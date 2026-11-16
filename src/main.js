@@ -2,6 +2,7 @@
 (function (global) {
   'use strict';
   const game = global.SlayPokemon;
+  game.catalog.initialize();
   game.app = { run: null };
 
   document.getElementById('new-button').addEventListener('click', () => {

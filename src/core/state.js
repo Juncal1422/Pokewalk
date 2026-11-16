@@ -4,19 +4,11 @@
   const game = global.SlayPokemon;
 
   function newPokemon(run, speciesId) {
-    const template = game.data.species[speciesId];
-    if (!template) throw new Error('Pokémon desconocido: ' + speciesId);
-    const pokemon = {
-      id: 'pk_' + run.nextPokemonId++,
-      speciesId,
-      hp: template.hp,
-      maxHp: template.hp,
-      moveIds: template.moves.slice()
-    };
-    return pokemon;
+    return game.catalog.createOwnedPokemon(run, speciesId);
   }
 
   function createRun(starterId) {
+    game.catalog.initialize();
     if (!game.data.starters.includes(starterId)) throw new Error('Starter no válido');
     const run = {
       schemaVersion: 1,
@@ -36,6 +28,7 @@
     const starter = newPokemon(run, starterId);
     run.team.push(starter);
     run.activePokemonId = starter.id;
+    game.catalog.updateLocks(run);
     return run;
   }
 

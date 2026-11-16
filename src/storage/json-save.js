@@ -40,7 +40,7 @@
       throw new Error('Este archivo no tiene el formato de guardado esperado.');
     }
     game.engine.validateRun(parsed.run);
-    return parsed.run;
+    return game.catalog.hydrateRun(parsed.run);
   }
 
   async function load(file) {

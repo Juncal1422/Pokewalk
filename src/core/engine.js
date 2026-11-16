@@ -17,6 +17,7 @@
     return run.team
       .filter(p => p.hp > 0 && (!ownerId || p.id === ownerId))
       .flatMap(p => p.moveIds.map(moveId => ({ pokemonId: p.id, moveId })))
+      .filter(card => !game.data.moves[card.moveId].locked)
       .filter(card => battle.remainingUses[cardKey(card)] > 0)
       .filter(card => !battle.hand.some(held => cardKey(held) === cardKey(card)));
   }
@@ -67,13 +68,13 @@
     const wasRoute = run.stage.kind === 'route';
     if (wasRoute) run.badges.push('Medalla ' + run.stage.index);
     else run.leagueWins += 1;
+    game.catalog.updateLocks(run);
     run.phase = 'reward';
     run.battle = null;
-    run.rewardOptions = wasRoute
-      ? game.data.captures.slice((run.stage.index - 1) % game.data.captures.length)
-        .concat(game.data.captures.slice(0, (run.stage.index - 1) % game.data.captures.length))
-        .slice(0, 2)
-      : [];
+    const availableCaptures = game.data.captures.filter(id => !game.data.species[id].locked);
+    const offset = availableCaptures.length ? (run.stage.index - 1) % availableCaptures.length : 0;
+    const orderedCaptures = availableCaptures.slice(offset).concat(availableCaptures.slice(0, offset));
+    run.rewardOptions = wasRoute ? orderedCaptures.slice(0, 2) : [];
     run.message = '¡Victoria! ' + (wasRoute ? 'Has obtenido una medalla.' : 'Has superado un combate de Liga.');
   }
   function takeEnemyTurn(run) {
@@ -149,7 +150,7 @@
   function applyReward(run, kind, speciesId) {
     if (run.phase !== 'reward') throw new Error('No hay una recompensa pendiente.');
     if (kind === 'capture') {
-      if (!run.rewardOptions.includes(speciesId)) throw new Error('Pokémon no disponible para capturar.');
+      if (!run.rewardOptions.includes(speciesId) || game.data.species[speciesId].locked) throw new Error('Pokémon no disponible para capturar.');
       if (run.team.length >= MAX_TEAM) throw new Error('Equipo lleno (máximo seis Pokémon).');
       run.team.push(game.state.newPokemon(run, speciesId));
       run.message = '¡Capturado ' + game.data.species[speciesId].name + '! Sus movimientos se suman al equipo.';

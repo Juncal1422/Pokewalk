@@ -10,6 +10,14 @@
   try {
     let run = game.state.createRun('bulbasaur');
     assert(run.team.length === 1 && run.team[0].moveIds.length === 2, 'Starter y dos movimientos');
+    assert(run.team[0] instanceof game.entities.StarterPokemon, 'Pokémon instanciado desde su subclase');
+    assert(game.data.moves.placaje instanceof game.entities.BasicMove &&
+      game.data.moves.ascuas instanceof game.entities.ElementalMove, 'Movimientos instanciados desde sus subclases');
+    assert(game.data.items.berry instanceof game.entities.BerryItem &&
+      game.data.items.potion instanceof game.entities.PotionItem, 'Objetos instanciados desde sus subclases');
+    assert(game.data.events.route_battle instanceof game.entities.BattleEvent &&
+      game.data.events.rest_stop instanceof game.entities.RestEvent, 'Eventos instanciados desde sus subclases');
+    assert(game.data.all.every(entity => typeof entity.locked === 'boolean'), 'Todas las entidades tienen estado locked');
     game.engine.startBattle(run);
     assert(run.phase === 'battle' && run.battle.hand.length === 2, 'Combate y mano inicial');
     const first = run.battle.hand[0];
@@ -19,7 +27,8 @@
     assert(run.battle.remainingUses[key] === before - 1, 'Uso del movimiento descontado');
     const saved = game.storage.serialize(run);
     run = game.storage.deserialize(saved);
-    assert(run.phase === 'battle' && run.battle.hand.length > 0, 'Guardar y restaurar combate');
+    assert(run.phase === 'battle' && run.battle.hand.length > 0 &&
+      run.team[0] instanceof game.entities.StarterPokemon, 'Guardar y restaurar combate con instancias');
     // Validación del formato y de los errores de carga.
     let rejected = false;
     try { game.storage.deserialize('{"format":"incorrecto"}'); } catch (_) { rejected = true; }
@@ -40,10 +49,26 @@
         game.engine.useMove(run, card.pokemonId + ':' + card.moveId);
       }
       assert(run.phase === 'reward', 'Recompensa después de ' + game.engine.stageLabel(run));
-      game.engine.applyReward(run, 'rest');
+      if (stage === 0) {
+        assert(!game.data.species.pidgey.locked && game.data.events.rest_stop.locked,
+          'Primera victoria desbloquea Pokémon y mantiene el evento bloqueado');
+      }
+      if (stage === 1) {
+        assert(!game.data.items.potion.locked && !game.data.moves.chispazo.locked &&
+          !game.data.events.rest_stop.locked, 'Dos medallas desbloquean objetos, movimientos y eventos');
+      }
+      if (stage === 0) {
+        game.engine.applyReward(run, 'capture', 'pidgey');
+        assert(run.team[1] instanceof game.entities.WildPokemon, 'Pokémon capturado creado desde su subclase');
+      } else {
+        game.engine.applyReward(run, 'rest');
+      }
     }
     assert(run.phase === 'won' && run.badges.length === 8 && run.leagueWins === 5, 'Ocho medallas y Liga completa');
     game.engine.validateRun(run);
+    run = game.state.createRun('squirtle');
+    assert(game.data.species.pidgey.locked && game.data.items.potion.locked &&
+      game.data.events.rest_stop.locked, 'Nueva run reinicia las instancias y sus bloqueos');
     output.textContent = lines.join('\n') + '\n\nTODAS LAS PRUEBAS HAN PASADO';
   } catch (error) {
     output.textContent = lines.join('\n') + '\n\n' + error.message;

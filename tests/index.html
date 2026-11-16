@@ -3,6 +3,48 @@
 <head>
   <meta charset="utf-8">
   <title>Pruebas de Slay Pokémon</title>
+  <script id="game-data" type="application/json">
+  {
+    "starters":["bulbasaur","charmander","squirtle"],
+    "captures":["pidgey","pikachu","geodude","oddish"],
+    "species":[
+      {"id":"bulbasaur","name":"Bulbasaur","hp":54,"moves":["placaje","latigo_cepa"],"kind":"starter","starter":true,"locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"charmander","name":"Charmander","hp":50,"moves":["aranazo","ascuas"],"kind":"starter","starter":true,"locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"squirtle","name":"Squirtle","hp":56,"moves":["placaje","pistola_agua"],"kind":"starter","starter":true,"locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"pidgey","name":"Pidgey","hp":42,"moves":["picotazo","ataque_rapido"],"kind":"wild","starter":false,"locked":true,"unlockCondition":{"type":"firstVictory"}},
+      {"id":"pikachu","name":"Pikachu","hp":44,"moves":["impactrueno","ataque_rapido","chispazo"],"kind":"wild","starter":false,"locked":true,"unlockCondition":{"type":"firstVictory"}},
+      {"id":"geodude","name":"Geodude","hp":58,"moves":["placaje","lanzarrocas","endurecer"],"kind":"wild","starter":false,"locked":true,"unlockCondition":{"type":"badgeCount","count":4}},
+      {"id":"oddish","name":"Oddish","hp":48,"moves":["absorcion","polvo_veneno"],"kind":"wild","starter":false,"locked":true,"unlockCondition":{"type":"leagueWins","count":1}}
+    ],
+    "moves":[
+      {"id":"placaje","name":"Placaje","type":"Normal","power":9,"uses":4,"kind":"basic","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"latigo_cepa","name":"Látigo Cepa","type":"Planta","power":13,"uses":3,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"ascuas","name":"Ascuas","type":"Fuego","power":13,"uses":3,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"aranazo","name":"Arañazo","type":"Normal","power":9,"uses":4,"kind":"basic","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"pistola_agua","name":"Pistola Agua","type":"Agua","power":13,"uses":3,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"burbuja","name":"Burbuja","type":"Agua","power":10,"uses":4,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"picotazo","name":"Picotazo","type":"Volador","power":11,"uses":4,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"ataque_rapido","name":"Ataque Rápido","type":"Normal","power":11,"uses":4,"kind":"basic","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"impactrueno","name":"Impactrueno","type":"Eléctrico","power":14,"uses":3,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"chispazo","name":"Chispazo","type":"Eléctrico","power":12,"uses":3,"kind":"elemental","locked":true,"unlockCondition":{"type":"badgeCount","count":2}},
+      {"id":"lanzarrocas","name":"Lanzarrocas","type":"Roca","power":14,"uses":3,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"endurecer","name":"Endurecer","type":"Normal","power":7,"uses":5,"kind":"basic","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"absorcion","name":"Absorción","type":"Planta","power":12,"uses":3,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"polvo_veneno","name":"Polvo Veneno","type":"Veneno","power":10,"uses":4,"kind":"elemental","locked":false,"unlockCondition":{"type":"always"}}
+    ],
+    "items":[
+      {"id":"berry","name":"Baya","kind":"berry","effect":"heal","amount":12,"locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"potion","name":"Poción","kind":"potion","effect":"heal","amount":20,"locked":true,"unlockCondition":{"type":"badgeCount","count":2}}
+    ],
+    "events":[
+      {"id":"route_battle","name":"Encuentro de ruta","kind":"battle","description":"Combate contra el rival de la ruta.","locked":false,"unlockCondition":{"type":"always"}},
+      {"id":"rest_stop","name":"Parada de descanso","kind":"rest","description":"Recupera al equipo en una parada de ruta.","locked":true,"unlockCondition":{"type":"badgeCount","count":2}},
+      {"id":"league_battle","name":"Combate de Liga","kind":"battle","description":"Encuentro del Alto Mando o del Campeón.","locked":true,"unlockCondition":{"type":"badgeCount","count":8}},
+      {"id":"mystery_event","name":"Evento misterioso","kind":"rest","description":"Un evento especial aparece tras dos victorias de Liga.","locked":true,"unlockCondition":{"type":"leagueWins","count":2}}
+    ]
+  }
+  </script>
+  <script src="../src/core/entities.js" defer></script>
   <script src="../src/data/catalog.js" defer></script>
   <script src="../src/core/state.js" defer></script>
   <script src="../src/core/engine.js" defer></script>

@@ -45,8 +45,9 @@ SlayPokemon_Web/
 │   └── ARQUITECTURA.md       # Reglas provisionales y puntos de extensión
 ├── src/
 │   ├── data/
-│   │   └── catalog.js       # Pokémon y movimientos de muestra
+│   │   └── catalog.js       # Instancias y bloqueos del catálogo JSON
 │   ├── core/
+│   │   ├── entities.js      # Clases y subclases de entidades del juego
 │   │   ├── state.js         # Estado de la run
 │   │   └── engine.js        # Combate y progreso (demo)
 │   ├── storage/
@@ -58,6 +59,8 @@ SlayPokemon_Web/
     ├── index.html          # Pruebas sencillas desde el navegador
     └── smoke.js
 ```
+
+Los datos JSON están en `index.html` para que el juego siga funcionando sin servidor local. Cada nueva run crea instancias de las clases y sus bloqueos se recalculan con las condiciones de progreso de esa run.
 
 ## 5. Subir los cambios a GitHub con VS Code
 
