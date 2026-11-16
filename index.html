@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slay Pokémon | Prototipo</title>
+  <!-- Sin CSS ni frameworks: se abre también con doble clic (file://). -->
+  <script src="src/data/catalog.js" defer></script>
+  <script src="src/core/state.js" defer></script>
+  <script src="src/core/engine.js" defer></script>
+  <script src="src/storage/json-save.js" defer></script>
+  <script src="src/ui/render.js" defer></script>
+  <script src="src/main.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Slay Pokémon</h1>
+    <p>Prototipo local · sin estilos ni dependencias</p>
+    <nav aria-label="Partida">
+      <button type="button" id="save-button" disabled>Guardar partida (.json)</button>
+      <button type="button" id="load-button">Cargar partida (.json)</button>
+      <input type="file" id="load-input" accept=".json,application/json" hidden>
+      <button type="button" id="new-button">Nueva run</button>
+    </nav>
+    <p id="status" role="status" aria-live="polite"></p>
+  </header>
+  <main id="app"></main>
+  <footer>
+    <p>El guardado descarga un archivo JSON. Cargar permite recuperarlo desde tu equipo.</p>
+  </footer>
+</body>
+</html>
