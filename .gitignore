@@ -1,14 +1,1 @@
-# Archivos de sistema y editor
-.DS_Store
-Thumbs.db
-.vscode/*.log
 
-# Copias personales de partidas (no subir al repositorio)
-*.save.json
-saves/
-
-# Cachés y archivos temporales
-*.tmp
-*.bak
-node_modules/
-dist/
