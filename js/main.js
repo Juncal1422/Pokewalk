@@ -1,9 +1,9 @@
-import { BIOMES } from "./data/biomes.js";
-import { DEFAULT_DEX } from "./core/constants.js";
-import { updateEntity, loadLevel } from "./core/entities.js";
-import { attachInput } from "./core/input.js";
-import { changeBiome, draw } from "./core/renderer.js";
-import { game, resetGameState } from "./core/state.js";
+import { BIOMES } from './data/biomes.js';
+import { DEFAULT_DEX } from './core/constants.js';
+import { updateEntity, loadLevel } from './core/entities.js';
+import { attachInput } from './core/input.js';
+import { changeBiome, draw } from './core/renderer.js';
+import { game, resetGameState } from './core/state.js';
 
 const EMBEDDED_APP = `
   <div id="poke-walk-app">
@@ -37,7 +37,7 @@ const EMBEDDED_APP = `
   </div>`;
 
 function mountApp(root) {
-  if (root.querySelector("#game")) return;
+  if (root.querySelector('#game')) return;
   root.innerHTML = EMBEDDED_APP;
 }
 
@@ -48,21 +48,25 @@ function frame() {
   game.animationFrame = requestAnimationFrame(frame);
 }
 
-export async function startGame({ root = document.querySelector("#game-root") || document.body } = {}) {
+export async function startGame({
+  root = document.querySelector('#game-root') || document.body,
+} = {}) {
   root.__pokeWalkCleanup?.();
   resetGameState();
   mountApp(root);
-  game.canvas = document.getElementById("game");
-  game.ctx = game.canvas.getContext("2d");
-  game.loadingEl = document.getElementById("loading");
-  game.toastEl = document.getElementById("toast");
-  game.biomeSel = document.getElementById("biome-sel");
-  game.biomeSel.replaceChildren(...BIOMES.map(biome => {
-    const option = document.createElement("option");
-    option.value = biome.id;
-    option.textContent = biome.name;
-    return option;
-  }));
+  game.canvas = document.getElementById('game');
+  game.ctx = game.canvas.getContext('2d');
+  game.loadingEl = document.getElementById('loading');
+  game.toastEl = document.getElementById('toast');
+  game.biomeSel = document.getElementById('biome-sel');
+  game.biomeSel.replaceChildren(
+    ...BIOMES.map((biome) => {
+      const option = document.createElement('option');
+      option.value = biome.id;
+      option.textContent = biome.name;
+      return option;
+    }),
+  );
 
   await changeBiome(BIOMES[0]);
   await loadLevel(DEFAULT_DEX);
@@ -75,4 +79,5 @@ export async function startGame({ root = document.querySelector("#game-root") ||
   game.animationFrame = requestAnimationFrame(frame);
 }
 
-if (document.querySelector("#game") && !document.querySelector("#game-root")) startGame();
+if (document.querySelector('#game') && !document.querySelector('#game-root'))
+  startGame();

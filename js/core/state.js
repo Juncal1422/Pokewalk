@@ -17,7 +17,7 @@ export const game = {
   keys: Object.create(null),
   animationFrame: 0,
   inputController: null,
-  toastTimer: 0
+  toastTimer: 0,
 };
 
 export function resetGameState() {

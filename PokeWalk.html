@@ -1,17 +1,30 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11131a">
   <title>PokeWalk</title>
   <style>
-    body { margin:0; background:#11131a; color:#f0f4f8; font:14px system-ui,sans-serif; }
-    #startup { padding:1rem; text-align:center; }
+    body {
+      margin: 0;
+      background: #11131a;
+      color: #f0f4f8;
+      font: 14px system-ui, sans-serif;
+    }
+
+    #startup {
+      padding: 1rem;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
-  <main id="game-root"><p id="startup" role="status">Cargando PokeWalk…</p></main>
+  <main id="game-root">
+    <p id="startup" role="status">Cargando PokeWalk…</p>
+  </main>
   <script type="module">
     const root = document.getElementById("game-root");
     try {
@@ -23,4 +36,5 @@
     }
   </script>
 </body>
+
 </html>
