@@ -23,6 +23,7 @@ export function collectItems(player) {
   game.drops = game.drops.filter(drop => {
     if (Math.hypot(drop.x - player.x, drop.y - player.y) > 12) return true;
     const item = game.items[drop.id];
+    console.info('[Objeto] Recogido', item.name, item.duration);
     for (const [key, delta] of Object.entries(item.stats)) {
       if (item.duration === 'floor') player.floorStats[key] = (player.floorStats[key] || 0) + delta;
       else player.baseStats[key] = clampStat(key, player.baseStats[key] + delta);

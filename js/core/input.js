@@ -3,6 +3,7 @@ import { setState, startCharge, triggerAttack } from './entities.js';
 import { game } from './state.js';
 
 export function attachInput() {
+  console.debug('[Controles] Activando teclado y puntero');
   const controller = new AbortController();
   const { signal } = controller;
   const canvas = game.canvas;

@@ -42,6 +42,7 @@ export async function changeBiome(biome) {
     if (selection !== request) return;
     game.tileSheet = sheet;
     game.currentBiome = biome;
+    console.debug('[Render] Atlas preparado', biome.name, biome.terrain);
   } catch (error) {
     if (selection !== request) return;
     throw new Error(`No se pudo cargar el tileset de ${biome.name}`, {
@@ -53,8 +54,13 @@ export async function changeBiome(biome) {
 const portalImage = new Image();
 portalImage.src = new URL('../../tiled/tilesets/Teleporter.png', import.meta.url).href;
 
+const stairsImage = new Image();
+stairsImage.src = new URL('../../tiled/tilesets/Stairs.png', import.meta.url).href;
+const objectiveImage = new Image();
+objectiveImage.src = new URL('../../assets/items/goldenapple.png', import.meta.url).href;
+
 export function preparePortal() {
-  return portalImage.decode();
+  return Promise.all([portalImage, stairsImage, objectiveImage].map(image => image.decode()));
 }
 
 export function draw() {
@@ -79,11 +85,6 @@ export function draw() {
   );
   for (let y = rowStart; y <= rowEnd; y++) {
     for (let x = colStart; x <= colEnd; x++) {
-      // El portal ocupa una celda completa y mantiene el suelo transitable.
-      if (game.portal?.x === x && game.portal.y === y) {
-        ctx.drawImage(portalImage, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
-        continue;
-      }
       const { mask, index } = game.autotileGrid[y][x];
       const variant = game.variantGrid[y][x];
       const { floors, walls } = game.currentBiome.variants;
@@ -103,6 +104,15 @@ export function draw() {
         RTILE,
         RTILE,
       );
+      if (!floor && game.currentBiome.terrain !== 'wall') {
+        const colors = { water: 'rgba(26,126,209,.62)', lava: 'rgba(219,68,16,.7)', void: 'rgba(16,8,35,.91)' };
+        ctx.fillStyle = colors[game.currentBiome.terrain];
+        ctx.fillRect(x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
+      }
+      if (game.portal?.x === x && game.portal.y === y) {
+        const icon = { stairs: stairsImage, objective: objectiveImage, portal: portalImage }[game.portal.kind];
+        ctx.drawImage(icon, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
+      }
     }
   }
 
@@ -130,7 +140,7 @@ export function draw() {
     }
 
     const animation = entity.anims[entity.state] || entity.anims.Idle;
-    const scale = ZOOM * sizeScale(entity.stats);
+    const scale = ZOOM * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
     const drawW = animation.fw * scale, drawH = animation.fh * scale;
     // El alcance extra desplaza solo el dibujo del ataque, nunca el cuerpo físico.
     const phase = (entity.frame + entity.timer / (animation.durs[entity.frame] || 8)) / animation.frames;

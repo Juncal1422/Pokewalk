@@ -18,5 +18,6 @@ export async function loadEncountersCatalog(upgrades) {
     }
     pokemon.set(row.dex, row);
   }
+  console.debug('[Encuentros] Catálogo validado', pokemon.size);
   return { pokemon, items };
 }

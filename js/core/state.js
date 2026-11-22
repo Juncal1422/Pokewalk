@@ -22,6 +22,7 @@ export const game = {
 };
 
 export function resetGameState() {
+  console.info('[Partida] Reiniciando la simulación');
   cancelAnimationFrame(game.animationFrame);
   game.canvas = null;
   game.ctx = null;

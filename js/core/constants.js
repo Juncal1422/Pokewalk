@@ -43,3 +43,5 @@ export const BODY_RADIUS = 7.8;
 export const MAX_HP = 10;
 export const FADE_MS = 1500;
 export const HOLD_MS = 500;
+// Una sola traza al cargar el módulo permite comprobar la escala de simulación.
+console.debug('[PokeWalk] Escala del mapa', { TILE, ZOOM, MAP_W, MAP_H });

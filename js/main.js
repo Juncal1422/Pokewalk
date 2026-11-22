@@ -1,10 +1,11 @@
+import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
 import { refreshStats } from './core/stats.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
 import { loadUpgrades, applyUpgrade } from './data/upgrades.js';
 import { loadHud } from './core/hud.js';
-import { BIOMES } from './data/biomes.js';
+import { loadBiomes } from './data/biomes.js';
 import { DEFAULT_DEX, FADE_MS, TILE } from './core/constants.js';
 import { updateEntity, loadLevel, showToast } from './core/entities.js';
 import { attachInput } from './core/input.js';
@@ -19,9 +20,10 @@ const EMBEDDED_APP = `
       #canvas-container, #game { width:100%; height:100%; display:block; }
       #game { image-rendering:pixelated; touch-action:none; outline:none; }
       #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
+      #rewards img.essence { width:24px; }
       #rewards::backdrop { background:#0b101ddc; }
       #rewards h1 { margin:0 0 12px; font-size:clamp(18px,5vmin,30px); }
-      #rewards .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
+      #rewards .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
       #rewards button { min-width:0; display:grid; justify-items:center; gap:6px; padding:clamp(4px,2vmin,18px); border:2px solid #455d77; border-radius:8px; background:#26374a; color:#fff; font:600 clamp(12px,2.7vmin,18px) system-ui; cursor:pointer; }
       #rewards button:is(:hover,:focus-visible) { outline:2px solid #a7e9e2; background:#324e60; }
       #rewards img { width:min(80px,15vw,17dvh); aspect-ratio:1; image-rendering:pixelated; }
@@ -38,16 +40,16 @@ function mountApp(root) {
 }
 
 // El portal sustituye un suelo común y nunca se genera bajo el jugador.
-function placePortal(px, py) {
+function placePortal(px, py, kind) {
   const floors = [];
   game.grid.forEach((row, y) =>
     row.forEach((terrain, x) => {
       if (
         terrain === 0 &&
-        game.variantGrid[y][x] === 0 &&
+
         (x !== px || y !== py)
       ) {
-        floors.push({ x, y, entered: false });
+        floors.push({ x, y, kind, entered: false });
       }
     }),
   );
@@ -61,15 +63,25 @@ async function nextLevel() {
   const previousBiome = game.currentBiome;
   const previousSheet = game.tileSheet;
   try {
-    const reward = await chooseReward(game.defeated, game.catalog, game.pokemon);
-    game.loadingEl.style.display = 'flex';
-    const choices = BIOMES.filter((biome) => biome !== game.currentBiome);
-    await changeBiome(choices[Math.floor(Math.random() * choices.length)]);
-    await loadLevel(game.player.dex);
-    // Se concede una sola vez, después de cargar el nuevo piso con éxito.
-    applyUpgrade(game.player.baseStats, reward);
-    refreshStats(game.player);
-    game.adventure++;
+    const m = game.mission;
+    if (game.portal.kind === 'stairs') {
+      game.loadingEl.style.display = 'flex';
+      await loadLevel(game.player.dex, m, game.floor + 1);
+    } else {
+      const option = await chooseReward(rewardOptions(), game.catalog);
+      game.loadingEl.style.display = 'flex';
+      const biome = sample(game.biomes.filter(b => b.id !== m.biome.id));
+      const next = newMission(m.number + 1, biome);
+      await changeBiome(biome);
+      await loadLevel(option?.row.dex ?? game.player.dex, next, 1);
+      if (option) {
+        const ids = [option.row.mejora, option.bonus].filter(Boolean);
+        for (const id of ids) applyUpgrade(game.player.baseStats, game.catalog.find(r => r.id === id));
+        refreshStats(game.player);
+        game.formEssence = option.essence;
+        console.info('[Ditto] Transformación', option.row.name, ids);
+      }
+    }
     if (document.hasFocus()) game.canvas.focus();
   } catch (error) {
     game.currentBiome = previousBiome;
@@ -99,14 +111,21 @@ function frame() {
       return;
     }
     // Esperamos a que termine el último fundido antes de habilitar la salida.
-    if (player.hp > 0 && game.entities.length === 1) {
+    if (player.hp > 0) {
       const x = Math.floor(player.x / TILE),
         y = Math.floor(player.y / TILE);
-      if (!game.portal) placePortal(x, y);
+      const kind = exitKind(game.mission, game.floor, game.entities.length === 1);
+      if (kind && game.portal?.kind !== kind) placePortal(x, y, kind);
       const portal = game.portal;
       if (portal) {
         const inside = portal.x === x && portal.y === y;
-        if (inside && !portal.entered) void nextLevel();
+        if (inside && !portal.entered) {
+          if (portal.kind === 'objective') {
+            game.mission.recovered = true;
+            game.portal = null;
+            showToast('Objeto recuperado. Busca el teletransportador.');
+          } else void nextLevel();
+        }
         portal.entered = inside;
       }
     }
@@ -131,14 +150,19 @@ export async function startGame({
     draw();
   };
   resize();
-  const [catalog] = await Promise.all([loadUpgrades(), changeBiome(BIOMES[0]), preparePortal(), loadHud()]);
+  const [catalog, biomes] = await Promise.all([loadUpgrades(), loadBiomes(), preparePortal(), loadHud()]);
+  game.biomes = biomes;
   game.catalog = catalog;
   const { pokemon, items } = await loadEncountersCatalog(catalog);
   game.pokemon = pokemon;
   game.items = items;
   await loadItemImages(items);
   game.adventure = 0;
-  await loadLevel(DEFAULT_DEX);
+  game.essences = {};
+  game.formEssence = null;
+  const biome = sample(biomes);
+  await changeBiome(biome);
+  await loadLevel(DEFAULT_DEX, newMission(1, biome), 1);
   const input = attachInput();
   const observer = new ResizeObserver(resize);
   observer.observe(game.canvas);

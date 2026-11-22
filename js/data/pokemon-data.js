@@ -93,6 +93,7 @@ export async function loadPokemonData(dex) {
         Charge: charge || idle || walk,
       },
     };
+    console.debug('[Sprites] Animaciones preparadas', dex, Object.keys(data.anims));
     game.spriteCache.set(dex, data);
     return data;
   } catch {

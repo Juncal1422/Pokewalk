@@ -1,3 +1,4 @@
+import { encounters, onDefeat } from './missions.js';
 import { dropItem } from './items.js';
 import {
   ANIM_SPEED,
@@ -13,7 +14,7 @@ import {
   MAP_W,
   MAP_H,
 } from './constants.js';
-import { initialStats, rate, sizeScale, rangeScale } from './stats.js';
+import { initialStats, rate, sizeScale, rangeScale, scaledStat, refreshStats } from './stats.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -62,7 +63,9 @@ export function setState(entity, state) {
 }
 
 export function canMove(entity, x, y) {
-  const radius = BODY_RADIUS * sizeScale(entity.stats);
+  const radius = BODY_RADIUS * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
+  const species = game.pokemon.get(entity.dex);
+  const crosses = game.currentBiome.canCross.some(skill => species[skill]);
   for (const [offsetX, offsetY] of [
     [-radius, -radius],
     [radius, -radius],
@@ -76,13 +79,13 @@ export function canMove(entity, x, y) {
       tileY < 0 ||
       tileX >= MAP_W ||
       tileY >= MAP_H ||
-      game.grid[tileY][tileX] === 1
+      (game.grid[tileY][tileX] === 1 && (!crosses || tileX === 0 || tileY === 0 || tileX === MAP_W - 1 || tileY === MAP_H - 1))
     )
       return false;
   }
   // Movimiento y retroceso comparten el mismo cuerpo circular.
   return !game.entities.some(other => other !== entity && other.hp > 0 &&
-    Math.hypot(other.x - x, other.y - y) < radius + BODY_RADIUS * sizeScale(other.stats));
+    Math.hypot(other.x - x, other.y - y) < radius + BODY_RADIUS * sizeScale(other.stats) * (other.boss ? 2 : 1));
 }
 
 export function triggerAttack(attacker) {
@@ -99,14 +102,14 @@ function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
   const [vx, vy] = DIR_VEC[attacker.dir];
   const reach = ATTACK_RANGE * rangeScale(attacker.stats.range);
   for (const target of game.entities) {
-    if (target === attacker || target.hp === 0) continue;
+    if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
     // Distancia al segmento frontal: al ampliar el alcance siguen entrando
     // los objetivos cercanos, incluso en diagonal.
     const dx = target.x - attacker.x, dy = target.y - attacker.y;
     const distance = dx * vx + dy * vy;
     if (distance <= 0) continue;
     const along = Math.min(reach, distance);
-    if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS * (1 + sizeScale(target.stats))) continue;
+    if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS * (1 + sizeScale(target.stats) * (target.boss ? 2 : 1))) continue;
     target.chargeTime = 0;
     target.hp = Math.max(0, target.hp - damage);
     target.lastHit = performance.now();
@@ -116,7 +119,7 @@ function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
     if (target.hp === 0) {
       target.deathAt = target.lastHit;
       if (!target.isPlayer) {
-        game.defeated.push(target.dex);
+        onDefeat(target, attacker);
         dropItem(target);
       }
     }
@@ -134,46 +137,38 @@ export function startCharge() {
   game.player.chargeTime = 0;
 }
 
-async function loadEncounters() {
-  // Saco las especies sin reposición. Si falta una hoja, pruebo otra para esa sala.
-  const pool = [...game.pokemon.keys()];
-  return Promise.all(
-    Array.from({ length: 4 }, async () => {
-      for (let attempt = 0; attempt < 3; attempt++) {
-        const index = Math.floor(Math.random() * pool.length);
-        const [dex] = pool.splice(index, 1);
-        const data = await loadPokemonData(dex);
-        if (data) return data;
-      }
-      return null;
-    }),
-  );
-}
-
-export async function loadLevel(dex = DEFAULT_DEX) {
-  const [playerData, opponents] = await Promise.all([
-    loadPokemonData(dex),
-    loadEncounters(),
-  ]);
-  if (!playerData) throw new Error('No se pudo cargar el Pokémon del jugador.');
-  if (opponents.some(data => !data)) throw new Error('No se pudieron cargar los cuatro encuentros. Vuelve a intentarlo.');
-  const stats = game.player?.baseStats ?? initialStats();
-  const hp = game.player?.hp ?? stats.hpMax;
-  generateDungeon();
+// Precargamos todos los sprites antes de sustituir el piso actual.
+export async function loadLevel(dex, mission, floor) {
+  const ids = encounters(mission, floor);
+  const [playerData, ...opponents] = await Promise.all([dex, ...ids].map(loadPokemonData));
+  if (!playerData || opponents.some(data => !data)) throw new Error('No se pudieron cargar los Pokémon de este piso.');
+  const old = game.player;
+  const bossFloor = mission.type === 'leader' && floor === mission.floors;
+  generateDungeon({ ...mission.layout, open: bossFloor });
   game.portal = null;
-  game.defeated = [];
-  game.player = createEntity(playerData, game.rooms[0], true);
-  game.player.baseStats = stats;
-  game.player.floorStats = {};
-  game.player.stats = { ...stats };
+  game.mission = mission;
+  game.floor = floor;
+  game.adventure = mission.number - 1;
+  const player = createEntity(playerData, game.rooms[0], true);
+  player.adventure = game.adventure;
+  player.baseStats = old?.baseStats ?? initialStats();
+  player.floorStats = {};
+  refreshStats(player);
+  player.hp = old ? Math.min(player.stats.hpMax, Math.max(1,
+    Math.round(old.hp * player.stats.hpMax / old.stats.hpMax))) : player.stats.hpMax;
+  game.player = player;
   game.drops = [];
-  game.player.hp = hp;
-  game.entities = [game.player];
+  game.entities = [player];
   opponents.forEach((data, index) => {
-    if (data)
-      game.entities.push(createEntity(data, game.rooms[index * 2 + 1], false));
+    const enemy = createEntity(data, game.rooms[index * 2 + 1], false);
+    enemy.boss = bossFloor;
+    for (const key of Object.keys(enemy.stats)) enemy.stats[key] = scaledStat(key, enemy.stats[key], game.adventure);
+    if (enemy.boss) enemy.stats.hpMax = Math.min(Number.MAX_SAFE_INTEGER, enemy.stats.hpMax * 2);
+    enemy.hp = enemy.stats.hpMax;
+    game.entities.push(enemy);
   });
   game.loadingEl.style.display = 'none';
+  console.info('[Piso]', floor, mission.name, ids);
 }
 
 function moveEntity(entity, dx, dy) {

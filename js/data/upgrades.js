@@ -27,4 +27,5 @@ export async function loadUpgrades() {
 
 export function applyUpgrade(stats, item) {
   effects.get(item.effect).apply(stats, item);
+  console.info('[Mejora] Aplicada', item.id);
 }

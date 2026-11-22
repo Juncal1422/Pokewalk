@@ -294,6 +294,13 @@ export function generateDungeon(options = {}) {
     ...rooms.filter((r) => r.isNode),
   ];
 
+  // El enfrentamiento final necesita espacio para el cuerpo doble del líder.
+  if (options.open) {
+    for (let y = 1; y < MAP_H - 1; y++) grid[y].fill(0, 1, MAP_W - 1);
+    sortedRooms[0] = { cx: Math.floor(MAP_W / 4), cy: Math.floor(MAP_H / 2) };
+    sortedRooms[1] = { cx: Math.floor(3 * MAP_W / 4), cy: Math.floor(MAP_H / 2) };
+  }
+  console.debug('[Mazmorra] Distribución generada', { pasillos, habitaciones, cruces, abierta: !!options.open });
   game.grid = grid;
   game.rooms = sortedRooms;
 

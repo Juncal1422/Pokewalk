@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catálogos · PokeWalk</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101922;color:#e6eee9;font:16px system-ui}main{max-width:1100px;margin:auto;padding:clamp(16px,4vw,52px)}h1{font-size:clamp(28px,5vw,46px);margin:0 0 20px}header,nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0}input,select,button{padding:9px;border:1px solid #66858b;background:#1c2b35;color:inherit;border-radius:6px}input[type=search]{flex:1;min-width:140px}#cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:12px}article{border:1px solid #344a58;border-radius:8px;padding:14px;background:#182630;min-width:0}h2{font-size:20px;margin:0 0 10px}summary{cursor:pointer;color:#a9e1d4}dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 12px;font-size:14px}dt{color:#a4bac0}dd{margin:0;overflow-wrap:anywhere}.tags{display:flex;flex-wrap:wrap;gap:4px}.tag{border-radius:4px;padding:2px 6px;background:#293e49}button:disabled{opacity:.45}nav output{font-variant-numeric:tabular-nums}label{display:grid;gap:4px;color:#b3c8c5;font-size:13px}
+</style><main><h1>Catálogos de PokeWalk</h1>
+<header><label>Catálogo<select id="source"><option value="pokemon.json">Pokémon</option><option value="biomas.json">Biomas</option><option value="upgrades.json">Mejoras</option><option value="items.json">Objetos</option></select></label><label>Abrir JSON local<input type="file" accept=".json,application/json" id="file"></label><input id="search" type="search" aria-label="Buscar en los datos" placeholder="Buscar nombre, atributo o valor"></header>
+<nav><button id="prev">Anterior</button><output id="status" aria-live="polite"></output><button id="next">Siguiente</button></nav><section id="cards"></section></main>
+<script>
+const $=id=>document.getElementById(id);
+const el=(tag,value)=>{const n=document.createElement(tag);if(value!==undefined)n.textContent=value;return n};
+let rows=[],page=0,serial=0;const size=24;
+function valueNode(value){
+  if(Array.isArray(value)){
+    const box=el('div');box.className='tags';
+    for(const item of value){const t=valueNode(item);t.classList.add('tag');box.append(t)}
+    return box;
+  }
+  if(value && typeof value==='object'){
+    const dl=el('dl');
+    for(const [key,v] of Object.entries(value)){
+      const dd=el('dd');
+      if(v && typeof v==='object'){
+        const details=el('details');details.open=key==='stats';
+        details.append(el('summary',Array.isArray(v)?v.length+' elementos':'Ver campos'),valueNode(v));dd.append(details);
+      }else dd.append(valueNode(v));
+      dl.append(el('dt',key),dd);
+    }return dl;
+  }
+  return el('span',value===true?'Sí':value===false?'No':String(value));
+}
+function render(){
+  const text=$('search').value.toLocaleLowerCase();
+  const list=rows.filter(r=>r.search.includes(text));
+  const pages=Math.max(1,Math.ceil(list.length/size));page=Math.max(0,Math.min(page,pages-1));
+  $('status').value=list.length+' registros · '+(page+1)+' / '+pages;
+  $('prev').disabled=!page;$('next').disabled=page+1>=pages;
+  $('cards').replaceChildren(...list.slice(page*size,(page+1)*size).map(r=>{
+    const card=el('article');card.append(el('h2',r.title),valueNode(r.value));return card;
+  }));
+}
+async function openData(read){
+  const token=++serial;
+  try{
+    const data=await read();if(token!==serial)return;
+    rows=Object.entries(data).map(([key,value])=>{
+      const title=value?.name||value?.label||value?.id||key;
+      return {title,value,search:(key+' '+JSON.stringify(value)).toLocaleLowerCase()};
+    });page=0;$('search').value='';render();
+  }catch(error){
+    if(token!==serial)return;
+    rows=[];render();$('status').value='Abre un archivo JSON local o sirve esta carpeta con Live Server. '+error.message;
+  }
+}
+function catalog(){openData(async()=>{const r=await fetch('./'+$('source').value);if(!r.ok)throw Error(r.status);return r.json()})}
+$('source').onchange=catalog;$('file').onchange=e=>{const f=e.target.files[0];if(f)openData(async()=>JSON.parse(await f.text()))};
+$('search').oninput=()=>{page=0;render()};$('prev').onclick=()=>{page--;render()};$('next').onclick=()=>{page++;render()};
+if(location.protocol==='file:'){$('status').value='Elige un archivo JSON local.'}else catalog();
+</script></html>

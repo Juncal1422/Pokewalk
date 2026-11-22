@@ -1,35 +1,8 @@
-// Los muros del atlas siguen el orden numérico de las máscaras.
-// Reservo la variante 1 del suelo para objetos. En los muros depende de la máscara.
-function biome(id, name, filename, floors, walls = {}) {
-  return {
-    id,
-    name,
-    tileset: new URL(`../../tiled/tilesets/${filename}`, import.meta.url).href,
-    variants: { floors, walls },
-  };
+// Los medios, permisos y encuentros se resuelven desde el mismo catálogo editable.
+export async function loadBiomes() {
+  const response = await fetch(new URL('./biomas.json', import.meta.url));
+  if (!response.ok) throw new Error('No se pudo leer biomas.json');
+  const rows = await response.json();
+  console.info('[Biomas] Catálogo cargado', rows.length);
+  return rows.map(row => ({ ...row, tileset: new URL('../../' + row.tileset, import.meta.url).href }));
 }
-export const BIOMES = [
-  biome(
-    'buried',
-    'Buried Relic',
-    'BuriedRelic-blob.png',
-    { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 },
-    { 124: { 1: 0 } },
-  ),
-  biome('forest', 'Purity Lake', 'PurityLake-blob.png', {
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5,
-    6: 6,
-  }),
-  biome('steel', 'Steel Aegis Cave', 'SteelAegis-blob.png', {
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5,
-    6: 6,
-  }),
-];
