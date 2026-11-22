@@ -1,0 +1,3 @@
+[
+  { "id": "damage-plus-one", "label": "+1 Daño", "effect": "increaseStat", "stat": "atkdmg", "amount": 1 }
+]

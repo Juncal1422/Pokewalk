@@ -1,3 +1,6 @@
+import { chooseReward } from './core/rewards.js';
+import { loadUpgrades, applyUpgrade } from './data/upgrades.js';
+import { loadHud } from './core/hud.js';
 import { BIOMES } from './data/biomes.js';
 import { DEFAULT_DEX, FADE_MS, TILE } from './core/constants.js';
 import { updateEntity, loadLevel, showToast } from './core/entities.js';
@@ -8,15 +11,22 @@ import { game, resetGameState } from './core/state.js';
 const EMBEDDED_APP = `
   <div id="poke-walk-app">
     <style>
-      #poke-walk-app { min-height:100vh; padding:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#11131a; color:#f0f4f8; font:14px 'Segoe UI',system-ui,sans-serif; }
-      #poke-walk-app * { box-sizing:border-box; margin:0; }
-      #poke-walk-app #canvas-container { position:relative; max-width:100%; border:4px solid #353c52; border-radius:8px; overflow:hidden; background:#000; }
-      #poke-walk-app canvas { display:block; max-width:100%; height:auto; image-rendering:pixelated; cursor:crosshair; user-select:none; }
+      html, body { margin:0; width:100%; height:100%; overflow:hidden; }
+      #poke-walk-app { position:fixed; inset:0; overflow:hidden; background:#11131a; color:#f0f4f8; font:14px system-ui,sans-serif; }
+      #canvas-container, #game { width:100%; height:100%; display:block; }
+      #game { image-rendering:pixelated; touch-action:none; outline:none; }
+      #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
+      #rewards::backdrop { background:#0b101ddc; }
+      #rewards h1 { margin:0 0 12px; font-size:clamp(18px,5vmin,30px); }
+      #rewards .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
+      #rewards button { min-width:0; display:grid; justify-items:center; gap:6px; padding:clamp(4px,2vmin,18px); border:2px solid #455d77; border-radius:8px; background:#26374a; color:#fff; font:600 clamp(12px,2.7vmin,18px) system-ui; cursor:pointer; }
+      #rewards button:is(:hover,:focus-visible) { outline:2px solid #a7e9e2; background:#324e60; }
+      #rewards img { width:min(80px,15vw,17dvh); aspect-ratio:1; image-rendering:pixelated; }
       #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
-      #poke-walk-app .hint { margin-top:8px; font-size:.82rem; color:#94a3b8; } #poke-walk-app kbd { background:#1e293b; border:1px solid #475569; border-radius:4px; padding:1px 5px; color:#e2e8f0; }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
+    <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
 
 function mountApp(root) {
@@ -45,13 +55,20 @@ async function nextLevel() {
   game.changingLevel = true;
   game.keys = Object.create(null);
   game.canvas.blur();
-  game.loadingEl.style.display = 'flex';
+  const previousBiome = game.currentBiome;
+  const previousSheet = game.tileSheet;
   try {
+    const reward = await chooseReward(game.defeated, game.catalog);
+    game.loadingEl.style.display = 'flex';
     const choices = BIOMES.filter((biome) => biome !== game.currentBiome);
     await changeBiome(choices[Math.floor(Math.random() * choices.length)]);
     await loadLevel(game.player.dex);
+    // Se concede una sola vez, después de cargar el nuevo piso con éxito.
+    applyUpgrade(game.player.stats, reward);
     if (document.hasFocus()) game.canvas.focus();
   } catch (error) {
+    game.currentBiome = previousBiome;
+    game.tileSheet = previousSheet;
     showToast(error.message);
     if (document.hasFocus()) game.canvas.focus();
   } finally {
@@ -102,10 +119,20 @@ export async function startGame({
   game.ctx = game.canvas.getContext('2d');
   game.loadingEl = document.getElementById('loading');
   game.toastEl = document.getElementById('toast');
-  await Promise.all([changeBiome(BIOMES[0]), preparePortal()]);
+  const resize = () => {
+    game.canvas.width = Math.max(1, game.canvas.clientWidth);
+    game.canvas.height = Math.max(1, game.canvas.clientHeight);
+    draw();
+  };
+  resize();
+  const [catalog] = await Promise.all([loadUpgrades(), changeBiome(BIOMES[0]), preparePortal(), loadHud()]);
+  game.catalog = catalog;
   await loadLevel(DEFAULT_DEX);
   const input = attachInput();
+  const observer = new ResizeObserver(resize);
+  observer.observe(game.canvas);
   root.__pokeWalkCleanup = () => {
+    observer.disconnect();
     input.abort();
     cancelAnimationFrame(game.animationFrame);
     clearTimeout(game.toastTimer);

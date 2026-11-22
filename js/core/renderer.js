@@ -1,4 +1,6 @@
-import { FADE_MS, MAP_H, MAP_W, MAX_CHARGE_FRAMES, RTILE, ZOOM } from './constants.js';
+import { healthBar, drawHud } from './hud.js';
+import { sizeScale, rate } from './stats.js';
+import { DIR_VEC, ATTACK_RANGE, FADE_MS, MAP_H, MAP_W, MAX_CHARGE_FRAMES, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
 const tilesets = new Map();
@@ -61,21 +63,9 @@ export function draw() {
   ctx.fillStyle = '#0b0d12';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // En los bordes dejo de centrar al jugador para aprovechar toda la vista.
-  const cameraX = Math.max(
-    0,
-    Math.min(
-      MAP_W * RTILE - canvas.width,
-      Math.floor(player.x * ZOOM - canvas.width / 2),
-    ),
-  );
-  const cameraY = Math.max(
-    0,
-    Math.min(
-      MAP_H * RTILE - canvas.height,
-      Math.floor(player.y * ZOOM - canvas.height / 2),
-    ),
-  );
+  // Fuera del mapa se ve el fondo para mantener siempre al jugador centrado.
+  const cameraX = Math.floor(player.x * ZOOM - canvas.width / 2);
+  const cameraY = Math.floor(player.y * ZOOM - canvas.height / 2);
   const colStart = Math.max(0, Math.floor(cameraX / RTILE));
   const colEnd = Math.min(
     MAP_W - 1,
@@ -138,8 +128,13 @@ export function draw() {
     }
 
     const animation = entity.anims[entity.state] || entity.anims.Idle;
-    const drawW = animation.fw * ZOOM,
-      drawH = animation.fh * ZOOM;
+    const scale = ZOOM * sizeScale(entity.stats);
+    const drawW = animation.fw * scale, drawH = animation.fh * scale;
+    // El alcance extra desplaza solo el dibujo del ataque, nunca el cuerpo físico.
+    const phase = (entity.frame + entity.timer / (animation.durs[entity.frame] || 8)) / animation.frames;
+    const extension = entity.state === 'Attack'
+      ? Math.sin(Math.PI * Math.min(1, phase)) * ATTACK_RANGE * (rate(entity.stats.range) - 1) * ZOOM : 0;
+    const [vx, vy] = DIR_VEC[entity.dir];
     const row = Math.min(
       entity.dir,
       Math.floor(animation.img.height / animation.fh) - 1,
@@ -150,8 +145,8 @@ export function draw() {
       row * animation.fh,
       animation.fw,
       animation.fh,
-      Math.floor(px - drawW / 2),
-      Math.floor(py - drawH / 2),
+      Math.floor(px + vx * extension - drawW / 2),
+      Math.floor(py + vy * extension - drawH / 2),
       drawW,
       drawH,
     );
@@ -167,6 +162,12 @@ export function draw() {
       ctx.fillStyle = ratio >= 1 ? '#facc15' : '#38bdf8';
       ctx.fillRect(x, y, Math.floor(width * ratio), height);
     }
+    if (!entity.isPlayer && performance.now() - entity.lastHit < 3000) {
+      const cell = 6;
+      healthBar(ctx, entity, Math.round(px - (entity.stats.hpMax + 2) * cell / 2),
+        Math.round(py - drawH / 2 - cell - 2), cell);
+    }
     ctx.restore();
   }
+  drawHud(ctx, canvas, player);
 }

@@ -15,6 +15,7 @@ import {
   MAP_W,
   MAP_H,
 } from './constants.js';
+import { initialStats, rate, sizeScale } from './stats.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -40,7 +41,9 @@ export function createEntity(data, room, isPlayer) {
     state: 'Idle',
     frame: 0,
     timer: 0,
+    stats: initialStats(),
     hp: MAX_HP,
+    lastHit: -Infinity,
     deathAt: null,
     impactPending: false,
     chargeTime: 0,
@@ -60,7 +63,7 @@ export function setState(entity, state) {
 }
 
 export function canMove(entity, x, y) {
-  const radius = BODY_RADIUS;
+  const radius = BODY_RADIUS * sizeScale(entity.stats);
   for (const [offsetX, offsetY] of [
     [-radius, -radius],
     [radius, -radius],
@@ -80,7 +83,7 @@ export function canMove(entity, x, y) {
   }
   // Movimiento y retroceso comparten el mismo cuerpo circular.
   return !game.entities.some(other => other !== entity && other.hp > 0 &&
-    Math.hypot(other.x - x, other.y - y) < radius * 2);
+    Math.hypot(other.x - x, other.y - y) < radius + BODY_RADIUS * sizeScale(other.stats));
 }
 
 export function triggerAttack(attacker) {
@@ -92,23 +95,29 @@ export function triggerAttack(attacker) {
 }
 
 // Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
-function resolveImpact(attacker) {
+function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
   attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
-  const hitX = attacker.x + vx * ATTACK_RANGE,
-    hitY = attacker.y + vy * ATTACK_RANGE;
+  const reach = ATTACK_RANGE * rate(attacker.stats.range);
   for (const target of game.entities) {
-    if (
-      target === attacker || target.hp === 0 ||
-      Math.hypot(target.x - hitX, target.y - hitY) > BODY_RADIUS * 2
-    )
-      continue;
+    if (target === attacker || target.hp === 0) continue;
+    // Distancia al segmento frontal: al ampliar el alcance siguen entrando
+    // los objetivos cercanos, incluso en diagonal.
+    const dx = target.x - attacker.x, dy = target.y - attacker.y;
+    const distance = dx * vx + dy * vy;
+    if (distance <= 0) continue;
+    const along = Math.min(reach, distance);
+    if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS * (1 + sizeScale(target.stats))) continue;
     target.chargeTime = 0;
-    target.hp--;
+    target.hp = Math.max(0, target.hp - damage);
+    target.lastHit = performance.now();
     target.frame = target.timer = 0;
     target.impactPending = false;
     setState(target, 'Hurt');
-    if (target.hp === 0) target.deathAt = performance.now();
+    if (target.hp === 0) {
+      target.deathAt = target.lastHit;
+      if (!target.isPlayer) game.defeated.push(target.dex);
+    }
     if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
       target.x += vx * 10;
       target.y += vy * 10;
@@ -147,10 +156,14 @@ export async function loadLevel(dex = DEFAULT_DEX) {
     loadEncounters(),
   ]);
   if (!playerData) throw new Error('No se pudo cargar el Pokémon del jugador.');
-  const hp = game.player?.hp ?? MAX_HP;
+  if (opponents.some(data => !data)) throw new Error('No se pudieron cargar los seis encuentros. Vuelve a intentarlo.');
+  const stats = game.player?.stats ?? initialStats();
+  const hp = game.player?.hp ?? stats.hpMax;
   generateDungeon();
   game.portal = null;
+  game.defeated = [];
   game.player = createEntity(playerData, game.rooms[0], true);
+  game.player.stats = stats;
   game.player.hp = hp;
   game.entities = [game.player];
   opponents.forEach((data, index) => {
@@ -164,8 +177,8 @@ function moveEntity(entity, dx, dy) {
   if (dx === 0 && dy === 0) return;
   entity.dir = DIR_MAP[`${dx},${dy}`] ?? entity.dir;
   const length = Math.hypot(dx, dy);
-  const vx = (dx / length) * entity.speed,
-    vy = (dy / length) * entity.speed;
+  const speed = entity.speed * rate(entity.stats.speed);
+  const vx = (dx / length) * speed, vy = (dy / length) * speed;
   if (canMove(entity, entity.x + vx, entity.y)) entity.x += vx;
   if (canMove(entity, entity.x, entity.y + vy)) entity.y += vy;
 }
@@ -179,8 +192,12 @@ export function updateEntity(entity) {
     if (game.keys.a || game.keys.arrowleft) dx--;
     if (game.keys.d || game.keys.arrowright) dx++;
     if (entity.state === 'Charge') {
-      entity.chargeTime = Math.min(MAX_CHARGE_FRAMES, entity.chargeTime + 1);
       if (dx || dy) entity.dir = DIR_MAP[`${dx},${dy}`] ?? entity.dir;
+      entity.chargeTime += rate(entity.stats.chargespeed);
+      if (entity.chargeTime >= MAX_CHARGE_FRAMES) {
+        entity.chargeTime -= MAX_CHARGE_FRAMES;
+        resolveImpact(entity, entity.stats.chargedmg);
+      }
     } else if (!['Attack', 'Hurt'].includes(entity.state)) {
       if (dx || dy) {
         setState(entity, 'Walk');
@@ -231,7 +248,9 @@ export function updateEntity(entity) {
   }
 
   const animation = entity.anims[entity.state] || entity.anims.Idle;
-  entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED;
+  const tempo = entity.state === 'Walk' ? rate(entity.stats.speed) :
+    entity.state === 'Attack' ? rate(entity.stats.atkspeed) : 1;
+  entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED * tempo;
   const duration =
     (animation.durs[entity.frame] || 8) + (entity.state === 'Hurt' ? 2 : 0);
   if (entity.state === 'Attack' && entity.impactPending) {
