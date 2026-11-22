@@ -16,8 +16,7 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
       #poke-walk-app .hint { margin-top:8px; font-size:.82rem; color:#94a3b8; } #poke-walk-app kbd { background:#1e293b; border:1px solid #475569; border-radius:4px; padding:1px 5px; color:#e2e8f0; }
     </style>
-    <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1600" height="750"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
-    <div class="hint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> o <kbd>Flechas</kbd> mover · <kbd>Clic</kbd> o <kbd>Espacio</kbd> atacar · Mantener 0,5 s para cargar y soltar para atacar</div>
+    <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
   </div>`;
 
 function mountApp(root) {
@@ -28,11 +27,17 @@ function mountApp(root) {
 // El portal sustituye un suelo común y nunca se genera bajo el jugador.
 function placePortal(px, py) {
   const floors = [];
-  game.grid.forEach((row, y) => row.forEach((terrain, x) => {
-    if (terrain === 0 && game.variantGrid[y][x] === 0 && (x !== px || y !== py)) {
-      floors.push({ x, y, entered: false });
-    }
-  }));
+  game.grid.forEach((row, y) =>
+    row.forEach((terrain, x) => {
+      if (
+        terrain === 0 &&
+        game.variantGrid[y][x] === 0 &&
+        (x !== px || y !== py)
+      ) {
+        floors.push({ x, y, entered: false });
+      }
+    }),
+  );
   game.portal = floors[Math.floor(Math.random() * floors.length)];
 }
 
@@ -42,7 +47,7 @@ async function nextLevel() {
   game.canvas.blur();
   game.loadingEl.style.display = 'flex';
   try {
-    const choices = BIOMES.filter(biome => biome !== game.currentBiome);
+    const choices = BIOMES.filter((biome) => biome !== game.currentBiome);
     await changeBiome(choices[Math.floor(Math.random() * choices.length)]);
     await loadLevel(game.player.dex);
     if (document.hasFocus()) game.canvas.focus();
@@ -59,17 +64,21 @@ function frame() {
   if (!game.changingLevel) {
     game.entities.forEach(updateEntity);
     const now = performance.now();
-    game.entities = game.entities.filter(entity => entity.hp > 0 || now - entity.deathAt < FADE_MS);
+    game.entities = game.entities.filter(
+      (entity) => entity.hp > 0 || now - entity.deathAt < FADE_MS,
+    );
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
-      game.loadingEl.textContent = 'Tu Pokémon se ha debilitado. Recarga para volver a jugar.';
+      game.loadingEl.textContent =
+        'Tu Pokémon se ha debilitado. Recarga para volver a jugar.';
       game.loadingEl.style.display = 'flex';
       return;
     }
     // Esperamos a que termine el último fundido antes de habilitar la salida.
     if (player.hp > 0 && game.entities.length === 1) {
-      const x = Math.floor(player.x / TILE), y = Math.floor(player.y / TILE);
+      const x = Math.floor(player.x / TILE),
+        y = Math.floor(player.y / TILE);
       if (!game.portal) placePortal(x, y);
       const portal = game.portal;
       if (portal) {
