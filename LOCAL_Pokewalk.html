@@ -3,31 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#11131a">
   <title>PokeWalk · Local</title>
-  <style>
-    body { margin:0; background:#11131a; color:#f0f4f8; font:14px system-ui,sans-serif; }
-    #startup { padding:1rem; text-align:center; }
-  </style>
+  <style>body { margin: 0; background: #11131a; color: #f0f4f8; font: 14px system-ui, sans-serif; }</style>
 </head>
 <body>
-  <main id="game-root"><p id="startup" role="status">Cargando PokeWalk…</p></main>
+  <main id="game-root"></main>
   <script type="module">
-    const root = document.getElementById("game-root");
-    async function startLocalGame() {
-      if (location.protocol === "file:") {
-        root.textContent = "Abre LOCAL_Pokewalk.html con Live Server desde la carpeta del proyecto para cargar los módulos locales.";
-        return;
-      }
-      try {
-        const { startGame } = await import("./js/main.js");
-        await startGame({ root });
-      } catch (error) {
-        console.error(error);
-        root.textContent = "Error al cargar PokeWalk desde esta carpeta: " + error.message;
-      }
-    }
-    startLocalGame();
+    import { startGame } from "./js/main.js";
+    await startGame({ root: document.getElementById("game-root") });
   </script>
 </body>
 </html>
