@@ -1,7 +1,8 @@
 import { BIOMES } from "../data/biomes.js";
-import { changeBiome, generateDungeon } from "./dungeon.js";
+import { generateDungeon } from "./dungeon.js";
+import { changeBiome } from "./renderer.js";
 import { game } from "./state.js";
-import { getRandomValidDex, releaseCharge, setPlayerDex, startCharge } from "./entities.js";
+import { showToast, getRandomValidDex, releaseCharge, setPlayerDex, startCharge } from "./entities.js";
 
 export function attachInput() {
   const controller = new AbortController();
@@ -13,10 +14,9 @@ export function attachInput() {
   }, { signal });
   document.getElementById("choose-dex").addEventListener("click", () => setPlayerDex(parseInt(document.getElementById("dex-in").value, 10)), { signal });
   document.getElementById("random-dex").addEventListener("click", () => setPlayerDex(getRandomValidDex()), { signal });
-  game.biomeSel.addEventListener("change", event => changeBiome(event.target.value), { signal });
+  game.biomeSel.addEventListener("change", event => changeBiome(BIOMES.find(biome => biome.id === event.target.value)).catch(error => showToast(error.message)), { signal });
   document.getElementById("new-map").addEventListener("click", async () => {
-    changeBiome(BIOMES[Math.floor(Math.random() * BIOMES.length)].id);
-    game.biomeSel.value = game.currentBiome.id;
+    changeBiome(BIOMES[Math.floor(Math.random() * BIOMES.length)]).catch(error => showToast(error.message));
     generateDungeon();
     await setPlayerDex(parseInt(document.getElementById("dex-in").value, 10));
   }, { signal });

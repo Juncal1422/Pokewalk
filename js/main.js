@@ -1,8 +1,8 @@
 import { BIOMES } from "./data/biomes.js";
-import { changeBiome, generateDungeon } from "./core/dungeon.js";
+import { generateDungeon } from "./core/dungeon.js";
 import { updateEntity, setPlayerDex } from "./core/entities.js";
 import { attachInput } from "./core/input.js";
-import { draw } from "./core/renderer.js";
+import { changeBiome, draw } from "./core/renderer.js";
 import { game, resetGameState } from "./core/state.js";
 
 const EMBEDDED_APP = `
@@ -69,7 +69,7 @@ export async function startGame({ root = document.querySelector("#game-root") ||
     cancelAnimationFrame(game.animationFrame);
     clearTimeout(game.toastTimer);
   };
-  changeBiome("amp");
+  await changeBiome(BIOMES[0]);
   generateDungeon();
   await setPlayerDex(25);
   game.animationFrame = requestAnimationFrame(frame);

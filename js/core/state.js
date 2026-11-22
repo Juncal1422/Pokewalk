@@ -6,7 +6,9 @@ export const game = {
   biomeSel: null,
   currentBiome: null,
   tileSheet: null,
-  map: [],
+  grid: [],
+  autotileGrid: [],
+  variantGrid: [],
   rooms: [],
   entities: [],
   player: null,
@@ -26,7 +28,9 @@ export function resetGameState() {
   game.biomeSel = null;
   game.currentBiome = null;
   game.tileSheet = null;
-  game.map = [];
+  game.grid = [];
+  game.autotileGrid = [];
+  game.variantGrid = [];
   game.rooms = [];
   game.entities = [];
   game.player = null;

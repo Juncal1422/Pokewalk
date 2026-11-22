@@ -39,7 +39,7 @@ export function canMove(x, y) {
   const radius = 9;
   for (const [offsetX, offsetY] of [[-radius,-radius],[radius,-radius],[-radius,radius],[radius,radius]]) {
     const tileX = Math.floor((x + offsetX) / TILE), tileY = Math.floor((y + offsetY) / TILE);
-    if (tileX < 0 || tileY < 0 || tileX >= MAP_W || tileY >= MAP_H || game.map[tileY][tileX] === 0) return false;
+    if (tileX < 0 || tileY < 0 || tileX >= MAP_W || tileY >= MAP_H || game.grid[tileY][tileX] === 1) return false;
   }
   return true;
 }

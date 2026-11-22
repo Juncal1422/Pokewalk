@@ -1,6 +1,14 @@
+// Base wall masks are sorted numerically (clockwise bits starting at north).
+// Floor ID 1 is reserved for objects. Wall IDs are scoped to the canonical mask.
+function biome(id, name, filename, floors, walls = {}) {
+  return {
+    id, name,
+    tileset: new URL(`../../tiled/tilesets/${filename}`, import.meta.url).href,
+    variants: { floors, walls }
+  };
+}
 export const BIOMES = [
-  { id: "amp", name: "Amp Plains", floor: "#8c7b3b", floor2: "#9c8a44", wall: "#473b1d", wallTop: "#29210f", border: "#5e4e27" },
-  { id: "beach", name: "Beach Cave", floor: "#d6c087", floor2: "#c9b277", wall: "#4b6f8a", wallTop: "#2b4357", border: "#638aa8" },
-  { id: "bristle", name: "Mt. Bristle", floor: "#9e6640", floor2: "#ad7249", wall: "#59331b", wallTop: "#361d0e", border: "#734426" },
-  { id: "temporal", name: "Temporal Tower", floor: "#46647a", floor2: "#51738c", wall: "#223545", wallTop: "#121e29", border: "#314b61" }
+  biome("buried", "Buried Relic", "BuriedRelic-blob.png", { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 }, { 124: { 1: 0 } }),
+  biome("forest", "Purity Forest", "PutiryForest-blob.png", { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 }),
+  biome("steel", "Steel Aegis Cave", "SteelAegis-blob.png", { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 })
 ];
