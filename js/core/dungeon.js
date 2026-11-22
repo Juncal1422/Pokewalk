@@ -310,10 +310,11 @@ export function generateDungeon(options = {}) {
 
   game.variantGrid = grid.map((row, y) =>
     row.map((terrain, x) => {
-      if (terrain === 0) return Math.random() < 0.12 ? randomInt(2, 6) : 0;
-      return game.autotileGrid[y][x].mask === 124 && Math.random() < 0.25
-        ? 1
-        : 0;
+      // Solo se sortean casillas dibujadas en las filas extra de este atlas.
+      const variants = game.currentBiome.variants;
+      const slots = Object.keys(terrain === 0 ? variants.floors : variants.walls[game.autotileGrid[y][x].mask] ?? {});
+      if (!slots.length || Math.random() >= (terrain === 0 ? 0.12 : 0.25)) return 0;
+      return Number(slots[randomInt(0, slots.length - 1)]);
     }),
   );
 }

@@ -91,7 +91,7 @@ export function draw() {
       const variant = game.variantGrid[y][x];
       const { floors, walls } = game.currentBiome.variants;
       const floor = game.grid[y][x] === 0;
-      const special = variant && !floor ? walls?.[mask]?.[variant] : undefined;
+      const special = variant !== 0 && !floor ? walls?.[mask]?.[variant] : undefined;
       const col = floor ? (floors?.[variant] ?? 0) : (special ?? index % 7);
       const row = floor ? 7 : special === undefined ? Math.floor(index / 7) : 8;
       const { image, size } = tileSheet;
@@ -106,11 +106,6 @@ export function draw() {
         RTILE,
         RTILE,
       );
-      if (!floor && game.currentBiome.terrain !== 'wall') {
-        const colors = { water: 'rgba(26,126,209,.62)', lava: 'rgba(219,68,16,.7)', void: 'rgba(16,8,35,.91)' };
-        ctx.fillStyle = colors[game.currentBiome.terrain];
-        ctx.fillRect(x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
-      }
       if (game.portal?.x === x && game.portal.y === y) {
         const icon = { stairs: stairsImage, objective: objectiveImage, portal: portalImage }[game.portal.kind];
         ctx.drawImage(icon, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);

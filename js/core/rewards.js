@@ -24,7 +24,12 @@ export function chooseReward(options, catalog) {
       gem.alt = essence;
       gem.className = 'essence';
       card.append(portrait, row.name, gem, reward.label);
-      if (bonus) card.append('Bono de línea: ' + catalog.find(item => item.id === bonus).label);
+      if (bonus) {
+        const extra = document.createElement('span');
+        extra.className = 'line-bonus';
+        extra.textContent = 'Bono de línea: ' + catalog.find(item => item.id === bonus).label;
+        card.append(extra);
+      }
       card.onclick = () => {
         if (!dialog.open) return;
         dialog.close();

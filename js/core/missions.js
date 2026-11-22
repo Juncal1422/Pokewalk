@@ -74,15 +74,20 @@ export function rewardOptions() {
     return !!rule && rule.essences.some(id => (game.essences[id] || 0) >= rule.amount);
   }
   if (!defeated.length) return [];
+  const hasBonus = row => Boolean(game.formEssence) && row.root === current.root;
+  const priority = id => id === game.formEssence ? 2 :
+    Number(defeated.some(row => hasBonus(row) && unlocked(row) && row.essences.includes(id)));
   const groups = Object.entries(game.essences).map(([id, total]) => ({ id, total, tie: Math.random() }))
-    .sort((a,b) => b.total - a.total || a.tie - b.tie);
+    .sort((a,b) => b.total - a.total || priority(b.id) - priority(a.id) || a.tie - b.tie);
   const choices = [], used = new Set();
   for (const { id } of groups) {
     const continuation = id === game.formEssence && groups.slice(0, 3).some(entry => entry.id === id);
     const evolutions = continuation ? current.next.map(dex => game.pokemon.get(dex)).filter(unlocked) : [];
     const candidates = continuation ? (evolutions.length ? evolutions : [current]) :
       defeated.filter(row => row.essences.includes(id));
-    const row = sample(candidates.filter(row => !used.has(row.dex) && unlocked(row)));
+    const available = candidates.filter(row => !used.has(row.dex) && unlocked(row));
+    const family = available.filter(hasBonus);
+    const row = sample(family.length ? family : available);
     if (!row) continue;
     used.add(row.dex);
     choices.push({ row, essence: id, bonus: game.formEssence && current.root === row.root ? game.pokemon.get(row.root)?.mejora : null });

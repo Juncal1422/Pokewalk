@@ -20,6 +20,7 @@ const EMBEDDED_APP = `
       #canvas-container, #game { width:100%; height:100%; display:block; }
       #game { image-rendering:pixelated; touch-action:none; outline:none; }
       #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
+      #rewards .line-bonus { align-self:end; width:100%; padding-top:6px; border-top:1px solid #748493; color:#a7e9e2; }
       #rewards img.essence { width:24px; }
       #roster { position:absolute; right:8px; top:68px; color:#eef6ff; background:#101a25e8; border-radius:6px; max-width:44vw; max-height:60vh; overflow:auto; padding:6px 9px; font-size:12px; }
       #roster summary { cursor:pointer; font-weight:600; }
@@ -169,10 +170,11 @@ export async function startGame({
     draw();
   };
   resize();
-  const [catalog, biomes] = await Promise.all([loadUpgrades(), loadBiomes(), preparePortal(), loadHud()]);
-  game.biomes = biomes;
+  const [catalog] = await Promise.all([loadUpgrades(), preparePortal(), loadHud()]);
   game.catalog = catalog;
   const { pokemon, items } = await loadEncountersCatalog(catalog);
+  const biomes = await loadBiomes(pokemon);
+  game.biomes = biomes;
   game.pokemon = pokemon;
   game.items = items;
   await loadItemImages(items);

@@ -1,5 +1,5 @@
-import { ATTACK_RANGE, DIR_MAP, TILE } from './constants.js';
-import { rangeScale } from './stats.js';
+import { ATTACK_RANGE, DIR_MAP, MAX_CHARGE_FRAMES, TILE } from './constants.js';
+import { rangeScale, rate } from './stats.js';
 import { game } from './state.js';
 
 const cell = position => Math.floor(position / TILE);
@@ -9,7 +9,7 @@ const neighbors = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 
 // El recorrido puede cruzar un medio permitido, pero su destino siempre es tierra.
 // Si el jugador está en terreno inaccesible, se busca la orilla alcanzable más próxima.
-function route(enemy, goalX, goalY, terrainFree, nearestLand) {
+function route(enemy, goalX, goalY, terrainFree, nearestLand, escapeDistance = 0) {
   const width = game.grid[0].length;
   const start = cell(enemy.y) * width + cell(enemy.x);
   const queue = [start];
@@ -20,11 +20,13 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand) {
     const key = queue[i], x = key % width, y = Math.floor(key / width);
     if (land(x, y)) {
       const d = Math.hypot(x - goalX, y - goalY);
-      if (d < distance) {
+      // En retirada buscamos la primera tierra a distancia segura por el camino más corto.
+      const score = escapeDistance ? -d : d;
+      if (score < distance) {
         best = key;
-        distance = d;
+        distance = score;
       }
-      if (nearestLand || d === 0) break;
+      if (nearestLand || (escapeDistance ? d >= escapeDistance : d === 0)) break;
     }
     for (const [dx, dy] of neighbors) {
       const nx = x + dx, ny = y + dy, next = ny * width + nx;
@@ -63,15 +65,34 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const distance = Math.hypot(dx, dy);
   const onLand = land(cell(enemy.x), cell(enemy.y));
   const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
+  const fleeing = pursuing && enemy.hp <= enemy.stats.hpMax * 0.25;
   enemy.atkCooldown--;
-  if (pursuing && onLand && distance <= reach + 5) {
+  if (enemy.state === 'Charge' && !fleeing) {
+    // La carga enemiga usa el mismo contador e impacto diferido que la del jugador.
+    enemy.chargeTime += rate(enemy.stats.chargespeed);
+    if (enemy.chargeTime >= MAX_CHARGE_FRAMES) attack(enemy);
+    return;
+  }
+  if (fleeing && enemy.state === 'Charge') {
+    enemy.chargeTime = 0;
+    setState(enemy, 'Idle');
+  }
+  if (fleeing && onLand && distance >= reach * 4) {
+    enemy.path = [];
+    setState(enemy, 'Idle');
+    return;
+  }
+  if (pursuing && !fleeing && onLand && distance <= reach + 5) {
     enemy.dir = DIR_MAP[[Math.sign(Math.round(dx / 5)), Math.sign(Math.round(dy / 5))]] ?? enemy.dir;
     enemy.path = [];
     enemy.aiTimer = 0;
     enemy.tracking = true;
     setState(enemy, 'Idle');
     if (enemy.atkCooldown <= 0) {
-      attack(enemy);
+      if (enemy.stats.chargedmg > 2 * enemy.stats.atkdmg && Math.random() < 0.35) {
+        enemy.chargeTime = 0;
+        setState(enemy, 'Charge');
+      } else attack(enemy);
       enemy.atkCooldown = 55 + Math.random() * 30;
     }
     return;
@@ -79,10 +100,11 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
 
   // Mientras cruza conserva el camino completo hasta la siguiente orilla.
   enemy.aiTimer--;
-  if (!enemy.path?.length || (onLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking))) {
+  if (!enemy.path?.length || (onLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
     const gx = pursuing ? cell(player.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
     const gy = pursuing ? cell(player.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
-    enemy.path = route(enemy, gx, gy, terrainFree, !onLand && !pursuing);
+    enemy.path = route(enemy, gx, gy, terrainFree, !onLand && !pursuing, fleeing ? Math.ceil(4 * reach / TILE) + 1 : 0);
+    enemy.fleeing = fleeing;
     enemy.aiTimer = pursuing ? 30 : 65;
     enemy.tracking = pursuing;
   }
