@@ -1,3 +1,4 @@
+// Los controles, la simulación y el canvas trabajan sobre la misma partida.
 export const game = {
   canvas: null,
   ctx: null,

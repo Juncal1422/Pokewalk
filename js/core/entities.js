@@ -1,4 +1,5 @@
-import { ANIM_SPEED, ATTACK_RANGE, AI_SPEED, DIR_MAP, DIR_VEC, EXCLUDED_DEX, MAX_CHARGE_FRAMES, MAX_DEX, PLAYER_SPEED, TILE, MAP_W, MAP_H } from "./constants.js";
+import { ANIM_SPEED, ATTACK_RANGE, AI_SPEED, DEFAULT_DEX, DIR_MAP, DIR_VEC, EXCLUDED_DEX, MAX_CHARGE_FRAMES, MAX_DEX, PLAYER_SPEED, TILE, MAP_W, MAP_H } from "./constants.js";
+import { generateDungeon } from "./dungeon.js";
 import { game } from "./state.js";
 import { loadPokemonData } from "../data/pokemon-data.js";
 
@@ -10,7 +11,7 @@ export function showToast(message) {
 }
 
 export function normalizeValidDex(raw) {
-  let dex = Math.max(1, Math.min(MAX_DEX, Number.isNaN(Number(raw)) ? 25 : Number(raw)));
+  let dex = Math.max(1, Math.min(MAX_DEX, Number.isNaN(Number(raw)) ? DEFAULT_DEX : Number(raw)));
   while (EXCLUDED_DEX.has(dex)) dex = dex < MAX_DEX ? dex + 1 : 1;
   return dex;
 }
@@ -69,27 +70,53 @@ export function releaseCharge() {
   triggerAttack(game.player);
 }
 
-export async function setPlayerDex(rawDex) {
-  const clamped = Math.max(1, Math.min(MAX_DEX, Number.isNaN(Number(rawDex)) ? 25 : Number(rawDex)));
-  let dex = normalizeValidDex(clamped);
-  if (dex !== clamped) showToast(`#${String(clamped).padStart(4, "0")} no está completo; saltando a #${String(dex).padStart(4, "0")}`);
+async function loadPlayer(rawDex) {
+  const dex = normalizeValidDex(rawDex);
+  const data = await loadPokemonData(dex);
+  if (!data) throw new Error(`No se pudo cargar el Pokémon #${dex}.`);
+  return data;
+}
 
-  game.loadingEl.style.display = "flex";
-  let playerData = await loadPokemonData(dex);
-  while (!playerData) { dex = getRandomValidDex(); playerData = await loadPokemonData(dex); }
+function syncPlayerControls(dex) {
   document.getElementById("dex-in").value = dex;
+  const preset = document.getElementById("preset");
+  preset.value = Array.from(preset.options).some(option => option.value === String(dex)) ? String(dex) : "";
+}
 
-  const aiDexList = [5, 10, 15, 20, 25, 30].map(offset => normalizeValidDex(dex + offset <= MAX_DEX ? dex + offset : Math.max(1, dex - offset)));
-  const aiData = await Promise.all(aiDexList.map(id => loadPokemonData(id)));
+export async function setPlayerDex(rawDex) {
+  const data = await loadPlayer(rawDex);
+  // Al cambiar de especie conservo la posición y los encuentros de esta planta.
+  const player = game.player;
+  Object.assign(player, { dex: data.dex, dexStr: data.dexStr, anims: data.anims,
+    state: "Idle", frame: 0, timer: 0, chargeTime: 0 });
+  syncPlayerControls(data.dex);
+}
+
+async function loadEncounters() {
+  // Saco las especies sin reposición. Si falta una hoja, pruebo otra para esa sala.
+  const pool = Array.from({ length: MAX_DEX }, (_, i) => i + 1).filter(dex => !EXCLUDED_DEX.has(dex));
+  return Promise.all(Array.from({ length: 6 }, async () => {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const index = Math.floor(Math.random() * pool.length);
+      const [dex] = pool.splice(index, 1);
+      const data = await loadPokemonData(dex);
+      if (data) return data;
+    }
+    return null;
+  }));
+}
+
+export async function loadLevel(rawDex) {
+  const [playerData, opponents] = await Promise.all([loadPlayer(rawDex), loadEncounters()]);
+  generateDungeon();
   game.player = createEntity(playerData, game.rooms[0], true);
   game.entities = [game.player];
-  const roomSlots = [1, 3, 5, 7, 9, 11], loadedIds = [];
-  aiData.forEach((data, index) => {
-    if (!data) return;
-    game.entities.push(createEntity(data, game.rooms[roomSlots[index] % game.rooms.length], false));
-    loadedIds.push(`#${data.dexStr}`);
+  opponents.forEach((data, index) => {
+    if (data) game.entities.push(createEntity(data, game.rooms[index * 2 + 1], false));
   });
-  document.getElementById("ia-info").textContent = `IA (${loadedIds.length}): ${loadedIds.join(" · ") || "Ninguna"}`;
+  syncPlayerControls(playerData.dex);
+  const ids = game.entities.slice(1).map(entity => `#${entity.dexStr}`);
+  document.getElementById("ia-info").textContent = `IA (${ids.length}): ${ids.join(" · ") || "Ninguna"}`;
   game.loadingEl.style.display = "none";
 }
 

@@ -44,8 +44,9 @@ export function draw() {
   ctx.fillStyle = "#0b0d12";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const cameraX = Math.floor(player.x * ZOOM - canvas.width / 2);
-  const cameraY = Math.floor(player.y * ZOOM - canvas.height / 2);
+  // En los bordes dejo de centrar al jugador para aprovechar toda la vista.
+  const cameraX = Math.max(0, Math.min(MAP_W * RTILE - canvas.width, Math.floor(player.x * ZOOM - canvas.width / 2)));
+  const cameraY = Math.max(0, Math.min(MAP_H * RTILE - canvas.height, Math.floor(player.y * ZOOM - canvas.height / 2)));
   const colStart = Math.max(0, Math.floor(cameraX / RTILE));
   const colEnd = Math.min(MAP_W - 1, Math.ceil((cameraX + canvas.width) / RTILE));
   const rowStart = Math.max(0, Math.floor(cameraY / RTILE));

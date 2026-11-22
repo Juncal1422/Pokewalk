@@ -1,8 +1,9 @@
 import { MAP_H, MAP_W } from "./constants.js";
 import { game } from "./state.js";
 
-// Clockwise from north: N=1, NE=2, E=4, SE=8, S=16, SW=32, W=64, NW=128.
+// Leo los vecinos desde el norte en sentido horario. Cada posición ocupa un bit.
 const neighbors = [[0,-1], [1,-1], [1,0], [1,1], [0,1], [-1,1], [-1,0], [-1,-1]];
+// Una diagonal solo conecta si también están sus dos vecinos laterales.
 function normalize(mask) {
   for (const [diagonal, sides] of [[2,5], [8,20], [32,80], [128,65]]) {
     if ((mask & sides) !== sides) mask &= ~diagonal;

@@ -5,6 +5,7 @@ async function fetchAnimation(baseUrl, animations, candidates) {
   for (const name of candidates) {
     let node = animations.find(item => item.getElementsByTagName("Name")[0]?.textContent === name);
     if (!node) continue;
+    // Algunas animaciones remiten a otra hoja del mismo Pokémon.
     const copyOf = node.getElementsByTagName("CopyOf")[0]?.textContent;
     const imageName = copyOf || name;
     if (copyOf) node = animations.find(item => item.getElementsByTagName("Name")[0]?.textContent === copyOf) || node;

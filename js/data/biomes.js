@@ -1,5 +1,5 @@
-// Base wall masks are sorted numerically (clockwise bits starting at north).
-// Floor ID 1 is reserved for objects. Wall IDs are scoped to the canonical mask.
+// Los muros del atlas siguen el orden numérico de las máscaras.
+// Reservo la variante 1 del suelo para objetos. En los muros depende de la máscara.
 function biome(id, name, filename, floors, walls = {}) {
   return {
     id, name,

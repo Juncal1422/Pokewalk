@@ -4,60 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11131a">
-  <title>PokeWalk · Pruebas</title>
+  <title>PokeWalk</title>
   <style>
-    * { box-sizing:border-box; }
-    body { margin:0; background:#11131a; color:#f0f4f8; font:14px 'Segoe UI',system-ui,sans-serif; }
-    #test-controls { position:sticky; top:0; z-index:20; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; padding:10px; background:#202532; border-bottom:1px solid #475569; }
-    #test-controls label { font-weight:600; } #test-ref { width:min(340px,60vw); padding:7px 9px; color:#f8fafc; background:#141821; border:1px solid #64748b; border-radius:5px; }
-    #test-controls button { padding:7px 12px; border:0; border-radius:5px; background:#2563eb; color:white; font-weight:600; cursor:pointer; }
-    #test-status { color:#cbd5e1; min-width:200px; text-align:center; } #test-status[data-error="true"] { color:#fca5a5; }
-    #game-root { min-height:calc(100vh - 48px); }
-    .test-note { color:#94a3b8; font-size:12px; }
+    body { margin:0; background:#11131a; color:#f0f4f8; font:14px system-ui,sans-serif; }
+    #startup { padding:1rem; text-align:center; }
   </style>
 </head>
 <body>
-  <form id="test-controls">
-    <label for="test-ref">Rama, etiqueta o commit:</label>
-    <input id="test-ref" name="ref" value="develop" autocomplete="off" spellcheck="false">
-    <button type="submit">Cargar versión</button>
-    <span id="test-status" role="status">Preparado</span>
-  </form>
-  <main id="game-root"></main>
+  <main id="game-root"><p id="startup" role="status">Cargando PokeWalk…</p></main>
   <script type="module">
-    const form = document.querySelector('#test-controls');
-    const field = document.querySelector('#test-ref');
-    const status = document.querySelector('#test-status');
-    const initial = new URL(location.href).searchParams.get('ref') || 'develop';
-    field.value = initial;
-
-    form.addEventListener('submit', async event => {
-      event.preventDefault();
-      const ref = field.value.trim();
-      if (!ref || ref.startsWith('-')) {
-        status.dataset.error = 'true';
-        status.textContent = 'Indica una referencia válida.';
-        return;
-      }
-      const encodedRef = encodeURIComponent(ref);
-      const url = `https://cdn.jsdelivr.net/gh/Juncal1422/Pokewalk@${encodedRef}/js/main.js`;
-      status.dataset.error = 'false';
-      status.textContent = `Cargando ${ref}…`;
-      const query = new URL(location.href);
-      query.searchParams.set('ref', ref);
-      history.replaceState(null, '', query);
-      try {
-        const app = await import(url);
-        await app.startGame({ root: document.querySelector('#game-root') });
-        status.textContent = `Versión cargada: ${ref}`;
-      } catch (error) {
-        console.error(error);
-        status.dataset.error = 'true';
-        status.textContent = `No se pudo cargar ${ref}. Comprueba que la rama exista y que el repositorio sea público.`;
-      }
-    });
-
-    form.requestSubmit();
+    const root = document.getElementById("game-root");
+    try {
+      const { startGame } = await import("https://cdn.jsdelivr.net/gh/Juncal1422/Pokewalk@develop/js/main.js");
+      await startGame({ root });
+    } catch (error) {
+      console.error(error);
+      root.textContent = "No se pudo cargar PokeWalk. Recarga la página para volver a intentarlo.";
+    }
   </script>
 </body>
 </html>
