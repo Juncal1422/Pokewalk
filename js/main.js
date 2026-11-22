@@ -32,7 +32,7 @@ const EMBEDDED_APP = `
       <div class="group"><label for="biome-sel">Bioma:</label><select id="biome-sel"></select><button class="sec" id="new-map">Nuevo Mapa</button></div>
       <div class="group" id="ia-info" style="font-size:.8rem;color:#93c5fd">IA: --</div>
     </div>
-    <div id="canvas-container"><canvas id="game" width="600" height="450"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
+    <div id="canvas-container"><canvas id="game" width="1600" height="750"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
     <div class="hint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> o <kbd>Flechas</kbd> mover · Mantener <kbd>Clic</kbd> o <kbd>Espacio</kbd> cargar y soltar para atacar</div>
   </div>`;
 

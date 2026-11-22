@@ -16,7 +16,7 @@ export const BIOMES = [
     { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 },
     { 124: { 1: 0 } },
   ),
-  biome('forest', 'Purity Forest', 'PutiryForest-blob.png', {
+  biome('forest', 'Purity Lake', 'PurityLake-blob.png', {
     1: 1,
     2: 2,
     3: 3,
