@@ -1,3 +1,4 @@
+import { updateEnemy } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
 import { dropItem } from './items.js';
 import {
@@ -62,7 +63,7 @@ export function setState(entity, state) {
   }
 }
 
-export function canMove(entity, x, y) {
+function terrainFree(entity, x, y) {
   const radius = BODY_RADIUS * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
   const species = game.pokemon.get(entity.dex);
   const crosses = game.currentBiome.canCross.some(skill => species[skill]);
@@ -83,6 +84,12 @@ export function canMove(entity, x, y) {
     )
       return false;
   }
+  return true;
+}
+
+export function canMove(entity, x, y) {
+  if (!terrainFree(entity, x, y)) return false;
+  const radius = BODY_RADIUS * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
   // Movimiento y retroceso comparten el mismo cuerpo circular.
   return !game.entities.some(other => other !== entity && other.hp > 0 &&
     Math.hypot(other.x - x, other.y - y) < radius + BODY_RADIUS * sizeScale(other.stats) * (other.boss ? 2 : 1));
@@ -91,13 +98,16 @@ export function canMove(entity, x, y) {
 export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
   if (attacker.hp === 0) return;
+  // Las barras completas se liquidan una sola vez en el fotograma de impacto.
+  const bars = attacker.state === 'Charge' ? Math.floor(attacker.chargeTime / MAX_CHARGE_FRAMES) : 0;
+  attacker.attackDamage = attacker.stats.atkdmg + bars * attacker.stats.chargedmg;
   attacker.chargeTime = 0;
   attacker.impactPending = true;
   setState(attacker, 'Attack');
 }
 
 // Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
-function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
+function resolveImpact(attacker, damage = attacker.attackDamage ?? attacker.stats.atkdmg) {
   attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
   const reach = ATTACK_RANGE * rangeScale(attacker.stats.range);
@@ -110,6 +120,11 @@ function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
     if (distance <= 0) continue;
     const along = Math.min(reach, distance);
     if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS * (1 + sizeScale(target.stats) * (target.boss ? 2 : 1))) continue;
+    const dodge = .05 + (target.isPlayer ? game.perks.dodge : 0);
+    if (Math.random() < dodge) {
+      target.missUntil = performance.now() + 750;
+      continue;
+    }
     target.chargeTime = 0;
     target.hp = Math.max(0, target.hp - damage);
     target.lastHit = performance.now();
@@ -120,7 +135,7 @@ function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
       target.deathAt = target.lastHit;
       if (!target.isPlayer) {
         onDefeat(target, attacker);
-        dropItem(target);
+        dropItem(target, attacker);
       }
     }
     if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
@@ -173,9 +188,9 @@ export async function loadLevel(dex, mission, floor) {
 
 function moveEntity(entity, dx, dy) {
   if (dx === 0 && dy === 0) return;
-  entity.dir = DIR_MAP[`${dx},${dy}`] ?? entity.dir;
+  entity.dir = DIR_MAP[[Math.sign(dx),Math.sign(dy)]] ?? entity.dir;
   const length = Math.hypot(dx, dy);
-  const speed = entity.speed * rate(entity.stats.speed);
+  const speed = entity.isPlayer ? entity.speed * rate(entity.stats.speed) : Math.min(length, entity.speed * rate(entity.stats.speed));
   const vx = (dx / length) * speed, vy = (dy / length) * speed;
   if (canMove(entity, entity.x + vx, entity.y)) entity.x += vx;
   if (canMove(entity, entity.x, entity.y + vy)) entity.y += vy;
@@ -192,10 +207,7 @@ export function updateEntity(entity) {
     if (entity.state === 'Charge') {
       if (dx || dy) entity.dir = DIR_MAP[`${dx},${dy}`] ?? entity.dir;
       entity.chargeTime += rate(entity.stats.chargespeed);
-      if (entity.chargeTime >= MAX_CHARGE_FRAMES) {
-        entity.chargeTime -= MAX_CHARGE_FRAMES;
-        resolveImpact(entity, entity.stats.chargedmg);
-      }
+
     } else if (!['Attack', 'Hurt'].includes(entity.state)) {
       if (dx || dy) {
         setState(entity, 'Walk');
@@ -203,46 +215,7 @@ export function updateEntity(entity) {
       } else setState(entity, 'Idle');
     }
   } else if (!['Attack', 'Hurt'].includes(entity.state)) {
-    entity.aiTimer--;
-    if (entity.aiTimer <= 0) {
-      entity.aiTimer = 50 + Math.floor(Math.random() * 80);
-      const directions = [
-        [0, 1],
-        [1, 1],
-        [1, 0],
-        [1, -1],
-        [0, -1],
-        [-1, -1],
-        [-1, 0],
-        [-1, 1],
-        [0, 0],
-      ];
-      entity.aiDir = directions[Math.floor(Math.random() * directions.length)];
-    }
-    const [dx, dy] = entity.aiDir;
-    if (dx || dy) {
-      setState(entity, 'Walk');
-      const previousX = entity.x,
-        previousY = entity.y;
-      moveEntity(entity, dx, dy);
-      if (previousX === entity.x && previousY === entity.y) entity.aiTimer = 0;
-    } else setState(entity, 'Idle');
-
-    entity.atkCooldown--;
-    if (entity.atkCooldown <= 0) {
-      entity.atkCooldown = 130 + Math.floor(Math.random() * 150);
-      const nearby = game.entities.find(
-        (other) =>
-          other !== entity && other.hp > 0 &&
-          Math.hypot(other.x - entity.x, other.y - entity.y) < 42,
-      );
-      if (nearby) {
-        const sx = Math.sign(Math.round((nearby.x - entity.x) / 14)),
-          sy = Math.sign(Math.round((nearby.y - entity.y) / 14));
-        entity.dir = DIR_MAP[`${sx},${sy}`] ?? entity.dir;
-      }
-      triggerAttack(entity);
-    }
+    updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);
   }
 
   const animation = entity.anims[entity.state] || entity.anims.Idle;

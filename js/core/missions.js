@@ -1,7 +1,7 @@
 import { game } from './state.js';
 
 const layouts = {
-  retrieve: ['Recuperar objeto', 1, 1, 3], clear: ['Limpiar zona', 2, 3, 4],
+  retrieve: ['Recuperar objeto', 5, 1, 5], clear: ['Limpiar zona', 2, 3, 4],
   leader: ['Vence al líder', 5, 5, 5], hunt: ['Caza', 5, 1, 5],
 };
 export const sample = list => list[Math.floor(Math.random() * list.length)];
@@ -44,7 +44,9 @@ export function onDefeat(target, attacker) {
   if (!attacker.isPlayer) return;
   const m = game.mission;
   const essence = sample(game.pokemon.get(target.dex).essences);
-  game.essences[essence] = (game.essences[essence] || 0) + 1;
+  const row = game.pokemon.get(target.dex);
+  const base = row.legendary ? 5 : row.mythical ? 4 : row.stage >= 3 ? 3 : row.stage === 2 || row.final ? 2 : 1;
+  game.essences[essence] = (game.essences[essence] || 0) + base + game.perks.essence;
   m.defeated.push(target.dex);
   if (m.target === target.dex) m.kills++;
   console.info('[Esencia]', essence, game.essences[essence], target.dex);
@@ -65,15 +67,22 @@ export function exitKind(m, floor, cleared) {
 export function rewardOptions() {
   const m = game.mission, current = game.pokemon.get(game.player.dex);
   const defeated = [...new Set(m.defeated)].map(id => game.pokemon.get(id));
+  // Solo cuentan las esencias de un tipo individual. No se consumen al evolucionar.
+  function unlocked(row) {
+    if (row.root !== current.root || row.stage <= current.stage) return true;
+    const rule = current.evolutions.find(rule => rule.to === row.dex);
+    return !!rule && rule.essences.some(id => (game.essences[id] || 0) >= rule.amount);
+  }
   if (!defeated.length) return [];
   const groups = Object.entries(game.essences).map(([id, total]) => ({ id, total, tie: Math.random() }))
     .sort((a,b) => b.total - a.total || a.tie - b.tie);
   const choices = [], used = new Set();
   for (const { id } of groups) {
     const continuation = id === game.formEssence && groups.slice(0, 3).some(entry => entry.id === id);
-    const candidates = continuation ? [current, ...current.next.map(dex => game.pokemon.get(dex))] :
+    const evolutions = continuation ? current.next.map(dex => game.pokemon.get(dex)).filter(unlocked) : [];
+    const candidates = continuation ? (evolutions.length ? evolutions : [current]) :
       defeated.filter(row => row.essences.includes(id));
-    const row = sample(candidates.filter(row => !used.has(row.dex)));
+    const row = sample(candidates.filter(row => !used.has(row.dex) && unlocked(row)));
     if (!row) continue;
     used.add(row.dex);
     choices.push({ row, essence: id, bonus: game.formEssence && current.root === row.root ? game.pokemon.get(row.root)?.mejora : null });
@@ -83,7 +92,7 @@ export function rewardOptions() {
   // diferentes. Las misiones con menos de tres candidatos muestran los disponibles.
   for (const choice of [...choices]) {
     if (choice.essence === game.formEssence) continue;
-    const remaining = defeated.filter(row => row.essences.includes(choice.essence) && !used.has(row.dex));
+    const remaining = defeated.filter(row => row.essences.includes(choice.essence) && !used.has(row.dex) && unlocked(row));
     while (choices.length < 3 && remaining.length) {
       const index = Math.floor(Math.random() * remaining.length);
       const [row] = remaining.splice(index, 1);

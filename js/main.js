@@ -21,6 +21,10 @@ const EMBEDDED_APP = `
       #game { image-rendering:pixelated; touch-action:none; outline:none; }
       #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
       #rewards img.essence { width:24px; }
+      #roster { position:absolute; right:8px; top:68px; color:#eef6ff; background:#101a25e8; border-radius:6px; max-width:44vw; max-height:60vh; overflow:auto; padding:6px 9px; font-size:12px; }
+      #roster summary { cursor:pointer; font-weight:600; }
+      #roster ul { list-style:none; margin:6px 0 0; padding:0; }
+      #roster li { padding:4px 0; border-top:1px solid #354456; }
       #rewards::backdrop { background:#0b101ddc; }
       #rewards h1 { margin:0 0 12px; font-size:clamp(18px,5vmin,30px); }
       #rewards .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
@@ -31,6 +35,7 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
+    <details id="roster" open><summary>Pokémon del piso</summary><ul></ul></details>
     <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
 
@@ -94,6 +99,19 @@ async function nextLevel() {
   }
 }
 
+// El panel comparte los valores de combate y solo cambia el DOM cuando varían.
+function updateRoster() {
+  const list = document.querySelector('#roster ul');
+  const rows = game.entities.map(e => {
+    const name = game.pokemon.get(e.dex).name + (e.isPlayer ? ' (tú)' : e.boss ? ' (líder)' : '');
+    return name + ' · PV ' + e.hp + '/' + e.stats.hpMax + ' · Daño ' + e.stats.atkdmg;
+  });
+  const signature = rows.join('|');
+  if (list.dataset.signature === signature) return;
+  list.dataset.signature = signature;
+  list.replaceChildren(...rows.map(text => { const li=document.createElement('li'); li.textContent=text; return li; }));
+}
+
 function frame() {
   if (!game.changingLevel) {
     game.entities.forEach(updateEntity);
@@ -102,6 +120,7 @@ function frame() {
     game.entities = game.entities.filter(
       (entity) => entity.hp > 0 || now - entity.deathAt < FADE_MS,
     );
+    updateRoster();
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
@@ -159,6 +178,8 @@ export async function startGame({
   await loadItemImages(items);
   game.adventure = 0;
   game.essences = {};
+  game.pickups = [];
+  game.perks = { loot: 0, essence: 0, dodge: 0 };
   game.formEssence = null;
   const biome = sample(biomes);
   await changeBiome(biome);

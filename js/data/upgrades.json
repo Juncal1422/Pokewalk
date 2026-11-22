@@ -54,5 +54,26 @@
     "effect": "increaseStat",
     "stat": "chargespeed",
     "amount": 1
+  },
+  {
+    "id": "loot-plus",
+    "label": "Botín +10%",
+    "effect": "runPerk",
+    "perk": "loot",
+    "amount": 0.1
+  },
+  {
+    "id": "essence-plus",
+    "label": "+1 esencia por victoria",
+    "effect": "runPerk",
+    "perk": "essence",
+    "amount": 1
+  },
+  {
+    "id": "dodge-plus",
+    "label": "Evasión +5%",
+    "effect": "runPerk",
+    "perk": "dodge",
+    "amount": 0.05
   }
 ]

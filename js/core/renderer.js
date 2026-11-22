@@ -54,13 +54,15 @@ export async function changeBiome(biome) {
 const portalImage = new Image();
 portalImage.src = new URL('../../tiled/tilesets/Teleporter.png', import.meta.url).href;
 
+const missImage = new Image();
+missImage.src = new URL('../../assets/ui/miss.png', import.meta.url).href;
 const stairsImage = new Image();
 stairsImage.src = new URL('../../tiled/tilesets/Stairs.png', import.meta.url).href;
 const objectiveImage = new Image();
 objectiveImage.src = new URL('../../assets/items/goldenapple.png', import.meta.url).href;
 
 export function preparePortal() {
-  return Promise.all([portalImage, stairsImage, objectiveImage].map(image => image.decode()));
+  return Promise.all([portalImage, stairsImage, objectiveImage, missImage].map(image => image.decode()));
 }
 
 export function draw() {
@@ -130,9 +132,9 @@ export function draw() {
     ctx.fill();
 
     if (entity.state === 'Charge') {
-      const ratio = entity.chargeTime / MAX_CHARGE_FRAMES;
+      const ratio = (entity.chargeTime % MAX_CHARGE_FRAMES) / MAX_CHARGE_FRAMES;
       const pulse = 18 + Math.sin(Date.now() / 65) * 4 + ratio * 8;
-      ctx.strokeStyle = ratio >= 1 ? '#facc15' : '#38bdf8';
+      ctx.strokeStyle = entity.chargeTime >= MAX_CHARGE_FRAMES ? '#facc15' : '#38bdf8';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.ellipse(px, py + 7, pulse, pulse * 0.5, 0, 0, Math.PI * 2);
@@ -164,14 +166,14 @@ export function draw() {
     );
 
     if (entity.isPlayer && entity.state === 'Charge') {
-      const ratio = entity.chargeTime / MAX_CHARGE_FRAMES,
+      const ratio = (entity.chargeTime % MAX_CHARGE_FRAMES) / MAX_CHARGE_FRAMES,
         width = 44,
         height = 5;
       const x = px - width / 2,
         y = py - drawH / 2 - 12;
       ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
       ctx.fillRect(x - 1, y - 1, width + 2, height + 2);
-      ctx.fillStyle = ratio >= 1 ? '#facc15' : '#38bdf8';
+      ctx.fillStyle = entity.chargeTime >= MAX_CHARGE_FRAMES ? '#facc15' : '#38bdf8';
       ctx.fillRect(x, y, Math.floor(width * ratio), height);
     }
     if (!entity.isPlayer && performance.now() - entity.lastHit < 3000) {
@@ -182,6 +184,7 @@ export function draw() {
       ctx.fillStyle = fraction < 0.25 ? '#ef5350' : fraction <= 0.5 ? '#ffd54f' : '#66cf77';
       ctx.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
     }
+    if (entity.missUntil > performance.now()) ctx.drawImage(missImage, px - 15, py - drawH / 2 - 22, 30, 16);
     ctx.restore();
   }
   drawHud(ctx, canvas, player);
