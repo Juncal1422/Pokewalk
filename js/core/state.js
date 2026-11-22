@@ -4,7 +4,8 @@ export const game = {
   ctx: null,
   loadingEl: null,
   toastEl: null,
-  biomeSel: null,
+  portal: null,
+  changingLevel: false,
   currentBiome: null,
   tileSheet: null,
   grid: [],
@@ -26,7 +27,8 @@ export function resetGameState() {
   game.ctx = null;
   game.loadingEl = null;
   game.toastEl = null;
-  game.biomeSel = null;
+  game.portal = null;
+  game.changingLevel = false;
   game.currentBiome = null;
   game.tileSheet = null;
   game.grid = [];

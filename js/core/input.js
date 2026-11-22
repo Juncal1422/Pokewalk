@@ -1,81 +1,74 @@
-import { BIOMES } from '../data/biomes.js';
-import { changeBiome } from './renderer.js';
+import { HOLD_MS } from './constants.js';
+import { setState, startCharge, triggerAttack } from './entities.js';
 import { game } from './state.js';
-import {
-  loadLevel,
-  showToast,
-  getRandomValidDex,
-  releaseCharge,
-  setPlayerDex,
-  startCharge,
-} from './entities.js';
 
 export function attachInput() {
   const controller = new AbortController();
   const { signal } = controller;
-  const on = (target, type, listener) =>
-    target.addEventListener(type, listener, { signal });
+  const canvas = game.canvas;
+  let press = null;
+  const on = (target, type, listener) => target.addEventListener(type, listener, { signal });
 
-  // Mientras llegan los recursos, evito que dos cambios de nivel se pisen.
-  const hud = document.getElementById('hud');
-  async function load(action) {
-    if (hud.inert) return;
-    hud.inert = true;
-    game.loadingEl.style.display = 'flex';
-    try {
-      await action();
-    } catch (error) {
-      showToast(error.message);
-    } finally {
-      hud.inert = false;
-      game.loadingEl.style.display = 'none';
+  function cancelInput() {
+    clearTimeout(press?.timer);
+    press = null;
+    game.keys = Object.create(null);
+    const player = game.player;
+    if (player && ['Walk', 'Charge'].includes(player.state)) {
+      player.chargeTime = 0;
+      setState(player, 'Idle');
     }
   }
 
-  on(document.getElementById('preset'), 'change', (event) => {
-    if (event.target.value)
-      load(() => setPlayerDex(Number(event.target.value)));
-  });
-  on(document.getElementById('choose-dex'), 'click', () =>
-    load(() => setPlayerDex(document.getElementById('dex-in').valueAsNumber)),
-  );
-  on(document.getElementById('random-dex'), 'click', () =>
-    load(() => setPlayerDex(getRandomValidDex())),
-  );
-  on(game.biomeSel, 'change', (event) =>
-    load(() =>
-      changeBiome(BIOMES.find((biome) => biome.id === event.target.value)),
-    ),
-  );
-  on(document.getElementById('new-map'), 'click', () =>
-    load(async () => {
-      await changeBiome(BIOMES[Math.floor(Math.random() * BIOMES.length)]);
-      await loadLevel(game.player.dex);
-    }),
-  );
+  // Asociar la pulsación a su jugador y PV impide arrastrar un ataque tras
+  // recibir daño, cambiar de planta o recuperar el foco.
+  function begin(source) {
+    const player = game.player;
+    if (press || game.changingLevel || !player?.hp || !['Idle', 'Walk'].includes(player.state)) return;
+    press = { source, player, hp: player.hp };
+    press.timer = setTimeout(() => {
+      if (validPress()) startCharge();
+    }, HOLD_MS);
+  }
+  function validPress() {
+    return press && !game.changingLevel && press.player === game.player && press.hp === game.player.hp;
+  }
+  function release(source) {
+    if (press?.source !== source) return;
+    clearTimeout(press.timer);
+    if (validPress()) triggerAttack(game.player);
+    press = null;
+  }
 
-  on(window, 'keydown', (event) => {
+  on(canvas, 'keydown', event => {
     const key = event.key.toLowerCase();
-    game.keys[key] = true;
-    if (key === ' ') {
-      event.preventDefault();
-      if (!event.repeat) startCharge();
-    }
+    if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(key)) return;
+    event.preventDefault();
+    if (event.repeat || game.changingLevel) return;
+    if (key === ' ') begin('space');
+    else game.keys[key] = true;
   });
-  on(window, 'keyup', (event) => {
+  on(window, 'keyup', event => {
     const key = event.key.toLowerCase();
-    game.keys[key] = false;
-    if (key === ' ') {
-      event.preventDefault();
-      releaseCharge();
-    }
+    delete game.keys[key];
+    if (key === ' ') release('space');
   });
-  on(game.canvas, 'mousedown', (event) => {
-    if (event.button === 0) startCharge();
+  on(canvas, 'pointerdown', event => {
+    if (event.button !== 0 || !event.isPrimary) return;
+    canvas.focus();
+    canvas.setPointerCapture(event.pointerId);
+    begin(event.pointerId);
   });
-  on(window, 'mouseup', (event) => {
-    if (event.button === 0) releaseCharge();
+  on(canvas, 'pointerup', event => release(event.pointerId));
+  on(canvas, 'pointercancel', cancelInput);
+  on(canvas, 'lostpointercapture', event => {
+    if (press?.source === event.pointerId) cancelInput();
   });
-  game.inputController = controller;
+  on(document, 'pointerdown', event => { if (event.target !== canvas) cancelInput(); });
+  on(canvas, 'blur', cancelInput);
+  on(window, 'blur', cancelInput);
+  on(document, 'visibilitychange', () => { if (document.hidden) cancelInput(); });
+  signal.addEventListener('abort', cancelInput, { once: true });
+  canvas.focus();
   return controller;
 }

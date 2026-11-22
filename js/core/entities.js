@@ -1,5 +1,7 @@
 import {
   ANIM_SPEED,
+  BODY_RADIUS,
+  MAX_HP,
   ATTACK_RANGE,
   AI_SPEED,
   DEFAULT_DEX,
@@ -26,23 +28,6 @@ export function showToast(message) {
   }, 2800);
 }
 
-export function normalizeValidDex(raw) {
-  let dex = Math.max(
-    1,
-    Math.min(MAX_DEX, Number.isNaN(Number(raw)) ? DEFAULT_DEX : Number(raw)),
-  );
-  while (EXCLUDED_DEX.has(dex)) dex = dex < MAX_DEX ? dex + 1 : 1;
-  return dex;
-}
-
-export function getRandomValidDex() {
-  let dex;
-  do {
-    dex = Math.floor(Math.random() * MAX_DEX) + 1;
-  } while (EXCLUDED_DEX.has(dex));
-  return dex;
-}
-
 export function createEntity(data, room, isPlayer) {
   return {
     isPlayer,
@@ -55,6 +40,9 @@ export function createEntity(data, room, isPlayer) {
     state: 'Idle',
     frame: 0,
     timer: 0,
+    hp: MAX_HP,
+    deathAt: null,
+    impactPending: false,
     chargeTime: 0,
     speed: isPlayer ? PLAYER_SPEED : AI_SPEED,
     aiDir: [0, 0],
@@ -71,8 +59,8 @@ export function setState(entity, state) {
   }
 }
 
-export function canMove(x, y) {
-  const radius = 9;
+export function canMove(entity, x, y) {
+  const radius = BODY_RADIUS;
   for (const [offsetX, offsetY] of [
     [-radius, -radius],
     [radius, -radius],
@@ -90,24 +78,38 @@ export function canMove(x, y) {
     )
       return false;
   }
-  return true;
+  // Movimiento y retroceso comparten el mismo cuerpo circular.
+  return !game.entities.some(other => other !== entity && other.hp > 0 &&
+    Math.hypot(other.x - x, other.y - y) < radius * 2);
 }
 
 export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
+  if (attacker.hp === 0) return;
+  attacker.chargeTime = 0;
+  attacker.impactPending = true;
   setState(attacker, 'Attack');
+}
+
+// Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
+function resolveImpact(attacker) {
+  attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
   const hitX = attacker.x + vx * ATTACK_RANGE,
     hitY = attacker.y + vy * ATTACK_RANGE;
   for (const target of game.entities) {
     if (
-      target === attacker ||
-      Math.hypot(target.x - hitX, target.y - hitY) >= 28
+      target === attacker || target.hp === 0 ||
+      Math.hypot(target.x - hitX, target.y - hitY) > BODY_RADIUS * 2
     )
       continue;
     target.chargeTime = 0;
+    target.hp--;
+    target.frame = target.timer = 0;
+    target.impactPending = false;
     setState(target, 'Hurt');
-    if (canMove(target.x + vx * 10, target.y + vy * 10)) {
+    if (target.hp === 0) target.deathAt = performance.now();
+    if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
       target.x += vx * 10;
       target.y += vy * 10;
     }
@@ -119,45 +121,6 @@ export function startCharge() {
     return;
   setState(game.player, 'Charge');
   game.player.chargeTime = 0;
-}
-
-export function releaseCharge() {
-  if (!game.player || game.player.state !== 'Charge') return;
-  game.player.chargeTime = 0;
-  triggerAttack(game.player);
-}
-
-async function loadPlayer(rawDex) {
-  const dex = normalizeValidDex(rawDex);
-  const data = await loadPokemonData(dex);
-  if (!data) throw new Error(`No se pudo cargar el Pokémon #${dex}.`);
-  return data;
-}
-
-function syncPlayerControls(dex) {
-  document.getElementById('dex-in').value = dex;
-  const preset = document.getElementById('preset');
-  preset.value = Array.from(preset.options).some(
-    (option) => option.value === String(dex),
-  )
-    ? String(dex)
-    : '';
-}
-
-export async function setPlayerDex(rawDex) {
-  const data = await loadPlayer(rawDex);
-  // Al cambiar de especie conservo la posición y los encuentros de esta planta.
-  const player = game.player;
-  Object.assign(player, {
-    dex: data.dex,
-    dexStr: data.dexStr,
-    anims: data.anims,
-    state: 'Idle',
-    frame: 0,
-    timer: 0,
-    chargeTime: 0,
-  });
-  syncPlayerControls(data.dex);
 }
 
 async function loadEncounters() {
@@ -178,22 +141,22 @@ async function loadEncounters() {
   );
 }
 
-export async function loadLevel(rawDex) {
+export async function loadLevel(dex = DEFAULT_DEX) {
   const [playerData, opponents] = await Promise.all([
-    loadPlayer(rawDex),
+    loadPokemonData(dex),
     loadEncounters(),
   ]);
+  if (!playerData) throw new Error('No se pudo cargar el Pokémon del jugador.');
+  const hp = game.player?.hp ?? MAX_HP;
   generateDungeon();
+  game.portal = null;
   game.player = createEntity(playerData, game.rooms[0], true);
+  game.player.hp = hp;
   game.entities = [game.player];
   opponents.forEach((data, index) => {
     if (data)
       game.entities.push(createEntity(data, game.rooms[index * 2 + 1], false));
   });
-  syncPlayerControls(playerData.dex);
-  const ids = game.entities.slice(1).map((entity) => `#${entity.dexStr}`);
-  document.getElementById('ia-info').textContent =
-    `IA (${ids.length}): ${ids.join(' · ') || 'Ninguna'}`;
   game.loadingEl.style.display = 'none';
 }
 
@@ -203,8 +166,8 @@ function moveEntity(entity, dx, dy) {
   const length = Math.hypot(dx, dy);
   const vx = (dx / length) * entity.speed,
     vy = (dy / length) * entity.speed;
-  if (canMove(entity.x + vx, entity.y)) entity.x += vx;
-  if (canMove(entity.x, entity.y + vy)) entity.y += vy;
+  if (canMove(entity, entity.x + vx, entity.y)) entity.x += vx;
+  if (canMove(entity, entity.x, entity.y + vy)) entity.y += vy;
 }
 
 export function updateEntity(entity) {
@@ -255,7 +218,7 @@ export function updateEntity(entity) {
       entity.atkCooldown = 130 + Math.floor(Math.random() * 150);
       const nearby = game.entities.find(
         (other) =>
-          other !== entity &&
+          other !== entity && other.hp > 0 &&
           Math.hypot(other.x - entity.x, other.y - entity.y) < 42,
       );
       if (nearby) {
@@ -271,12 +234,19 @@ export function updateEntity(entity) {
   entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED;
   const duration =
     (animation.durs[entity.frame] || 8) + (entity.state === 'Hurt' ? 2 : 0);
+  if (entity.state === 'Attack' && entity.impactPending) {
+    // Sin marca de impacto usamos el centro de la animación. Una hoja de un
+    // fotograma impacta a media duración para conservar la anticipación.
+    const marker = Number.isInteger(animation.hitFrame) ? animation.hitFrame : Math.floor(animation.frames / 2);
+    const frame = Math.min(animation.frames - 1, Math.max(1, marker));
+    if (entity.frame === frame && (frame !== 0 || entity.timer >= duration / 2)) resolveImpact(entity);
+  }
   if (entity.timer >= duration) {
     entity.timer = 0;
     entity.frame++;
     if (entity.frame >= animation.frames) {
       entity.frame = 0;
-      if (entity.state === 'Attack' || entity.state === 'Hurt')
+      if (entity.hp > 0 && (entity.state === 'Attack' || entity.state === 'Hurt'))
         setState(entity, 'Idle');
     }
   }

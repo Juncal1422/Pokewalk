@@ -37,6 +37,8 @@ async function fetchAnimation(baseUrl, animations, candidates) {
       });
       return {
         img: image,
+        // HitFrame indica en qué fotograma conecta el golpe de esta hoja.
+        hitFrame: parseInt(node.getElementsByTagName('HitFrame')[0]?.textContent, 10),
         fw: frameWidth,
         fh: frameHeight,
         durs: durations.length ? durations : [8],

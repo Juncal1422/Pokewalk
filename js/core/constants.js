@@ -36,3 +36,9 @@ export const DIR_VEC = [
   [-1, 0],
   [-0.7, 0.7],
 ];
+
+// Las colisiones se miden en píxeles del mapa, los tiempos de entrada y muerte en ms.
+export const BODY_RADIUS = 9;
+export const MAX_HP = 10;
+export const FADE_MS = 1500;
+export const HOLD_MS = 500;

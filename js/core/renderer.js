@@ -1,4 +1,4 @@
-import { MAP_H, MAP_W, MAX_CHARGE_FRAMES, RTILE, ZOOM } from './constants.js';
+import { FADE_MS, MAP_H, MAP_W, MAX_CHARGE_FRAMES, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
 const tilesets = new Map();
@@ -39,14 +39,19 @@ export async function changeBiome(biome) {
     if (selection !== request) return;
     game.tileSheet = sheet;
     game.currentBiome = biome;
-    game.biomeSel.value = biome.id;
   } catch (error) {
     if (selection !== request) return;
-    if (game.currentBiome) game.biomeSel.value = game.currentBiome.id;
     throw new Error(`No se pudo cargar el tileset de ${biome.name}`, {
       cause: error,
     });
   }
+}
+
+const portalImage = new Image();
+portalImage.src = new URL('../../tiled/tilesets/Teleporter.png', import.meta.url).href;
+
+export function preparePortal() {
+  return portalImage.decode();
 }
 
 export function draw() {
@@ -83,6 +88,11 @@ export function draw() {
   );
   for (let y = rowStart; y <= rowEnd; y++) {
     for (let x = colStart; x <= colEnd; x++) {
+      // El portal ocupa una celda completa y mantiene el suelo transitable.
+      if (game.portal?.x === x && game.portal.y === y) {
+        ctx.drawImage(portalImage, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
+        continue;
+      }
       const { mask, index } = game.autotileGrid[y][x];
       const variant = game.variantGrid[y][x];
       const { floors, walls } = game.currentBiome.variants;
@@ -106,6 +116,8 @@ export function draw() {
   }
 
   for (const entity of [...game.entities].sort((a, b) => a.y - b.y)) {
+    ctx.save();
+    if (entity.hp === 0) ctx.globalAlpha = Math.max(0, 1 - (performance.now() - entity.deathAt) / FADE_MS);
     const px = Math.floor(entity.x * ZOOM - cameraX),
       py = Math.floor(entity.y * ZOOM - cameraY);
     ctx.fillStyle = entity.isPlayer
@@ -155,13 +167,6 @@ export function draw() {
       ctx.fillStyle = ratio >= 1 ? '#facc15' : '#38bdf8';
       ctx.fillRect(x, y, Math.floor(width * ratio), height);
     }
-    if (!entity.isPlayer) {
-      ctx.fillStyle = 'rgba(15,23,42,0.75)';
-      ctx.fillRect(px - 22, py - drawH / 2 - 14, 44, 14);
-      ctx.fillStyle = '#93c5fd';
-      ctx.font = 'bold 10px monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(`#${entity.dexStr}`, px, py - drawH / 2 - 4);
-    }
+    ctx.restore();
   }
 }
