@@ -1,3 +1,4 @@
+import { TILE } from './constants.js';
 import { game } from './state.js';
 import { clampStat, refreshStats } from './stats.js';
 
@@ -11,11 +12,12 @@ export async function loadItemImages(items) {
   }));
 }
 
-export function dropItem(entity) {
+export function dropItem(entity, attacker) {
   const ids = game.pokemon.get(entity.dex).drops;
-  if (!ids.length || Math.random() >= 1 / 3) return;
+  if (!ids.length || Math.random() >= 1 / 3 + (attacker.isPlayer ? game.perks.loot : 0)) return;
   const id = ids[Math.floor(Math.random() * ids.length)];
-  game.drops.push({ x: entity.x, y: entity.y, id });
+  const center = pos => (Math.floor(pos / TILE) + .5) * TILE;
+  game.drops.push({ x: center(entity.x), y: center(entity.y), id });
 }
 
 export function collectItems(player) {
@@ -28,8 +30,14 @@ export function collectItems(player) {
       if (item.duration === 'floor') player.floorStats[key] = (player.floorStats[key] || 0) + delta;
       else player.baseStats[key] = clampStat(key, player.baseStats[key] + delta);
     }
+    const previous = { ...player.stats, hp: player.hp };
     refreshStats(player);
     player.hp = Math.min(player.stats.hpMax, player.hp + item.heal);
+    const now = performance.now();
+    for (const key of [...Object.keys(item.stats), 'hp']) {
+      const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];
+      if (delta) game.pickups.push({ key, delta, time: now });
+    }
     return false;
   });
 }

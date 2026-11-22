@@ -4,11 +4,11 @@ import { labels } from './stats.js';
 const icons = {};
 const compact = new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 });
 const formatValue = n => n >= 1000 ? compact.format(n) : String(n);
-const essenceNames = 'normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon'.split(' ');
+const essenceNames = 'normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon dark steel'.split(' ');
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
   console.debug('[HUD] Cargando interfaz y esencias');
-  await Promise.all(['hp', 'hpbar', ...Object.keys(labels), ...essenceNames.map(id => 'essence-' + id)].map(async key => {
+  await Promise.all(['hp', 'hp-red', 'hp-yellow', 'hpbar', ...Object.keys(labels), ...essenceNames.map(id => 'essence-' + id)].map(async key => {
     const image = new Image();
     image.src = new URL('../../assets/ui/' + key + '.png', import.meta.url).href;
     await image.decode();
@@ -25,13 +25,31 @@ export function healthBar(ctx, entity, x, y, cell) {
     const frame = i === 0 ? 0 : i === max + 1 ? 2 : 1;
     const left = x + i * cell;
     ctx.drawImage(icons.hpbar, frame * 16, 0, 16, 16, left, y, cell, cell);
-    if (i > 0 && i <= filled) ctx.drawImage(icons.hp, left, y, cell, cell);
+    if (i > 0 && i <= filled) ctx.drawImage(icons[i <= 2 ? 'hp-red' : i <= 5 ? 'hp-yellow' : 'hp'], left, y, cell, cell);
   }
+}
+
+// Un indicador por recogida permite ver dos efectos consecutivos del mismo atributo.
+function indicators(ctx,key,x,y,now) {
+  ctx.save();
+  ctx.textBaseline = 'middle';
+  for (const note of game.pickups.filter(entry => entry.key === key)) {
+    ctx.globalAlpha = Math.min(1, (1500 - (now-note.time)) / 800);
+    ctx.fillStyle = note.delta > 0 ? '#79ed8e' : '#ff7474';
+    const text = (note.delta > 0 ? '+' : '') + formatValue(note.delta);
+    ctx.fillText(text,x,y); x += ctx.measureText(text).width + 6;
+  }
+  ctx.restore();
 }
 
 export function drawHud(ctx, canvas, player) {
   const cell = Math.max(1, Math.min(24, Math.floor((canvas.width - 16) / (Math.min(24, player.stats.hpMax) + 2))));
   healthBar(ctx, player, 8, 8, cell);
+  const now = performance.now();
+  game.pickups = game.pickups.filter(note => now-note.time < 1500);
+  const end = 12 + cell*(Math.min(24,player.stats.hpMax)+2);
+  indicators(ctx,'hp',end,13,now);
+  indicators(ctx,'hpMax',end,28,now);
   ctx.font = 'bold 12px system-ui';
   ctx.textBaseline = 'middle';
   let index = 0;
@@ -53,6 +71,7 @@ export function drawHud(ctx, canvas, player) {
     ctx.drawImage(icons[key], 10, y, line - 2, line - 2);
     ctx.fillStyle = '#fff';
     ctx.fillText(formatValue(player.stats[key]), 14 + line, y + line / 2);
+    indicators(ctx,key,65,y + line / 2,now);
     y += line;
   }
   ctx.save();

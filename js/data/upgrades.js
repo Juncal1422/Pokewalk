@@ -1,8 +1,16 @@
+import { game } from '../core/state.js';
 import { clampStat, initialStats } from '../core/stats.js';
 
 // Cada tipo de efecto declara su validación y cómo modificar la run.
 // El catálogo solo contiene datos: nuevos efectos específicos se registran aquí.
 const effects = new Map([
+  ['runPerk', {
+    valid: item => ['loot','essence','dodge'].includes(item.perk) && Number.isFinite(item.amount) && item.amount > 0,
+    apply: (_, item) => {
+      const cap = { loot: 2/3, dodge: .95, essence: Number.MAX_SAFE_INTEGER }[item.perk];
+      game.perks[item.perk] = Math.min(cap, game.perks[item.perk] + item.amount);
+    },
+  }],
   ['increaseStat', {
     valid: item => Object.hasOwn(initialStats(), item.stat) && Number.isInteger(item.amount) && item.amount > 0,
     apply: (stats, item) => { stats[item.stat] = clampStat(item.stat, stats[item.stat] + item.amount); },
