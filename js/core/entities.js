@@ -1,21 +1,19 @@
+import { dropItem } from './items.js';
 import {
   ANIM_SPEED,
   BODY_RADIUS,
-  MAX_HP,
   ATTACK_RANGE,
   AI_SPEED,
   DEFAULT_DEX,
   DIR_MAP,
   DIR_VEC,
-  EXCLUDED_DEX,
   MAX_CHARGE_FRAMES,
-  MAX_DEX,
   PLAYER_SPEED,
   TILE,
   MAP_W,
   MAP_H,
 } from './constants.js';
-import { initialStats, rate, sizeScale } from './stats.js';
+import { initialStats, rate, sizeScale, rangeScale } from './stats.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -30,6 +28,7 @@ export function showToast(message) {
 }
 
 export function createEntity(data, room, isPlayer) {
+  const stats = isPlayer ? initialStats() : { ...game.pokemon.get(data.dex).stats };
   return {
     isPlayer,
     dex: data.dex,
@@ -41,8 +40,8 @@ export function createEntity(data, room, isPlayer) {
     state: 'Idle',
     frame: 0,
     timer: 0,
-    stats: initialStats(),
-    hp: MAX_HP,
+    stats,
+    hp: stats.hpMax,
     lastHit: -Infinity,
     deathAt: null,
     impactPending: false,
@@ -98,7 +97,7 @@ export function triggerAttack(attacker) {
 function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
   attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
-  const reach = ATTACK_RANGE * rate(attacker.stats.range);
+  const reach = ATTACK_RANGE * rangeScale(attacker.stats.range);
   for (const target of game.entities) {
     if (target === attacker || target.hp === 0) continue;
     // Distancia al segmento frontal: al ampliar el alcance siguen entrando
@@ -116,7 +115,10 @@ function resolveImpact(attacker, damage = attacker.stats.atkdmg) {
     setState(target, 'Hurt');
     if (target.hp === 0) {
       target.deathAt = target.lastHit;
-      if (!target.isPlayer) game.defeated.push(target.dex);
+      if (!target.isPlayer) {
+        game.defeated.push(target.dex);
+        dropItem(target);
+      }
     }
     if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
       target.x += vx * 10;
@@ -134,11 +136,9 @@ export function startCharge() {
 
 async function loadEncounters() {
   // Saco las especies sin reposición. Si falta una hoja, pruebo otra para esa sala.
-  const pool = Array.from({ length: MAX_DEX }, (_, i) => i + 1).filter(
-    (dex) => !EXCLUDED_DEX.has(dex),
-  );
+  const pool = [...game.pokemon.keys()];
   return Promise.all(
-    Array.from({ length: 6 }, async () => {
+    Array.from({ length: 4 }, async () => {
       for (let attempt = 0; attempt < 3; attempt++) {
         const index = Math.floor(Math.random() * pool.length);
         const [dex] = pool.splice(index, 1);
@@ -156,14 +156,17 @@ export async function loadLevel(dex = DEFAULT_DEX) {
     loadEncounters(),
   ]);
   if (!playerData) throw new Error('No se pudo cargar el Pokémon del jugador.');
-  if (opponents.some(data => !data)) throw new Error('No se pudieron cargar los seis encuentros. Vuelve a intentarlo.');
-  const stats = game.player?.stats ?? initialStats();
+  if (opponents.some(data => !data)) throw new Error('No se pudieron cargar los cuatro encuentros. Vuelve a intentarlo.');
+  const stats = game.player?.baseStats ?? initialStats();
   const hp = game.player?.hp ?? stats.hpMax;
   generateDungeon();
   game.portal = null;
   game.defeated = [];
   game.player = createEntity(playerData, game.rooms[0], true);
-  game.player.stats = stats;
+  game.player.baseStats = stats;
+  game.player.floorStats = {};
+  game.player.stats = { ...stats };
+  game.drops = [];
   game.player.hp = hp;
   game.entities = [game.player];
   opponents.forEach((data, index) => {

@@ -1,11 +1,11 @@
-import { initialStats } from '../core/stats.js';
+import { clampStat, initialStats } from '../core/stats.js';
 
 // Cada tipo de efecto declara su validación y cómo modificar la run.
 // El catálogo solo contiene datos: nuevos efectos específicos se registran aquí.
 const effects = new Map([
   ['increaseStat', {
     valid: item => Object.hasOwn(initialStats(), item.stat) && Number.isInteger(item.amount) && item.amount > 0,
-    apply: (stats, item) => { stats[item.stat] += item.amount; },
+    apply: (stats, item) => { stats[item.stat] = clampStat(item.stat, stats[item.stat] + item.amount); },
   }],
 ]);
 

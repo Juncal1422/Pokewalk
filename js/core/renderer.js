@@ -1,5 +1,6 @@
-import { healthBar, drawHud } from './hud.js';
-import { sizeScale, rate } from './stats.js';
+import { drawItems } from './items.js';
+import { drawHud } from './hud.js';
+import { sizeScale, rangeScale } from './stats.js';
 import { DIR_VEC, ATTACK_RANGE, FADE_MS, MAP_H, MAP_W, MAX_CHARGE_FRAMES, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
@@ -105,6 +106,7 @@ export function draw() {
     }
   }
 
+  drawItems(ctx, ZOOM, cameraX, cameraY);
   for (const entity of [...game.entities].sort((a, b) => a.y - b.y)) {
     ctx.save();
     if (entity.hp === 0) ctx.globalAlpha = Math.max(0, 1 - (performance.now() - entity.deathAt) / FADE_MS);
@@ -133,7 +135,7 @@ export function draw() {
     // El alcance extra desplaza solo el dibujo del ataque, nunca el cuerpo físico.
     const phase = (entity.frame + entity.timer / (animation.durs[entity.frame] || 8)) / animation.frames;
     const extension = entity.state === 'Attack'
-      ? Math.sin(Math.PI * Math.min(1, phase)) * ATTACK_RANGE * (rate(entity.stats.range) - 1) * ZOOM : 0;
+      ? Math.sin(Math.PI * Math.min(1, phase)) * ATTACK_RANGE * (rangeScale(entity.stats.range) - 1) * ZOOM : 0;
     const [vx, vy] = DIR_VEC[entity.dir];
     const row = Math.min(
       entity.dir,
@@ -163,9 +165,12 @@ export function draw() {
       ctx.fillRect(x, y, Math.floor(width * ratio), height);
     }
     if (!entity.isPlayer && performance.now() - entity.lastHit < 3000) {
-      const cell = 6;
-      healthBar(ctx, entity, Math.round(px - (entity.stats.hpMax + 2) * cell / 2),
-        Math.round(py - drawH / 2 - cell - 2), cell);
+      const fraction = entity.hp / entity.stats.hpMax;
+      const x = px - 19, y = Math.round(py - drawH / 2 - 7);
+      ctx.fillStyle = '#131921';
+      ctx.fillRect(x, y, 38, 6);
+      ctx.fillStyle = fraction < 0.25 ? '#ef5350' : fraction <= 0.5 ? '#ffd54f' : '#66cf77';
+      ctx.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
     }
     ctx.restore();
   }

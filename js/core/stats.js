@@ -7,9 +7,17 @@ export const labels = {
 };
 
 export function initialStats() {
-  return { size: 1, speed: 1, atkdmg: 1, range: 1, atkspeed: 1, chargedmg: 1, chargespeed: 1, hpMax: MAX_HP };
+  return { hpMax: MAX_HP, size: 5, speed: 4, atkdmg: 1, atkspeed: 4, range: 4, chargedmg: 2, chargespeed: 4 };
 }
 
-// El cuerpo máximo aún cabe por los pasillos de un tile (24 px).
-export const sizeScale = stats => 1 + 0.075 * (Math.min(stats.size, 5) - 1);
-export const rate = level => 1 + 0.25 * (Math.min(level, 5) - 1);
+export const clampStat = (key, value) => Math.max(1, Math.min(key === 'hpMax' ? 20 : 10, value));
+export const sizeScale = stats => 1 + 0.10 * (stats.size - 5);
+export const rate = level => 1 + 0.20 * (level - 4);
+export const rangeScale = level => 1 + 0.10 * (level - 4);
+
+// Los modificadores de piso se suman a los permanentes antes de aplicar los límites.
+export function refreshStats(player) {
+  for (const key of Object.keys(player.baseStats)) {
+    player.stats[key] = clampStat(key, player.baseStats[key] + (player.floorStats[key] || 0));
+  }
+}

@@ -1,3 +1,6 @@
+import { collectItems, loadItemImages } from './core/items.js';
+import { refreshStats } from './core/stats.js';
+import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
 import { loadUpgrades, applyUpgrade } from './data/upgrades.js';
 import { loadHud } from './core/hud.js';
@@ -18,7 +21,7 @@ const EMBEDDED_APP = `
       #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
       #rewards::backdrop { background:#0b101ddc; }
       #rewards h1 { margin:0 0 12px; font-size:clamp(18px,5vmin,30px); }
-      #rewards .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
+      #rewards .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
       #rewards button { min-width:0; display:grid; justify-items:center; gap:6px; padding:clamp(4px,2vmin,18px); border:2px solid #455d77; border-radius:8px; background:#26374a; color:#fff; font:600 clamp(12px,2.7vmin,18px) system-ui; cursor:pointer; }
       #rewards button:is(:hover,:focus-visible) { outline:2px solid #a7e9e2; background:#324e60; }
       #rewards img { width:min(80px,15vw,17dvh); aspect-ratio:1; image-rendering:pixelated; }
@@ -58,13 +61,15 @@ async function nextLevel() {
   const previousBiome = game.currentBiome;
   const previousSheet = game.tileSheet;
   try {
-    const reward = await chooseReward(game.defeated, game.catalog);
+    const reward = await chooseReward(game.defeated, game.catalog, game.pokemon);
     game.loadingEl.style.display = 'flex';
     const choices = BIOMES.filter((biome) => biome !== game.currentBiome);
     await changeBiome(choices[Math.floor(Math.random() * choices.length)]);
     await loadLevel(game.player.dex);
     // Se concede una sola vez, después de cargar el nuevo piso con éxito.
-    applyUpgrade(game.player.stats, reward);
+    applyUpgrade(game.player.baseStats, reward);
+    refreshStats(game.player);
+    game.adventure++;
     if (document.hasFocus()) game.canvas.focus();
   } catch (error) {
     game.currentBiome = previousBiome;
@@ -80,6 +85,7 @@ async function nextLevel() {
 function frame() {
   if (!game.changingLevel) {
     game.entities.forEach(updateEntity);
+    collectItems(game.player);
     const now = performance.now();
     game.entities = game.entities.filter(
       (entity) => entity.hp > 0 || now - entity.deathAt < FADE_MS,
@@ -127,6 +133,11 @@ export async function startGame({
   resize();
   const [catalog] = await Promise.all([loadUpgrades(), changeBiome(BIOMES[0]), preparePortal(), loadHud()]);
   game.catalog = catalog;
+  const { pokemon, items } = await loadEncountersCatalog(catalog);
+  game.pokemon = pokemon;
+  game.items = items;
+  await loadItemImages(items);
+  game.adventure = 0;
   await loadLevel(DEFAULT_DEX);
   const input = attachInput();
   const observer = new ResizeObserver(resize);

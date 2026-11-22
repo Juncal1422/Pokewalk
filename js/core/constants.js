@@ -38,7 +38,8 @@ export const DIR_VEC = [
 ];
 
 // Las colisiones se miden en píxeles del mapa, los tiempos de entrada y muerte en ms.
-export const BODY_RADIUS = 9;
+// Incluso al tamaño 10 el diámetro cabe en un pasillo de 24 px.
+export const BODY_RADIUS = 7.8;
 export const MAX_HP = 10;
 export const FADE_MS = 1500;
 export const HOLD_MS = 500;

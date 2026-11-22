@@ -1,3 +1,58 @@
 [
-  { "id": "damage-plus-one", "label": "+1 Daño", "effect": "increaseStat", "stat": "atkdmg", "amount": 1 }
+  {
+    "id": "hp-plus-one",
+    "label": "+1 HPMax",
+    "effect": "increaseStat",
+    "stat": "hpMax",
+    "amount": 1
+  },
+  {
+    "id": "size-plus-one",
+    "label": "+1 Tamaño",
+    "effect": "increaseStat",
+    "stat": "size",
+    "amount": 1
+  },
+  {
+    "id": "speed-plus-one",
+    "label": "+1 Velocidad de movimiento",
+    "effect": "increaseStat",
+    "stat": "speed",
+    "amount": 1
+  },
+  {
+    "id": "damage-plus-one",
+    "label": "+1 Daño",
+    "effect": "increaseStat",
+    "stat": "atkdmg",
+    "amount": 1
+  },
+  {
+    "id": "range-plus-one",
+    "label": "+1 Rango de ataque",
+    "effect": "increaseStat",
+    "stat": "range",
+    "amount": 1
+  },
+  {
+    "id": "attack-speed-plus-one",
+    "label": "+1 Velocidad de ataque",
+    "effect": "increaseStat",
+    "stat": "atkspeed",
+    "amount": 1
+  },
+  {
+    "id": "charge-damage-plus-one",
+    "label": "+1 Daño de carga",
+    "effect": "increaseStat",
+    "stat": "chargedmg",
+    "amount": 1
+  },
+  {
+    "id": "charge-speed-plus-one",
+    "label": "+1 Velocidad de carga",
+    "effect": "increaseStat",
+    "stat": "chargespeed",
+    "amount": 1
+  }
 ]

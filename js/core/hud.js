@@ -1,3 +1,4 @@
+import { game } from './state.js';
 import { labels } from './stats.js';
 
 const icons = {};
@@ -33,7 +34,17 @@ export function drawHud(ctx, canvas, player) {
     ctx.fillRect(8, y, 52, line - 1);
     ctx.drawImage(icons[key], 10, y, line - 2, line - 2);
     ctx.fillStyle = '#fff';
-    ctx.fillText(Math.min(5, player.stats[key]), 14 + line, y + line / 2);
+    ctx.fillText(player.stats[key], 14 + line, y + line / 2);
     y += line;
   }
+  ctx.save();
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  const counter = 'Aventura ' + game.adventure;
+  const width = Math.ceil(ctx.measureText(counter).width);
+  ctx.fillStyle = 'rgba(10,16,26,.85)';
+  ctx.fillRect(canvas.width - width - 20, 8, width + 12, 23);
+  ctx.fillStyle = '#fff';
+  ctx.fillText(counter, canvas.width - 14, 12);
+  ctx.restore();
 }

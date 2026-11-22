@@ -1,0 +1,89 @@
+{
+  "potion": {
+    "name": "Poción",
+    "duration": "run",
+    "stats": {},
+    "heal": 1,
+    "image": "assets/items/potion.png"
+  },
+  "goldenapple": {
+    "name": "Manzana dorada",
+    "duration": "run",
+    "stats": {
+      "hpMax": 1
+    },
+    "heal": 1,
+    "image": "assets/items/goldenapple.png"
+  },
+  "horn": {
+    "name": "Cuerno",
+    "duration": "floor",
+    "stats": {
+      "atkdmg": 1
+    },
+    "heal": 0,
+    "image": "assets/items/horn.png"
+  },
+  "amulet": {
+    "name": "Amuleto",
+    "duration": "floor",
+    "stats": {
+      "speed": 1,
+      "atkspeed": 1
+    },
+    "heal": 0,
+    "image": "assets/items/amulet.png"
+  },
+  "ambrose": {
+    "name": "Ambrosía",
+    "duration": "floor",
+    "stats": {
+      "chargedmg": 1,
+      "chargespeed": 1
+    },
+    "heal": 0,
+    "image": "assets/items/ambrose.png"
+  },
+  "ribbon": {
+    "name": "Lazo",
+    "duration": "floor",
+    "stats": {
+      "atkspeed": 2
+    },
+    "heal": 0,
+    "image": "assets/items/ribbon.png"
+  },
+  "seed": {
+    "name": "Semilla",
+    "duration": "run",
+    "stats": {
+      "atkspeed": 1
+    },
+    "heal": 0,
+    "image": "assets/items/seed.png"
+  },
+  "min_lens": {
+    "name": "Lente de reducción",
+    "duration": "run",
+    "stats": {
+      "size": -1,
+      "speed": 1,
+      "atkspeed": 1,
+      "range": 1
+    },
+    "heal": 0,
+    "image": "assets/items/min_lens.png"
+  },
+  "max_lens": {
+    "name": "Lente de aumento",
+    "duration": "run",
+    "stats": {
+      "size": 1,
+      "speed": -1,
+      "atkdmg": 1,
+      "chargedmg": 2
+    },
+    "heal": 0,
+    "image": "assets/items/max_lens.png"
+  }
+}

@@ -1,11 +1,11 @@
 // La lista proviene de las bajas de esta planta, incluidas las causadas por la IA.
-export function chooseReward(defeated, catalog) {
+export function chooseReward(defeated, catalog, pokemon) {
   const dialog = document.getElementById('rewards');
   const cards = dialog.querySelector('.cards');
   cards.replaceChildren();
   return new Promise(resolve => {
     for (const dex of defeated) {
-      const reward = catalog[Math.floor(Math.random() * catalog.length)];
+      const reward = catalog.find(item => item.id === pokemon.get(dex).mejora);
       const card = document.createElement('button');
       const portrait = new Image();
       const number = String(dex).padStart(4, '0');
