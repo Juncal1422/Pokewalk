@@ -1,5 +1,5 @@
 import { game } from '../core/state.js';
-import { clampStat, initialStats } from '../core/stats.js';
+import { labels } from '../core/stats.js';
 
 // Cada tipo de efecto declara su validación y cómo modificar la run.
 // El catálogo solo contiene datos: nuevos efectos específicos se registran aquí.
@@ -12,8 +12,8 @@ const effects = new Map([
     },
   }],
   ['increaseStat', {
-    valid: item => Object.hasOwn(initialStats(), item.stat) && Number.isInteger(item.amount) && item.amount > 0,
-    apply: (stats, item) => { stats[item.stat] = clampStat(item.stat, stats[item.stat] + item.amount); },
+    valid: item => Object.hasOwn(labels, item.stat) && Number.isInteger(item.amount) && item.amount > 0,
+    apply: (stats, item) => { stats[item.stat] = stats[item.stat] + item.amount; },
   }],
 ]);
 
@@ -36,4 +36,15 @@ export async function loadUpgrades() {
 export function applyUpgrade(stats, item) {
   effects.get(item.effect).apply(stats, item);
   console.info('[Mejora] Aplicada', item.id);
+}
+
+// Esta proyección se usa tanto en las tarjetas como al entrar al siguiente piso.
+export function rewardBonuses(current, option, reward) {
+  const bonuses = { ...current };
+  if (option?.bonus) {
+    for (const key of Object.keys(labels)) bonuses[key]++;
+  } else if (reward?.effect === 'increaseStat') {
+    effects.get('increaseStat').apply(bonuses, reward);
+  }
+  return bonuses;
 }

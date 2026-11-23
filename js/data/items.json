@@ -4,7 +4,8 @@
     "duration": "run",
     "stats": {},
     "heal": 1,
-    "image": "assets/items/potion.png"
+    "image": "assets/items/potion.png",
+    "description": "Recupera 1 HP."
   },
   "goldenapple": {
     "name": "Manzana dorada",
@@ -13,77 +14,82 @@
       "hpMax": 1
     },
     "heal": 1,
-    "image": "assets/items/goldenapple.png"
+    "image": "assets/items/goldenapple.png",
+    "description": "Recupera 1 HP, +1 HP máx. durante la aventura."
   },
   "horn": {
     "name": "Cuerno",
     "duration": "floor",
     "stats": {
-      "atkdmg": 1
+      "attack": 1
     },
     "heal": 0,
-    "image": "assets/items/horn.png"
+    "image": "assets/items/horn.png",
+    "description": "+1 Ataque durante este piso."
   },
   "amulet": {
     "name": "Amuleto",
     "duration": "floor",
     "stats": {
       "speed": 1,
-      "atkspeed": 1
+      "defense": 1
     },
     "heal": 0,
-    "image": "assets/items/amulet.png"
+    "image": "assets/items/amulet.png",
+    "description": "+1 Velocidad, +1 Defensa durante este piso."
   },
   "ambrose": {
     "name": "Ambrosía",
     "duration": "floor",
     "stats": {
-      "chargedmg": 1,
-      "chargespeed": 1
+      "attack": 1,
+      "defense": 1
     },
     "heal": 0,
-    "image": "assets/items/ambrose.png"
+    "image": "assets/items/ambrose.png",
+    "description": "+1 Ataque, +1 Defensa durante este piso."
   },
   "ribbon": {
     "name": "Lazo",
     "duration": "floor",
     "stats": {
-      "atkspeed": 2
+      "speed": 2
     },
     "heal": 0,
-    "image": "assets/items/ribbon.png"
+    "image": "assets/items/ribbon.png",
+    "description": "+2 Velocidad durante este piso."
   },
   "seed": {
     "name": "Semilla",
     "duration": "run",
     "stats": {
-      "atkspeed": 1
+      "speed": 1
     },
     "heal": 0,
-    "image": "assets/items/seed.png"
+    "image": "assets/items/seed.png",
+    "description": "+1 Velocidad durante la aventura."
   },
   "min_lens": {
     "name": "Lente de reducción",
     "duration": "run",
     "stats": {
-      "size": -1,
-      "speed": 1,
-      "atkspeed": 1,
-      "range": 1
+      "defense": -1,
+      "speed": 2
     },
     "heal": 0,
-    "image": "assets/items/min_lens.png"
+    "image": "assets/items/min_lens.png",
+    "description": "-1 Defensa, +2 Velocidad durante la aventura."
   },
   "max_lens": {
     "name": "Lente de aumento",
     "duration": "run",
     "stats": {
-      "size": 1,
       "speed": -1,
-      "atkdmg": 1,
-      "chargedmg": 2
+      "attack": 1,
+      "defense": 2
     },
     "heal": 0,
-    "image": "assets/items/max_lens.png"
+    "image": "assets/items/max_lens.png",
+    "description": "-1 Velocidad, +1 Ataque, +2 Defensa durante la aventura."
   }
 }

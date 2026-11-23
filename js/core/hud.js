@@ -8,25 +8,12 @@ const essenceNames = 'normal fire water electric grass ice fighting poison groun
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
   console.debug('[HUD] Cargando interfaz y esencias');
-  await Promise.all(['hp', 'hp-red', 'hp-yellow', 'hpbar', ...Object.keys(labels), ...essenceNames.map(id => 'essence-' + id)].map(async key => {
+  await Promise.all(essenceNames.map(id => 'essence-' + id).map(async key => {
     const image = new Image();
     image.src = new URL('../../assets/ui/' + key + '.png', import.meta.url).href;
     await image.decode();
     icons[key] = image;
   }));
-}
-
-// El marco depende solo del máximo. Cada punto ocupa su propia celda de 16 px.
-export function healthBar(ctx, entity, x, y, cell) {
-  // Agrupar segmentos evita dibujar millones de sprites en aventuras avanzadas.
-  const max = Math.min(entity.stats.hpMax, 24);
-  const filled = Math.ceil(entity.hp / entity.stats.hpMax * max);
-  for (let i = 0; i < max + 2; i++) {
-    const frame = i === 0 ? 0 : i === max + 1 ? 2 : 1;
-    const left = x + i * cell;
-    ctx.drawImage(icons.hpbar, frame * 16, 0, 16, 16, left, y, cell, cell);
-    if (i > 0 && i <= filled) ctx.drawImage(icons[i <= 2 ? 'hp-red' : i <= 5 ? 'hp-yellow' : 'hp'], left, y, cell, cell);
-  }
 }
 
 // Un indicador por recogida permite ver dos efectos consecutivos del mismo atributo.
@@ -43,36 +30,37 @@ function indicators(ctx,key,x,y,now) {
 }
 
 export function drawHud(ctx, canvas, player) {
-  const cell = Math.max(1, Math.min(24, Math.floor((canvas.width - 16) / (Math.min(24, player.stats.hpMax) + 2))));
-  healthBar(ctx, player, 8, 8, cell);
   const now = performance.now();
-  game.pickups = game.pickups.filter(note => now-note.time < 1500);
-  const end = 12 + cell*(Math.min(24,player.stats.hpMax)+2);
-  indicators(ctx,'hp',end,13,now);
-  indicators(ctx,'hpMax',end,28,now);
-  ctx.font = 'bold 12px system-ui';
+  game.pickups = game.pickups.filter(note => now - note.time < 1500);
+  const baseWidth = Math.min(110, canvas.width * 0.22);
+  const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
+  const fraction = player.hp / player.stats.hpMax;
+  ctx.fillStyle = '#15202b';
+  ctx.fillRect(8, 9, length + 4, 16);
+  ctx.fillStyle = fraction < 0.25 ? '#ef5350' : fraction < 0.5 ? '#ffd54f' : '#66cf77';
+  ctx.fillRect(10, 11, length * fraction, 12);
+  ctx.font = 'bold 13px system-ui';
   ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#fff';
+  ctx.fillText(player.hp + '/' + player.stats.hpMax, 18 + length, 17);
+  indicators(ctx, 'hp', 18 + length, 33, now);
   let index = 0;
   const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 80)));
   for (const [id, count] of Object.entries(game.essences)) {
-    const x = 8 + (index % columns) * 48, y = 12 + cell + Math.floor(index / columns) * 19;
+    const x = 8 + (index % columns) * 48, y = 40 + Math.floor(index / columns) * 19;
     ctx.drawImage(icons['essence-' + id], x, y, 16, 16);
     ctx.fillStyle = '#fff';
     ctx.fillText(count, x + 18, y + 8);
     index++;
   }
-  const line = Math.min(26, Math.max(12, Math.floor((canvas.height - cell - 20) / 7)));
-  let y = canvas.height - line * 7 - 6;
-  ctx.font = 'bold 15px system-ui';
-  ctx.textBaseline = 'middle';
-  for (const key of Object.keys(labels)) {
-    ctx.fillStyle = 'rgba(10,16,26,.85)';
-    ctx.fillRect(8, y, 52, line - 1);
-    ctx.drawImage(icons[key], 10, y, line - 2, line - 2);
+  let y = canvas.height - 80;
+  for (const [key, label] of Object.entries(labels)) {
+    ctx.fillStyle = '#101924dc';
+    ctx.fillRect(8, y, 112, 18);
     ctx.fillStyle = '#fff';
-    ctx.fillText(formatValue(player.stats[key]), 14 + line, y + line / 2);
-    indicators(ctx,key,65,y + line / 2,now);
-    y += line;
+    ctx.fillText(label + ' ' + player.stats[key], 12, y + 9);
+    indicators(ctx, key, 124, y + 9, now);
+    y += 19;
   }
   ctx.save();
   ctx.textAlign = 'right';
@@ -88,12 +76,4 @@ export function drawHud(ctx, canvas, player) {
   ctx.fillText(counter, canvas.width - 14, 12);
   ctx.fillText(goal, canvas.width - 14, 32);
   ctx.restore();
-  if (player.stats.hpMax > 24) {
-    ctx.save();
-    ctx.font = 'bold 12px system-ui';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#fff';
-    ctx.fillText(formatValue(player.hp) + ' / ' + formatValue(player.stats.hpMax), 8 + 13 * cell, 8 + cell / 2);
-    ctx.restore();
-  }
 }

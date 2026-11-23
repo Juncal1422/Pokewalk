@@ -1,5 +1,4 @@
-import { ATTACK_RANGE, DIR_MAP, MAX_CHARGE_FRAMES, TILE } from './constants.js';
-import { rangeScale, rate } from './stats.js';
+import { ATTACK_RANGE, DIR_MAP, TILE } from './constants.js';
 import { game } from './state.js';
 
 const cell = position => Math.floor(position / TILE);
@@ -61,7 +60,7 @@ function recoverOnLand(enemy, canMove) {
 
 export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove) {
   const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
-  const reach = ATTACK_RANGE * rangeScale(enemy.stats.range);
+  const reach = ATTACK_RANGE;
   const distance = Math.hypot(dx, dy);
   const onLand = land(cell(enemy.x), cell(enemy.y));
   const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
@@ -76,16 +75,6 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
   enemy.atkCooldown--;
-  if (enemy.state === 'Charge' && !fleeing) {
-    // La carga enemiga usa el mismo contador e impacto diferido que la del jugador.
-    enemy.chargeTime += rate(enemy.stats.chargespeed);
-    if (enemy.chargeTime >= MAX_CHARGE_FRAMES) attack(enemy);
-    return;
-  }
-  if (fleeing && enemy.state === 'Charge') {
-    enemy.chargeTime = 0;
-    setState(enemy, 'Idle');
-  }
   if (fleeing && onLand && distance >= reach * 2) {
     enemy.retreatTicks = 0;
     enemy.path = [];
@@ -99,10 +88,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     enemy.tracking = true;
     setState(enemy, 'Idle');
     if (enemy.atkCooldown <= 0) {
-      if (enemy.stats.chargedmg > 2 * enemy.stats.atkdmg && Math.random() < 0.35) {
-        enemy.chargeTime = 0;
-        setState(enemy, 'Charge');
-      } else attack(enemy);
+      attack(enemy);
       enemy.atkCooldown = enemy.boss ? 16 + Math.random() * 10 : 55 + Math.random() * 30;
     }
     return;

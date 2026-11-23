@@ -1,9 +1,10 @@
+import { loadMessageFrame } from './core/message-frame.js';
 import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
-import { refreshStats } from './core/stats.js';
+import { labels } from './core/stats.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
-import { loadUpgrades, applyUpgrade } from './data/upgrades.js';
+import { loadUpgrades, applyUpgrade, rewardBonuses } from './data/upgrades.js';
 import { loadHud } from './core/hud.js';
 import { loadBiomes } from './data/biomes.js';
 import { DEFAULT_DEX, FADE_MS, TILE } from './core/constants.js';
@@ -22,6 +23,8 @@ const EMBEDDED_APP = `
       #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
       #rewards .line-bonus { align-self:end; width:100%; padding-top:6px; border-top:1px solid #748493; color:#a7e9e2; }
       #rewards img.essence { width:24px; }
+      #nearby { position:absolute; right:8px; bottom:8px; box-sizing:border-box; width:max-content; max-width:min(57vw,380px); max-height:40vh; overflow:auto; padding:4px; border:12px solid transparent; border-image-repeat:stretch; background:rgb(0 0 0 / 50%) padding-box; }
+      #nearby p { margin:3px 0; }
       #roster { position:absolute; right:8px; top:68px; color:#eef6ff; background:#101a25e8; border-radius:6px; max-width:44vw; max-height:60vh; overflow:auto; padding:6px 9px; font-size:12px; }
       #roster summary { cursor:pointer; font-weight:600; }
       #roster ul { list-style:none; margin:6px 0 0; padding:0; }
@@ -36,6 +39,7 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
+    <aside id="nearby" hidden aria-live="polite"></aside>
     <details id="roster" open><summary>Pokémon del piso</summary><ul></ul></details>
     <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
@@ -79,13 +83,13 @@ async function nextLevel() {
       const biome = sample(game.biomes.filter(b => b.id !== m.biome.id));
       const next = newMission(m.number + 1, biome);
       await changeBiome(biome);
-      await loadLevel(option?.row.dex ?? game.player.dex, next, 1);
+      const reward = option && game.catalog.find(item => item.id === option.row.mejora);
+      const bonuses = rewardBonuses(game.player.bonuses, option, reward);
+      await loadLevel(option?.row.dex ?? game.player.dex, next, 1, bonuses);
       if (option) {
-        const ids = [option.row.mejora, option.bonus].filter(Boolean);
-        for (const id of ids) applyUpgrade(game.player.baseStats, game.catalog.find(r => r.id === id));
-        refreshStats(game.player);
+        if (reward.effect === 'runPerk') applyUpgrade(bonuses, reward);
         game.formEssence = option.essence;
-        console.info('[Ditto] Transformación', option.row.name, ids);
+        console.info('[Ditto] Transformación', option.row.name, reward.id);
       }
     }
     if (document.hasFocus()) game.canvas.focus();
@@ -105,12 +109,36 @@ function updateRoster() {
   const list = document.querySelector('#roster ul');
   const rows = game.entities.map(e => {
     const name = game.pokemon.get(e.dex).name + (e.isPlayer ? ' (tú)' : e.boss ? ' (líder)' : '');
-    return name + ' · PV ' + e.hp + '/' + e.stats.hpMax + ' · Daño ' + e.stats.atkdmg;
+    return name + ' · Nv. ' + e.level + ' · HP ' + e.hp + '/' + e.stats.hpMax +
+      ' · ' + ['attack', 'defense', 'speed'].map(k => labels[k] + ' ' + e.stats[k]).join(' · ');
   });
   const signature = rows.join('|');
   if (list.dataset.signature === signature) return;
   list.dataset.signature = signature;
   list.replaceChildren(...rows.map(text => { const li=document.createElement('li'); li.textContent=text; return li; }));
+}
+
+// Agrupa duplicados y actualiza el panel solo al entrar o salir de su radio.
+function updateNearby() {
+  const panel = document.getElementById('nearby');
+  const counts = new Map();
+  for (const drop of game.drops) {
+    if (Math.hypot(drop.x - game.player.x, drop.y - game.player.y) <= 3 * TILE)
+      counts.set(drop.id, (counts.get(drop.id) || 0) + 1);
+  }
+  const goal = game.portal;
+  if (goal?.kind === 'objective' && Math.hypot((goal.x + .5) * TILE - game.player.x, (goal.y + .5) * TILE - game.player.y) <= 3 * TILE)
+    counts.set('objective', 1);
+  const signature = JSON.stringify([...counts]);
+  if (panel.dataset.signature === signature) return;
+  panel.dataset.signature = signature;
+  panel.hidden = !counts.size;
+  panel.replaceChildren(...Array.from(counts, ([id, count]) => {
+    const p = document.createElement('p');
+    const item = game.items[id] ?? { name: 'Objeto de misión', description: 'Recógelo para desbloquear el teletransportador.' };
+    p.textContent = item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
+    return p;
+  }));
 }
 
 function frame() {
@@ -122,6 +150,7 @@ function frame() {
       (entity) => entity.hp > 0 || now - entity.deathAt < FADE_MS,
     );
     updateRoster();
+    updateNearby();
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
@@ -160,6 +189,7 @@ export async function startGame({
   root.__pokeWalkCleanup?.();
   resetGameState();
   mountApp(root);
+  void loadMessageFrame(root.querySelector('#nearby'));
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
   game.loadingEl = document.getElementById('loading');

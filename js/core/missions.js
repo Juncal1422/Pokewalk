@@ -90,7 +90,7 @@ export function rewardOptions() {
     const row = sample(family.length ? family : available);
     if (!row) continue;
     used.add(row.dex);
-    choices.push({ row, essence: id, bonus: game.formEssence && current.root === row.root ? game.pokemon.get(row.root)?.mejora : null });
+    choices.push({ row, essence: id, bonus: hasBonus(row) });
     if (choices.length === 3) break;
   }
   // Con dos o más bajas de la misma esencia aún podemos ofrecer tres especies
@@ -103,7 +103,7 @@ export function rewardOptions() {
       const [row] = remaining.splice(index, 1);
       if (used.has(row.dex)) continue;
       used.add(row.dex);
-      choices.push({ row, essence: choice.essence, bonus: game.formEssence && current.root === row.root ? game.pokemon.get(row.root)?.mejora : null });
+      choices.push({ row, essence: choice.essence, bonus: hasBonus(row) });
     }
   }
   return choices;

@@ -1,7 +1,6 @@
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
-import { sizeScale, rangeScale } from './stats.js';
-import { DIR_VEC, ATTACK_RANGE, FADE_MS, MAP_H, MAP_W, MAX_CHARGE_FRAMES, RTILE, ZOOM } from './constants.js';
+import { FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
 const tilesets = new Map();
@@ -126,51 +125,30 @@ export function draw() {
     ctx.ellipse(px, py + 7, 15, 7, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    if (entity.state === 'Charge') {
-      const ratio = (entity.chargeTime % MAX_CHARGE_FRAMES) / MAX_CHARGE_FRAMES;
-      const pulse = 18 + Math.sin(Date.now() / 65) * 4 + ratio * 8;
-      ctx.strokeStyle = entity.chargeTime >= MAX_CHARGE_FRAMES ? '#facc15' : '#38bdf8';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.ellipse(px, py + 7, pulse, pulse * 0.5, 0, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-
     const animation = entity.anims[entity.state] || entity.anims.Idle;
-    const scale = ZOOM * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
+    const scale = ZOOM * (entity.boss ? 2 : 1);
     const drawW = animation.fw * scale, drawH = animation.fh * scale;
-    // El alcance extra desplaza solo el dibujo del ataque, nunca el cuerpo físico.
-    const phase = (entity.frame + entity.timer / (animation.durs[entity.frame] || 8)) / animation.frames;
-    const extension = entity.state === 'Attack'
-      ? Math.sin(Math.PI * Math.min(1, phase)) * ATTACK_RANGE * (rangeScale(entity.stats.range) - 1) * ZOOM : 0;
-    const [vx, vy] = DIR_VEC[entity.dir];
     const row = Math.min(
       entity.dir,
       Math.floor(animation.img.height / animation.fh) - 1,
     );
+    const elapsed = performance.now() - entity.lastHit;
+    ctx.save();
+    if (entity.isPlayer && elapsed < 200 && Math.floor(elapsed / 40) % 2) ctx.globalAlpha *= 0.28;
+    if (elapsed < 110) ctx.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
     ctx.drawImage(
       animation.img,
       entity.frame * animation.fw,
       row * animation.fh,
       animation.fw,
       animation.fh,
-      Math.floor(px + vx * extension - drawW / 2),
-      Math.floor(py + vy * extension - drawH / 2),
+      Math.floor(px - drawW / 2),
+      Math.floor(py - drawH / 2),
       drawW,
       drawH,
     );
 
-    if (entity.isPlayer && entity.state === 'Charge') {
-      const ratio = (entity.chargeTime % MAX_CHARGE_FRAMES) / MAX_CHARGE_FRAMES,
-        width = 44,
-        height = 5;
-      const x = px - width / 2,
-        y = py - drawH / 2 - 12;
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-      ctx.fillRect(x - 1, y - 1, width + 2, height + 2);
-      ctx.fillStyle = entity.chargeTime >= MAX_CHARGE_FRAMES ? '#facc15' : '#38bdf8';
-      ctx.fillRect(x, y, Math.floor(width * ratio), height);
-    }
+    ctx.restore();
     if (!entity.isPlayer && performance.now() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;
       const x = px - 19, y = Math.round(py - drawH / 2 - 7);
@@ -178,6 +156,17 @@ export function draw() {
       ctx.fillRect(x, y, 38, 6);
       ctx.fillStyle = fraction < 0.25 ? '#ef5350' : fraction <= 0.5 ? '#ffd54f' : '#66cf77';
       ctx.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
+    }
+    const hit = entity.hitNumber;
+    if (hit && performance.now() - hit.time < 750) {
+      const rise = (performance.now() - hit.time) / 45;
+      ctx.font = 'bold 17px system-ui';
+      ctx.textAlign = 'center';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#231720';
+      ctx.fillStyle = hit.critical ? '#ff9c36' : '#fff';
+      ctx.strokeText(hit.damage, px, py - drawH / 2 - rise);
+      ctx.fillText(hit.damage, px, py - drawH / 2 - rise);
     }
     if (entity.missUntil > performance.now()) ctx.drawImage(missImage, px - 15, py - drawH / 2 - 22, 30, 16);
     ctx.restore();

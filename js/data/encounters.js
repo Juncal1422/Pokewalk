@@ -1,4 +1,4 @@
-import { initialStats, clampStat } from '../core/stats.js';
+import { labels } from '../core/stats.js';
 
 async function readData(filename) {
   const result = await fetch(new URL(filename, import.meta.url));
@@ -13,7 +13,7 @@ export async function loadEncountersCatalog(upgrades) {
   const rewards = new Set(upgrades.map(item => item.id));
   for (const row of rows) {
     if (pokemon.has(row.dex) || !rewards.has(row.mejora) || !row.drops.every(id => Object.hasOwn(items, id)) ||
-        !Object.keys(initialStats()).every(k => Number.isInteger(row.stats[k]) && clampStat(k,row.stats[k]) === row.stats[k])) {
+        !Number.isInteger(row.maxLevel) || row.maxLevel < 1 || !Object.keys(labels).every(k => Number.isInteger(row.stats[k]) && row.stats[k] > 0)) {
       throw new Error('Ficha Pokémon inválida: ' + row.dex);
     }
     pokemon.set(row.dex, row);

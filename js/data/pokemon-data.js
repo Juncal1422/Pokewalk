@@ -62,7 +62,7 @@ export async function loadPokemonData(dex) {
       'text/xml',
     );
     const animations = Array.from(documentXml.getElementsByTagName('Anim'));
-    const [walk, idle, attack, hurt, charge] = await Promise.all([
+    const [walk, idle, attack, hurt] = await Promise.all([
       fetchAnimation(baseUrl, animations, ['Walk', 'Idle']),
       fetchAnimation(baseUrl, animations, ['Idle', 'Walk']),
       fetchAnimation(baseUrl, animations, [
@@ -74,12 +74,6 @@ export async function loadPokemonData(dex) {
         'Walk',
       ]),
       fetchAnimation(baseUrl, animations, ['Hurt', 'Faint', 'Idle']),
-      fetchAnimation(baseUrl, animations, [
-        'Charge',
-        'DeepBreath',
-        'Withdraw',
-        'Idle',
-      ]),
     ]);
     if (!walk) return null;
     const data = {
@@ -90,7 +84,6 @@ export async function loadPokemonData(dex) {
         Idle: idle || walk,
         Attack: attack || walk,
         Hurt: hurt || idle || walk,
-        Charge: charge || idle || walk,
       },
     };
     console.debug('[Sprites] Animaciones preparadas', dex, Object.keys(data.anims));

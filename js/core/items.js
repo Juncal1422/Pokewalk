@@ -1,6 +1,6 @@
 import { TILE } from './constants.js';
 import { game } from './state.js';
-import { clampStat, refreshStats } from './stats.js';
+import { statsFor } from './stats.js';
 
 const images = new Map();
 export async function loadItemImages(items) {
@@ -39,10 +39,10 @@ export function collectItems(player) {
     console.info('[Objeto] Recogido', item.name, item.duration);
     for (const [key, delta] of Object.entries(item.stats)) {
       if (item.duration === 'floor') player.floorStats[key] = (player.floorStats[key] || 0) + delta;
-      else player.baseStats[key] = clampStat(key, player.baseStats[key] + delta);
+      else player.bonuses[key] += delta;
     }
     const previous = { ...player.stats, hp: player.hp };
-    refreshStats(player);
+    player.stats = statsFor(game.pokemon.get(player.dex), game.progress, player.bonuses, player.floorStats);
     player.hp = Math.min(player.stats.hpMax, player.hp + item.heal);
     const now = performance.now();
     for (const key of [...Object.keys(item.stats), 'hp']) {

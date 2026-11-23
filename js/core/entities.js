@@ -6,16 +6,14 @@ import {
   BODY_RADIUS,
   ATTACK_RANGE,
   AI_SPEED,
-  DEFAULT_DEX,
   DIR_MAP,
   DIR_VEC,
-  MAX_CHARGE_FRAMES,
   PLAYER_SPEED,
   TILE,
   MAP_W,
   MAP_H,
 } from './constants.js';
-import { initialStats, rate, sizeScale, rangeScale, scaledStat, refreshStats } from './stats.js';
+import { statsFor, emptyBonuses, movementRate, levelFor, damageFor } from './stats.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -30,7 +28,8 @@ export function showToast(message) {
 }
 
 export function createEntity(data, room, isPlayer) {
-  const stats = isPlayer ? initialStats() : { ...game.pokemon.get(data.dex).stats };
+  const species = game.pokemon.get(data.dex);
+  const stats = statsFor(species, game.progress);
   return {
     isPlayer,
     dex: data.dex,
@@ -47,9 +46,8 @@ export function createEntity(data, room, isPlayer) {
     lastHit: -Infinity,
     deathAt: null,
     impactPending: false,
-    chargeTime: 0,
+    level: levelFor(species, game.progress),
     speed: isPlayer ? PLAYER_SPEED : AI_SPEED,
-    aiDir: [0, 0],
     aiTimer: 45,
     atkCooldown: 120 + Math.floor(Math.random() * 140),
   };
@@ -63,10 +61,7 @@ export function setState(entity, state) {
   }
 }
 
-// El radio físico deja margen en los pasillos de una casilla hasta tamaño 15.
-function bodyRadius(entity) {
-  return Math.min(TILE / 2 - 1, BODY_RADIUS * sizeScale(entity.stats)) * (entity.boss ? 2 : 1);
-}
+function bodyRadius(entity) { return BODY_RADIUS * (entity.boss ? 2 : 1); }
 
 function terrainFree(entity, x, y) {
   const radius = bodyRadius(entity);
@@ -103,19 +98,15 @@ export function canMove(entity, x, y) {
 export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
   if (attacker.hp === 0) return;
-  // Las barras completas se liquidan una sola vez en el fotograma de impacto.
-  const bars = attacker.state === 'Charge' ? Math.floor(attacker.chargeTime / MAX_CHARGE_FRAMES) : 0;
-  attacker.attackDamage = attacker.stats.atkdmg + bars * attacker.stats.chargedmg;
-  attacker.chargeTime = 0;
   attacker.impactPending = true;
   setState(attacker, 'Attack');
 }
 
 // Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
-function resolveImpact(attacker, damage = attacker.attackDamage ?? attacker.stats.atkdmg) {
+function resolveImpact(attacker) {
   attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
-  const reach = ATTACK_RANGE * rangeScale(attacker.stats.range);
+  const reach = ATTACK_RANGE;
   for (const target of game.entities) {
     if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
     // Distancia al segmento frontal: al ampliar el alcance siguen entrando
@@ -124,13 +115,17 @@ function resolveImpact(attacker, damage = attacker.attackDamage ?? attacker.stat
     const distance = dx * vx + dy * vy;
     if (distance <= 0) continue;
     const along = Math.min(reach, distance);
-    if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS * (1 + sizeScale(target.stats) * (target.boss ? 2 : 1))) continue;
+    if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS + bodyRadius(target)) continue;
+    const now = performance.now();
+    if (target.isPlayer && now - target.lastHit < 200) continue;
     const dodge = .05 + (target.isPlayer ? game.perks.dodge : 0);
     if (Math.random() < dodge) {
       target.missUntil = performance.now() + 750;
       continue;
     }
-    target.chargeTime = 0;
+    const critical = Math.random() < 0.10;
+    const damage = Math.min(target.hp, damageFor(attacker, target, critical));
+    target.hitNumber = { damage, critical, time: now };
     target.hp = Math.max(0, target.hp - damage);
     target.lastHit = performance.now();
     target.frame = target.timer = 0;
@@ -150,15 +145,8 @@ function resolveImpact(attacker, damage = attacker.attackDamage ?? attacker.stat
   }
 }
 
-export function startCharge() {
-  if (!game.player || ['Attack', 'Hurt', 'Charge'].includes(game.player.state))
-    return;
-  setState(game.player, 'Charge');
-  game.player.chargeTime = 0;
-}
-
 // Precargamos todos los sprites antes de sustituir el piso actual.
-export async function loadLevel(dex, mission, floor) {
+export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonuses ?? emptyBonuses()) {
   const ids = encounters(mission, floor);
   const [playerData, ...opponents] = await Promise.all([dex, ...ids].map(loadPokemonData));
   if (!playerData || opponents.some(data => !data)) throw new Error('No se pudieron cargar los Pokémon de este piso.');
@@ -170,11 +158,12 @@ export async function loadLevel(dex, mission, floor) {
   game.mission = mission;
   game.floor = floor;
   game.adventure = mission.number - 1;
+  game.progress = old ? game.progress + 1 : 5;
   const player = createEntity(playerData, game.rooms[0], true);
-  player.adventure = game.adventure;
-  player.baseStats = old?.baseStats ?? initialStats();
+  player.bonuses = bonuses;
   player.floorStats = {};
-  refreshStats(player);
+  player.stats = statsFor(game.pokemon.get(dex), game.progress, bonuses);
+  if (!old) game.initialHP = player.stats.hpMax;
   player.hp = old ? Math.min(player.stats.hpMax, Math.max(1,
     Math.round(old.hp * player.stats.hpMax / old.stats.hpMax))) : player.stats.hpMax;
   game.player = player;
@@ -183,15 +172,8 @@ export async function loadLevel(dex, mission, floor) {
   opponents.forEach((data, index) => {
     const enemy = createEntity(data, game.rooms[index * 2 + 1], false);
     enemy.boss = bossFloor;
-    for (const key of Object.keys(enemy.stats)) enemy.stats[key] = scaledStat(key, enemy.stats[key], game.adventure);
-    if (enemy.boss) {
-      // Después del escalado de aventura, el líder tiene más aguante y presión ofensiva.
-      for (const [key, factor] of Object.entries({ hpMax: 3, atkdmg: 2, chargedmg: 2 })) {
-        enemy.stats[key] = Math.min(Number.MAX_SAFE_INTEGER, enemy.stats[key] * factor);
-      }
-      for (const key of ['speed', 'atkspeed', 'range', 'chargespeed']) {
-        enemy.stats[key] = Math.min(15, enemy.stats[key] + 2);
-      }
+    enemy.stats = statsFor(game.pokemon.get(data.dex), game.progress, {}, {}, bossFloor);
+    if (bossFloor) {
       enemy.tracking = true;
       enemy.atkCooldown = 0;
     }
@@ -207,7 +189,7 @@ function moveEntity(entity, dx, dy) {
   if (dx === 0 && dy === 0) return;
   entity.dir = DIR_MAP[[Math.sign(dx),Math.sign(dy)]] ?? entity.dir;
   const length = Math.hypot(dx, dy);
-  const speed = entity.isPlayer ? entity.speed * rate(entity.stats.speed) : Math.min(length, entity.speed * rate(entity.stats.speed));
+  const speed = entity.isPlayer ? entity.speed * movementRate(entity.stats.speed) : Math.min(length, entity.speed * movementRate(entity.stats.speed));
   const vx = (dx / length) * speed, vy = (dy / length) * speed;
   if (canMove(entity, entity.x + vx, entity.y)) entity.x += vx;
   if (canMove(entity, entity.x, entity.y + vy)) entity.y += vy;
@@ -221,11 +203,7 @@ export function updateEntity(entity) {
     if (game.keys.s || game.keys.arrowdown) dy++;
     if (game.keys.a || game.keys.arrowleft) dx--;
     if (game.keys.d || game.keys.arrowright) dx++;
-    if (entity.state === 'Charge') {
-      if (dx || dy) entity.dir = DIR_MAP[`${dx},${dy}`] ?? entity.dir;
-      entity.chargeTime += rate(entity.stats.chargespeed);
-
-    } else if (!['Attack', 'Hurt'].includes(entity.state)) {
+    if (!['Attack', 'Hurt'].includes(entity.state)) {
       if (dx || dy) {
         setState(entity, 'Walk');
         moveEntity(entity, dx, dy);
@@ -236,8 +214,7 @@ export function updateEntity(entity) {
   }
 
   const animation = entity.anims[entity.state] || entity.anims.Idle;
-  const tempo = entity.state === 'Walk' ? rate(entity.stats.speed) :
-    entity.state === 'Attack' ? rate(entity.stats.atkspeed) : 1;
+  const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) : 1;
   entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED * tempo;
   const duration =
     (animation.durs[entity.frame] || 8) + (entity.state === 'Hurt' ? 2 : 0);
