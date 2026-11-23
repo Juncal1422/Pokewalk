@@ -6,23 +6,27 @@ const layouts = {
 };
 export const sample = list => list[Math.floor(Math.random() * list.length)];
 
-export function eligible(row, number, boss = false) {
-  if (boss) {
-    if (number <= 6) return row.final && [2, 3].includes(row.stage);
-    if (number <= 16) return row.mythical || (row.final && row.stage === 3);
-    return row.legendary;
-  }
-  if (row.legendary || row.mythical) return false;
-  if (number <= 6) return row.stage === 1 && !row.final;
-  if (number <= 16) return row.stage === 2 || (row.stage === 1 && row.final);
-  return row.final;
+// El presupuesto crece de forma continua. Dentro del bioma se eligen especies
+// cercanas a ese presupuesto por sus bases de combate y su coste evolutivo.
+function encounterPool(biome, adventure, boss) {
+  const target = (boss ? 310 : 155) + adventure * (boss ? 4.5 : 4);
+  const ranked = biome.wild.map(id => game.pokemon.get(id))
+    .filter(row => (row.stage < 3 || adventure >= 50) &&
+      (boss ? row.final : !row.legendary && !row.mythical))
+    .map(row => {
+      const s = row.stats;
+      const strength = s.hpMax + s.attack + s.defense + s.speed + 2 * row.evolutionCost +
+        (row.legendary || row.mythical ? 55 : 0);
+      return { id: row.dex, distance: Math.abs(strength - target) };
+    }).sort((a, b) => a.distance - b.distance);
+  return ranked.slice(0, boss ? 8 : 28).map(entry => entry.id);
 }
 
 export function newMission(number, biome) {
   const type = number % 4 === 0 ? 'leader' : sample(['retrieve', 'clear', 'hunt']);
   const [name, pasillos, habitaciones, cruces] = layouts[type];
   const floors = type === 'leader' ? 1 : 1 + Math.floor(Math.random() * Math.min(20, number + 2));
-  const pool = biome.wild.filter(id => eligible(game.pokemon.get(id), number));
+  const pool = encounterPool(biome, number - 1, type === 'leader');
   const target = type === 'hunt' ? sample(pool) : null;
   const layout = { pasillos, habitaciones, cruces };
   for (const key of Object.keys(layout)) layout[key] += biome.layoutModifier[key];
@@ -35,7 +39,7 @@ export function newMission(number, biome) {
 // Una presa garantizada por piso permite completar cualquier cuota de caza.
 export function encounters(m, floor) {
   if (m.type === 'leader' && floor === m.floors) {
-    return [sample(m.biome.wild.filter(id => eligible(game.pokemon.get(id), m.number, true)))];
+    return [sample(m.pool)];
   }
   const ids = m.target ? [m.target] : [];
   while (ids.length < 4) ids.push(sample(m.pool.filter(id => !ids.includes(id))));
@@ -75,6 +79,7 @@ export function rewardOptions() {
   const defeated = [...new Set(m.defeated)].map(id => game.pokemon.get(id));
   // Solo cuentan las esencias de un tipo individual. No se consumen al evolucionar.
   function unlocked(row) {
+    if (row.stage >= 3 && m.number < 50) return false;
     if (row.root !== current.root || row.stage <= current.stage) return true;
     const rule = current.evolutions.find(rule => rule.to === row.dex);
     return !!rule && rule.essences.some(id => (game.essences[id] || 0) >= rule.amount);

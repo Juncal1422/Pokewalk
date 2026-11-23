@@ -58,7 +58,7 @@ function recoverOnLand(enemy, canMove) {
   if (dest) [enemy.x, enemy.y] = dest;
 }
 
-// Tras dos impactos cercanos, prueba ambos flancos. Cada paso comprueba cuerpos,
+// Tras un MISS, elige un flanco. Cada paso comprueba cuerpos,
 // paredes y tierra firme antes de mover al enemigo.
 export function trySidestep(enemy, attacker, canMove, now) {
   if (now < (enemy.evadeAfter ?? 0)) return false;
@@ -75,12 +75,11 @@ export function trySidestep(enemy, attacker, canMove, now) {
       distance = d;
     }
     if (distance < TILE / 2) continue;
-    enemy.x += sx * distance;
-    enemy.y += sy * distance;
+    enemy.sidestep = { sx, sy, remaining: distance };
     enemy.path = [];
     enemy.aimSince = null;
     enemy.tracking = true;
-    enemy.counterUntil = now + 1400;
+
     enemy.evadeAfter = now + 2600;
     return true;
   }
@@ -88,6 +87,24 @@ export function trySidestep(enemy, attacker, canMove, now) {
 }
 
 export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove) {
+  // Se ejecuta solo cuando Hurt y Attack han terminado. Revalida el tramo
+  // en cada fotograma porque otro combatiente puede ocuparlo durante la esquiva.
+  if (enemy.sidestep) {
+    const step = enemy.sidestep;
+    const length = Math.min(2, step.remaining);
+    const x = enemy.x + length * step.sx, y = enemy.y + length * step.sy;
+    if (land(cell(x), cell(y)) && canMove(enemy, x, y)) {
+      setState(enemy, 'Walk');
+      enemy.x = x;
+      enemy.y = y;
+      step.remaining -= length;
+    } else step.remaining = 0;
+    if (step.remaining <= 0) {
+      enemy.sidestep = null;
+      enemy.counterUntil = performance.now() + 1400;
+    }
+    return;
+  }
   const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
   const reach = enemy.stats.range;
   const distance = Math.hypot(dx, dy);

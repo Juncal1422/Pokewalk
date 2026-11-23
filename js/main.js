@@ -1,7 +1,7 @@
 import { loadMessageFrame } from './core/message-frame.js';
 import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
-import { element, gem, portrait } from './core/pokemon-panel.js';
+import { element, tones, portrait } from './core/pokemon-panel.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
 import { loadUpgrades, applyUpgrade, rewardBonuses } from './data/upgrades.js';
@@ -25,32 +25,32 @@ const EMBEDDED_APP = `
       #poke-walk-app .portrait, #poke-walk-app .essence { image-rendering:pixelated; vertical-align:middle; }
       #poke-walk-app .essence { width:16px; height:16px; }
       #roster { position:absolute; top:62px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:12px; }
-      #roster summary { cursor:pointer; background:#172330dd; padding:3px 7px; }
       #roster ul { margin:4px 0; padding:0; list-style:none; display:grid; gap:3px; }
       #roster li, #rewards button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
       #roster li { display:grid; grid-template-columns:32px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
-      #roster .portrait { width:32px; grid-row:span 3; }
-      #roster li div { display:flex; gap:2px; }
+      #roster .portrait { width:32px; grid-row:span 2; }
       #rewards { padding:4px; max-width:96vw; max-height:92dvh; overflow:auto; background:transparent; border:0; color:white; }
       #rewards::backdrop { background:#080d16b0; }
       #rewards h1 { margin:0 0 5px; font:600 17px system-ui; text-align:center; }
       #rewards .cards { display:flex; gap:5px; align-items:stretch; }
-      #rewards button { flex:1 1 0; width:clamp(94px,29vw,162px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px; background-color:#223040; color:white; font:12px/1.22 system-ui; cursor:pointer; }
+      #rewards button { flex:1 1 0; width:clamp(100px,30vw,218px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:15px/1.32 system-ui; cursor:pointer; }
       #rewards button:focus-visible, #rewards button:hover { outline:2px solid #d4efff; outline-offset:-4px; }
-      #rewards .portrait { width:42px; height:42px; }
+      #rewards .portrait { width:64px; height:64px; }
       #rewards table { width:100%; margin:4px 0; border-collapse:collapse; font:inherit; font-variant-numeric:tabular-nums; }
       #rewards td { padding:2px 1px; text-align:right; border-bottom:1px solid #ffffff24; }
       #rewards td:first-child { text-align:left; }
       #rewards .evolutions { width:100%; margin-top:auto; text-align:left; font-size:10px; }
       #rewards .evolutions div { display:flex; align-items:center; gap:2px; }
       #rewards progress { flex:1; min-width:8px; height:7px; accent-color:#a4ddab; }
-      @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:10px; } }
+      #rewards .keep-form { width:auto; margin:8px auto 0; flex-direction:row; gap:8px; }
+      #rewards .keep-form .portrait { width:32px; height:32px; }
+      @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:12px; } }
       #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" hidden aria-live="polite"></aside>
-    <details id="roster" open><summary>Pokémon del piso</summary><ul></ul></details>
+    <aside id="roster" aria-label="Pokémon del piso"><ul></ul></aside>
     <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
 
@@ -127,9 +127,12 @@ function updateRoster() {
       li = element('li');
       li.combatant = enemy;
       enemy.rosterCard = li;
-      const drops = element('div');
-      drops.append(...row.essences.map(gem));
-      li.append(portrait(row), element('strong', row.name + (enemy.boss ? ' · Líder' : '')), element('span'), drops);
+      const [first, second] = row.essences;
+      li.style.backgroundColor = tones[first];
+      if (second) li.style.backgroundImage = 'linear-gradient(135deg,' + tones[first] + ' 50%,' + tones[second] + ' 50%)';
+      li.setAttribute('aria-label', row.name + ' · ' + row.essences.join(', '));
+      li.title = row.essences.join(' / ');
+      li.append(portrait(row), element('strong', row.name + (enemy.boss ? ' · Líder' : '')), element('span'));
       list.append(li);
     }
     const stats = 'HP ' + enemy.hp + '/' + enemy.stats.hpMax + ' · ATQ ' + enemy.stats.attack + ' · DEF ' + enemy.stats.defense;

@@ -124,18 +124,16 @@ function resolveImpact(attacker) {
     if (target.isPlayer && now - target.lastHit < PLAYER_GRACE_MS) continue;
     const dodge = .05 + (target.isPlayer ? game.perks.dodge : 0);
     if (Math.random() < dodge) {
-      target.missUntil = performance.now() + 750;
+      target.missUntil = now + 750;
+      if (attacker.isPlayer && !target.isPlayer) trySidestep(target, attacker, canMove, now);
       continue;
     }
     const critical = Math.random() < 0.10;
     const damage = Math.min(target.hp, damageFor(attacker, target, critical));
     target.hitNumber = { damage, critical, time: now };
     target.hp = Math.max(0, target.hp - damage);
-    const pinned = !target.isPlayer && attacker.isPlayer && now - target.lastHit < 1400 &&
-      Math.hypot(target.x - target.hitX, target.y - target.hitY) < TILE;
     target.lastHit = now;
-    target.hitX = target.x;
-    target.hitY = target.y;
+    target.sidestep = null;
     target.frame = target.timer = 0;
     target.impactPending = false;
     setState(target, 'Hurt');
@@ -145,10 +143,6 @@ function resolveImpact(attacker) {
         onDefeat(target, attacker);
         dropItem(target, attacker);
       }
-    }
-    if (target.hp > 0 && pinned && trySidestep(target, attacker, canMove, now)) {
-      setState(target, 'Walk');
-      continue;
     }
     if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
       target.x += vx * 10;

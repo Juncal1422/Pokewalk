@@ -29,9 +29,9 @@ export function statsFor(species, progress, bonuses = {}, boss = false) {
     if (boss) {
       // progress = misión + 4. Los límites suben al empezar cada bloque de cuatro misiones.
       const tier = Math.max(0, Math.floor((progress - 5) / 4));
-      const limits = { hpMax: 38 + tier * 7, attack: 16 + tier * 4, defense: 16 + tier * 4,
+      const limits = { hpMax: 38 + tier * 12, attack: 16 + tier * 10, defense: 16 + tier * 7,
         speed: 20 + tier * 5, attackSpeed: 16 + tier * 3, size: 185 + tier * 2, range: 30 + tier };
-      const factors = { hpMax: 1.5, attack: 1.15, defense: 1.15, speed: 1.1, attackSpeed: 1.1, size: 1.45, range: 1.15 };
+      const factors = { hpMax: 1.5 + Math.min(1, tier * 0.12), attack: 1.15 + Math.min(0.95, tier * 0.14), defense: 1.15 + Math.min(0.5, tier * 0.075), speed: 1.1, attackSpeed: 1.1, size: 1.45, range: 1.15 };
       value = Math.min(limits[key], Math.ceil(value * factors[key]));
     }
     value += bonuses[key] || 0;
@@ -42,7 +42,7 @@ export function statsFor(species, progress, bonuses = {}, boss = false) {
 }
 
 export function damageFor(attacker, target, critical) {
-  const power = 40;
+  const power = attacker.boss ? 40 + Math.min(30, Math.max(0, attacker.level - 8)) : 40;
   const base = Math.floor((2 * attacker.level / 5 + 2) * power * attacker.stats.attack / target.stats.defense / 50) + 2;
   const damage = Math.floor(base * (critical ? 1.5 : 1));
   // Protección para formas frágiles, incluso ante un crítico de un jefe tardío.

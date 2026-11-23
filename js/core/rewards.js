@@ -1,12 +1,7 @@
 import { game } from './state.js';
 import { labels, statsFor, levelFor } from './stats.js';
 import { rewardBonuses } from '../data/upgrades.js';
-import { element, gem, portrait } from './pokemon-panel.js';
-
-const tones = { normal:'#494641', fire:'#622821', water:'#203d61', electric:'#554519',
-  grass:'#244b30', ice:'#285059', fighting:'#532e28', poison:'#482951', ground:'#53412b',
-  flying:'#35455e', psychic:'#582e4d', bug:'#414b23', rock:'#4b4232', ghost:'#392e50',
-  dragon:'#302e62', dark:'#343037', steel:'#36454b' };
+import { element, gem, portrait, tones } from './pokemon-panel.js';
 
 function evolutionBars(row) {
   const footer = element('div');
@@ -63,13 +58,23 @@ export function chooseReward(options, catalog) {
   const cards = dialog.querySelector('.cards');
   cards.replaceChildren();
   return new Promise(resolve => {
-    for (const option of options.length ? options : [null]) {
-      const card = option ? rewardCard(option, catalog) : element('button', 'Continuar con la forma actual');
+    for (const option of options) {
+      const card = rewardCard(option, catalog);
       card.onclick = () => {
         dialog.close();
         resolve(option);
       };
       cards.append(card);
+    }
+    dialog.querySelector('.keep-form')?.remove();
+    if (!options.some(option => option.row.dex === game.player.dex)) {
+      const current = game.pokemon.get(game.player.dex);
+      const keep = element('button', 'Mantener ' + current.name);
+      keep.type = 'button';
+      keep.className = 'keep-form';
+      keep.prepend(portrait(current));
+      keep.onclick = () => { dialog.close(); resolve(null); };
+      cards.after(keep);
     }
     dialog.oncancel = event => event.preventDefault();
     dialog.showModal();

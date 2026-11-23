@@ -25,3 +25,8 @@ export function element(tag, text) {
   if (text !== undefined) node.textContent = text;
   return node;
 }
+
+export const tones = { normal:'#494641', fire:'#622821', water:'#203d61', electric:'#554519',
+  grass:'#244b30', ice:'#285059', fighting:'#532e28', poison:'#482951', ground:'#53412b',
+  flying:'#35455e', psychic:'#582e4d', bug:'#414b23', rock:'#4b4232', ghost:'#392e50',
+  dragon:'#302e62', dark:'#343037', steel:'#36454b' };
