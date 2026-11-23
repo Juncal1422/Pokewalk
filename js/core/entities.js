@@ -1,6 +1,6 @@
 import { updateEnemy } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
-import { dropItem } from './items.js';
+import { dropItem, spawnFloorPotion } from './items.js';
 import {
   ANIM_SPEED,
   BODY_RADIUS,
@@ -63,10 +63,15 @@ export function setState(entity, state) {
   }
 }
 
+// El radio físico deja margen en los pasillos de una casilla hasta tamaño 15.
+function bodyRadius(entity) {
+  return Math.min(TILE / 2 - 1, BODY_RADIUS * sizeScale(entity.stats)) * (entity.boss ? 2 : 1);
+}
+
 function terrainFree(entity, x, y) {
-  const radius = BODY_RADIUS * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
+  const radius = bodyRadius(entity);
   const species = game.pokemon.get(entity.dex);
-  const crosses = game.currentBiome.canCross.some(skill => species[skill]);
+  const crosses = !game.bossArena && game.currentBiome.canCross.some(skill => species[skill]);
   for (const [offsetX, offsetY] of [
     [-radius, -radius],
     [radius, -radius],
@@ -89,10 +94,10 @@ function terrainFree(entity, x, y) {
 
 export function canMove(entity, x, y) {
   if (!terrainFree(entity, x, y)) return false;
-  const radius = BODY_RADIUS * sizeScale(entity.stats) * (entity.boss ? 2 : 1);
+  const radius = bodyRadius(entity);
   // Movimiento y retroceso comparten el mismo cuerpo circular.
   return !game.entities.some(other => other !== entity && other.hp > 0 &&
-    Math.hypot(other.x - x, other.y - y) < radius + BODY_RADIUS * sizeScale(other.stats) * (other.boss ? 2 : 1));
+    Math.hypot(other.x - x, other.y - y) < radius + bodyRadius(other));
 }
 
 export function triggerAttack(attacker) {
@@ -159,6 +164,7 @@ export async function loadLevel(dex, mission, floor) {
   if (!playerData || opponents.some(data => !data)) throw new Error('No se pudieron cargar los Pokémon de este piso.');
   const old = game.player;
   const bossFloor = mission.type === 'leader' && floor === mission.floors;
+  game.bossArena = bossFloor;
   generateDungeon({ ...mission.layout, open: bossFloor });
   game.portal = null;
   game.mission = mission;
@@ -178,10 +184,21 @@ export async function loadLevel(dex, mission, floor) {
     const enemy = createEntity(data, game.rooms[index * 2 + 1], false);
     enemy.boss = bossFloor;
     for (const key of Object.keys(enemy.stats)) enemy.stats[key] = scaledStat(key, enemy.stats[key], game.adventure);
-    if (enemy.boss) enemy.stats.hpMax = Math.min(Number.MAX_SAFE_INTEGER, enemy.stats.hpMax * 2);
+    if (enemy.boss) {
+      // Después del escalado de aventura, el líder tiene más aguante y presión ofensiva.
+      for (const [key, factor] of Object.entries({ hpMax: 3, atkdmg: 2, chargedmg: 2 })) {
+        enemy.stats[key] = Math.min(Number.MAX_SAFE_INTEGER, enemy.stats[key] * factor);
+      }
+      for (const key of ['speed', 'atkspeed', 'range', 'chargespeed']) {
+        enemy.stats[key] = Math.min(15, enemy.stats[key] + 2);
+      }
+      enemy.tracking = true;
+      enemy.atkCooldown = 0;
+    }
     enemy.hp = enemy.stats.hpMax;
     game.entities.push(enemy);
   });
+  spawnFloorPotion();
   game.loadingEl.style.display = 'none';
   console.info('[Piso]', floor, mission.name, ids);
 }

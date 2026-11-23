@@ -13,7 +13,7 @@ export function initialStats() {
 }
 
 export const powerStats = ['hpMax', 'atkdmg', 'chargedmg'];
-export const clampStat = (key, value) => Math.max(1, Math.min(powerStats.includes(key) ? Number.MAX_SAFE_INTEGER : 10, value));
+export const clampStat = (key, value) => Math.max(1, Math.min(powerStats.includes(key) ? Number.MAX_SAFE_INTEGER : 15, value));
 // Los rangos base siguen siendo editables. Solo las tres magnitudes absolutas
 // crecen con la aventura, hasta el mayor entero exacto de JavaScript.
 export function scaledStat(key, value, adventure) {

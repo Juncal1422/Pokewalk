@@ -296,9 +296,12 @@ export function generateDungeon(options = {}) {
 
   // El enfrentamiento final necesita espacio para el cuerpo doble del líder.
   if (options.open) {
-    for (let y = 1; y < MAP_H - 1; y++) grid[y].fill(0, 1, MAP_W - 1);
-    sortedRooms[0] = { cx: Math.floor(MAP_W / 4), cy: Math.floor(MAP_H / 2) };
-    sortedRooms[1] = { cx: Math.floor(3 * MAP_W / 4), cy: Math.floor(MAP_H / 2) };
+    const cx = Math.floor(MAP_W / 2), cy = Math.floor(MAP_H / 2);
+    grid.forEach((row, y) => {
+      row.fill(1);
+      if (Math.abs(y - cy) <= 5) row.fill(0, cx - 8, cx + 9);
+    });
+    sortedRooms.splice(0, sortedRooms.length, { cx: cx - 5, cy }, { cx: cx + 5, cy });
   }
   console.debug('[Mazmorra] Distribución generada', { pasillos, habitaciones, cruces, abierta: !!options.open });
   game.grid = grid;
@@ -312,7 +315,7 @@ export function generateDungeon(options = {}) {
     row.map((terrain, x) => {
       // Solo se sortean casillas dibujadas en las filas extra de este atlas.
       const variants = game.currentBiome.variants;
-      const slots = Object.keys(terrain === 0 ? variants.floors : variants.walls[game.autotileGrid[y][x].mask] ?? {});
+      const slots = Object.keys(terrain === 0 ? variants.floors : (game.autotileGrid[y][x].index === 46 ? variants.walls[255] ?? {} : {}));
       if (!slots.length || Math.random() >= (terrain === 0 ? 0.12 : 0.25)) return 0;
       return Number(slots[randomInt(0, slots.length - 1)]);
     }),
