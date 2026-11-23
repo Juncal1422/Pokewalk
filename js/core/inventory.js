@@ -42,7 +42,7 @@ export function attachInventory(root, signal) {
     tip.hidden = true;
     bag.setAttribute('aria-expanded', String(!panel.hidden));
     render();
-    if (panel.hidden) game.canvas.focus();
+    game.canvas.focus();
   }, { signal });
   return render;
 }

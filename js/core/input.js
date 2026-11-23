@@ -17,7 +17,10 @@ export function attachInput() {
     if (!game.changingLevel && game.player?.hp) triggerAttack(game.player);
   }
 
-  on(canvas, 'keydown', event => {
+  const isBag = target => !!target?.closest?.('#bag, #inventory');
+  on(document, 'keydown', event => {
+    if (event.target !== canvas && !isBag(event.target)) return;
+    if (game.changingLevel) return;
     const key = event.key.toLowerCase();
     if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(key)) return;
     event.preventDefault();
@@ -34,8 +37,11 @@ export function attachInput() {
     canvas.focus();
     attack();
   });
-  on(document, 'pointerdown', event => { if (event.target !== canvas) cancelInput(); });
-  on(canvas, 'blur', cancelInput);
+  on(document, 'pointerdown', event => { if (event.target !== canvas && !isBag(event.target)) cancelInput(); });
+  on(document, 'focusout', event => {
+    if ((event.target === canvas || isBag(event.target)) &&
+        event.relatedTarget !== canvas && !isBag(event.relatedTarget)) cancelInput();
+  });
   on(window, 'blur', cancelInput);
   on(document, 'visibilitychange', () => { if (document.hidden) cancelInput(); });
   signal.addEventListener('abort', cancelInput, { once: true });

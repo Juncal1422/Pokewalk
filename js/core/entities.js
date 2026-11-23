@@ -116,6 +116,13 @@ function resolveImpact(attacker) {
     target.hp = Math.max(0, target.hp - damage);
     target.lastHit = now;
     target.sidestep = null;
+    // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
+    // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
+    if (target.boss && target.hp && (target.bossResponse || target.finishingCounter)) continue;
+    if (target.boss && target.hp) {
+      target.hitsWithoutAction = (target.hitsWithoutAction || 0) + 1;
+      target.bossResponse = target.hitsWithoutAction >= 2;
+    }
     target.frame = target.timer = 0;
     target.impactPending = false;
     setState(target, 'Hurt');
@@ -211,9 +218,10 @@ export function updateEntity(entity) {
   const animation = entity.anims[entity.state] || entity.anims.Idle;
   const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) :
     entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) * (entity.isPlayer ? 1 : 0.48) : 1;
-  entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED * tempo;
-  const duration =
-    (animation.durs[entity.frame] || 8) + (entity.state === 'Hurt' ? 2 : 0);
+  const hurt = entity.state === 'Hurt';
+  const frameTime = animation.durs[entity.frame] || 8;
+  const duration = hurt ? Math.ceil((frameTime + 2) / 0.55) : frameTime;
+  entity.timer += hurt ? (entity.boss ? 2 : 1) : ANIM_SPEED * tempo;
   if (entity.state === 'Attack' && entity.impactPending) {
     // Sin marca de impacto usamos el centro de la animación. Una hoja de un
     // fotograma impacta a media duración para conservar la anticipación.
@@ -222,10 +230,11 @@ export function updateEntity(entity) {
     if (entity.frame === frame && (frame !== 0 || entity.timer >= duration / 2)) resolveImpact(entity);
   }
   if (entity.timer >= duration) {
-    entity.timer = 0;
+    entity.timer = hurt ? entity.timer - duration : 0;
     entity.frame++;
     if (entity.frame >= animation.frames) {
       entity.frame = 0;
+      if (entity.state === 'Attack') entity.finishingCounter = false;
       if (entity.hp > 0 && (entity.state === 'Attack' || entity.state === 'Hurt'))
         setState(entity, 'Idle');
     }

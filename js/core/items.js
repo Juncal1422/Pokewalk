@@ -66,7 +66,7 @@ export function collectItems(player, strike = null) {
 
 export function drawItems(ctx, zoom, cameraX, cameraY) {
   for (const { id, essence, x, y } of game.drops) {
-    const side = essence ? 32 : 24;
+    const side = essence ? 20 : 24;
     ctx.drawImage(essence ? essenceIcon(essence) : images.get(id), Math.round((x - side / 2) * zoom - cameraX),
       Math.round((y - side / 2) * zoom - cameraY), side * zoom, side * zoom);
   }

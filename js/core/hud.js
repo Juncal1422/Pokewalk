@@ -36,12 +36,12 @@ function indicators(ctx,key,x,y,now) {
 export function drawHud(ctx, canvas, player) {
   const now = performance.now();
   game.pickups = game.pickups.filter(note => now - note.time < 1500);
-  const baseWidth = Math.min(110, canvas.width * 0.22);
+  const baseWidth = Math.min(144, canvas.width * 0.22);
   const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
   const fraction = player.hp / player.stats.hpMax;
   // El hueco del PNG ocupa las filas 10–13. Las tapas mantienen su
   // proporción y el tramo central absorbe el crecimiento de los PV máximos.
-  const scale = 1.5, cap = Math.min(16 * scale, length / 3);
+  const scale = 2, cap = Math.min(16 * scale, length / 3);
   const left = 8, top = 2, bar = icons.hpbar;
   const inset = cap * 10 / 16, innerWidth = length - inset * 2;
   ctx.fillStyle = '#15202b';
@@ -54,24 +54,26 @@ export function drawHud(ctx, canvas, player) {
     ctx.drawImage(bar, part * 16, 0, 16, 16, cursor, top, widths[part], 16 * scale);
     cursor += widths[part];
   }
-  ctx.font = 'bold 13px system-ui';
+  ctx.font = 'bold 17px system-ui';
   ctx.textBaseline = 'middle';
   const health = player.hp + '/' + player.stats.hpMax;
-  textBox(ctx, cursor, 5, ctx.measureText(health).width + 14, 24);
+  textBox(ctx, cursor, 5, ctx.measureText(health).width + 18, 32);
   ctx.fillStyle = '#fff';
-  ctx.fillText(health, cursor + 7, 17);
-  indicators(ctx, 'hp', cursor + 7, 35, now);
+  ctx.fillText(health, cursor + 9, 21);
+  indicators(ctx, 'hp', cursor + 9, 43, now);
   let index = 0;
-  const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 80)));
+  const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 146)));
+  const essenceTop = canvas.width < 580 ? 109 : 48;
   const entries = Object.entries(game.essences);
-  if (entries.length) textBox(ctx, 4, 39, Math.min(columns, entries.length) * 48 + 9, Math.ceil(entries.length / columns) * 19 + 10);
+  if (entries.length) textBox(ctx, 4, essenceTop, Math.min(columns, entries.length) * 70 + 9, Math.ceil(entries.length / columns) * 32 + 10);
   for (const [id, count] of entries) {
-    const x = 8 + (index % columns) * 48, y = 43 + Math.floor(index / columns) * 19;
-    ctx.drawImage(icons['essence-' + id], x, y, 16, 16);
+    const x = 8 + (index % columns) * 70, y = essenceTop + 4 + Math.floor(index / columns) * 32;
+    ctx.drawImage(icons['essence-' + id], x, y, 32, 32);
     ctx.fillStyle = '#fff';
-    ctx.fillText(count, x + 18, y + 8);
+    ctx.fillText(formatValue(count), x + 33, y + 16);
     index++;
   }
+  ctx.font = 'bold 13px system-ui';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
   textBox(ctx, 4, y - 6, 185, canvas.height - y + 5);
   for (const [key, label] of Object.entries(labels)) {
@@ -81,6 +83,7 @@ export function drawHud(ctx, canvas, player) {
     y += 19;
   }
   ctx.save();
+  ctx.font = 'bold 17px system-ui';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'top';
   const m = game.mission;
@@ -88,9 +91,10 @@ export function drawHud(ctx, canvas, player) {
   const goal = m.type === 'hunt' ? 'Caza: ' + game.pokemon.get(m.target).name + ' ' + m.kills + '/' + m.quota :
     m.type === 'retrieve' && m.recovered ? 'Objeto recuperado' : m.name;
   const width = Math.ceil(Math.max(ctx.measureText(counter).width, ctx.measureText(goal).width));
-  textBox(ctx, canvas.width - width - 24, 5, width + 20, 49);
+  const panelTop = canvas.width < 580 ? 46 : 5;
+  textBox(ctx, canvas.width - width - 27, panelTop, width + 22, 59);
   ctx.fillStyle = '#fff';
-  ctx.fillText(counter, canvas.width - 14, 12);
-  ctx.fillText(goal, canvas.width - 14, 32);
+  ctx.fillText(counter, canvas.width - 15, panelTop + 8);
+  ctx.fillText(goal, canvas.width - 15, panelTop + 31);
   ctx.restore();
 }

@@ -18,47 +18,48 @@ const EMBEDDED_APP = `
   <div id="poke-walk-app">
     <style>
       html, body { margin:0; width:100%; height:100%; overflow:hidden; }
-      #poke-walk-app { position:fixed; inset:0; overflow:hidden; background:#11131a; color:#f0f4f8; font:14px system-ui,sans-serif; }
+      #poke-walk-app { position:fixed; inset:0; overflow:hidden; background:#11131a; color:#f0f4f8; font:17px system-ui,sans-serif; }
       #canvas-container, #game { width:100%; height:100%; display:block; }
       #game { image-rendering:pixelated; touch-action:none; outline:none; }
       #nearby { position:absolute; right:8px; bottom:8px; box-sizing:border-box; width:max-content; max-width:min(57vw,380px); max-height:40vh; overflow:auto; padding:4px; border:12px solid transparent; border-image-repeat:stretch; background:rgb(0 0 0 / 50%) padding-box; }
       #nearby p { margin:3px 0; }
       #poke-walk-app .portrait, #poke-walk-app .essence { image-rendering:pixelated; vertical-align:middle; }
-      #poke-walk-app .essence { width:16px; height:16px; }
-      #roster { position:absolute; top:62px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:12px; }
+      #poke-walk-app .essence { width:32px; height:32px; }
+      #roster { position:absolute; top:69px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:15px; }
       #roster ul { margin:4px 0; padding:0; list-style:none; display:grid; gap:3px; }
       #roster li, #rewards button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
-      #roster li { display:grid; grid-template-columns:32px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
-      #roster .portrait { width:32px; grid-row:span 2; }
+      #roster li { display:grid; grid-template-columns:44px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
+      #roster .portrait { width:44px; grid-row:span 2; }
       #rewards { padding:4px; max-width:96vw; max-height:92dvh; overflow:auto; background:transparent; border:0; color:white; }
       #rewards::backdrop { background:#080d16b0; }
-      #rewards h1 { margin:0 0 5px; font:600 17px system-ui; text-align:center; }
+      #rewards h1 { margin:0 0 5px; font:600 22px system-ui; text-align:center; }
       #rewards .cards { display:flex; gap:5px; align-items:stretch; }
-      #rewards button { flex:1 1 0; width:clamp(100px,30vw,218px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:15px/1.32 system-ui; cursor:pointer; }
+      #rewards button { flex:1 1 0; width:clamp(100px,30vw,274px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:18px/1.32 system-ui; cursor:pointer; }
       #rewards button:focus-visible, #rewards button:hover { outline:2px solid #d4efff; outline-offset:-4px; }
-      #rewards .portrait { width:64px; height:64px; }
+      #rewards .portrait { width:80px; height:80px; }
       #rewards table { width:100%; margin:4px 0; border-collapse:collapse; font:inherit; font-variant-numeric:tabular-nums; }
       #rewards td { padding:2px 1px; text-align:right; border-bottom:1px solid #ffffff24; }
       #rewards td:first-child { text-align:left; }
-      #rewards .evolutions { width:100%; margin-top:auto; text-align:left; font-size:10px; }
+      #rewards .evolutions { width:100%; margin-top:auto; text-align:left; font-size:13px; }
       #rewards .evolutions div { display:flex; align-items:center; gap:2px; }
-      #rewards progress { flex:1; min-width:8px; height:7px; accent-color:#a4ddab; }
+      #rewards progress { flex:1; min-width:8px; height:10px; accent-color:#a4ddab; }
       #rewards .keep-form { width:auto; margin:8px auto 0; flex-direction:row; gap:8px; }
-      #rewards .keep-form .portrait { width:32px; height:32px; }
-      @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:12px; } }
-      #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:10; }
-      #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
+      #rewards .keep-form .portrait { width:44px; height:44px; }
+      @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:15px; } }
+      #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1.25rem; z-index:10; }
+      #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:1.05rem; font-weight:600; display:none; z-index:12; }
       #poke-walk-app .box { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background:rgb(12 20 34 / 82%) padding-box; color:white; }
       #bag, #inventory, #item-tip { position:absolute; left:50%; transform:translateX(-50%); }
       #bag { bottom:5px; cursor:pointer; padding:1px 5px; }
-      #bag img { width:32px; height:32px; display:block; image-rendering:pixelated; }
-      #inventory { bottom:60px; width:max-content; max-width:min(92vw,440px); max-height:42vh; overflow:auto; }
-      #inventory button { display:inline-flex; align-items:center; gap:4px; padding:3px; color:white; background:transparent; border:0; cursor:pointer; }
+      #bag img { width:44px; height:44px; display:block; image-rendering:pixelated; }
+      #inventory { bottom:74px; width:max-content; max-width:min(92vw,440px); max-height:42vh; overflow:auto; }
+      #inventory button { font:inherit; display:inline-flex; align-items:center; gap:4px; padding:3px; color:white; background:transparent; border:0; cursor:pointer; }
       #inventory button:hover,#inventory button:focus-visible { background:#42577b; }
-      #inventory img { width:24px; height:24px; image-rendering:pixelated; }
+      #inventory img { width:32px; height:32px; image-rendering:pixelated; }
       #item-tip { width:max-content; max-width:min(90vw,330px); pointer-events:none; }
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
+      @media(max-width:579px) { #roster { top:110px; } }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>

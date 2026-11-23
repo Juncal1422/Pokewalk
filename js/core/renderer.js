@@ -1,5 +1,5 @@
 import { drawItems } from './items.js';
-import { drawHud, textBox } from './hud.js';
+import { drawHud } from './hud.js';
 import { PLAYER_GRACE_MS, FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
@@ -162,8 +162,6 @@ export function draw() {
       const rise = (performance.now() - hit.time) / 45;
       ctx.font = 'bold 17px system-ui';
       ctx.textAlign = 'center';
-      const labelWidth = ctx.measureText(hit.damage).width + 14;
-      textBox(ctx, px - labelWidth / 2, py - drawH / 2 - rise - 20, labelWidth, 26);
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#231720';
       ctx.fillStyle = hit.critical ? '#ff9c36' : '#fff';
