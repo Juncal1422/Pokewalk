@@ -12,10 +12,21 @@ export async function loadItemImages(items) {
   }));
 }
 
+// Un solo sorteo por piso, después de colocar a todos los combatientes.
+export function spawnFloorPotion() {
+  if (Math.random() >= 0.5) return;
+  const sites = [];
+  game.grid.forEach((row, y) => row.forEach((tile, x) => {
+    if (tile !== 0 || game.entities.some(e => Math.floor(e.x / TILE) === x && Math.floor(e.y / TILE) === y)) return;
+    sites.push({ id: 'potion', x: (x + 0.5) * TILE, y: (y + 0.5) * TILE });
+  }));
+  if (sites.length) game.drops.push(sites[Math.floor(Math.random() * sites.length)]);
+}
+
 export function dropItem(entity, attacker) {
   const ids = game.pokemon.get(entity.dex).drops;
-  if (!ids.length || Math.random() >= 1 / 3 + (attacker.isPlayer ? game.perks.loot : 0)) return;
-  const id = ids[Math.floor(Math.random() * ids.length)];
+  if (!entity.boss && (!ids.length || Math.random() >= 1 / 3 + (attacker.isPlayer ? game.perks.loot : 0))) return;
+  const id = ids.length ? ids[Math.floor(Math.random() * ids.length)] : 'potion';
   const center = pos => (Math.floor(pos / TILE) + .5) * TILE;
   game.drops.push({ x: center(entity.x), y: center(entity.y), id });
 }

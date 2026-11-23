@@ -46,7 +46,7 @@ export function onDefeat(target, attacker) {
   const essence = sample(game.pokemon.get(target.dex).essences);
   const row = game.pokemon.get(target.dex);
   const base = row.legendary ? 5 : row.mythical ? 4 : row.stage >= 3 ? 3 : row.stage === 2 || row.final ? 2 : 1;
-  game.essences[essence] = (game.essences[essence] || 0) + base + game.perks.essence;
+  game.essences[essence] = (game.essences[essence] || 0) + (base + game.perks.essence) * (target.boss ? 2 : 1);
   m.defeated.push(target.dex);
   if (m.target === target.dex) m.kills++;
   console.info('[Esencia]', essence, game.essences[essence], target.dex);

@@ -65,7 +65,16 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const distance = Math.hypot(dx, dy);
   const onLand = land(cell(enemy.x), cell(enemy.y));
   const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
-  const fleeing = pursuing && enemy.hp <= enemy.stats.hpMax * 0.25;
+  const species = game.pokemon.get(enemy.dex);
+  // Una sola retirada breve por enemigo terrestre. Tras ella vuelve a combatir.
+  const canRetreat = !enemy.boss && !species.fly && !species.swim && !species.lavawalk;
+  if (pursuing && canRetreat && !enemy.retreated && enemy.hp < enemy.stats.hpMax * 0.15 && distance <= 2 * reach) {
+    enemy.retreated = true;
+    enemy.retreatTicks = 30;
+    enemy.path = [];
+  }
+  const fleeing = enemy.retreatTicks > 0;
+  if (fleeing) enemy.retreatTicks--;
   enemy.atkCooldown--;
   if (enemy.state === 'Charge' && !fleeing) {
     // La carga enemiga usa el mismo contador e impacto diferido que la del jugador.
@@ -77,7 +86,8 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     enemy.chargeTime = 0;
     setState(enemy, 'Idle');
   }
-  if (fleeing && onLand && distance >= reach * 4) {
+  if (fleeing && onLand && distance >= reach * 2) {
+    enemy.retreatTicks = 0;
     enemy.path = [];
     setState(enemy, 'Idle');
     return;
@@ -93,7 +103,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
         enemy.chargeTime = 0;
         setState(enemy, 'Charge');
       } else attack(enemy);
-      enemy.atkCooldown = 55 + Math.random() * 30;
+      enemy.atkCooldown = enemy.boss ? 16 + Math.random() * 10 : 55 + Math.random() * 30;
     }
     return;
   }
@@ -103,7 +113,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   if (!enemy.path?.length || (onLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
     const gx = pursuing ? cell(player.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
     const gy = pursuing ? cell(player.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
-    enemy.path = route(enemy, gx, gy, terrainFree, !onLand && !pursuing, fleeing ? Math.ceil(4 * reach / TILE) + 1 : 0);
+    enemy.path = route(enemy, gx, gy, terrainFree, !onLand && !pursuing, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
     enemy.fleeing = fleeing;
     enemy.aiTimer = pursuing ? 30 : 65;
     enemy.tracking = pursuing;
