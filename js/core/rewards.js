@@ -51,7 +51,7 @@ export function chooseReward(options, catalog) {
         const line = document.createElement('span');
         const change = projected[key] - game.player.stats[key];
         line.textContent = label + ' ' + projected[key] + (change ? ' (' + (change > 0 ? '+' : '') + change + ')' : ' (=)');
-        if (change) line.style.color = change > 0 ? '#96edaa' : '#ffadad';
+        if (change) line.style.color = (key === 'size' ? change < 0 : change > 0) ? '#96edaa' : '#ffadad';
         card.append(line);
       }
       const next = evolutionText(row);
@@ -59,7 +59,7 @@ export function chooseReward(options, catalog) {
       if (bonus) {
         const extra = document.createElement('span');
         extra.className = 'line-bonus';
-        extra.textContent = 'Bono de línea: +1 a las cuatro estadísticas';
+        extra.textContent = 'Bono de línea: −1 Tamaño y +1 a las demás estadísticas';
         card.append(extra);
       }
       card.onclick = () => {

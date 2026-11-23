@@ -43,7 +43,7 @@ export function collectItems(player) {
     }
     const previous = { ...player.stats, hp: player.hp };
     player.stats = statsFor(game.pokemon.get(player.dex), game.progress, player.bonuses, player.floorStats);
-    player.hp = Math.min(player.stats.hpMax, player.hp + item.heal);
+    player.hp = Math.min(player.stats.hpMax, player.hp + item.heal + Math.ceil(player.stats.hpMax * (item.healFraction || 0)));
     const now = performance.now();
     for (const key of [...Object.keys(item.stats), 'hp']) {
       const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];

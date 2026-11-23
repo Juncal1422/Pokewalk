@@ -1,4 +1,4 @@
-import { ATTACK_RANGE, DIR_MAP, TILE } from './constants.js';
+import { ATTACK_RANGE, TILE } from './constants.js';
 import { game } from './state.js';
 
 const cell = position => Math.floor(position / TILE);
@@ -74,7 +74,6 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
-  enemy.atkCooldown--;
   if (fleeing && onLand && distance >= reach * 2) {
     enemy.retreatTicks = 0;
     enemy.path = [];
@@ -82,15 +81,13 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     return;
   }
   if (pursuing && !fleeing && onLand && distance <= reach + 5) {
-    enemy.dir = DIR_MAP[[Math.sign(Math.round(dx / 5)), Math.sign(Math.round(dy / 5))]] ?? enemy.dir;
+    enemy.dir = (Math.round(Math.atan2(dx, dy) / (Math.PI / 4)) + 8) % 8;
     enemy.path = [];
     enemy.aiTimer = 0;
     enemy.tracking = true;
     setState(enemy, 'Idle');
-    if (enemy.atkCooldown <= 0) {
-      attack(enemy);
-      enemy.atkCooldown = enemy.boss ? 16 + Math.random() * 10 : 55 + Math.random() * 30;
-    }
+    // La propia animación delimita cuándo puede iniciar el siguiente golpe.
+    attack(enemy);
     return;
   }
 

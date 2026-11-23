@@ -57,7 +57,11 @@ export function exitKind(m, floor, cleared) {
     if (floor < m.floors) return 'stairs';
     return m.recovered ? 'portal' : 'objective';
   }
-  if (m.type === 'hunt' && m.kills >= m.quota) return 'portal';
+  if (m.type === 'hunt') {
+    if (m.kills >= m.quota) return 'portal';
+    const preyAlive = game.entities.some(e => !e.isPlayer && e.dex === m.target && e.hp > 0);
+    return preyAlive ? null : 'stairs';
+  }
   if (!cleared) return null;
   return floor < m.floors ? 'stairs' : 'portal';
 }

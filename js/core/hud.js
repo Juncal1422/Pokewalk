@@ -22,7 +22,7 @@ function indicators(ctx,key,x,y,now) {
   ctx.textBaseline = 'middle';
   for (const note of game.pickups.filter(entry => entry.key === key)) {
     ctx.globalAlpha = Math.min(1, (1500 - (now-note.time)) / 800);
-    ctx.fillStyle = note.delta > 0 ? '#79ed8e' : '#ff7474';
+    ctx.fillStyle = (key === 'size' ? note.delta < 0 : note.delta > 0) ? '#79ed8e' : '#ff7474';
     const text = (note.delta > 0 ? '+' : '') + formatValue(note.delta);
     ctx.fillText(text,x,y); x += ctx.measureText(text).width + 6;
   }
@@ -53,13 +53,13 @@ export function drawHud(ctx, canvas, player) {
     ctx.fillText(count, x + 18, y + 8);
     index++;
   }
-  let y = canvas.height - 80;
+  let y = canvas.height - 19 * Object.keys(labels).length - 6;
   for (const [key, label] of Object.entries(labels)) {
     ctx.fillStyle = '#101924dc';
-    ctx.fillRect(8, y, 112, 18);
+    ctx.fillRect(8, y, 170, 18);
     ctx.fillStyle = '#fff';
     ctx.fillText(label + ' ' + player.stats[key], 12, y + 9);
-    indicators(ctx, key, 124, y + 9, now);
+    indicators(ctx, key, 182, y + 9, now);
     y += 19;
   }
   ctx.save();

@@ -42,7 +42,7 @@ export function applyUpgrade(stats, item) {
 export function rewardBonuses(current, option, reward) {
   const bonuses = { ...current };
   if (option?.bonus) {
-    for (const key of Object.keys(labels)) bonuses[key]++;
+    for (const key of Object.keys(labels)) bonuses[key] += key === 'size' ? -1 : 1;
   } else if (reward?.effect === 'increaseStat') {
     effects.get('increaseStat').apply(bonuses, reward);
   }

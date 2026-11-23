@@ -110,7 +110,7 @@ function updateRoster() {
   const rows = game.entities.map(e => {
     const name = game.pokemon.get(e.dex).name + (e.isPlayer ? ' (tú)' : e.boss ? ' (líder)' : '');
     return name + ' · Nv. ' + e.level + ' · HP ' + e.hp + '/' + e.stats.hpMax +
-      ' · ' + ['attack', 'defense', 'speed'].map(k => labels[k] + ' ' + e.stats[k]).join(' · ');
+      ' · ' + ['attack', 'defense', 'speed', 'size', 'attackSpeed'].map(k => labels[k] + ' ' + e.stats[k]).join(' · ');
   });
   const signature = rows.join('|');
   if (list.dataset.signature === signature) return;

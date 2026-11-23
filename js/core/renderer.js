@@ -126,7 +126,7 @@ export function draw() {
     ctx.fill();
 
     const animation = entity.anims[entity.state] || entity.anims.Idle;
-    const scale = ZOOM * (entity.boss ? 2 : 1);
+    const scale = ZOOM * entity.stats.size / 100;
     const drawW = animation.fw * scale, drawH = animation.fh * scale;
     const row = Math.min(
       entity.dir,

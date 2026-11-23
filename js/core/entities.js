@@ -13,7 +13,7 @@ import {
   MAP_W,
   MAP_H,
 } from './constants.js';
-import { statsFor, emptyBonuses, movementRate, levelFor, damageFor } from './stats.js';
+import { statsFor, emptyBonuses, movementRate, attackRate, levelFor, damageFor } from './stats.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -49,7 +49,6 @@ export function createEntity(data, room, isPlayer) {
     level: levelFor(species, game.progress),
     speed: isPlayer ? PLAYER_SPEED : AI_SPEED,
     aiTimer: 45,
-    atkCooldown: 120 + Math.floor(Math.random() * 140),
   };
 }
 
@@ -61,7 +60,7 @@ export function setState(entity, state) {
   }
 }
 
-function bodyRadius(entity) { return BODY_RADIUS * (entity.boss ? 2 : 1); }
+function bodyRadius(entity) { return Math.min(TILE / 2 - 1, BODY_RADIUS * entity.stats.size / 100); }
 
 function terrainFree(entity, x, y) {
   const radius = bodyRadius(entity);
@@ -164,8 +163,7 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
   player.floorStats = {};
   player.stats = statsFor(game.pokemon.get(dex), game.progress, bonuses);
   if (!old) game.initialHP = player.stats.hpMax;
-  player.hp = old ? Math.min(player.stats.hpMax, Math.max(1,
-    Math.round(old.hp * player.stats.hpMax / old.stats.hpMax))) : player.stats.hpMax;
+  player.hp = old ? Math.min(player.stats.hpMax, old.hp) : player.stats.hpMax;
   game.player = player;
   game.drops = [];
   game.entities = [player];
@@ -175,7 +173,6 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
     enemy.stats = statsFor(game.pokemon.get(data.dex), game.progress, {}, {}, bossFloor);
     if (bossFloor) {
       enemy.tracking = true;
-      enemy.atkCooldown = 0;
     }
     enemy.hp = enemy.stats.hpMax;
     game.entities.push(enemy);
@@ -214,7 +211,8 @@ export function updateEntity(entity) {
   }
 
   const animation = entity.anims[entity.state] || entity.anims.Idle;
-  const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) : 1;
+  const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) :
+    entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) : 1;
   entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED * tempo;
   const duration =
     (animation.durs[entity.frame] || 8) + (entity.state === 'Hurt' ? 2 : 0);

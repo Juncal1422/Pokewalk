@@ -3,9 +3,10 @@
     "name": "Poción",
     "duration": "run",
     "stats": {},
-    "heal": 1,
+    "heal": 0,
     "image": "assets/items/potion.png",
-    "description": "Recupera 1 HP."
+    "description": "Recupera el 10 % de los HP máximos.",
+    "healFraction": 0.1
   },
   "goldenapple": {
     "name": "Manzana dorada",
@@ -53,32 +54,33 @@
     "name": "Lazo",
     "duration": "floor",
     "stats": {
-      "speed": 2
+      "attackSpeed": 2
     },
     "heal": 0,
     "image": "assets/items/ribbon.png",
-    "description": "+2 Velocidad durante este piso."
+    "description": "+2 Velocidad de ataque durante este piso."
   },
   "seed": {
     "name": "Semilla",
     "duration": "run",
     "stats": {
-      "speed": 1
+      "attackSpeed": 1
     },
     "heal": 0,
     "image": "assets/items/seed.png",
-    "description": "+1 Velocidad durante la aventura."
+    "description": "+1 Velocidad de ataque durante la aventura."
   },
   "min_lens": {
     "name": "Lente de reducción",
     "duration": "run",
     "stats": {
       "defense": -1,
-      "speed": 2
+      "speed": 2,
+      "size": -5
     },
     "heal": 0,
     "image": "assets/items/min_lens.png",
-    "description": "-1 Defensa, +2 Velocidad durante la aventura."
+    "description": "-5 Tamaño, -1 Defensa, +2 Velocidad durante la aventura."
   },
   "max_lens": {
     "name": "Lente de aumento",
@@ -86,10 +88,11 @@
     "stats": {
       "speed": -1,
       "attack": 1,
-      "defense": 2
+      "defense": 2,
+      "size": 5
     },
     "heal": 0,
     "image": "assets/items/max_lens.png",
-    "description": "-1 Velocidad, +1 Ataque, +2 Defensa durante la aventura."
+    "description": "+5 Tamaño, -1 Velocidad, +1 Ataque, +2 Defensa durante la aventura."
   }
 }
