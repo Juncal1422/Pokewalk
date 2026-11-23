@@ -1,4 +1,4 @@
-import { updateEnemy } from './enemy-ai.js';
+import { updateEnemy, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
 import { collectItems, dropItem, spawnFloorPotion } from './items.js';
 import {
@@ -10,10 +10,9 @@ import {
   DIR_VEC,
   PLAYER_SPEED,
   TILE,
-  MAP_W,
-  MAP_H,
 } from './constants.js';
 import { statsFor, emptyBonuses, movementRate, attackRate, levelFor, damageFor } from './stats.js';
+import { groundFree } from './terrain.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -66,24 +65,7 @@ function terrainFree(entity, x, y) {
   const radius = bodyRadius(entity);
   const species = game.pokemon.get(entity.dex);
   const crosses = !game.bossArena && game.currentBiome.canCross.some(skill => species[skill]);
-  for (const [offsetX, offsetY] of [
-    [-radius, -radius],
-    [radius, -radius],
-    [-radius, radius],
-    [radius, radius],
-  ]) {
-    const tileX = Math.floor((x + offsetX) / TILE),
-      tileY = Math.floor((y + offsetY) / TILE);
-    if (
-      tileX < 0 ||
-      tileY < 0 ||
-      tileX >= MAP_W ||
-      tileY >= MAP_H ||
-      (game.grid[tileY][tileX] === 1 && (!crosses || tileX === 0 || tileY === 0 || tileX === MAP_W - 1 || tileY === MAP_H - 1))
-    )
-      return false;
-  }
-  return true;
+  return groundFree(x, y, radius, crosses);
 }
 
 export function canMove(entity, x, y) {
@@ -124,14 +106,16 @@ function resolveImpact(attacker) {
     if (target.isPlayer && now - target.lastHit < PLAYER_GRACE_MS) continue;
     const dodge = .05 + (target.isPlayer ? game.perks.dodge : 0);
     if (Math.random() < dodge) {
-      target.missUntil = performance.now() + 750;
+      target.missUntil = now + 750;
+      if (attacker.isPlayer && !target.isPlayer) trySidestep(target, attacker, canMove, now);
       continue;
     }
     const critical = Math.random() < 0.10;
     const damage = Math.min(target.hp, damageFor(attacker, target, critical));
     target.hitNumber = { damage, critical, time: now };
     target.hp = Math.max(0, target.hp - damage);
-    target.lastHit = performance.now();
+    target.lastHit = now;
+    target.sidestep = null;
     target.frame = target.timer = 0;
     target.impactPending = false;
     setState(target, 'Hurt');
@@ -142,9 +126,11 @@ function resolveImpact(attacker) {
         dropItem(target, attacker);
       }
     }
-    if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
-      target.x += vx * 10;
-      target.y += vy * 10;
+    // El retroceso se detiene en el primer obstáculo del recorrido.
+    for (let step = 0; step < 10; step++) {
+      if (!canMove(target, target.x + vx, target.y + vy)) break;
+      target.x += vx;
+      target.y += vy;
     }
   }
 }
@@ -192,8 +178,16 @@ function moveEntity(entity, dx, dy) {
   const length = Math.hypot(dx, dy);
   const speed = entity.isPlayer ? entity.speed * movementRate(entity.stats.speed) : Math.min(length, entity.speed * movementRate(entity.stats.speed));
   const vx = (dx / length) * speed, vy = (dy / length) * speed;
-  if (canMove(entity, entity.x + vx, entity.y)) entity.x += vx;
-  if (canMove(entity, entity.x, entity.y + vy)) entity.y += vy;
+  // Primero probamos la diagonal real: separar siempre los ejes bloqueaba
+  // cuerpos pequeños justo en el punto más estrecho entre dos esquinas.
+  const steps = Math.ceil(speed);
+  for (let i = 0; i < steps; i++) {
+    const x = entity.x + vx / steps, y = entity.y + vy / steps;
+    if (canMove(entity, x, y)) { entity.x = x; entity.y = y; }
+    else if (vx && canMove(entity, x, entity.y)) entity.x = x;
+    else if (vy && canMove(entity, entity.x, y)) entity.y = y;
+    else break;
+  }
 }
 
 export function updateEntity(entity) {

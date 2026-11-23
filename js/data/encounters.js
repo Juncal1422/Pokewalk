@@ -18,6 +18,16 @@ export async function loadEncountersCatalog(upgrades) {
     }
     pokemon.set(row.dex, row);
   }
+  // Acumula el coste real de la cadena. La ordenación también cubre bebés
+  // cuyo número de Pokédex es posterior al de la evolución.
+  for (const row of [...rows].sort((a, b) => a.stage - b.stage)) {
+    row.evolutionCost ??= 0;
+    for (const rule of row.evolutions) {
+      const child = pokemon.get(rule.to);
+      const cost = row.evolutionCost + rule.amount;
+      if (child) child.evolutionCost = Math.min(child.evolutionCost ?? Infinity, cost);
+    }
+  }
   console.debug('[Encuentros] Catálogo validado', pokemon.size);
   return { pokemon, items };
 }
