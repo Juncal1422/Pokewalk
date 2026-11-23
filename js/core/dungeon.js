@@ -227,16 +227,7 @@ function createRoomInCell(grid, gx, gy, cellW, cellH, habitacionesLevel) {
   return { x, y, w, h, cx, cy, isNode: false };
 }
 
-// Genera una cuadrícula nueva, coloca habitaciones y actualiza los datos de dibujo.
-// Si no recibe argumentos, usa por defecto { pasillos: 2, habitaciones: 2, cruces: 1 }.
-export function generateDungeon(options = {}) {
-  const { pasillos = 5, habitaciones = 5, cruces = 5 } = options || {};
-
-  const pLvl = clampLevel(pasillos);
-  const hLvl = clampLevel(habitaciones);
-  const cLvl = clampLevel(cruces);
-
-  const grid = Array.from({ length: MAP_H }, () => Array(MAP_W).fill(1));
+function carveRooms(grid, pLvl, hLvl, cLvl) {
   const rooms = [];
 
   const cols = hLvl === 1 && cLvl >= 4 ? 5 : 4;
@@ -289,21 +280,25 @@ export function generateDungeon(options = {}) {
 
   // Priorizar habitaciones reales al principio del array pero conservar todas las celdas
   // para que entities.js nunca reciba undefined al buscar salas por índice.
-  const sortedRooms = [
+  return [
     ...rooms.filter((r) => !r.isNode),
     ...rooms.filter((r) => r.isNode),
   ];
 
-  // El enfrentamiento final necesita espacio para el cuerpo doble del líder.
-  if (options.open) {
-    const cx = Math.floor(MAP_W / 2), cy = Math.floor(MAP_H / 2);
-    grid.forEach((row, y) => {
-      row.fill(1);
-      if (Math.abs(y - cy) <= 5) row.fill(0, cx - 8, cx + 9);
-    });
-    sortedRooms.splice(0, sortedRooms.length, { cx: cx - 5, cy }, { cx: cx + 5, cy });
-  }
-  console.debug('[Mazmorra] Distribución generada', { pasillos, habitaciones, cruces, abierta: !!options.open });
+}
+
+// La arena tiene dos puntos de aparición enfrentados dentro de una sola habitación.
+function carveArena(grid) {
+  const cx = Math.floor(MAP_W / 2), cy = Math.floor(MAP_H / 2);
+  for (let y = cy - 5; y <= cy + 5; y++) grid[y].fill(0, cx - 8, cx + 9);
+  return [{ cx: cx - 5, cy }, { cx: cx + 5, cy }];
+}
+
+export function generateDungeon({ pasillos = 5, habitaciones = 5, cruces = 5, open = false } = {}) {
+  const grid = Array.from({ length: MAP_H }, () => Array(MAP_W).fill(1));
+  const sortedRooms = open ? carveArena(grid) :
+    carveRooms(grid, clampLevel(pasillos), clampLevel(habitaciones), clampLevel(cruces));
+  console.debug('[Mazmorra] Distribución generada', { pasillos, habitaciones, cruces, abierta: open });
   game.grid = grid;
   game.rooms = sortedRooms;
 

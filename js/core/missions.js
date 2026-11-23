@@ -1,8 +1,8 @@
 import { game } from './state.js';
 
 const layouts = {
-  retrieve: ['Recuperar objeto', 5, 1, 5], clear: ['Limpiar zona', 2, 3, 4],
-  leader: ['Vence al líder', 5, 5, 5], hunt: ['Caza', 5, 1, 5],
+  retrieve: ['Recuperar objeto', 4, 2, 4], clear: ['Limpiar piso', 2, 2, 2],
+  leader: ['Vence al líder', 5, 5, 5], hunt: ['Caza', 3, 2, 2],
 };
 export const sample = list => list[Math.floor(Math.random() * list.length)];
 
@@ -21,11 +21,13 @@ export function eligible(row, number, boss = false) {
 export function newMission(number, biome) {
   const type = number % 4 === 0 ? 'leader' : sample(['retrieve', 'clear', 'hunt']);
   const [name, pasillos, habitaciones, cruces] = layouts[type];
-  const floors = 1 + Math.floor(Math.random() * Math.min(20, number + 2));
+  const floors = type === 'leader' ? 1 : 1 + Math.floor(Math.random() * Math.min(20, number + 2));
   const pool = biome.wild.filter(id => eligible(game.pokemon.get(id), number));
   const target = type === 'hunt' ? sample(pool) : null;
+  const layout = { pasillos, habitaciones, cruces };
+  for (const key of Object.keys(layout)) layout[key] += biome.layoutModifier[key];
   const mission = { number, biome, type, name, floors, pool, target, quota: target ? 1 + Math.floor(Math.random() * floors) : 0,
-    kills: 0, defeated: [], recovered: false, layout: { pasillos, habitaciones, cruces } };
+    kills: 0, defeated: [], recovered: false, layout };
   console.info('[Misión]', name, { number, floors, biome: biome.name, target });
   return mission;
 }

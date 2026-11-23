@@ -1,5 +1,7 @@
-export const labels = { hpMax: 'HP', attack: 'Ataque', defense: 'Defensa', speed: 'Velocidad', size: 'Tamaño (%)', attackSpeed: 'Velocidad de ataque' };
-export const emptyBonuses = () => ({ hpMax: 0, attack: 0, defense: 0, speed: 0, size: 0, attackSpeed: 0 });
+import { ATTACK_RANGE } from './constants.js';
+
+export const labels = { hpMax: 'HP', attack: 'Ataque', defense: 'Defensa', speed: 'Velocidad', size: 'Tamaño', attackSpeed: 'Velocidad de ataque', range: 'Rango de ataque' };
+export const emptyBonuses = () => ({ hpMax: 0, attack: 0, defense: 0, speed: 0, size: 0, attackSpeed: 0, range: 0 });
 export const levelFor = (species, progress) => Math.min(species.maxLevel, progress);
 export const movementRate = speed => 0.85 + speed / 150;
 
@@ -8,6 +10,7 @@ export const movementRate = speed => 0.85 + speed / 150;
 export const attackRate = score => 1 + 1.5 * (Math.tanh((score - 5) / 65) - Math.tanh(4 / 65));
 
 function naturalStat(species, key, level) {
+  if (key === 'range') return species.stats.range ?? ATTACK_RANGE;
   if (key === 'size') return species.stats.size;
   if (key === 'hpMax') {
     const startingHP = species.dex === 292 ? 1 : Math.floor(species.stats.hpMax / 10) + 15;
@@ -18,17 +21,17 @@ function naturalStat(species, key, level) {
   return key === 'speed' || key === 'attackSpeed' ? Math.min(179, value) : value;
 }
 
-export function statsFor(species, progress, bonuses = {}, floor = {}, boss = false) {
+export function statsFor(species, progress, bonuses = {}, boss = false) {
   const level = levelFor(species, progress);
   const result = {};
   for (const key of Object.keys(labels)) {
     let value = naturalStat(species, key, level);
     if (boss) {
       const peak = naturalStat(species, key, species.maxLevel);
-      const factor = { hpMax: 1.25, attack: 1.1, defense: 1.1, speed: 1.1, attackSpeed: 1.1, size: 1.6 }[key];
+      const factor = { hpMax: 1.25, attack: 1.1, defense: 1.1, speed: 1.1, attackSpeed: 1.1, size: 1.6, range: 1.2 }[key];
       value = Math.max(peak + 1, Math.ceil(peak * factor));
     }
-    value += (bonuses[key] || 0) + (floor[key] || 0);
+    value += bonuses[key] || 0;
     result[key] = key === 'speed' || key === 'attackSpeed' ? Math.max(5, Math.min(180, value)) :
       Math.max(key === 'size' ? 40 : 1, value);
   }

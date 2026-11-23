@@ -13,7 +13,7 @@ export async function loadEncountersCatalog(upgrades) {
   const rewards = new Set(upgrades.map(item => item.id));
   for (const row of rows) {
     if (pokemon.has(row.dex) || !rewards.has(row.mejora) || !row.drops.every(id => Object.hasOwn(items, id)) ||
-        !Number.isInteger(row.maxLevel) || row.maxLevel < 1 || !Object.keys(labels).every(k => Number.isInteger(row.stats[k]) && row.stats[k] > 0)) {
+        !Number.isInteger(row.maxLevel) || row.maxLevel < 1 || !Object.keys(labels).every(k => (k === 'range' && row.stats[k] === undefined) || (Number.isInteger(row.stats[k]) && row.stats[k] > 0))) {
       throw new Error('Ficha Pokémon inválida: ' + row.dex);
     }
     pokemon.set(row.dex, row);

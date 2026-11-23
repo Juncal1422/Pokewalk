@@ -1,10 +1,10 @@
 import { updateEnemy } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
-import { dropItem, spawnFloorPotion } from './items.js';
+import { collectItems, dropItem, spawnFloorPotion } from './items.js';
 import {
   ANIM_SPEED,
   BODY_RADIUS,
-  ATTACK_RANGE,
+  PLAYER_GRACE_MS, PLAYER_STAGGER_MS,
   AI_SPEED,
   DIR_MAP,
   DIR_VEC,
@@ -105,18 +105,23 @@ export function triggerAttack(attacker) {
 function resolveImpact(attacker) {
   attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
-  const reach = ATTACK_RANGE;
+  const reach = attacker.stats.range;
+  // Distancia al segmento delantero, común al golpe y a la recogida al atacar.
+  function inStrike(x, y, radius) {
+    const dx = x - attacker.x, dy = y - attacker.y;
+    const forward = dx * vx + dy * vy;
+    if (forward <= 0) return false;
+    const along = Math.min(reach, forward);
+    return Math.hypot(dx - vx * along, dy - vy * along) <= radius;
+  }
+  if (attacker.isPlayer) collectItems(attacker, (drop) =>
+    Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, BODY_RADIUS));
+
   for (const target of game.entities) {
     if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
-    // Distancia al segmento frontal: al ampliar el alcance siguen entrando
-    // los objetivos cercanos, incluso en diagonal.
-    const dx = target.x - attacker.x, dy = target.y - attacker.y;
-    const distance = dx * vx + dy * vy;
-    if (distance <= 0) continue;
-    const along = Math.min(reach, distance);
-    if (Math.hypot(dx - vx * along, dy - vy * along) > BODY_RADIUS + bodyRadius(target)) continue;
+    if (!inStrike(target.x, target.y, BODY_RADIUS + bodyRadius(target))) continue;
     const now = performance.now();
-    if (target.isPlayer && now - target.lastHit < 200) continue;
+    if (target.isPlayer && now - target.lastHit < PLAYER_GRACE_MS) continue;
     const dodge = .05 + (target.isPlayer ? game.perks.dodge : 0);
     if (Math.random() < dodge) {
       target.missUntil = performance.now() + 750;
@@ -157,10 +162,9 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
   game.mission = mission;
   game.floor = floor;
   game.adventure = mission.number - 1;
-  game.progress = old ? game.progress + 1 : 5;
+  game.progress = 4 + mission.number;
   const player = createEntity(playerData, game.rooms[0], true);
   player.bonuses = bonuses;
-  player.floorStats = {};
   player.stats = statsFor(game.pokemon.get(dex), game.progress, bonuses);
   if (!old) game.initialHP = player.stats.hpMax;
   player.hp = old ? Math.min(player.stats.hpMax, old.hp) : player.stats.hpMax;
@@ -170,7 +174,7 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
   opponents.forEach((data, index) => {
     const enemy = createEntity(data, game.rooms[index * 2 + 1], false);
     enemy.boss = bossFloor;
-    enemy.stats = statsFor(game.pokemon.get(data.dex), game.progress, {}, {}, bossFloor);
+    enemy.stats = statsFor(game.pokemon.get(data.dex), game.progress, {}, bossFloor);
     if (bossFloor) {
       enemy.tracking = true;
     }
@@ -194,6 +198,7 @@ function moveEntity(entity, dx, dy) {
 
 export function updateEntity(entity) {
   if (entity.isPlayer) {
+    if (entity.hp > 0 && entity.state === 'Hurt' && performance.now() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
     let dx = 0,
       dy = 0;
     if (game.keys.w || game.keys.arrowup) dy--;
@@ -212,7 +217,7 @@ export function updateEntity(entity) {
 
   const animation = entity.anims[entity.state] || entity.anims.Idle;
   const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) :
-    entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) : 1;
+    entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) * (entity.isPlayer ? 1 : 0.48) : 1;
   entity.timer += entity.state === 'Hurt' ? 0.55 : ANIM_SPEED * tempo;
   const duration =
     (animation.durs[entity.frame] || 8) + (entity.state === 'Hurt' ? 2 : 0);

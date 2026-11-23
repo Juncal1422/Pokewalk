@@ -1,4 +1,4 @@
-import { ATTACK_RANGE, TILE } from './constants.js';
+import { TILE } from './constants.js';
 import { game } from './state.js';
 
 const cell = position => Math.floor(position / TILE);
@@ -60,7 +60,7 @@ function recoverOnLand(enemy, canMove) {
 
 export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove) {
   const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
-  const reach = ATTACK_RANGE;
+  const reach = enemy.stats.range;
   const distance = Math.hypot(dx, dy);
   const onLand = land(cell(enemy.x), cell(enemy.y));
   const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
@@ -74,20 +74,28 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
+  const inRange = pursuing && !fleeing && onLand && distance <= reach + 5;
+  const now = performance.now();
+  if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
     enemy.retreatTicks = 0;
     enemy.path = [];
     setState(enemy, 'Idle');
     return;
   }
-  if (pursuing && !fleeing && onLand && distance <= reach + 5) {
+  if (inRange) {
     enemy.dir = (Math.round(Math.atan2(dx, dy) / (Math.PI / 4)) + 8) % 8;
     enemy.path = [];
     enemy.aiTimer = 0;
     enemy.tracking = true;
     setState(enemy, 'Idle');
-    // La propia animación delimita cuándo puede iniciar el siguiente golpe.
-    attack(enemy);
+    // Exige exposición continua antes del primer golpe y deja respirar entre ataques.
+    enemy.aimSince ??= now;
+    if (now - enemy.aimSince >= 600 && now >= (enemy.nextAttackAt ?? 0)) {
+      attack(enemy);
+      enemy.aimSince = null;
+      enemy.nextAttackAt = now + (enemy.boss ? 1500 : 2000);
+    }
     return;
   }
 

@@ -16,49 +16,49 @@
     },
     "heal": 1,
     "image": "assets/items/goldenapple.png",
-    "description": "Recupera 1 HP, +1 HP máx. durante la aventura."
+    "description": "Recupera 1 PV. Bono permanente: +1 PV máximos."
   },
   "horn": {
     "name": "Cuerno",
-    "duration": "floor",
+    "duration": "run",
     "stats": {
       "attack": 1
     },
     "heal": 0,
     "image": "assets/items/horn.png",
-    "description": "+1 Ataque durante este piso."
+    "description": "Bono permanente: +1 Ataque."
   },
   "amulet": {
     "name": "Amuleto",
-    "duration": "floor",
+    "duration": "run",
     "stats": {
       "speed": 1,
       "defense": 1
     },
     "heal": 0,
     "image": "assets/items/amulet.png",
-    "description": "+1 Velocidad, +1 Defensa durante este piso."
+    "description": "Bono permanente: +1 Velocidad, +1 Defensa."
   },
   "ambrose": {
     "name": "Ambrosía",
-    "duration": "floor",
+    "duration": "run",
     "stats": {
       "attack": 1,
       "defense": 1
     },
     "heal": 0,
     "image": "assets/items/ambrose.png",
-    "description": "+1 Ataque, +1 Defensa durante este piso."
+    "description": "Bono permanente: +1 Ataque, +1 Defensa."
   },
   "ribbon": {
     "name": "Lazo",
-    "duration": "floor",
+    "duration": "run",
     "stats": {
       "attackSpeed": 2
     },
     "heal": 0,
     "image": "assets/items/ribbon.png",
-    "description": "+2 Velocidad de ataque durante este piso."
+    "description": "Bono permanente: +2 Velocidad de ataque."
   },
   "seed": {
     "name": "Semilla",
@@ -68,7 +68,7 @@
     },
     "heal": 0,
     "image": "assets/items/seed.png",
-    "description": "+1 Velocidad de ataque durante la aventura."
+    "description": "Bono permanente: +1 Velocidad de ataque."
   },
   "min_lens": {
     "name": "Lente de reducción",
@@ -76,11 +76,12 @@
     "stats": {
       "defense": -1,
       "speed": 2,
-      "size": -5
+      "size": -5,
+      "range": 1
     },
     "heal": 0,
     "image": "assets/items/min_lens.png",
-    "description": "-5 Tamaño, -1 Defensa, +2 Velocidad durante la aventura."
+    "description": "Bono permanente: -1 Defensa, +2 Velocidad, -5 Tamaño, +1 Rango de ataque."
   },
   "max_lens": {
     "name": "Lente de aumento",
@@ -93,6 +94,6 @@
     },
     "heal": 0,
     "image": "assets/items/max_lens.png",
-    "description": "+5 Tamaño, -1 Velocidad, +1 Ataque, +2 Defensa durante la aventura."
+    "description": "Bono permanente: -1 Velocidad, +1 Ataque, +2 Defensa, +5 Tamaño."
   }
 }

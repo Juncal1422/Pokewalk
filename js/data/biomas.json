@@ -298,6 +298,11 @@
           "6": 5
         }
       }
+    },
+    "layoutModifier": {
+      "pasillos": 0,
+      "habitaciones": 0,
+      "cruces": 0
     }
   },
   {
@@ -545,6 +550,11 @@
           "5": 4
         }
       }
+    },
+    "layoutModifier": {
+      "pasillos": -1,
+      "habitaciones": 0,
+      "cruces": 0
     }
   },
   {
@@ -821,6 +831,11 @@
         "6": 6
       },
       "walls": {}
+    },
+    "layoutModifier": {
+      "pasillos": -1,
+      "habitaciones": -1,
+      "cruces": -1
     }
   },
   {
@@ -1101,6 +1116,11 @@
         "6": 6
       },
       "walls": {}
+    },
+    "layoutModifier": {
+      "pasillos": 0,
+      "habitaciones": 0,
+      "cruces": 1
     }
   },
   {
@@ -1284,6 +1304,11 @@
           "7": 6
         }
       }
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": 0,
+      "cruces": 0
     }
   },
   {
@@ -1475,6 +1500,11 @@
         "6": 6
       },
       "walls": {}
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": 1,
+      "cruces": 1
     }
   }
 ]

@@ -13,6 +13,8 @@ export const ANIM_SPEED = 0.72;
 export const PLAYER_SPEED = 2.25;
 export const AI_SPEED = 1.3;
 export const ATTACK_RANGE = 25;
+export const PLAYER_GRACE_MS = 1000;
+export const PLAYER_STAGGER_MS = 140;
 
 export const DIR_MAP = {
   '0,1': 0,

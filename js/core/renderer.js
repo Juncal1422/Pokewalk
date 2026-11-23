@@ -1,6 +1,6 @@
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
-import { FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
+import { PLAYER_GRACE_MS, FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
 const tilesets = new Map();
@@ -134,7 +134,7 @@ export function draw() {
     );
     const elapsed = performance.now() - entity.lastHit;
     ctx.save();
-    if (entity.isPlayer && elapsed < 200 && Math.floor(elapsed / 40) % 2) ctx.globalAlpha *= 0.28;
+    if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2) ctx.globalAlpha *= 0.28;
     if (elapsed < 110) ctx.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
     ctx.drawImage(
       animation.img,
