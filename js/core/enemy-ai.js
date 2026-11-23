@@ -1,10 +1,12 @@
+import { groundFree } from './terrain.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 
 const cell = position => Math.floor(position / TILE);
 const center = index => (index + 0.5) * TILE;
 const land = (x, y) => game.grid[y]?.[x] === 0;
-const neighbors = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+const neighbors = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+const standingOnLand = (x, y) => groundFree(x, y, 0.01);
 
 // El recorrido puede cruzar un medio permitido, pero su destino siempre es tierra.
 // Si el jugador está en terreno inaccesible, se busca la orilla alcanzable más próxima.
@@ -30,6 +32,12 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, escapeDistance = 0
     for (const [dx, dy] of neighbors) {
       const nx = x + dx, ny = y + dy, next = ny * width + nx;
       if (nx <= 0 || ny <= 0 || nx >= width - 1 || ny >= game.grid.length - 1 || previous.has(next)) continue;
+      if (dx && dy) {
+        // Solo añadimos el atajo entre dos suelos con muros opuestos.
+        // Por simetría, el vértice compartido es el punto más estrecho.
+        if (!land(x, y) || !land(nx, ny) || land(nx, y) || land(x, ny)) continue;
+        if (!terrainFree(enemy, center(x) + dx * TILE / 2, center(y) + dy * TILE / 2)) continue;
+      }
       if (!terrainFree(enemy, center(nx), center(ny))) continue;
       previous.set(next, key);
       queue.push(next);
@@ -71,7 +79,7 @@ export function trySidestep(enemy, attacker, canMove, now) {
     let distance = 0;
     for (let d = 2; d <= TILE; d += 2) {
       const x = enemy.x + sx * d, y = enemy.y + sy * d;
-      if (!land(cell(x), cell(y)) || !canMove(enemy, x, y)) break;
+      if (!standingOnLand(x, y) || !canMove(enemy, x, y)) break;
       distance = d;
     }
     if (distance < TILE / 2) continue;
@@ -93,7 +101,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     const step = enemy.sidestep;
     const length = Math.min(2, step.remaining);
     const x = enemy.x + length * step.sx, y = enemy.y + length * step.sy;
-    if (land(cell(x), cell(y)) && canMove(enemy, x, y)) {
+    if (standingOnLand(x, y) && canMove(enemy, x, y)) {
       setState(enemy, 'Walk');
       enemy.x = x;
       enemy.y = y;
@@ -108,7 +116,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
   const reach = enemy.stats.range;
   const distance = Math.hypot(dx, dy);
-  const onLand = land(cell(enemy.x), cell(enemy.y));
+  const onLand = standingOnLand(enemy.x, enemy.y);
   const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
   const species = game.pokemon.get(enemy.dex);
   // Una sola retirada breve por enemigo terrestre. Tras ella vuelve a combatir.

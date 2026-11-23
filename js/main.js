@@ -1,3 +1,4 @@
+import { loadTerrain } from './core/terrain.js';
 import { loadMessageFrame } from './core/message-frame.js';
 import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
@@ -222,7 +223,7 @@ export async function startGame({
     draw();
   };
   resize();
-  const [catalog] = await Promise.all([loadUpgrades(), preparePortal(), loadHud()]);
+  const [catalog] = await Promise.all([loadUpgrades(), preparePortal(), loadHud(), loadTerrain()]);
   game.catalog = catalog;
   const { pokemon, items } = await loadEncountersCatalog(catalog);
   const biomes = await loadBiomes(pokemon);
