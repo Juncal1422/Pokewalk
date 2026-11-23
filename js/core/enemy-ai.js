@@ -1,4 +1,5 @@
 import { groundFree } from './terrain.js';
+import { attackReach } from './stats.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 
@@ -13,6 +14,16 @@ const standingOnLand = (x, y) => groundFree(x, y, 0.01);
 function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, escapeDistance = 0) {
   const width = game.grid[0].length;
   const start = cell(enemy.y) * width + cell(enemy.x);
+  // La visión sigue el dibujo sólido del atlas, incluso para especies que
+  // pueden cruzarlo. Sin visión directa buscamos un rodeo por ejes.
+  const player = game.player;
+  const dx = player.x - enemy.x, dy = player.y - enemy.y;
+  const steps = Math.ceil(Math.hypot(dx, dy));
+  let visible = true;
+  for (let i = 1; i < steps && visible; i++) {
+    visible = standingOnLand(enemy.x + dx * i / steps, enemy.y + dy * i / steps);
+  }
+  const directions = visible ? neighbors : neighbors.slice(0, 4);
   const queue = [start];
   const previous = new Map([[start, -1]]);
   let best = start;
@@ -32,7 +43,7 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, esca
     // Entre rutas del mismo número de pasos, exploramos primero el vecino
     // que más nos acerca a la presa (diagonal cuando difieren ambos ejes).
     const distanceAfter = ([dx, dy]) => (goalX - x - dx) ** 2 + (goalY - y - dy) ** 2;
-    const ordered = [...neighbors].sort((a, b) => distanceAfter(a) - distanceAfter(b));
+    const ordered = [...directions].sort((a, b) => distanceAfter(a) - distanceAfter(b));
     for (const [dx, dy] of ordered) {
       const nx = x + dx, ny = y + dy, next = ny * width + nx;
       if (nx <= 0 || ny <= 0 || nx >= width - 1 || ny >= game.grid.length - 1 || previous.has(next)) continue;
@@ -117,7 +128,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     return;
   }
   const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
-  const reach = enemy.stats.range;
+  const reach = attackReach(enemy.stats);
   const distance = Math.hypot(dx, dy);
   const onLand = standingOnLand(enemy.x, enemy.y);
   const returnToLand = playerOnLand && !onLand;

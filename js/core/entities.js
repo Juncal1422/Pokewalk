@@ -11,7 +11,7 @@ import {
   PLAYER_SPEED,
   TILE,
 } from './constants.js';
-import { statsFor, emptyBonuses, movementRate, attackRate, levelFor, damageFor } from './stats.js';
+import { statsFor, emptyBonuses, movementRate, attackRate, levelFor, enemyProgress, attackReach, damageFor } from './stats.js';
 import { groundFree } from './terrain.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
@@ -87,7 +87,8 @@ export function triggerAttack(attacker) {
 function resolveImpact(attacker) {
   attacker.impactPending = false;
   const [vx, vy] = DIR_VEC[attacker.dir];
-  const reach = attacker.stats.range;
+  const reach = attackReach(attacker.stats);
+  const strikeRadius = BODY_RADIUS * attacker.stats.size / 100;
   // Distancia al segmento delantero, común al golpe y a la recogida al atacar.
   function inStrike(x, y, radius) {
     const dx = x - attacker.x, dy = y - attacker.y;
@@ -97,11 +98,11 @@ function resolveImpact(attacker) {
     return Math.hypot(dx - vx * along, dy - vy * along) <= radius;
   }
   if (attacker.isPlayer) collectItems(attacker, (drop) =>
-    Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, BODY_RADIUS));
+    Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, strikeRadius));
 
   for (const target of game.entities) {
     if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
-    if (!inStrike(target.x, target.y, BODY_RADIUS + bodyRadius(target))) continue;
+    if (!inStrike(target.x, target.y, strikeRadius + bodyRadius(target))) continue;
     const now = performance.now();
     if (target.isPlayer && now - target.lastHit < PLAYER_GRACE_MS) continue;
     const dodge = .05 + (target.isPlayer ? game.perks.dodge : 0);
@@ -164,9 +165,11 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
   game.drops = [];
   game.entities = [player];
   opponents.forEach((data, index) => {
-    const enemy = createEntity(data, game.rooms[index * 2 + 1], false);
+    const enemy = createEntity(data, game.rooms[index + 1], false);
     enemy.boss = bossFloor;
-    enemy.stats = statsFor(game.pokemon.get(data.dex), game.progress, {}, bossFloor);
+    const species = game.pokemon.get(data.dex);
+    enemy.level = levelFor(species, enemyProgress(game.progress));
+    enemy.stats = statsFor(species, game.progress, {}, bossFloor, true);
     if (bossFloor) {
       enemy.tracking = true;
     }

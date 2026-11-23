@@ -6,27 +6,30 @@ const layouts = {
 };
 export const sample = list => list[Math.floor(Math.random() * list.length)];
 
-// El presupuesto crece de forma continua. Dentro del bioma se eligen especies
-// cercanas a ese presupuesto por sus bases de combate y su coste evolutivo.
-function encounterPool(biome, adventure, boss) {
-  const target = (boss ? 310 : 155) + adventure * (boss ? 4.5 : 4);
-  const ranked = biome.wild.map(id => game.pokemon.get(id))
-    .filter(row => (row.stage < 3 || adventure >= 50) &&
-      (boss ? row.final : !row.legendary && !row.mythical))
-    .map(row => {
-      const s = row.stats;
-      const strength = s.hpMax + s.attack + s.defense + s.speed + 2 * row.evolutionCost +
-        (row.legendary || row.mythical ? 55 : 0);
-      return { id: row.dex, distance: Math.abs(strength - target) };
-    }).sort((a, b) => a.distance - b.distance);
-  return ranked.slice(0, boss ? 8 : 28).map(entry => entry.id);
+// Posición 0 corresponde a un bioma de nivel 1.
+const floorCaps = {
+  retrieve: [3,5,7,10,15,20,25,30,40,50], clear: [2,3,4,5,6,7,10,15,20,25],
+  hunt: [2,3,5,7,10,15,20,30,40,50],
+};
+const enemyCaps = {
+  retrieve: [2,3,3,4,4,4,5,5,6,6], clear: [2,3,3,4,5,6,7,8,9,10],
+  hunt: [4,5,6,7,8,8,9,9,10,10],
+};
+const between = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+
+export function chooseBiome(biomes, missionNumber) {
+  const preferred = Math.min(10, 1 + (missionNumber - 1) / 8);
+  const weights = biomes.map(b => Math.exp(-Math.abs(b.level - preferred) / 1.5));
+  let roll = Math.random() * weights.reduce((sum, weight) => sum + weight, 0);
+  return biomes.find((_, i) => (roll -= weights[i]) < 0) ?? biomes.at(-1);
 }
 
-export function newMission(number, biome) {
+export function newMission(number, biome, playerLevel) {
   const type = number % 4 === 0 ? 'leader' : sample(['retrieve', 'clear', 'hunt']);
   const [name, pasillos, habitaciones, cruces] = layouts[type];
-  const floors = type === 'leader' ? 1 : 1 + Math.floor(Math.random() * Math.min(20, number + 2));
-  const pool = encounterPool(biome, number - 1, type === 'leader');
+  const floors = type === 'leader' ? 1 : between(biome.level, floorCaps[type][biome.level - 1]);
+  const band = playerLevel <= 16 ? '1-16' : playerLevel <= 36 ? '17-36' : playerLevel <= 60 ? '37-60' : '61-100';
+  const pool = (type === 'leader' ? biome.leaders : biome.wild)[band];
   const target = type === 'hunt' ? sample(pool) : null;
   const layout = { pasillos, habitaciones, cruces };
   for (const key of Object.keys(layout)) layout[key] += biome.layoutModifier[key];
@@ -42,7 +45,12 @@ export function encounters(m, floor) {
     return [sample(m.pool)];
   }
   const ids = m.target ? [m.target] : [];
-  while (ids.length < 4) ids.push(sample(m.pool.filter(id => !ids.includes(id))));
+  const max = enemyCaps[m.type][m.biome.level - 1];
+  const count = between(Math.ceil(max / 2), max);
+  while (ids.length < count) {
+    const unused = m.pool.filter(id => !ids.includes(id));
+    ids.push(sample(unused.length ? unused : m.pool));
+  }
   return ids;
 }
 
@@ -54,7 +62,7 @@ export function onDefeat(target, attacker) {
   const amount = (base + game.perks.essence) * (target.boss ? 2 : 1);
   game.drops.push({ essence, amount, x: target.x, y: target.y });
   if (!attacker.isPlayer) return;
-  m.defeated.push(target.dex);
+  if (!target.boss) m.defeated.push(target.dex);
   if (m.target === target.dex) m.kills++;
   console.info('[Esencia]', essence, amount, target.dex);
 }
@@ -80,7 +88,6 @@ export function rewardOptions() {
   const defeated = [...new Set(m.defeated)].map(id => game.pokemon.get(id));
   // Solo cuentan las esencias de un tipo individual. No se consumen al evolucionar.
   function unlocked(row) {
-    if (row.stage >= 3 && m.number < 50) return false;
     if (row.root !== current.root || row.stage <= current.stage) return true;
     const rule = current.evolutions.find(rule => rule.to === row.dex);
     return !!rule && rule.essences.some(id => (game.essences[id] || 0) >= rule.amount);

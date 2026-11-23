@@ -3,6 +3,8 @@ import { ATTACK_RANGE } from './constants.js';
 export const labels = { hpMax: 'HP', attack: 'Ataque', defense: 'Defensa', speed: 'Velocidad', size: 'Tamaño', attackSpeed: 'Velocidad de ataque', range: 'Rango de ataque' };
 export const emptyBonuses = () => ({ hpMax: 0, attack: 0, defense: 0, speed: 0, size: 0, attackSpeed: 0, range: 0 });
 export const levelFor = (species, progress) => Math.min(species.maxLevel, progress);
+export const enemyProgress = progress => 5 + Math.round((progress - 5) * 1.6);
+export const attackReach = stats => stats.range * stats.size / 100;
 export const movementRate = speed => 0.85 + speed / 150;
 
 // La rama positiva de tanh crece con rendimientos decrecientes. Un 9 mantiene
@@ -21,11 +23,13 @@ function naturalStat(species, key, level) {
   return key === 'speed' || key === 'attackSpeed' ? Math.min(179, value) : value;
 }
 
-export function statsFor(species, progress, bonuses = {}, boss = false) {
-  const level = levelFor(species, progress);
+export function statsFor(species, progress, bonuses = {}, boss = false, wild = boss) {
+  const level = levelFor(species, wild ? enemyProgress(progress) : progress);
   const result = {};
   for (const key of Object.keys(labels)) {
-    let value = naturalStat(species, key, level);
+    // Los PV del líder parten exactamente de la curva anterior antes del ×10.
+    const statLevel = boss && key === 'hpMax' ? levelFor(species, progress) : level;
+    let value = naturalStat(species, key, statLevel);
     if (boss) {
       // progress = misión + 4. Los límites suben al empezar cada bloque de cuatro misiones.
       const tier = Math.max(0, Math.floor((progress - 5) / 4));
@@ -33,6 +37,7 @@ export function statsFor(species, progress, bonuses = {}, boss = false) {
         speed: 20 + tier * 5, attackSpeed: 16 + tier * 3, size: 185 + tier * 2, range: 30 + tier };
       const factors = { hpMax: 1.5 + Math.min(1, tier * 0.12), attack: 1.15 + Math.min(0.95, tier * 0.14), defense: 1.15 + Math.min(0.5, tier * 0.075), speed: 1.1, attackSpeed: 1.1, size: 1.45, range: 1.15 };
       value = Math.min(limits[key], Math.ceil(value * factors[key]));
+      if (key === 'hpMax') value *= 10;
     }
     value += bonuses[key] || 0;
     result[key] = key === 'speed' || key === 'attackSpeed' ? Math.max(5, Math.min(180, value)) :

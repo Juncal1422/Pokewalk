@@ -1,6 +1,8 @@
+import { updateEvolutionMenu } from './core/evolution.js';
+import { levelFor } from './core/stats.js';
 import { loadTerrain } from './core/terrain.js';
 import { attachInventory } from './core/inventory.js';
-import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
+import { newMission, exitKind, rewardOptions, chooseBiome } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
 import { element, tones, portrait } from './core/pokemon-panel.js';
 import { loadEncountersCatalog } from './data/encounters.js';
@@ -60,10 +62,13 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
+      #evolve { position:absolute; left:6px; bottom:155px; max-width:min(48vw,340px); max-height:28vh; overflow:auto; }
+      #evolve button { font:inherit; cursor:pointer; }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
     <aside id="roster" aria-label="Pokémon del piso"><ul></ul></aside>
+    <section id="evolve" aria-label="Evoluciones disponibles" hidden></section>
     <button type="button" id="bag" class="box" aria-label="Mochila" aria-controls="inventory" aria-expanded="false"><img alt="" src="${new URL('../assets/ui/bag.png', import.meta.url).href}"></button>
     <section id="inventory" class="box" aria-label="Objetos obtenidos" hidden></section>
     <div id="item-tip" class="box" role="tooltip" hidden></div>
@@ -107,8 +112,8 @@ async function nextLevel() {
     } else {
       const option = await chooseReward(rewardOptions(), game.catalog);
       game.loadingEl.style.display = 'flex';
-      const biome = sample(game.biomes.filter(b => b.id !== m.biome.id));
-      const next = newMission(m.number + 1, biome);
+      const biome = chooseBiome(game.biomes.filter(b => b.id !== m.biome.id), m.number + 1);
+      const next = newMission(m.number + 1, biome, levelFor(option?.row ?? game.pokemon.get(game.player.dex), game.progress + 1));
       await changeBiome(biome);
       const reward = option && game.catalog.find(item => item.id === option.row.mejora);
       const bonuses = rewardBonuses(game.player.bonuses, option, reward);
@@ -194,6 +199,7 @@ function frame() {
     updateRoster();
     updateNearby();
     game.updateInventory();
+    updateEvolutionMenu(document.getElementById('evolve'));
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
@@ -256,9 +262,9 @@ export async function startGame({
   game.pickups = [];
   game.perks = { loot: 0, essence: 0, dodge: 0 };
   game.formEssence = null;
-  const biome = sample(biomes);
+  const biome = chooseBiome(biomes, 1);
   await changeBiome(biome);
-  await loadLevel(DEFAULT_DEX, newMission(1, biome), 1);
+  await loadLevel(DEFAULT_DEX, newMission(1, biome, levelFor(pokemon.get(DEFAULT_DEX), 5)), 1);
   const input = attachInput();
   game.updateInventory = attachInventory(root, input.signal);
   const observer = new ResizeObserver(resize);
