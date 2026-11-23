@@ -58,6 +58,35 @@ function recoverOnLand(enemy, canMove) {
   if (dest) [enemy.x, enemy.y] = dest;
 }
 
+// Tras dos impactos cercanos, prueba ambos flancos. Cada paso comprueba cuerpos,
+// paredes y tierra firme antes de mover al enemigo.
+export function trySidestep(enemy, attacker, canMove, now) {
+  if (now < (enemy.evadeAfter ?? 0)) return false;
+  const dx = enemy.x - attacker.x, dy = enemy.y - attacker.y;
+  const length = Math.hypot(dx, dy);
+  if (!length) return false;
+  const side = Math.random() < 0.5 ? -1 : 1;
+  for (const sign of [side, -side]) {
+    const sx = -dy / length * sign, sy = dx / length * sign;
+    let distance = 0;
+    for (let d = 2; d <= TILE; d += 2) {
+      const x = enemy.x + sx * d, y = enemy.y + sy * d;
+      if (!land(cell(x), cell(y)) || !canMove(enemy, x, y)) break;
+      distance = d;
+    }
+    if (distance < TILE / 2) continue;
+    enemy.x += sx * distance;
+    enemy.y += sy * distance;
+    enemy.path = [];
+    enemy.aimSince = null;
+    enemy.tracking = true;
+    enemy.counterUntil = now + 1400;
+    enemy.evadeAfter = now + 2600;
+    return true;
+  }
+  return false;
+}
+
 export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove) {
   const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
   const reach = enemy.stats.range;
@@ -91,8 +120,9 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     setState(enemy, 'Idle');
     // Exige exposición continua antes del primer golpe y deja respirar entre ataques.
     enemy.aimSince ??= now;
-    if (now - enemy.aimSince >= 600 && now >= (enemy.nextAttackAt ?? 0)) {
+    if (now - enemy.aimSince >= (now < enemy.counterUntil ? 180 : 600) && (now < enemy.counterUntil || now >= (enemy.nextAttackAt ?? 0))) {
       attack(enemy);
+      enemy.counterUntil = 0;
       enemy.aimSince = null;
       enemy.nextAttackAt = now + (enemy.boss ? 1500 : 2000);
     }

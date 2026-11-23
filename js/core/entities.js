@@ -1,4 +1,4 @@
-import { updateEnemy } from './enemy-ai.js';
+import { updateEnemy, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
 import { collectItems, dropItem, spawnFloorPotion } from './items.js';
 import {
@@ -131,7 +131,11 @@ function resolveImpact(attacker) {
     const damage = Math.min(target.hp, damageFor(attacker, target, critical));
     target.hitNumber = { damage, critical, time: now };
     target.hp = Math.max(0, target.hp - damage);
-    target.lastHit = performance.now();
+    const pinned = !target.isPlayer && attacker.isPlayer && now - target.lastHit < 1400 &&
+      Math.hypot(target.x - target.hitX, target.y - target.hitY) < TILE;
+    target.lastHit = now;
+    target.hitX = target.x;
+    target.hitY = target.y;
     target.frame = target.timer = 0;
     target.impactPending = false;
     setState(target, 'Hurt');
@@ -141,6 +145,10 @@ function resolveImpact(attacker) {
         onDefeat(target, attacker);
         dropItem(target, attacker);
       }
+    }
+    if (target.hp > 0 && pinned && trySidestep(target, attacker, canMove, now)) {
+      setState(target, 'Walk');
+      continue;
     }
     if (canMove(target, target.x + vx * 10, target.y + vy * 10)) {
       target.x += vx * 10;

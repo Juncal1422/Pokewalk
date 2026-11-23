@@ -1,79 +1,75 @@
 import { game } from './state.js';
 import { labels, statsFor, levelFor } from './stats.js';
 import { rewardBonuses } from '../data/upgrades.js';
+import { element, gem, portrait } from './pokemon-panel.js';
 
-function evolutionText(row) {
-  return row.evolutions.map(rule => {
-    const types = rule.essences.map(type => type + ' ' + (game.essences[type] || 0) + '/' + rule.amount);
-    return game.pokemon.get(rule.to).name + ' · ' + types.join(' o ');
-  }).join(' | ');
+const tones = { normal:'#494641', fire:'#622821', water:'#203d61', electric:'#554519',
+  grass:'#244b30', ice:'#285059', fighting:'#532e28', poison:'#482951', ground:'#53412b',
+  flying:'#35455e', psychic:'#582e4d', bug:'#414b23', rock:'#4b4232', ghost:'#392e50',
+  dragon:'#302e62', dark:'#343037', steel:'#36454b' };
+
+function evolutionBars(row) {
+  const footer = element('div');
+  footer.className = 'evolutions';
+  const current = game.pokemon.get(game.player.dex);
+  const incoming = current.evolutions.filter(rule => rule.to === row.dex);
+  for (const rule of [...incoming, ...row.evolutions]) {
+    const name = game.pokemon.get(rule.to).name;
+    footer.append(element('strong', (rule.to === row.dex ? 'Desbloqueada: ' : 'Evolución: ') + name));
+    for (const type of rule.essences) {
+      const count = game.essences[type] || 0;
+      const line = element('div');
+      const bar = element('progress');
+      bar.max = rule.amount;
+      bar.value = Math.min(count, rule.amount);
+      bar.setAttribute('aria-label', name + ' · ' + type);
+      line.append(gem(type), bar, element('small', count + '/' + rule.amount));
+      footer.append(line);
+    }
+  }
+  return footer;
 }
-// La lista proviene de las bajas de esta planta, incluidas las causadas por la IA.
+
+function rewardCard(option, catalog) {
+  const { row, essence, bonus } = option;
+  const reward = catalog.find(item => item.id === row.mejora);
+  const progress = game.progress + 1;
+  const stats = statsFor(row, progress, rewardBonuses(game.player.bonuses, option, reward));
+  const card = element('button');
+  card.type = 'button';
+  card.style.backgroundColor = tones[essence];
+  const heading = element('strong', row.name);
+  heading.prepend(gem(essence));
+  card.append(portrait(row), heading, element('small', 'Nv. ' + levelFor(row, progress)));
+  if (!bonus || reward.effect === 'runPerk') card.append(element('span', reward.label));
+  if (bonus) card.append(element('span', 'Bono de línea: −1 Tamaño y +1 al resto'));
+  const table = element('table');
+  const body = table.createTBody();
+  for (const [key, label] of Object.entries(labels)) {
+    const tr = body.insertRow();
+    const change = stats[key] - game.player.stats[key];
+    tr.insertCell().textContent = label;
+    tr.insertCell().textContent = stats[key];
+    const delta = tr.insertCell();
+    delta.textContent = change ? (change > 0 ? '+' : '') + change : '—';
+    if (change) delta.style.color = (key === 'size' ? change < 0 : change > 0) ? '#9ce9ab' : '#ffaaa6';
+  }
+  card.append(table, evolutionBars(row));
+  return card;
+}
+
 export function chooseReward(options, catalog) {
-  console.info('[Mejoras] Formas ofrecidas', options.map(option => option.row.name));
   const dialog = document.getElementById('rewards');
   const cards = dialog.querySelector('.cards');
   cards.replaceChildren();
-  let requirements = dialog.querySelector('.requirements');
-  if (!requirements) {
-    requirements = document.createElement('p');
-    requirements.className = 'requirements';
-    cards.before(requirements);
-  }
-  const current = evolutionText(game.pokemon.get(game.player.dex));
-  requirements.hidden = !current;
-  requirements.textContent = 'Evolución de tu forma actual: ' + current;
   return new Promise(resolve => {
-    for (const option of options) {
-      const { row, essence, bonus } = option;
-      const dex = row.dex;
-      const reward = catalog.find(item => item.id === row.mejora);
-      const card = document.createElement('button');
-      const portrait = new Image();
-      const number = String(dex).padStart(4, '0');
-      portrait.src = 'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/' + number + '/Normal.png';
-      portrait.alt = 'Retrato del Pokémon ' + dex;
-      portrait.onerror = () => {
-        portrait.onerror = null;
-        portrait.src = 'https://cdn.jsdelivr.net/gh/PMDCollab/SpriteCollab@master/portrait/' + number + '/Normal.png';
-      };
-      card.type = 'button';
-      const gem = new Image();
-      gem.src = new URL('../../assets/ui/essence-' + essence + '.png', import.meta.url).href;
-      gem.alt = essence;
-      gem.className = 'essence';
-      const bonuses = rewardBonuses(game.player.bonuses, option, reward);
-      const progress = game.progress + 1;
-      const projected = statsFor(row, progress, bonuses);
-      card.append(portrait, row.name + ' · Nv. ' + levelFor(row, progress), gem);
-      if (!bonus || reward.effect === 'runPerk') card.append(reward.label);
-      for (const [key, label] of Object.entries(labels)) {
-        const line = document.createElement('span');
-        const change = projected[key] - game.player.stats[key];
-        line.textContent = label + ' ' + projected[key] + (change ? ' (' + (change > 0 ? '+' : '') + change + ')' : ' (=)');
-        if (change) line.style.color = (key === 'size' ? change < 0 : change > 0) ? '#96edaa' : '#ffadad';
-        card.append(line);
-      }
-      const next = evolutionText(row);
-      if (next) card.append('Evolución: ' + next);
-      if (bonus) {
-        const extra = document.createElement('span');
-        extra.className = 'line-bonus';
-        extra.textContent = 'Bono de línea: −1 Tamaño y +1 a las demás estadísticas';
-        card.append(extra);
-      }
+    for (const option of options.length ? options : [null]) {
+      const card = option ? rewardCard(option, catalog) : element('button', 'Continuar con la forma actual');
       card.onclick = () => {
-        if (!dialog.open) return;
         dialog.close();
         resolve(option);
       };
       cards.append(card);
-    }
-    if (!options.length) {
-      const button = document.createElement('button');
-      button.textContent = 'Continuar con la forma actual';
-      button.onclick = () => { dialog.close(); resolve(null); };
-      cards.append(button);
     }
     dialog.oncancel = event => event.preventDefault();
     dialog.showModal();

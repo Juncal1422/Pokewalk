@@ -1,7 +1,7 @@
 import { loadMessageFrame } from './core/message-frame.js';
 import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
-import { labels } from './core/stats.js';
+import { element, gem, portrait } from './core/pokemon-panel.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
 import { loadUpgrades, applyUpgrade, rewardBonuses } from './data/upgrades.js';
@@ -20,21 +20,31 @@ const EMBEDDED_APP = `
       #poke-walk-app { position:fixed; inset:0; overflow:hidden; background:#11131a; color:#f0f4f8; font:14px system-ui,sans-serif; }
       #canvas-container, #game { width:100%; height:100%; display:block; }
       #game { image-rendering:pixelated; touch-action:none; outline:none; }
-      #rewards { box-sizing:border-box; width:min(92vw,760px); max-height:96dvh; padding:clamp(8px,3vmin,28px); color:#f3f6ff; background:#172233; border:2px solid #526681; border-radius:12px; }
-      #rewards .line-bonus { align-self:end; width:100%; padding-top:6px; border-top:1px solid #748493; color:#a7e9e2; }
-      #rewards img.essence { width:24px; }
       #nearby { position:absolute; right:8px; bottom:8px; box-sizing:border-box; width:max-content; max-width:min(57vw,380px); max-height:40vh; overflow:auto; padding:4px; border:12px solid transparent; border-image-repeat:stretch; background:rgb(0 0 0 / 50%) padding-box; }
       #nearby p { margin:3px 0; }
-      #roster { position:absolute; right:8px; top:68px; color:#eef6ff; background:#101a25e8; border-radius:6px; max-width:44vw; max-height:60vh; overflow:auto; padding:6px 9px; font-size:12px; }
-      #roster summary { cursor:pointer; font-weight:600; }
-      #roster ul { list-style:none; margin:6px 0 0; padding:0; }
-      #roster li { padding:4px 0; border-top:1px solid #354456; }
-      #rewards::backdrop { background:#0b101ddc; }
-      #rewards h1 { margin:0 0 12px; font-size:clamp(18px,5vmin,30px); }
-      #rewards .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(4px,1.5vmin,12px); }
-      #rewards button { min-width:0; display:grid; justify-items:center; gap:6px; padding:clamp(4px,2vmin,18px); border:2px solid #455d77; border-radius:8px; background:#26374a; color:#fff; font:600 clamp(12px,2.7vmin,18px) system-ui; cursor:pointer; }
-      #rewards button:is(:hover,:focus-visible) { outline:2px solid #a7e9e2; background:#324e60; }
-      #rewards img { width:min(80px,15vw,17dvh); aspect-ratio:1; image-rendering:pixelated; }
+      #poke-walk-app .portrait, #poke-walk-app .essence { image-rendering:pixelated; vertical-align:middle; }
+      #poke-walk-app .essence { width:16px; height:16px; }
+      #roster { position:absolute; top:62px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:12px; }
+      #roster summary { cursor:pointer; background:#172330dd; padding:3px 7px; }
+      #roster ul { margin:4px 0; padding:0; list-style:none; display:grid; gap:3px; }
+      #roster li, #rewards button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
+      #roster li { display:grid; grid-template-columns:32px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
+      #roster .portrait { width:32px; grid-row:span 3; }
+      #roster li div { display:flex; gap:2px; }
+      #rewards { padding:4px; max-width:96vw; max-height:92dvh; overflow:auto; background:transparent; border:0; color:white; }
+      #rewards::backdrop { background:#080d16b0; }
+      #rewards h1 { margin:0 0 5px; font:600 17px system-ui; text-align:center; }
+      #rewards .cards { display:flex; gap:5px; align-items:stretch; }
+      #rewards button { flex:1 1 0; width:clamp(94px,29vw,162px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px; background-color:#223040; color:white; font:12px/1.22 system-ui; cursor:pointer; }
+      #rewards button:focus-visible, #rewards button:hover { outline:2px solid #d4efff; outline-offset:-4px; }
+      #rewards .portrait { width:42px; height:42px; }
+      #rewards table { width:100%; margin:4px 0; border-collapse:collapse; font:inherit; font-variant-numeric:tabular-nums; }
+      #rewards td { padding:2px 1px; text-align:right; border-bottom:1px solid #ffffff24; }
+      #rewards td:first-child { text-align:left; }
+      #rewards .evolutions { width:100%; margin-top:auto; text-align:left; font-size:10px; }
+      #rewards .evolutions div { display:flex; align-items:center; gap:2px; }
+      #rewards progress { flex:1; min-width:8px; height:7px; accent-color:#a4ddab; }
+      @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:10px; } }
       #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
     </style>
@@ -107,15 +117,24 @@ async function nextLevel() {
 // El panel comparte los valores de combate y solo cambia el DOM cuando varían.
 function updateRoster() {
   const list = document.querySelector('#roster ul');
-  const rows = game.entities.map(e => {
-    const name = game.pokemon.get(e.dex).name + (e.isPlayer ? ' (tú)' : e.boss ? ' (líder)' : '');
-    return name + ' · Nv. ' + e.level + ' · HP ' + e.hp + '/' + e.stats.hpMax +
-      ' · ' + (e.isPlayer ? ['attack', 'defense', 'speed', 'size', 'attackSpeed', 'range'] : ['attack', 'defense', 'speed']).map(k => labels[k] + ' ' + e.stats[k]).join(' · ');
-  });
-  const signature = rows.join('|');
-  if (list.dataset.signature === signature) return;
-  list.dataset.signature = signature;
-  list.replaceChildren(...rows.map(text => { const li=document.createElement('li'); li.textContent=text; return li; }));
+  const alive = game.entities.filter(e => !e.isPlayer && e.hp > 0);
+  // Conservamos el nodo y el retrato durante los cambios de PV.
+  for (const li of Array.from(list.children)) if (!alive.includes(li.combatant)) li.remove();
+  for (const enemy of alive) {
+    const row = game.pokemon.get(enemy.dex);
+    let li = enemy.rosterCard;
+    if (!li || li.parentNode !== list) {
+      li = element('li');
+      li.combatant = enemy;
+      enemy.rosterCard = li;
+      const drops = element('div');
+      drops.append(...row.essences.map(gem));
+      li.append(portrait(row), element('strong', row.name + (enemy.boss ? ' · Líder' : '')), element('span'), drops);
+      list.append(li);
+    }
+    const stats = 'HP ' + enemy.hp + '/' + enemy.stats.hpMax + ' · ATQ ' + enemy.stats.attack + ' · DEF ' + enemy.stats.defense;
+    if (li.children[2].textContent !== stats) li.children[2].textContent = stats;
+  }
 }
 
 // Agrupa duplicados y actualiza el panel solo al entrar o salir de su radio.
