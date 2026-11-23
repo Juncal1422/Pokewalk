@@ -1,6 +1,6 @@
 import { updateEnemy, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
-import { collectItems, dropItem, spawnFloorPotion } from './items.js';
+import { collectItems, spawnFloorItems } from './items.js';
 import {
   ANIM_SPEED,
   BODY_RADIUS,
@@ -123,7 +123,6 @@ function resolveImpact(attacker) {
       target.deathAt = target.lastHit;
       if (!target.isPlayer) {
         onDefeat(target, attacker);
-        dropItem(target, attacker);
       }
     }
     // El retroceso se detiene en el primer obstáculo del recorrido.
@@ -167,7 +166,7 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
     enemy.hp = enemy.stats.hpMax;
     game.entities.push(enemy);
   });
-  spawnFloorPotion();
+  spawnFloorItems();
   game.loadingEl.style.display = 'none';
   console.info('[Piso]', floor, mission.name, ids);
 }

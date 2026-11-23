@@ -31,7 +31,7 @@ export function newMission(number, biome) {
   const layout = { pasillos, habitaciones, cruces };
   for (const key of Object.keys(layout)) layout[key] += biome.layoutModifier[key];
   const mission = { number, biome, type, name, floors, pool, target, quota: target ? 1 + Math.floor(Math.random() * floors) : 0,
-    kills: 0, defeated: [], recovered: false, layout };
+    itemBlock: -1, itemsPlaced: 0, kills: 0, defeated: [], recovered: false, layout };
   console.info('[Misión]', name, { number, floors, biome: biome.name, target });
   return mission;
 }
@@ -47,15 +47,16 @@ export function encounters(m, floor) {
 }
 
 export function onDefeat(target, attacker) {
-  if (!attacker.isPlayer) return;
   const m = game.mission;
   const essence = sample(game.pokemon.get(target.dex).essences);
   const row = game.pokemon.get(target.dex);
   const base = row.legendary ? 5 : row.mythical ? 4 : row.stage >= 3 ? 3 : row.stage === 2 || row.final ? 2 : 1;
-  game.essences[essence] = (game.essences[essence] || 0) + (base + game.perks.essence) * (target.boss ? 2 : 1);
+  const amount = (base + game.perks.essence) * (target.boss ? 2 : 1);
+  game.drops.push({ essence, amount, x: target.x, y: target.y });
+  if (!attacker.isPlayer) return;
   m.defeated.push(target.dex);
   if (m.target === target.dex) m.kills++;
-  console.info('[Esencia]', essence, game.essences[essence], target.dex);
+  console.info('[Esencia]', essence, amount, target.dex);
 }
 
 export function exitKind(m, floor, cleared) {

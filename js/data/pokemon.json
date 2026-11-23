@@ -44,7 +44,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 1,
@@ -81,7 +80,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "max_lens"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 2,
@@ -118,7 +116,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "horn"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 3,
@@ -176,7 +173,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -234,7 +230,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -271,7 +266,6 @@
       "Rotate",
       "Faint"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["fire", "flying"],
     "essences": ["fire", "flying"],
     "stage": 3,
@@ -329,7 +323,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -365,7 +358,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -401,7 +393,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 3,
@@ -437,7 +428,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -473,7 +463,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 2,
@@ -509,7 +498,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 3,
@@ -545,7 +533,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 1,
@@ -581,7 +568,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 2,
@@ -617,7 +603,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 3,
@@ -675,7 +660,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -711,7 +695,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -747,7 +730,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "min_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 3,
@@ -783,7 +765,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -819,7 +800,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -855,7 +835,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -891,7 +870,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -949,7 +927,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -985,7 +962,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -1043,7 +1019,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -1101,7 +1076,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 3,
@@ -1159,7 +1133,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -1217,7 +1190,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 2,
@@ -1253,7 +1225,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -1289,7 +1260,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -1325,7 +1295,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["poison", "ground"],
     "essences": ["poison", "ground"],
     "stage": 3,
@@ -1363,7 +1332,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -1401,7 +1369,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -1439,7 +1406,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["poison", "ground"],
     "essences": ["poison", "ground"],
     "stage": 3,
@@ -1475,7 +1441,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -1511,7 +1476,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -1571,7 +1535,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -1631,7 +1594,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -1689,7 +1651,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -1725,7 +1686,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -1761,7 +1721,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["poison", "flying"],
     "essences": ["poison", "flying"],
     "stage": 1,
@@ -1797,7 +1756,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["poison", "flying"],
     "essences": ["poison", "flying"],
     "stage": 2,
@@ -1833,7 +1791,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 1,
@@ -1869,7 +1826,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 2,
@@ -1905,7 +1861,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 3,
@@ -1941,7 +1896,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "potion"],
     "types": ["bug", "grass"],
     "essences": ["bug", "grass"],
     "stage": 1,
@@ -1977,7 +1931,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["bug", "grass"],
     "essences": ["bug", "grass"],
     "stage": 2,
@@ -2035,7 +1988,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 1,
@@ -2071,7 +2023,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 2,
@@ -2108,7 +2059,6 @@
       "Rotate",
       "Pose"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -2145,7 +2095,6 @@
       "Rotate",
       "Pose"
     ],
-    "drops": ["max_lens", "horn"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 2,
@@ -2203,7 +2152,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -2239,7 +2187,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -2276,7 +2223,6 @@
       "Rotate",
       "Pose"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -2312,7 +2258,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -2349,7 +2294,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -2385,7 +2329,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -2425,7 +2368,6 @@
       "Cringe",
       "EventSleep"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -2462,7 +2404,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "min_lens"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -2499,7 +2440,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -2535,7 +2475,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -2571,7 +2510,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["water", "fighting"],
     "essences": ["water", "fighting"],
     "stage": 3,
@@ -2630,7 +2568,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -2666,7 +2603,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -2702,7 +2638,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 3,
@@ -2759,7 +2694,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -2795,7 +2729,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -2831,7 +2764,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 3,
@@ -2867,7 +2799,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "horn"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 1,
@@ -2903,7 +2834,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 2,
@@ -2939,7 +2869,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 3,
@@ -2976,7 +2905,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["water", "poison"],
     "essences": ["water", "poison"],
     "stage": 1,
@@ -3013,7 +2941,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "min_lens"],
     "types": ["water", "poison"],
     "essences": ["water", "poison"],
     "stage": 2,
@@ -3049,7 +2976,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["rock", "ground"],
     "essences": ["rock", "ground"],
     "stage": 1,
@@ -3090,7 +3016,6 @@
       "Cringe",
       "TumbleBack"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["rock", "ground"],
     "essences": ["rock", "ground"],
     "stage": 2,
@@ -3127,7 +3052,6 @@
       "Rotate",
       "Special0"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["rock", "ground"],
     "essences": ["rock", "ground"],
     "stage": 3,
@@ -3185,7 +3109,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -3221,7 +3144,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -3257,7 +3179,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["water", "psychic"],
     "essences": ["water", "psychic"],
     "stage": 1,
@@ -3294,7 +3215,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["water", "psychic"],
     "essences": ["water", "psychic"],
     "stage": 2,
@@ -3330,7 +3250,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["electric", "steel"],
     "essences": ["electric", "steel"],
     "stage": 1,
@@ -3366,7 +3285,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["electric", "steel"],
     "essences": ["electric", "steel"],
     "stage": 2,
@@ -3402,7 +3320,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -3438,7 +3355,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -3474,7 +3390,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ribbon"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -3510,7 +3425,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -3546,7 +3460,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["water", "ice"],
     "essences": ["water", "ice"],
     "stage": 2,
@@ -3582,7 +3495,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ribbon"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -3618,7 +3530,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -3654,7 +3565,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -3690,7 +3600,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["water", "ice"],
     "essences": ["water", "ice"],
     "stage": 2,
@@ -3726,7 +3635,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ambrose"],
     "types": ["ghost", "poison"],
     "essences": ["ghost", "poison"],
     "stage": 1,
@@ -3762,7 +3670,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["ghost", "poison"],
     "essences": ["ghost", "poison"],
     "stage": 2,
@@ -3821,7 +3728,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["ghost", "poison"],
     "essences": ["ghost", "poison"],
     "stage": 3,
@@ -3857,7 +3763,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "potion"],
     "types": ["rock", "ground"],
     "essences": ["rock", "ground"],
     "stage": 1,
@@ -3893,7 +3798,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -3929,7 +3833,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "ribbon"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -3965,7 +3868,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -4001,7 +3903,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -4060,7 +3961,6 @@
       "TumbleBack",
       "Wake"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -4097,7 +3997,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -4133,7 +4032,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "horn"],
     "types": ["grass", "psychic"],
     "essences": ["grass", "psychic"],
     "stage": 1,
@@ -4170,7 +4068,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["grass", "psychic"],
     "essences": ["grass", "psychic"],
     "stage": 2,
@@ -4228,7 +4125,6 @@
       "DeepBreath",
       "Pain"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -4264,7 +4160,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 2,
@@ -4300,7 +4195,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -4336,7 +4230,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -4372,7 +4265,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -4408,7 +4300,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -4445,7 +4336,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -4481,7 +4371,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["ground", "rock"],
     "essences": ["ground", "rock"],
     "stage": 1,
@@ -4517,7 +4406,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["ground", "rock"],
     "essences": ["ground", "rock"],
     "stage": 2,
@@ -4553,7 +4441,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -4589,7 +4476,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ribbon"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -4625,7 +4511,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -4661,7 +4546,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "goldenapple"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -4697,7 +4581,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -4733,7 +4616,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -4769,7 +4651,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -4805,7 +4686,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -4841,7 +4721,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["water", "psychic"],
     "essences": ["water", "psychic"],
     "stage": 2,
@@ -4877,7 +4756,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -4913,7 +4791,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 1,
@@ -4949,7 +4826,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["ice", "psychic"],
     "essences": ["ice", "psychic"],
     "stage": 2,
@@ -4985,7 +4861,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -5021,7 +4896,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "amulet"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -5057,7 +4931,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -5093,7 +4966,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -5129,7 +5001,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -5166,7 +5037,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 2,
@@ -5203,7 +5073,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["water", "ice"],
     "essences": ["water", "ice"],
     "stage": 1,
@@ -5261,7 +5130,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -5320,7 +5188,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -5357,7 +5224,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -5415,7 +5281,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -5474,7 +5339,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -5511,7 +5375,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -5547,7 +5410,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["rock", "water"],
     "essences": ["rock", "water"],
     "stage": 1,
@@ -5583,7 +5445,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ambrose"],
     "types": ["rock", "water"],
     "essences": ["rock", "water"],
     "stage": 2,
@@ -5641,7 +5502,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["rock", "water"],
     "essences": ["rock", "water"],
     "stage": 1,
@@ -5677,7 +5537,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["rock", "water"],
     "essences": ["rock", "water"],
     "stage": 2,
@@ -5713,7 +5572,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["rock", "flying"],
     "essences": ["rock", "flying"],
     "stage": 1,
@@ -5749,7 +5607,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -5786,7 +5643,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["ice", "flying"],
     "essences": ["ice", "flying"],
     "stage": 1,
@@ -5823,7 +5679,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["electric", "flying"],
     "essences": ["electric", "flying"],
     "stage": 1,
@@ -5859,7 +5714,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["fire", "flying"],
     "essences": ["fire", "flying"],
     "stage": 1,
@@ -5903,7 +5757,6 @@
       "Laying",
       "TumbleBack"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 1,
@@ -5939,7 +5792,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 2,
@@ -5977,7 +5829,6 @@
       "Rotate",
       "Special0"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["dragon", "flying"],
     "essences": ["dragon", "flying"],
     "stage": 3,
@@ -6037,7 +5888,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -6095,7 +5945,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "ribbon"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -6154,7 +6003,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "seed"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -6190,7 +6038,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -6226,7 +6073,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 3,
@@ -6284,7 +6130,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -6342,7 +6187,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -6400,7 +6244,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 3,
@@ -6458,7 +6301,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -6494,7 +6336,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -6530,7 +6371,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 3,
@@ -6589,7 +6429,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "horn"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -6629,7 +6468,6 @@
       "Wake",
       "Laying"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -6665,7 +6503,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -6703,7 +6540,6 @@
       "Eat",
       "Cringe"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -6761,7 +6597,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "seed"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 1,
@@ -6797,7 +6632,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 2,
@@ -6833,7 +6667,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ribbon"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 1,
@@ -6869,7 +6702,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 2,
@@ -6905,7 +6737,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "horn"],
     "types": ["poison", "flying"],
     "essences": ["poison", "flying"],
     "stage": 3,
@@ -6941,7 +6772,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "max_lens"],
     "types": ["water", "electric"],
     "essences": ["water", "electric"],
     "stage": 1,
@@ -6999,7 +6829,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["water", "electric"],
     "essences": ["water", "electric"],
     "stage": 2,
@@ -7058,7 +6887,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -7095,7 +6923,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -7132,7 +6959,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -7168,7 +6994,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -7227,7 +7052,6 @@
       "HitGround",
       "Special0"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -7285,7 +7109,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["psychic", "flying"],
     "essences": ["psychic", "flying"],
     "stage": 1,
@@ -7321,7 +7144,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["psychic", "flying"],
     "essences": ["psychic", "flying"],
     "stage": 2,
@@ -7380,7 +7202,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "max_lens"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -7440,7 +7261,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -7476,7 +7296,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 3,
@@ -7512,7 +7331,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 3,
@@ -7571,7 +7389,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -7608,7 +7425,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 3,
@@ -7644,7 +7460,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 2,
@@ -7680,7 +7495,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 3,
@@ -7717,7 +7531,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["grass", "flying"],
     "essences": ["grass", "flying"],
     "stage": 1,
@@ -7754,7 +7567,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["grass", "flying"],
     "essences": ["grass", "flying"],
     "stage": 2,
@@ -7790,7 +7602,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["grass", "flying"],
     "essences": ["grass", "flying"],
     "stage": 3,
@@ -7848,7 +7659,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -7899,7 +7709,6 @@
       "HitGround",
       "Chop"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -7936,7 +7745,6 @@
       "Rotate",
       "Pose"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -7972,7 +7780,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 1,
@@ -8030,7 +7837,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 1,
@@ -8067,7 +7873,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 2,
@@ -8103,7 +7908,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -8162,7 +7966,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 2,
@@ -8220,7 +8023,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["dark", "flying"],
     "essences": ["dark", "flying"],
     "stage": 1,
@@ -8256,7 +8058,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "ambrose"],
     "types": ["water", "psychic"],
     "essences": ["water", "psychic"],
     "stage": 2,
@@ -8314,7 +8115,6 @@
       "Wake",
       "Nod"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 1,
@@ -8350,7 +8150,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -8387,7 +8186,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -8445,7 +8243,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal", "psychic"],
     "essences": ["normal", "psychic"],
     "stage": 1,
@@ -8482,7 +8279,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -8518,7 +8314,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["bug", "steel"],
     "essences": ["bug", "steel"],
     "stage": 2,
@@ -8577,7 +8372,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -8635,7 +8429,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "potion"],
     "types": ["ground", "flying"],
     "essences": ["ground", "flying"],
     "stage": 1,
@@ -8673,7 +8466,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["steel", "ground"],
     "essences": ["steel", "ground"],
     "stage": 2,
@@ -8711,7 +8503,6 @@
       "Eat",
       "Cringe"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -8747,7 +8538,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -8783,7 +8573,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["water", "poison"],
     "essences": ["water", "poison"],
     "stage": 1,
@@ -8819,7 +8608,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["bug", "steel"],
     "essences": ["bug", "steel"],
     "stage": 2,
@@ -8855,7 +8643,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["bug", "rock"],
     "essences": ["bug", "rock"],
     "stage": 1,
@@ -8891,7 +8678,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "ambrose"],
     "types": ["bug", "fighting"],
     "essences": ["bug", "fighting"],
     "stage": 1,
@@ -8949,7 +8735,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["dark", "ice"],
     "essences": ["dark", "ice"],
     "stage": 1,
@@ -8988,7 +8773,6 @@
       "Float",
       "Laying"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -9024,7 +8808,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -9061,7 +8844,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -9098,7 +8880,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["fire", "rock"],
     "essences": ["fire", "rock"],
     "stage": 2,
@@ -9142,7 +8923,6 @@
       "Laying",
       "Cringe"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["ice", "ground"],
     "essences": ["ice", "ground"],
     "stage": 1,
@@ -9178,7 +8958,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["ice", "ground"],
     "essences": ["ice", "ground"],
     "stage": 2,
@@ -9214,7 +8993,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["water", "rock"],
     "essences": ["water", "rock"],
     "stage": 1,
@@ -9250,7 +9028,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -9287,7 +9064,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -9345,7 +9121,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["ice", "flying"],
     "essences": ["ice", "flying"],
     "stage": 1,
@@ -9381,7 +9156,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 2,
@@ -9417,7 +9191,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["steel", "flying"],
     "essences": ["steel", "flying"],
     "stage": 1,
@@ -9475,7 +9248,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["dark", "fire"],
     "essences": ["dark", "fire"],
     "stage": 1,
@@ -9511,7 +9283,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["dark", "fire"],
     "essences": ["dark", "fire"],
     "stage": 2,
@@ -9547,7 +9318,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["water", "dragon"],
     "essences": ["water", "dragon"],
     "stage": 3,
@@ -9606,7 +9376,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "seed"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -9647,7 +9416,6 @@
       "Cringe",
       "TumbleBack"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 2,
@@ -9684,7 +9452,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -9720,7 +9487,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -9778,7 +9544,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -9816,7 +9581,6 @@
       "Eat",
       "Head"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -9852,7 +9616,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -9911,7 +9674,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["ice", "psychic"],
     "essences": ["ice", "psychic"],
     "stage": 1,
@@ -9947,7 +9709,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -10005,7 +9766,6 @@
       "TumbleBack",
       "Wake"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -10042,7 +9802,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -10079,7 +9838,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -10115,7 +9873,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "potion"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -10152,7 +9909,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -10189,7 +9945,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -10247,7 +10002,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "seed"],
     "types": ["rock", "ground"],
     "essences": ["rock", "ground"],
     "stage": 1,
@@ -10283,7 +10037,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["rock", "ground"],
     "essences": ["rock", "ground"],
     "stage": 2,
@@ -10319,7 +10072,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "amulet"],
     "types": ["rock", "dark"],
     "essences": ["rock", "dark"],
     "stage": 3,
@@ -10355,7 +10107,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["psychic", "flying"],
     "essences": ["psychic", "flying"],
     "stage": 1,
@@ -10391,7 +10142,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "horn"],
     "types": ["fire", "flying"],
     "essences": ["fire", "flying"],
     "stage": 1,
@@ -10449,7 +10199,6 @@
       "Head",
       "TumbleBack"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["psychic", "grass"],
     "essences": ["psychic", "grass"],
     "stage": 1,
@@ -10508,7 +10257,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -10566,7 +10314,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "horn"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -10602,7 +10349,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ambrose"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 3,
@@ -10661,7 +10407,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -10697,7 +10442,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["fire", "fighting"],
     "essences": ["fire", "fighting"],
     "stage": 2,
@@ -10734,7 +10478,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["fire", "fighting"],
     "essences": ["fire", "fighting"],
     "stage": 3,
@@ -10792,7 +10535,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -10830,7 +10572,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 2,
@@ -10890,7 +10631,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 3,
@@ -10948,7 +10688,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "horn"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 1,
@@ -11006,7 +10745,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "seed"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 2,
@@ -11052,7 +10790,6 @@
       "TumbleBack",
       "Eat"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -11088,7 +10825,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -11124,7 +10860,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -11160,7 +10895,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 2,
@@ -11196,7 +10930,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 3,
@@ -11232,7 +10965,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 2,
@@ -11268,7 +11000,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "goldenapple"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 3,
@@ -11306,7 +11037,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["water", "grass"],
     "essences": ["water", "grass"],
     "stage": 1,
@@ -11342,7 +11072,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "max_lens"],
     "types": ["water", "grass"],
     "essences": ["water", "grass"],
     "stage": 2,
@@ -11378,7 +11107,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["water", "grass"],
     "essences": ["water", "grass"],
     "stage": 3,
@@ -11419,7 +11147,6 @@
       "Sit",
       "LookUp"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -11477,7 +11204,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["grass", "dark"],
     "essences": ["grass", "dark"],
     "stage": 2,
@@ -11513,7 +11239,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["grass", "dark"],
     "essences": ["grass", "dark"],
     "stage": 3,
@@ -11549,7 +11274,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -11589,7 +11313,6 @@
       "Laying",
       "Cringe"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -11625,7 +11348,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 1,
@@ -11661,7 +11383,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 2,
@@ -11719,7 +11440,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -11778,7 +11498,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -11815,7 +11534,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 3,
@@ -11851,7 +11569,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["bug", "water"],
     "essences": ["bug", "water"],
     "stage": 1,
@@ -11887,7 +11604,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 2,
@@ -11924,7 +11640,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -11983,7 +11698,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "ribbon"],
     "types": ["grass", "fighting"],
     "essences": ["grass", "fighting"],
     "stage": 2,
@@ -12020,7 +11734,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -12057,7 +11770,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -12094,7 +11806,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -12130,7 +11841,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "potion"],
     "types": ["bug", "ground"],
     "essences": ["bug", "ground"],
     "stage": 1,
@@ -12166,7 +11876,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 2,
@@ -12203,7 +11912,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["bug", "ghost"],
     "essences": ["bug", "ghost"],
     "stage": 2,
@@ -12240,7 +11948,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -12279,7 +11986,6 @@
       "Eat",
       "Pose"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -12316,7 +12022,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -12374,7 +12079,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -12410,7 +12114,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "potion"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -12446,7 +12149,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "horn"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -12484,7 +12186,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 1,
@@ -12542,7 +12243,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -12601,7 +12301,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -12637,7 +12336,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "amulet"],
     "types": ["dark", "ghost"],
     "essences": ["dark", "ghost"],
     "stage": 1,
@@ -12673,7 +12371,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["steel"],
     "essences": ["steel"],
     "stage": 1,
@@ -12734,7 +12431,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["steel", "rock"],
     "essences": ["steel", "rock"],
     "stage": 1,
@@ -12773,7 +12469,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "ambrose"],
     "types": ["steel", "rock"],
     "essences": ["steel", "rock"],
     "stage": 2,
@@ -12812,7 +12507,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["steel", "rock"],
     "essences": ["steel", "rock"],
     "stage": 3,
@@ -12848,7 +12542,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["fighting", "psychic"],
     "essences": ["fighting", "psychic"],
     "stage": 1,
@@ -12884,7 +12577,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["fighting", "psychic"],
     "essences": ["fighting", "psychic"],
     "stage": 2,
@@ -12942,7 +12634,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -12981,7 +12672,6 @@
       "LookUp",
       "Cringe"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -13039,7 +12729,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -13097,7 +12786,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "potion"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -13133,7 +12821,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -13170,7 +12857,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -13229,7 +12915,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "ribbon"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 2,
@@ -13267,7 +12952,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -13305,7 +12989,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -13341,7 +13024,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["water", "dark"],
     "essences": ["water", "dark"],
     "stage": 1,
@@ -13377,7 +13059,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["water", "dark"],
     "essences": ["water", "dark"],
     "stage": 2,
@@ -13414,7 +13095,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -13451,7 +13131,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "horn"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -13488,7 +13167,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["fire", "ground"],
     "essences": ["fire", "ground"],
     "stage": 1,
@@ -13525,7 +13203,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["fire", "ground"],
     "essences": ["fire", "ground"],
     "stage": 2,
@@ -13562,7 +13239,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -13598,7 +13274,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "max_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -13634,7 +13309,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -13692,7 +13366,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -13750,7 +13423,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -13786,7 +13458,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["ground", "dragon"],
     "essences": ["ground", "dragon"],
     "stage": 2,
@@ -13822,7 +13493,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["ground", "dragon"],
     "essences": ["ground", "dragon"],
     "stage": 3,
@@ -13858,7 +13528,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -13894,7 +13563,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "seed"],
     "types": ["grass", "dark"],
     "essences": ["grass", "dark"],
     "stage": 2,
@@ -13952,7 +13620,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -14010,7 +13677,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "seed"],
     "types": ["dragon", "flying"],
     "essences": ["dragon", "flying"],
     "stage": 2,
@@ -14068,7 +13734,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -14104,7 +13769,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -14141,7 +13805,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["rock", "psychic"],
     "essences": ["rock", "psychic"],
     "stage": 1,
@@ -14178,7 +13841,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "ambrose"],
     "types": ["rock", "psychic"],
     "essences": ["rock", "psychic"],
     "stage": 1,
@@ -14216,7 +13878,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 1,
@@ -14254,7 +13915,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "max_lens"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 2,
@@ -14312,7 +13972,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "potion"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -14348,7 +14007,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["water", "dark"],
     "essences": ["water", "dark"],
     "stage": 2,
@@ -14385,7 +14043,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["ground", "psychic"],
     "essences": ["ground", "psychic"],
     "stage": 1,
@@ -14422,7 +14079,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["ground", "psychic"],
     "essences": ["ground", "psychic"],
     "stage": 2,
@@ -14458,7 +14114,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "horn"],
     "types": ["rock", "grass"],
     "essences": ["rock", "grass"],
     "stage": 1,
@@ -14516,7 +14171,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["rock", "grass"],
     "essences": ["rock", "grass"],
     "stage": 2,
@@ -14552,7 +14206,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["rock", "bug"],
     "essences": ["rock", "bug"],
     "stage": 1,
@@ -14588,7 +14241,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["rock", "bug"],
     "essences": ["rock", "bug"],
     "stage": 2,
@@ -14625,7 +14277,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -14661,7 +14312,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -14697,7 +14347,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -14755,7 +14404,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -14813,7 +14461,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 1,
@@ -14849,7 +14496,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 2,
@@ -14886,7 +14532,6 @@
       "Rotate",
       "Pose"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 1,
@@ -14922,7 +14567,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 2,
@@ -14959,7 +14603,6 @@
       "Rotate",
       "Eat"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["grass", "flying"],
     "essences": ["grass", "flying"],
     "stage": 1,
@@ -14997,7 +14640,6 @@
       "Eat",
       "Pose"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -15055,7 +14697,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "seed"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 1,
@@ -15092,7 +14733,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "amulet"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -15150,7 +14790,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 1,
@@ -15186,7 +14825,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ribbon"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 2,
@@ -15228,7 +14866,6 @@
       "Float",
       "Laying"
     ],
-    "drops": ["potion", "horn"],
     "types": ["ice", "water"],
     "essences": ["ice", "water"],
     "stage": 1,
@@ -15266,7 +14903,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "min_lens"],
     "types": ["ice", "water"],
     "essences": ["ice", "water"],
     "stage": 2,
@@ -15304,7 +14940,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["ice", "water"],
     "essences": ["ice", "water"],
     "stage": 3,
@@ -15340,7 +14975,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -15376,7 +15010,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -15413,7 +15046,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -15449,7 +15081,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "amulet"],
     "types": ["water", "rock"],
     "essences": ["water", "rock"],
     "stage": 1,
@@ -15485,7 +15116,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -15544,7 +15174,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 1,
@@ -15581,7 +15210,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 2,
@@ -15640,7 +15268,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "max_lens"],
     "types": ["dragon", "flying"],
     "essences": ["dragon", "flying"],
     "stage": 3,
@@ -15676,7 +15303,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["steel", "psychic"],
     "essences": ["steel", "psychic"],
     "stage": 1,
@@ -15712,7 +15338,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["steel", "psychic"],
     "essences": ["steel", "psychic"],
     "stage": 2,
@@ -15748,7 +15373,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["steel", "psychic"],
     "essences": ["steel", "psychic"],
     "stage": 3,
@@ -15786,7 +15410,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 1,
@@ -15824,7 +15447,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 1,
@@ -15862,7 +15484,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ribbon"],
     "types": ["steel"],
     "essences": ["steel"],
     "stage": 1,
@@ -15922,7 +15543,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["dragon", "psychic"],
     "essences": ["dragon", "psychic"],
     "stage": 1,
@@ -15960,7 +15580,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "potion"],
     "types": ["dragon", "psychic"],
     "essences": ["dragon", "psychic"],
     "stage": 1,
@@ -15996,7 +15615,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -16033,7 +15651,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -16071,7 +15688,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["dragon", "flying"],
     "essences": ["dragon", "flying"],
     "stage": 1,
@@ -16129,7 +15745,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["steel", "psychic"],
     "essences": ["steel", "psychic"],
     "stage": 1,
@@ -16166,7 +15781,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -16225,7 +15839,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -16267,7 +15880,6 @@
       "Sit",
       "Cringe"
     ],
-    "drops": ["ribbon", "max_lens"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -16304,7 +15916,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["grass", "ground"],
     "essences": ["grass", "ground"],
     "stage": 3,
@@ -16362,7 +15973,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -16398,7 +16008,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["fire", "fighting"],
     "essences": ["fire", "fighting"],
     "stage": 2,
@@ -16438,7 +16047,6 @@
       "LookUp",
       "Cringe"
     ],
-    "drops": ["min_lens", "amulet"],
     "types": ["fire", "fighting"],
     "essences": ["fire", "fighting"],
     "stage": 3,
@@ -16497,7 +16105,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "horn"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -16534,7 +16141,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ribbon"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -16571,7 +16177,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["water", "steel"],
     "essences": ["water", "steel"],
     "stage": 3,
@@ -16629,7 +16234,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -16665,7 +16269,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -16701,7 +16304,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 3,
@@ -16759,7 +16361,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -16795,7 +16396,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ambrose"],
     "types": ["normal", "water"],
     "essences": ["normal", "water"],
     "stage": 2,
@@ -16833,7 +16433,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -16869,7 +16468,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 2,
@@ -16928,7 +16526,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -16987,7 +16584,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "potion"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -17024,7 +16620,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 3,
@@ -17082,7 +16677,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 1,
@@ -17125,7 +16719,6 @@
       "LookUp",
       "Cringe"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 3,
@@ -17162,7 +16755,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "amulet"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 1,
@@ -17199,7 +16791,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 2,
@@ -17236,7 +16827,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["rock", "steel"],
     "essences": ["rock", "steel"],
     "stage": 1,
@@ -17273,7 +16863,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["rock", "steel"],
     "essences": ["rock", "steel"],
     "stage": 2,
@@ -17331,7 +16920,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "goldenapple"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -17367,7 +16955,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["bug", "grass"],
     "essences": ["bug", "grass"],
     "stage": 2,
@@ -17403,7 +16990,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 2,
@@ -17439,7 +17025,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 1,
@@ -17475,7 +17060,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 2,
@@ -17533,7 +17117,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "seed"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -17593,7 +17176,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -17630,7 +17212,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -17667,7 +17248,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -17703,7 +17283,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -17740,7 +17319,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -17778,7 +17356,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 2,
@@ -17815,7 +17392,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -17851,7 +17427,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "horn"],
     "types": ["ghost", "flying"],
     "essences": ["ghost", "flying"],
     "stage": 1,
@@ -17887,7 +17462,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "max_lens"],
     "types": ["ghost", "flying"],
     "essences": ["ghost", "flying"],
     "stage": 2,
@@ -17945,7 +17519,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -17981,7 +17554,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -18019,7 +17591,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 2,
@@ -18064,7 +17635,6 @@
       "Laying",
       "Cringe"
     ],
-    "drops": ["horn", "potion"],
     "types": ["dark", "flying"],
     "essences": ["dark", "flying"],
     "stage": 2,
@@ -18124,7 +17694,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -18162,7 +17731,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -18223,7 +17791,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -18281,7 +17848,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["poison", "dark"],
     "essences": ["poison", "dark"],
     "stage": 1,
@@ -18317,7 +17883,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["poison", "dark"],
     "essences": ["poison", "dark"],
     "stage": 2,
@@ -18353,7 +17918,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["steel", "psychic"],
     "essences": ["steel", "psychic"],
     "stage": 1,
@@ -18390,7 +17954,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["steel", "psychic"],
     "essences": ["steel", "psychic"],
     "stage": 2,
@@ -18426,7 +17989,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 1,
@@ -18484,7 +18046,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -18544,7 +18105,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -18602,7 +18162,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "horn"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -18638,7 +18197,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["ghost", "dark"],
     "essences": ["ghost", "dark"],
     "stage": 1,
@@ -18675,7 +18233,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["dragon", "ground"],
     "essences": ["dragon", "ground"],
     "stage": 1,
@@ -18712,7 +18269,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "potion"],
     "types": ["dragon", "ground"],
     "essences": ["dragon", "ground"],
     "stage": 2,
@@ -18749,7 +18305,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["dragon", "ground"],
     "essences": ["dragon", "ground"],
     "stage": 3,
@@ -18807,7 +18362,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -18866,7 +18420,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -18925,7 +18478,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["fighting", "steel"],
     "essences": ["fighting", "steel"],
     "stage": 2,
@@ -18963,7 +18515,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -19001,7 +18552,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 2,
@@ -19037,7 +18587,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["poison", "bug"],
     "essences": ["poison", "bug"],
     "stage": 1,
@@ -19073,7 +18622,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["poison", "dark"],
     "essences": ["poison", "dark"],
     "stage": 2,
@@ -19132,7 +18680,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["poison", "fighting"],
     "essences": ["poison", "fighting"],
     "stage": 1,
@@ -19169,7 +18716,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["poison", "fighting"],
     "essences": ["poison", "fighting"],
     "stage": 2,
@@ -19205,7 +18751,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -19263,7 +18808,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -19299,7 +18843,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -19335,7 +18878,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 1,
@@ -19372,7 +18914,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "potion"],
     "types": ["grass", "ice"],
     "essences": ["grass", "ice"],
     "stage": 1,
@@ -19409,7 +18950,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "potion"],
     "types": ["grass", "ice"],
     "essences": ["grass", "ice"],
     "stage": 2,
@@ -19445,7 +18985,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["dark", "ice"],
     "essences": ["dark", "ice"],
     "stage": 2,
@@ -19481,7 +19020,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "horn"],
     "types": ["electric", "steel"],
     "essences": ["electric", "steel"],
     "stage": 3,
@@ -19518,7 +19056,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -19554,7 +19091,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "amulet"],
     "types": ["ground", "rock"],
     "essences": ["ground", "rock"],
     "stage": 3,
@@ -19591,7 +19127,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -19628,7 +19163,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 3,
@@ -19665,7 +19199,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "seed"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 3,
@@ -19701,7 +19234,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "potion"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 3,
@@ -19737,7 +19269,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["bug", "flying"],
     "essences": ["bug", "flying"],
     "stage": 2,
@@ -19796,7 +19327,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "horn"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -19855,7 +19385,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 2,
@@ -19891,7 +19420,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["ground", "flying"],
     "essences": ["ground", "flying"],
     "stage": 2,
@@ -19928,7 +19456,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["ice", "ground"],
     "essences": ["ice", "ground"],
     "stage": 3,
@@ -19970,7 +19497,6 @@
       "Laying",
       "Head"
     ],
-    "drops": ["potion", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -20006,7 +19532,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["psychic", "fighting"],
     "essences": ["psychic", "fighting"],
     "stage": 3,
@@ -20043,7 +19568,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "ribbon"],
     "types": ["rock", "steel"],
     "essences": ["rock", "steel"],
     "stage": 2,
@@ -20102,7 +19626,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 3,
@@ -20138,7 +19661,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["ice", "ghost"],
     "essences": ["ice", "ghost"],
     "stage": 2,
@@ -20175,7 +19697,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "horn"],
     "types": ["electric", "ghost"],
     "essences": ["electric", "ghost"],
     "stage": 1,
@@ -20212,7 +19733,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "min_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -20271,7 +19791,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "horn"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -20308,7 +19827,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -20345,7 +19863,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["steel", "dragon"],
     "essences": ["steel", "dragon"],
     "stage": 1,
@@ -20382,7 +19899,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["water", "dragon"],
     "essences": ["water", "dragon"],
     "stage": 1,
@@ -20419,7 +19935,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["fire", "steel"],
     "essences": ["fire", "steel"],
     "stage": 1,
@@ -20456,7 +19971,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -20492,7 +20006,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["ghost", "dragon"],
     "essences": ["ghost", "dragon"],
     "stage": 1,
@@ -20550,7 +20063,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -20608,7 +20120,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -20667,7 +20178,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -20726,7 +20236,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 1,
@@ -20785,7 +20294,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "ambrose"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -20842,7 +20350,6 @@
       "Pull",
       "SpAttack"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -20879,7 +20386,6 @@
       "Slam",
       "Twirl"
     ],
-    "drops": ["potion", "max_lens"],
     "types": ["psychic", "fire"],
     "essences": ["psychic", "fire"],
     "stage": 1,
@@ -20938,7 +20444,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -20974,7 +20479,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -21010,7 +20514,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 3,
@@ -21067,7 +20570,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -21103,7 +20605,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["fire", "fighting"],
     "essences": ["fire", "fighting"],
     "stage": 2,
@@ -21138,7 +20639,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "min_lens"],
     "types": ["fire", "fighting"],
     "essences": ["fire", "fighting"],
     "stage": 3,
@@ -21196,7 +20696,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -21231,7 +20730,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 2,
@@ -21266,7 +20764,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 3,
@@ -21302,7 +20799,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -21338,7 +20834,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -21396,7 +20891,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -21432,7 +20926,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -21467,7 +20960,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 3,
@@ -21503,7 +20995,6 @@
       "Rotate",
       "Scratch"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 1,
@@ -21539,7 +21030,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 2,
@@ -21575,7 +21065,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -21611,7 +21100,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -21647,7 +21135,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -21683,7 +21170,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "max_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -21718,7 +21204,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "amulet"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -21753,7 +21238,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -21789,7 +21273,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -21826,7 +21309,6 @@
       "Rotate",
       "Cringe"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 3,
@@ -21862,7 +21344,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "ambrose"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 1,
@@ -21900,7 +21381,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 2,
@@ -21937,7 +21417,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "horn"],
     "types": ["rock"],
     "essences": ["rock"],
     "stage": 3,
@@ -21973,7 +21452,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "horn"],
     "types": ["psychic", "flying"],
     "essences": ["psychic", "flying"],
     "stage": 1,
@@ -22009,7 +21487,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["psychic", "flying"],
     "essences": ["psychic", "flying"],
     "stage": 2,
@@ -22047,7 +21524,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["ground"],
     "essences": ["ground"],
     "stage": 1,
@@ -22084,7 +21560,6 @@
       "Rotate",
       "Eat"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["ground", "steel"],
     "essences": ["ground", "steel"],
     "stage": 2,
@@ -22124,7 +21599,6 @@
       "Eat",
       "Cringe"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -22160,7 +21634,6 @@
       "Pain",
       "Nod"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -22200,7 +21673,6 @@
       "Special0",
       "Special1"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -22236,7 +21708,6 @@
       "Hop",
       "Charge"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 3,
@@ -22272,7 +21743,6 @@
       "Rotate",
       "Shake"
     ],
-    "drops": ["seed", "max_lens"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -22308,7 +21778,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 2,
@@ -22343,7 +21812,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["water", "ground"],
     "essences": ["water", "ground"],
     "stage": 3,
@@ -22380,7 +21848,6 @@
       "Rotate",
       "Cringe"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -22417,7 +21884,6 @@
       "Rotate",
       "Cringe"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["bug", "grass"],
     "essences": ["bug", "grass"],
     "stage": 1,
@@ -22453,7 +21919,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["bug", "grass"],
     "essences": ["bug", "grass"],
     "stage": 2,
@@ -22488,7 +21953,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "horn"],
     "types": ["bug", "grass"],
     "essences": ["bug", "grass"],
     "stage": 3,
@@ -22546,7 +22010,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "min_lens"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 1,
@@ -22583,7 +22046,6 @@
       "Hurt",
       "Cringe"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 2,
@@ -22618,7 +22080,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["bug", "poison"],
     "essences": ["bug", "poison"],
     "stage": 3,
@@ -22654,7 +22115,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "seed"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -22690,7 +22150,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -22748,7 +22207,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "horn"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -22805,7 +22263,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 2,
@@ -22840,7 +22297,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -22876,7 +22332,6 @@
       "Hop",
       "Charge"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["ground", "dark"],
     "essences": ["ground", "dark"],
     "stage": 1,
@@ -22912,7 +22367,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["ground", "dark"],
     "essences": ["ground", "dark"],
     "stage": 2,
@@ -22948,7 +22402,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["ground", "dark"],
     "essences": ["ground", "dark"],
     "stage": 3,
@@ -22984,7 +22437,6 @@
       "Sleep",
       "Hurt"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -23021,7 +22473,6 @@
       "Double",
       "Charge"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 2,
@@ -23057,7 +22508,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["grass"],
     "essences": ["grass"],
     "stage": 1,
@@ -23115,7 +22565,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["bug", "rock"],
     "essences": ["bug", "rock"],
     "stage": 1,
@@ -23172,7 +22621,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "ribbon"],
     "types": ["dark", "fighting"],
     "essences": ["dark", "fighting"],
     "stage": 1,
@@ -23208,7 +22656,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "max_lens"],
     "types": ["dark", "fighting"],
     "essences": ["dark", "fighting"],
     "stage": 2,
@@ -23243,7 +22690,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["psychic", "flying"],
     "essences": ["psychic", "flying"],
     "stage": 1,
@@ -23278,7 +22724,6 @@
       "Rotate",
       "Hurt"
     ],
-    "drops": ["goldenapple", "potion"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 1,
@@ -23314,7 +22759,6 @@
       "Rotate",
       "Hurt"
     ],
-    "drops": ["potion", "horn"],
     "types": ["ghost"],
     "essences": ["ghost"],
     "stage": 2,
@@ -23354,7 +22798,6 @@
       "RearUp",
       "Cringe"
     ],
-    "drops": ["max_lens", "ambrose"],
     "types": ["rock", "flying"],
     "essences": ["rock", "flying"],
     "stage": 1,
@@ -23390,7 +22833,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["rock", "flying"],
     "essences": ["rock", "flying"],
     "stage": 2,
@@ -23448,7 +22890,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 1,
@@ -23484,7 +22925,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["poison"],
     "essences": ["poison"],
     "stage": 2,
@@ -23542,7 +22982,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 1,
@@ -23577,7 +23016,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["dark"],
     "essences": ["dark"],
     "stage": 2,
@@ -23636,7 +23074,6 @@
       "Sing",
       "Appeal"
     ],
-    "drops": ["seed", "ambrose"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 1,
@@ -23678,7 +23115,6 @@
       "Laying",
       "Cringe"
     ],
-    "drops": ["amulet", "goldenapple"],
     "types": ["normal"],
     "essences": ["normal"],
     "stage": 2,
@@ -23714,7 +23150,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "goldenapple"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -23751,7 +23186,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -23788,7 +23222,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 3,
@@ -23846,7 +23279,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -23884,7 +23316,6 @@
       "Rotate",
       "Pain"
     ],
-    "drops": ["horn", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -23920,7 +23351,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 3,
@@ -23956,7 +23386,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "ambrose"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 1,
@@ -23992,7 +23421,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["water", "flying"],
     "essences": ["water", "flying"],
     "stage": 2,
@@ -24050,7 +23478,6 @@
       "HitGround",
       "SpAttack"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 1,
@@ -24087,7 +23514,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "horn"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 2,
@@ -24123,7 +23549,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 3,
@@ -24181,7 +23606,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "amulet"],
     "types": ["normal", "grass"],
     "essences": ["normal", "grass"],
     "stage": 1,
@@ -24217,7 +23641,6 @@
       "Rotate",
       "Jab"
     ],
-    "drops": ["goldenapple", "ribbon"],
     "types": ["normal", "grass"],
     "essences": ["normal", "grass"],
     "stage": 2,
@@ -24275,7 +23698,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "ribbon"],
     "types": ["electric", "flying"],
     "essences": ["electric", "flying"],
     "stage": 1,
@@ -24310,7 +23732,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ambrose", "amulet"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 1,
@@ -24346,7 +23767,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["bug", "steel"],
     "essences": ["bug", "steel"],
     "stage": 2,
@@ -24383,7 +23803,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["grass", "poison"],
     "essences": ["grass", "poison"],
     "stage": 1,
@@ -24419,7 +23838,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "amulet"],
     "types": ["water"],
     "essences": ["water"],
     "stage": 1,
@@ -24455,7 +23873,6 @@
       "Rotate",
       "Strike"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["bug", "electric"],
     "essences": ["bug", "electric"],
     "stage": 1,
@@ -24491,7 +23908,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "max_lens"],
     "types": ["bug", "electric"],
     "essences": ["bug", "electric"],
     "stage": 2,
@@ -24541,7 +23957,6 @@
       "Laying",
       "Special0"
     ],
-    "drops": ["horn", "ambrose"],
     "types": ["grass", "steel"],
     "essences": ["grass", "steel"],
     "stage": 1,
@@ -24576,7 +23991,6 @@
       "Rotate",
       "Special0"
     ],
-    "drops": ["min_lens", "goldenapple"],
     "types": ["grass", "steel"],
     "essences": ["grass", "steel"],
     "stage": 2,
@@ -24612,7 +24026,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "goldenapple"],
     "types": ["steel"],
     "essences": ["steel"],
     "stage": 1,
@@ -24648,7 +24061,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["steel"],
     "essences": ["steel"],
     "stage": 2,
@@ -24684,7 +24096,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "potion"],
     "types": ["steel"],
     "essences": ["steel"],
     "stage": 3,
@@ -24720,7 +24131,6 @@
       "Hop",
       "Charge"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 1,
@@ -24757,7 +24167,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 2,
@@ -24794,7 +24203,6 @@
       "Rotate",
       "Cringe"
     ],
-    "drops": ["amulet", "seed"],
     "types": ["electric"],
     "essences": ["electric"],
     "stage": 3,
@@ -24851,7 +24259,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 1,
@@ -24887,7 +24294,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["psychic"],
     "essences": ["psychic"],
     "stage": 2,
@@ -24945,7 +24351,6 @@
       "HitGround",
       "SpAttack"
     ],
-    "drops": ["goldenapple", "horn"],
     "types": ["ghost", "fire"],
     "essences": ["ghost", "fire"],
     "stage": 1,
@@ -24982,7 +24387,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "min_lens"],
     "types": ["ghost", "fire"],
     "essences": ["ghost", "fire"],
     "stage": 2,
@@ -25019,7 +24423,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "horn"],
     "types": ["ghost", "fire"],
     "essences": ["ghost", "fire"],
     "stage": 3,
@@ -25077,7 +24480,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["seed", "ambrose"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 1,
@@ -25113,7 +24515,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 2,
@@ -25149,7 +24550,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 3,
@@ -25184,7 +24584,6 @@
       "Rotate",
       "Cringe"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 1,
@@ -25220,7 +24619,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "max_lens"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 2,
@@ -25256,7 +24654,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "goldenapple"],
     "types": ["ice"],
     "essences": ["ice"],
     "stage": 1,
@@ -25290,7 +24687,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ambrose"],
     "types": ["bug"],
     "essences": ["bug"],
     "stage": 2,
@@ -25346,7 +24742,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["horn", "min_lens"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 1,
@@ -25382,7 +24777,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["fighting"],
     "essences": ["fighting"],
     "stage": 2,
@@ -25420,7 +24814,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["dragon"],
     "essences": ["dragon"],
     "stage": 1,
@@ -25477,7 +24870,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "min_lens"],
     "types": ["ground", "ghost"],
     "essences": ["ground", "ghost"],
     "stage": 1,
@@ -25513,7 +24905,6 @@
       "Rotate",
       "SpAttack"
     ],
-    "drops": ["seed", "horn"],
     "types": ["ground", "ghost"],
     "essences": ["ground", "ghost"],
     "stage": 2,
@@ -25572,7 +24963,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["potion", "amulet"],
     "types": ["dark", "steel"],
     "essences": ["dark", "steel"],
     "stage": 1,
@@ -25630,7 +25020,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ambrose", "goldenapple"],
     "types": ["dark", "steel"],
     "essences": ["dark", "steel"],
     "stage": 2,
@@ -25688,7 +25077,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["goldenapple", "horn"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 1,
@@ -25724,7 +25112,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "max_lens"],
     "types": ["normal", "flying"],
     "essences": ["normal", "flying"],
     "stage": 2,
@@ -25760,7 +25147,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["dark", "flying"],
     "essences": ["dark", "flying"],
     "stage": 1,
@@ -25796,7 +25182,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "goldenapple"],
     "types": ["dark", "flying"],
     "essences": ["dark", "flying"],
     "stage": 2,
@@ -25832,7 +25217,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["fire"],
     "essences": ["fire"],
     "stage": 1,
@@ -25868,7 +25252,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["bug", "steel"],
     "essences": ["bug", "steel"],
     "stage": 1,
@@ -25925,7 +25308,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "potion"],
     "types": ["dark", "dragon"],
     "essences": ["dark", "dragon"],
     "stage": 1,
@@ -25961,7 +25343,6 @@
       "Rotate",
       "Hurt"
     ],
-    "drops": ["amulet", "potion"],
     "types": ["dark", "dragon"],
     "essences": ["dark", "dragon"],
     "stage": 2,
@@ -25995,7 +25376,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "min_lens"],
     "types": ["dark", "dragon"],
     "essences": ["dark", "dragon"],
     "stage": 3,
@@ -26031,7 +25411,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "horn"],
     "types": ["bug", "fire"],
     "essences": ["bug", "fire"],
     "stage": 1,
@@ -26068,7 +25447,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ambrose"],
     "types": ["bug", "fire"],
     "essences": ["bug", "fire"],
     "stage": 2,
@@ -26103,7 +25481,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "ribbon"],
     "types": ["steel", "fighting"],
     "essences": ["steel", "fighting"],
     "stage": 1,
@@ -26143,7 +25520,6 @@
       "Special1",
       "Fainted"
     ],
-    "drops": ["horn", "ribbon"],
     "types": ["rock", "fighting"],
     "essences": ["rock", "fighting"],
     "stage": 1,
@@ -26179,7 +25555,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["min_lens", "horn"],
     "types": ["grass", "fighting"],
     "essences": ["grass", "fighting"],
     "stage": 1,
@@ -26213,7 +25588,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["potion", "goldenapple"],
     "types": ["flying"],
     "essences": ["flying"],
     "stage": 1,
@@ -26247,7 +25621,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["seed", "min_lens"],
     "types": ["electric", "flying"],
     "essences": ["electric", "flying"],
     "stage": 1,
@@ -26305,7 +25678,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["max_lens", "ribbon"],
     "types": ["dragon", "fire"],
     "essences": ["dragon", "fire"],
     "stage": 1,
@@ -26339,7 +25711,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["ribbon", "seed"],
     "types": ["dragon", "electric"],
     "essences": ["dragon", "electric"],
     "stage": 1,
@@ -26373,7 +25744,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["horn", "seed"],
     "types": ["ground", "flying"],
     "essences": ["ground", "flying"],
     "stage": 1,
@@ -26411,7 +25781,6 @@
       "Cringe",
       "Special0"
     ],
-    "drops": ["max_lens", "amulet"],
     "types": ["dragon", "ice"],
     "essences": ["dragon", "ice"],
     "stage": 1,
@@ -26447,7 +25816,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["goldenapple", "seed"],
     "types": ["water", "fighting"],
     "essences": ["water", "fighting"],
     "stage": 1,
@@ -26506,7 +25874,6 @@
       "Faint",
       "HitGround"
     ],
-    "drops": ["ribbon", "amulet"],
     "types": ["normal", "psychic"],
     "essences": ["normal", "psychic"],
     "stage": 1,
@@ -26541,7 +25908,6 @@
       "Charge",
       "Rotate"
     ],
-    "drops": ["amulet", "ribbon"],
     "types": ["bug", "steel"],
     "essences": ["bug", "steel"],
     "stage": 1,

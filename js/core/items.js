@@ -1,3 +1,4 @@
+import { essenceIcon } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 import { statsFor } from './stats.js';
@@ -12,39 +13,41 @@ export async function loadItemImages(items) {
   }));
 }
 
-// Un solo sorteo por piso, después de colocar a todos los combatientes.
-export function spawnFloorPotion() {
-  if (Math.random() >= 0.5) return;
+// Las pociones tienen una tirada independiente. El cupo cuenta apariciones,
+// incluso si el jugador abandona la planta sin recoger el objeto.
+export function spawnFloorItems() {
+  const m = game.mission, block = Math.floor((game.floor - 1) / 5);
+  if (m.itemBlock !== block) { m.itemBlock = block; m.itemsPlaced = 0; }
+  const occupied = new Set(game.entities.map(e => Math.floor(e.x / TILE) + ',' + Math.floor(e.y / TILE)));
   const sites = [];
   game.grid.forEach((row, y) => row.forEach((tile, x) => {
-    if (tile !== 0 || game.entities.some(e => Math.floor(e.x / TILE) === x && Math.floor(e.y / TILE) === y)) return;
-    sites.push({ id: 'potion', x: (x + 0.5) * TILE, y: (y + 0.5) * TILE });
+    if (!tile && !occupied.has(x + ',' + y)) sites.push({ x: (x + .5) * TILE, y: (y + .5) * TILE });
   }));
-  if (sites.length) game.drops.push(sites[Math.floor(Math.random() * sites.length)]);
-}
-
-function terrainAt(x, y) {
-  return game.grid[Math.floor(y / TILE)]?.[Math.floor(x / TILE)] === 0 ? 'floor' : game.currentBiome.terrain;
-}
-
-export function dropItem(entity, attacker) {
-  if (terrainAt(entity.x, entity.y) === 'lava') return;
-  const ids = game.pokemon.get(entity.dex).drops;
-  if (!entity.boss && (!ids.length || Math.random() >= 1 / 3 + (attacker.isPlayer ? game.perks.loot : 0))) return;
-  const id = ids.length ? ids[Math.floor(Math.random() * ids.length)] : 'potion';
-  const center = pos => (Math.floor(pos / TILE) + .5) * TILE;
-  game.drops.push({ x: center(entity.x), y: center(entity.y), id });
+  function place(id) {
+    const [site] = sites.splice(Math.floor(Math.random() * sites.length), 1);
+    game.drops.push({ id, ...site });
+  }
+  if (sites.length && Math.random() < .5) place('potion');
+  const available = Object.keys(game.items).filter(id => !game.items[id].consumable && !game.inventory.has(id));
+  if (sites.length && available.length && m.itemsPlaced < 2 && Math.random() < 1 / 3 + game.perks.loot) {
+    place(available[Math.floor(Math.random() * available.length)]);
+    m.itemsPlaced++;
+  }
 }
 
 export function collectItems(player, strike = null) {
   if (!player.hp) return;
   game.drops = game.drops.filter(drop => {
-    const terrain = terrainAt(drop.x, drop.y);
-    if (terrain === 'lava') return false;
     if (strike) {
-      if (!['wall', 'water'].includes(terrain) || !strike(drop)) return true;
+      if (game.grid[Math.floor(drop.y / TILE)][Math.floor(drop.x / TILE)] === 0 || !strike(drop)) return true;
     } else if (Math.hypot(drop.x - player.x, drop.y - player.y) > 12) return true;
+    if (drop.essence) {
+      game.essences[drop.essence] = (game.essences[drop.essence] || 0) + drop.amount;
+      return false;
+    }
     const item = game.items[drop.id];
+    if (!item.consumable && game.inventory.has(drop.id)) return false;
+    game.inventory.add(drop.id);
     console.info('[Objeto] Recogido', item.name, item.duration);
     for (const [key, delta] of Object.entries(item.stats)) {
       player.bonuses[key] += delta;
@@ -62,8 +65,9 @@ export function collectItems(player, strike = null) {
 }
 
 export function drawItems(ctx, zoom, cameraX, cameraY) {
-  for (const { id, x, y } of game.drops) {
-    ctx.drawImage(images.get(id), Math.round((x - 8) * zoom - cameraX),
-      Math.round((y - 8) * zoom - cameraY), 16 * zoom, 16 * zoom);
+  for (const { id, essence, x, y } of game.drops) {
+    const side = essence ? 32 : 24;
+    ctx.drawImage(essence ? essenceIcon(essence) : images.get(id), Math.round((x - side / 2) * zoom - cameraX),
+      Math.round((y - side / 2) * zoom - cameraY), side * zoom, side * zoom);
   }
 }

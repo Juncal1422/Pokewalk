@@ -29,7 +29,7 @@
   },
   {
     "id": "loot-plus",
-    "label": "Botín +10%",
+    "label": "Objeto de piso +10 %",
     "effect": "runPerk",
     "perk": "loot",
     "amount": 0.1

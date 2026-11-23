@@ -1,5 +1,5 @@
 import { loadTerrain } from './core/terrain.js';
-import { loadMessageFrame } from './core/message-frame.js';
+import { attachInventory } from './core/inventory.js';
 import { newMission, exitKind, rewardOptions, sample } from './core/missions.js';
 import { collectItems, loadItemImages } from './core/items.js';
 import { element, tones, portrait } from './core/pokemon-panel.js';
@@ -48,10 +48,24 @@ const EMBEDDED_APP = `
       @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:12px; } }
       #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:.82rem; font-weight:600; display:none; z-index:12; }
+      #poke-walk-app .box { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background:rgb(12 20 34 / 82%) padding-box; color:white; }
+      #bag, #inventory, #item-tip { position:absolute; left:50%; transform:translateX(-50%); }
+      #bag { bottom:5px; cursor:pointer; padding:1px 5px; }
+      #bag img { width:32px; height:32px; display:block; image-rendering:pixelated; }
+      #inventory { bottom:60px; width:max-content; max-width:min(92vw,440px); max-height:42vh; overflow:auto; }
+      #inventory button { display:inline-flex; align-items:center; gap:4px; padding:3px; color:white; background:transparent; border:0; cursor:pointer; }
+      #inventory button:hover,#inventory button:focus-visible { background:#42577b; }
+      #inventory img { width:24px; height:24px; image-rendering:pixelated; }
+      #item-tip { width:max-content; max-width:min(90vw,330px); pointer-events:none; }
+      #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
+      #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
     </style>
-    <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" role="status"></div><div id="loading">Cargando Pokémon y mazmorra...</div></div>
-    <aside id="nearby" hidden aria-live="polite"></aside>
+    <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
+    <aside id="nearby" class="box" hidden aria-live="polite"></aside>
     <aside id="roster" aria-label="Pokémon del piso"><ul></ul></aside>
+    <button type="button" id="bag" class="box" aria-label="Mochila" aria-controls="inventory" aria-expanded="false"><img alt="" src="${new URL('../assets/ui/bag.png', import.meta.url).href}"></button>
+    <section id="inventory" class="box" aria-label="Objetos obtenidos" hidden></section>
+    <div id="item-tip" class="box" role="tooltip" hidden></div>
     <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
 
@@ -68,6 +82,7 @@ function placePortal(px, py, kind) {
       if (
         terrain === 0 &&
 
+        !game.drops.some(drop => Math.floor(drop.x / TILE) === x && Math.floor(drop.y / TILE) === y) &&
         (x !== px || y !== py)
       ) {
         floors.push({ x, y, kind, entered: false });
@@ -147,7 +162,10 @@ function updateNearby() {
   const counts = new Map();
   for (const drop of game.drops) {
     if (Math.hypot(drop.x - game.player.x, drop.y - game.player.y) <= 3 * TILE)
-      counts.set(drop.id, (counts.get(drop.id) || 0) + 1);
+      {
+        const key = drop.id ?? 'essence-' + drop.essence;
+        counts.set(key, (counts.get(key) || 0) + (drop.amount ?? 1));
+      }
   }
   const goal = game.portal;
   if (goal?.kind === 'objective' && Math.hypot((goal.x + .5) * TILE - game.player.x, (goal.y + .5) * TILE - game.player.y) <= 3 * TILE)
@@ -158,7 +176,7 @@ function updateNearby() {
   panel.hidden = !counts.size;
   panel.replaceChildren(...Array.from(counts, ([id, count]) => {
     const p = document.createElement('p');
-    const item = game.items[id] ?? { name: 'Objeto de misión', description: 'Recógelo para desbloquear el teletransportador.' };
+    const item = game.items[id] ?? (id.startsWith('essence-') ? { name: 'Esencia ' + id.slice(8), description: 'Recógela para acumularla.' } : { name: 'Objeto de misión', description: 'Recógelo para desbloquear el teletransportador.' });
     p.textContent = item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
     return p;
   }));
@@ -174,6 +192,7 @@ function frame() {
     );
     updateRoster();
     updateNearby();
+    game.updateInventory();
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
@@ -212,7 +231,6 @@ export async function startGame({
   root.__pokeWalkCleanup?.();
   resetGameState();
   mountApp(root);
-  void loadMessageFrame(root.querySelector('#nearby'));
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
   game.loadingEl = document.getElementById('loading');
@@ -232,6 +250,7 @@ export async function startGame({
   game.items = items;
   await loadItemImages(items);
   game.adventure = 0;
+  game.inventory = new Set();
   game.essences = {};
   game.pickups = [];
   game.perks = { loot: 0, essence: 0, dodge: 0 };
@@ -240,6 +259,7 @@ export async function startGame({
   await changeBiome(biome);
   await loadLevel(DEFAULT_DEX, newMission(1, biome), 1);
   const input = attachInput();
+  game.updateInventory = attachInventory(root, input.signal);
   const observer = new ResizeObserver(resize);
   observer.observe(game.canvas);
   root.__pokeWalkCleanup = () => {
