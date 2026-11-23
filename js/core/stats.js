@@ -80,7 +80,7 @@ export function statsFor(
         range: 1.15,
       };
       value = Math.min(limits[key], Math.ceil(value * factors[key]));
-      if (key === 'hpMax') value *= 5;
+      if (key === 'hpMax') value *= 4;
     }
     value += bonuses[key] || 0;
     result[key] =
