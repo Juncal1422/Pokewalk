@@ -50,6 +50,11 @@ function rewardCard(option, catalog) {
     if (change) delta.style.color = (key === 'size' ? change < 0 : change > 0) ? '#9ce9ab' : '#ffaaa6';
   }
   card.append(table, evolutionBars(row));
+  if (option.payment) {
+    const cost = element('small', 'Consumir ' + option.payment.amount + ' × ');
+    cost.append(gem(option.payment.type));
+    card.append(cost);
+  }
   return card;
 }
 
@@ -68,11 +73,9 @@ export function chooseReward(options, catalog) {
     }
     dialog.querySelector('.keep-form')?.remove();
     if (!options.some(option => option.row.dex === game.player.dex)) {
-      const current = game.pokemon.get(game.player.dex);
-      const keep = element('button', 'Mantener ' + current.name);
+      const keep = element('button', 'Continuar sin mejora');
       keep.type = 'button';
       keep.className = 'keep-form';
-      keep.prepend(portrait(current));
       keep.onclick = () => { dialog.close(); resolve(null); };
       cards.after(keep);
     }

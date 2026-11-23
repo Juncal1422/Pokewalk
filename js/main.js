@@ -1,4 +1,3 @@
-import { updateEvolutionMenu } from './core/evolution.js';
 import { levelFor } from './core/stats.js';
 import { loadTerrain } from './core/terrain.js';
 import { attachInventory } from './core/inventory.js';
@@ -62,13 +61,18 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
-      #evolve { position:absolute; left:6px; bottom:155px; max-width:min(48vw,340px); max-height:28vh; overflow:auto; }
-      #evolve button { font:inherit; cursor:pointer; }
+      #bag, #inventory, #item-tip, #nearby, #roster, #rewards, #toast, #loading { zoom:2; }
+      #rewards { max-width:47vw; max-height:45dvh; }
+      #rewards .cards { max-width:46vw; }
+      #roster { max-width:22vw; max-height:28vh; }
+      #inventory { max-width:46vw; max-height:21vh; }
+      #nearby,#item-tip { max-width:40vw; }
+      @media(max-width:1159px) { #roster { top:110px; } }
+      @media(max-width:720px) { #rewards .cards { flex-direction:column; } #rewards button { flex:none; width:43vw; } }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
     <aside id="roster" aria-label="Pokémon del piso"><ul></ul></aside>
-    <section id="evolve" aria-label="Evoluciones disponibles" hidden></section>
     <button type="button" id="bag" class="box" aria-label="Mochila" aria-controls="inventory" aria-expanded="false"><img alt="" src="${new URL('../assets/ui/bag.png', import.meta.url).href}"></button>
     <section id="inventory" class="box" aria-label="Objetos obtenidos" hidden></section>
     <div id="item-tip" class="box" role="tooltip" hidden></div>
@@ -119,6 +123,7 @@ async function nextLevel() {
       const bonuses = rewardBonuses(game.player.bonuses, option, reward);
       await loadLevel(option?.row.dex ?? game.player.dex, next, 1, bonuses);
       if (option) {
+        if (option.payment) game.essences[option.payment.type] -= option.payment.amount;
         if (reward.effect === 'runPerk') applyUpgrade(bonuses, reward);
         game.formEssence = option.essence;
         console.info('[Ditto] Transformación', option.row.name, reward.id);
@@ -199,7 +204,6 @@ function frame() {
     updateRoster();
     updateNearby();
     game.updateInventory();
-    updateEvolutionMenu(document.getElementById('evolve'));
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();

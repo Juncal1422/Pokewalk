@@ -1,3 +1,4 @@
+import { canMove } from './entities.js';
 import { essenceIcon } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
@@ -47,13 +48,28 @@ export function collectItems(player, strike = null) {
     }
     const item = game.items[drop.id];
     if (!item.consumable && game.inventory.has(drop.id)) return false;
+    const bonuses = { ...player.bonuses };
+    for (const [key, delta] of Object.entries(item.stats)) bonuses[key] += delta;
+    const oldStats = player.stats;
+    const previous = { ...oldStats, hp: player.hp };
+    player.stats = statsFor(game.pokemon.get(player.dex), game.progress, bonuses);
+    // Al crecer junto a una pared empujamos el cuerpo al punto válido más
+    // cercano. Si no cabe en las inmediaciones, el objeto sigue en el suelo.
+    if (player.stats.size > oldStats.size && !canMove(player, player.x, player.y)) {
+      let spot;
+      for (let r = 1; r <= TILE / 2 && !spot; r++) {
+        for (let i = 0; i < 32; i++) {
+          const angle = i * Math.PI / 16;
+          const x = player.x + r * Math.cos(angle), y = player.y + r * Math.sin(angle);
+          if (canMove(player, x, y)) { spot = { x, y }; break; }
+        }
+      }
+      if (!spot) { player.stats = oldStats; return true; }
+      Object.assign(player, spot);
+    }
+    player.bonuses = bonuses;
     game.inventory.add(drop.id);
     console.info('[Objeto] Recogido', item.name, item.duration);
-    for (const [key, delta] of Object.entries(item.stats)) {
-      player.bonuses[key] += delta;
-    }
-    const previous = { ...player.stats, hp: player.hp };
-    player.stats = statsFor(game.pokemon.get(player.dex), game.progress, player.bonuses);
     player.hp = Math.min(player.stats.hpMax, player.hp + item.heal + Math.ceil(player.stats.hpMax * (item.healFraction || 0)));
     const now = performance.now();
     for (const key of [...Object.keys(item.stats), 'hp']) {

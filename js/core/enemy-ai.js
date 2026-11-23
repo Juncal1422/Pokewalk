@@ -164,7 +164,6 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     const ready = now - enemy.aimSince >= (afterDodge ? 180 : 600) &&
       (afterDodge || now >= (enemy.nextAttackAt ?? 0));
     if (enemy.bossResponse || ready) {
-      enemy.finishingCounter = !!enemy.bossResponse;
       enemy.bossResponse = false;
       enemy.hitsWithoutAction = 0;
       attack(enemy);

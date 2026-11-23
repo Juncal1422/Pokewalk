@@ -75,7 +75,6 @@
         "Numel",
         "Swablu",
         "Elgyem",
-        "Pidove",
         "Shuppet",
         "Spearow",
         "Trapinch",
@@ -132,7 +131,6 @@
         "Drilbur",
         "Kabuto",
         "Togetic",
-        "Dwebble",
         "Farfetch_d",
         "Kecleon",
         "Rufflet",
@@ -278,7 +276,6 @@
         "Flygon",
         "Torterra",
         "Stoutland",
-        "Unfezant",
         "Golem",
         "Staraptor",
         "Gigalith",
@@ -401,7 +398,6 @@
         "Snorlax",
         "Torterra",
         "Stoutland",
-        "Unfezant",
         "Kangaskhan",
         "Golem",
         "Relicanth",
@@ -504,7 +500,6 @@
         "Gastly",
         "Oddish",
         "Pidgey",
-        "Foongus",
         "Paras",
         "Tentacool",
         "Wingull",
@@ -523,7 +518,6 @@
         "Shroomish",
         "Swablu",
         "Ferroseed",
-        "Pidove",
         "Croagunk",
         "Spearow",
         "Bellsprout",
@@ -561,7 +555,6 @@
         "Stunky",
         "Togetic",
         "Roselia",
-        "Dwebble",
         "Larvesta",
         "Farfetch_d",
         "Ledian",
@@ -652,7 +645,6 @@
         "Muk",
         "Weezing",
         "Bellossom",
-        "Accelgor",
         "Simisage",
         "Toxicroak",
         "Pinsir",
@@ -692,7 +684,6 @@
         "Scolipede",
         "Torterra",
         "Leafeon",
-        "Unfezant",
         "Staraptor",
         "Crobat",
         "Dragonite",
@@ -769,7 +760,6 @@
         "Garbodor",
         "Muk",
         "Weezing",
-        "Accelgor",
         "Simisage",
         "Pidgeot",
         "Toxicroak",
@@ -799,7 +789,6 @@
         "Heracross",
         "Torterra",
         "Drapion",
-        "Unfezant",
         "Pinsir",
         "Staraptor",
         "Tangrowth",
@@ -876,7 +865,6 @@
         "Zubat",
         "Gastly",
         "Oddish",
-        "Foongus",
         "Paras",
         "Tentacool",
         "Wingull",
@@ -925,7 +913,6 @@
         "Staryu",
         "Marill",
         "Pansage",
-        "Panpour",
         "Clamperl",
         "Chinchou",
         "Turtwig",
@@ -952,7 +939,6 @@
         "Corsola",
         "Kabuto",
         "Roselia",
-        "Dwebble",
         "Larvesta",
         "Ledian",
         "Skiploom",
@@ -1059,7 +1045,6 @@
         "Weezing",
         "Starmie",
         "Bellossom",
-        "Accelgor",
         "Simisage",
         "Toxicroak",
         "Pinsir",
@@ -1192,7 +1177,6 @@
         "Muk",
         "Weezing",
         "Starmie",
-        "Accelgor",
         "Simisage",
         "Toxicroak",
         "Blastoise",
@@ -1301,7 +1285,6 @@
         "Zubat",
         "Gastly",
         "Oddish",
-        "Foongus",
         "Paras",
         "Tentacool",
         "Wingull",
@@ -1350,7 +1333,6 @@
         "Staryu",
         "Marill",
         "Pansage",
-        "Panpour",
         "Clamperl",
         "Chinchou",
         "Turtwig",
@@ -1377,7 +1359,6 @@
         "Corsola",
         "Kabuto",
         "Roselia",
-        "Dwebble",
         "Larvesta",
         "Ledian",
         "Skiploom",
@@ -1484,7 +1465,6 @@
         "Weezing",
         "Starmie",
         "Bellossom",
-        "Accelgor",
         "Simisage",
         "Toxicroak",
         "Pinsir",
@@ -1617,7 +1597,6 @@
         "Muk",
         "Weezing",
         "Starmie",
-        "Accelgor",
         "Simisage",
         "Toxicroak",
         "Blastoise",
@@ -1750,7 +1729,6 @@
         "Hippopotas",
         "Drilbur",
         "Kabuto",
-        "Dwebble",
         "Pawniard",
         "Shuckle",
         "Anorith",
@@ -2019,7 +1997,6 @@
         "Joltik",
         "Staryu",
         "Marill",
-        "Panpour",
         "Clamperl",
         "Chinchou"
       ],
@@ -2252,6 +2229,825 @@
         "Cobalion",
         "Dialga",
         "Zekrom"
+      ]
+    }
+  },
+  {
+    "id": "relic-water",
+    "name": "Buried Relic Water",
+    "tileset": "tiled/tilesets/BuriedRelicWater-blob.png",
+    "level": 7,
+    "terrain": "water",
+    "canCross": [
+      "fly",
+      "swim"
+    ],
+    "variants": {
+      "floors": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {
+        "255": {
+          "2": 1
+        }
+      }
+    },
+    "layoutModifier": {
+      "pasillos": 0,
+      "habitaciones": 1,
+      "cruces": 0
+    },
+    "wild": {
+      "1-16": [
+        "Lotad",
+        "Mantyke",
+        "Tentacool",
+        "Baltoy",
+        "Horsea",
+        "Barboach",
+        "Larvitar",
+        "Seel",
+        "Staryu",
+        "Chinchou",
+        "Carvanha",
+        "Sandile"
+      ],
+      "17-36": [
+        "Corphish",
+        "Slowpoke",
+        "Bonsly",
+        "Lombre",
+        "Aron",
+        "Shuckle",
+        "Vibrava",
+        "Rhyhorn",
+        "Wailmer",
+        "Sealeo",
+        "Pupitar",
+        "Camerupt"
+      ],
+      "37-60": [
+        "Croconaw",
+        "Gligar",
+        "Gorebyss",
+        "Octillery",
+        "Dugtrio",
+        "Lumineon",
+        "Slowbro",
+        "Bastiodon",
+        "Milotic",
+        "Whiscash",
+        "Golduck",
+        "Lairon"
+      ],
+      "61-100": [
+        "Starmie",
+        "Armaldo",
+        "Empoleon",
+        "Wailord",
+        "Nidoking",
+        "Rampardos",
+        "Hippowdon",
+        "Archeops",
+        "Swampert",
+        "Feraligatr",
+        "Mamoswine",
+        "Garchomp"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Luvdisc",
+        "Pelipper",
+        "Qwilfish",
+        "Probopass",
+        "Cradily"
+      ],
+      "17-36": [
+        "Lanturn",
+        "Tentacruel",
+        "Vaporeon",
+        "Ludicolo",
+        "Armaldo"
+      ],
+      "37-60": [
+        "Golurk",
+        "Wailord",
+        "Gyarados",
+        "Poliwrath",
+        "Archeops"
+      ],
+      "61-100": [
+        "Excadrill",
+        "Golem",
+        "Rhyperior",
+        "Kyogre",
+        "Groudon"
+      ]
+    }
+  },
+  {
+    "id": "temporal-lake",
+    "name": "Temporal Lake",
+    "tileset": "tiled/tilesets/TemporalLake-blob.png",
+    "level": 8,
+    "terrain": "water",
+    "canCross": [
+      "fly",
+      "swim"
+    ],
+    "variants": {
+      "floors": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {}
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": 0,
+      "cruces": 1
+    },
+    "wild": {
+      "1-16": [
+        "Ralts",
+        "Abra",
+        "Wooper",
+        "Chingling",
+        "Tentacool",
+        "Spheal",
+        "Kirlia",
+        "Piplup",
+        "Remoraid",
+        "Psyduck",
+        "Deino",
+        "Mudkip"
+      ],
+      "17-36": [
+        "Ducklett",
+        "Unown",
+        "Poliwag",
+        "Duosion",
+        "Woobat",
+        "Goldeen",
+        "Lombre",
+        "Gothorita",
+        "Jynx",
+        "Wailmer",
+        "Mantine",
+        "Chimecho"
+      ],
+      "37-60": [
+        "Dewott",
+        "Medicham",
+        "Croconaw",
+        "Zweilous",
+        "Qwilfish",
+        "Seadra",
+        "Druddigon",
+        "Seaking",
+        "Gabite",
+        "Dewgong",
+        "Shelgon",
+        "Azumarill"
+      ],
+      "61-100": [
+        "Altaria",
+        "Lapras",
+        "Fraxure",
+        "Golduck",
+        "Starmie",
+        "Empoleon",
+        "Wailord",
+        "Gyarados",
+        "Kingdra",
+        "Flygon",
+        "Dragonite",
+        "Garchomp"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Unown",
+        "Girafarig",
+        "Medicham",
+        "Bibarel",
+        "Gastrodon"
+      ],
+      "17-36": [
+        "Alakazam",
+        "Lanturn",
+        "Tentacruel",
+        "Vaporeon",
+        "Ludicolo"
+      ],
+      "37-60": [
+        "Sharpedo",
+        "Empoleon",
+        "Gyarados",
+        "Swampert",
+        "Haxorus"
+      ],
+      "61-100": [
+        "Metagross",
+        "Mesprit",
+        "Celebi",
+        "Reshiram",
+        "Zekrom"
+      ]
+    }
+  },
+  {
+    "id": "temporal-tower",
+    "name": "Temporal Tower",
+    "tileset": "tiled/tilesets/TemporalTower-blob.png",
+    "level": 9,
+    "terrain": "wall",
+    "canCross": [],
+    "variants": {
+      "floors": {
+        "1": 1,
+        "3": 3,
+        "4": 4
+      },
+      "walls": {
+        "255": {
+          "2": 1
+        }
+      }
+    },
+    "layoutModifier": {
+      "pasillos": 0,
+      "habitaciones": 1,
+      "cruces": 1
+    },
+    "wild": {
+      "1-16": [
+        "Ralts",
+        "Abra",
+        "Smoochum",
+        "Gothita",
+        "Spoink",
+        "Wynaut",
+        "Bronzor",
+        "Drowzee",
+        "Klink",
+        "Natu",
+        "Deino",
+        "Unown"
+      ],
+      "17-36": [
+        "Exeggcute",
+        "Duosion",
+        "Bagon",
+        "Aron",
+        "Pawniard",
+        "Mawile",
+        "Vibrava",
+        "Lunatone",
+        "Beheeyem",
+        "Sigilyph",
+        "Medicham",
+        "Slowking"
+      ],
+      "37-60": [
+        "Metang",
+        "Klang",
+        "Swoobat",
+        "Probopass",
+        "Alakazam",
+        "Solrock",
+        "Gabite",
+        "Claydol",
+        "Bastiodon",
+        "Altaria",
+        "Ferrothorn",
+        "Gothitelle"
+      ],
+      "61-100": [
+        "Fraxure",
+        "Lairon",
+        "Starmie",
+        "Magnezone",
+        "Durant",
+        "Scizor",
+        "Kingdra",
+        "Excadrill",
+        "Klinklang",
+        "Aggron",
+        "Haxorus",
+        "Garchomp"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Unown",
+        "Girafarig",
+        "Medicham",
+        "Hypno",
+        "Xatu"
+      ],
+      "17-36": [
+        "Solrock",
+        "Gardevoir",
+        "Skarmory",
+        "Starmie",
+        "Durant"
+      ],
+      "37-60": [
+        "Bisharp",
+        "Excadrill",
+        "Aggron",
+        "Garchomp",
+        "Heatran"
+      ],
+      "61-100": [
+        "Mesprit",
+        "Mew",
+        "Palkia",
+        "Mewtwo",
+        "Zekrom"
+      ]
+    }
+  },
+  {
+    "id": "temporal-ruins",
+    "name": "Temporal Tower Ruined",
+    "tileset": "tiled/tilesets/TemporalTowerRuined-blob.png",
+    "level": 10,
+    "terrain": "void",
+    "canCross": [
+      "fly"
+    ],
+    "variants": {
+      "floors": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {
+        "255": {
+          "1": 0,
+          "3": 2
+        }
+      }
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": 0,
+      "cruces": 1
+    },
+    "wild": {
+      "1-16": [
+        "Litwick",
+        "Duskull",
+        "Shuppet",
+        "Dratini",
+        "Deino",
+        "Omanyte",
+        "Gible",
+        "Shieldon",
+        "Roggenrola",
+        "Bonsly",
+        "Nosepass",
+        "Corsola"
+      ],
+      "17-36": [
+        "Sableye",
+        "Lampent",
+        "Kabuto",
+        "Misdreavus",
+        "Anorith",
+        "Haunter",
+        "Lunatone",
+        "Rhyhorn",
+        "Cranidos",
+        "Magcargo",
+        "Onix",
+        "Dragonair"
+      ],
+      "37-60": [
+        "Cofagrigus",
+        "Zweilous",
+        "Probopass",
+        "Boldore",
+        "Solrock",
+        "Cradily",
+        "Omastar",
+        "Bastiodon",
+        "Altaria",
+        "Chandelure",
+        "Gengar",
+        "Froslass"
+      ],
+      "61-100": [
+        "Relicanth",
+        "Armaldo",
+        "Drifblim",
+        "Dusknoir",
+        "Kingdra",
+        "Rhydon",
+        "Flygon",
+        "Gigalith",
+        "Dragonite",
+        "Aggron",
+        "Haxorus",
+        "Garchomp"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Shedinja",
+        "Shuckle",
+        "Spiritomb",
+        "Mismagius",
+        "Solrock"
+      ],
+      "17-36": [
+        "Cradily",
+        "Bastiodon",
+        "Chandelure",
+        "Aerodactyl",
+        "Drifblim"
+      ],
+      "37-60": [
+        "Kabutops",
+        "Kingdra",
+        "Golem",
+        "Dragonite",
+        "Salamence"
+      ],
+      "61-100": [
+        "Haxorus",
+        "Latias",
+        "Reshiram",
+        "Rayquaza",
+        "Zekrom"
+      ]
+    }
+  },
+  {
+    "id": "treeshroud",
+    "name": "Treeshroud Forest",
+    "tileset": "tiled/tilesets/TreeshroudForest-blob.png",
+    "level": 3,
+    "terrain": "wall",
+    "canCross": [],
+    "variants": {
+      "floors": {
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {
+        "255": {
+          "5": 4,
+          "6": 5
+        }
+      }
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": -1,
+      "cruces": 0
+    },
+    "wild": {
+      "1-16": [
+        "Sunkern",
+        "Wurmple",
+        "Hoppip",
+        "Petilil",
+        "Spinarak",
+        "Pidgey",
+        "Starly",
+        "Treecko",
+        "Cottonee",
+        "Spearow",
+        "Nincada",
+        "Taillow"
+      ],
+      "17-36": [
+        "Cacnea",
+        "Snover",
+        "Exeggcute",
+        "Karrablast",
+        "Skorupi",
+        "Larvesta",
+        "Vullaby",
+        "Anorith",
+        "Illumise",
+        "Chatot",
+        "Pidgeotto",
+        "Carnivine"
+      ],
+      "37-60": [
+        "Emolga",
+        "Staravia",
+        "Mantine",
+        "Masquerain",
+        "Servine",
+        "Venomoth",
+        "Vespiquen",
+        "Cacturne",
+        "Volcarona",
+        "Abomasnow",
+        "Roserade",
+        "Whimsicott"
+      ],
+      "61-100": [
+        "Exeggutor",
+        "Escavalier",
+        "Breloom",
+        "Forretress",
+        "Honchkrow",
+        "Victreebel",
+        "Mandibuzz",
+        "Charizard",
+        "Braviary",
+        "Archeops",
+        "Leafeon",
+        "Salamence"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Shedinja",
+        "Illumise",
+        "Butterfree",
+        "Ariados",
+        "Dustox"
+      ],
+      "17-36": [
+        "Mothim",
+        "Cacturne",
+        "Galvantula",
+        "Vileplume",
+        "Escavalier"
+      ],
+      "37-60": [
+        "Bellossom",
+        "Jumpluff",
+        "Dodrio",
+        "Scizor",
+        "Meganium"
+      ],
+      "61-100": [
+        "Braviary",
+        "Scolipede",
+        "Salamence",
+        "Genesect",
+        "Rayquaza"
+      ]
+    }
+  },
+  {
+    "id": "waterfall-cave",
+    "name": "Waterfall Cave",
+    "tileset": "tiled/tilesets/WaterfalCave.png",
+    "level": 5,
+    "terrain": "wall",
+    "canCross": [],
+    "variants": {
+      "floors": {
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {
+        "255": {
+          "3": 2,
+          "5": 4
+        }
+      }
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": -1,
+      "cruces": 1
+    },
+    "wild": {
+      "1-16": [
+        "Lotad",
+        "Mantyke",
+        "Tentacool",
+        "Baltoy",
+        "Horsea",
+        "Barboach",
+        "Larvitar",
+        "Seel",
+        "Staryu",
+        "Chinchou",
+        "Carvanha",
+        "Sandile"
+      ],
+      "17-36": [
+        "Corphish",
+        "Slowpoke",
+        "Bonsly",
+        "Lombre",
+        "Aron",
+        "Shuckle",
+        "Vibrava",
+        "Rhyhorn",
+        "Wailmer",
+        "Sealeo",
+        "Pupitar",
+        "Camerupt"
+      ],
+      "37-60": [
+        "Croconaw",
+        "Gligar",
+        "Gorebyss",
+        "Octillery",
+        "Dugtrio",
+        "Lumineon",
+        "Slowbro",
+        "Bastiodon",
+        "Milotic",
+        "Whiscash",
+        "Golduck",
+        "Lairon"
+      ],
+      "61-100": [
+        "Starmie",
+        "Armaldo",
+        "Empoleon",
+        "Wailord",
+        "Nidoking",
+        "Rampardos",
+        "Hippowdon",
+        "Archeops",
+        "Swampert",
+        "Feraligatr",
+        "Mamoswine",
+        "Garchomp"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Luvdisc",
+        "Pelipper",
+        "Qwilfish",
+        "Probopass",
+        "Cradily"
+      ],
+      "17-36": [
+        "Lanturn",
+        "Tentacruel",
+        "Vaporeon",
+        "Ludicolo",
+        "Armaldo"
+      ],
+      "37-60": [
+        "Golurk",
+        "Wailord",
+        "Gyarados",
+        "Poliwrath",
+        "Archeops"
+      ],
+      "61-100": [
+        "Excadrill",
+        "Golem",
+        "Rhyperior",
+        "Kyogre",
+        "Groudon"
+      ]
+    }
+  },
+  {
+    "id": "waterfall-lake",
+    "name": "Waterfall Lake",
+    "tileset": "tiled/tilesets/WaterfallLake.png",
+    "level": 5,
+    "terrain": "water",
+    "canCross": [
+      "fly",
+      "swim"
+    ],
+    "variants": {
+      "floors": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {
+        "255": {
+          "3": 2,
+          "4": 3,
+          "5": 4
+        }
+      }
+    },
+    "layoutModifier": {
+      "pasillos": 0,
+      "habitaciones": 1,
+      "cruces": 1
+    },
+    "wild": {
+      "1-16": [
+        "Lotad",
+        "Hoppip",
+        "Surskit",
+        "Vanillite",
+        "Spheal",
+        "Piplup",
+        "Horsea",
+        "Barboach",
+        "Cubchoo",
+        "Mudkip",
+        "Staryu",
+        "Poliwag"
+      ],
+      "17-36": [
+        "Delibird",
+        "Corphish",
+        "Shellder",
+        "Drifloon",
+        "Togetic",
+        "Rufflet",
+        "Vanillish",
+        "Archen",
+        "Emolga",
+        "Staravia",
+        "Tropius",
+        "Sigilyph"
+      ],
+      "37-60": [
+        "Marshtomp",
+        "Mothim",
+        "Basculin",
+        "Qwilfish",
+        "Quagsire",
+        "Seaking",
+        "Slowbro",
+        "Tentacruel",
+        "Huntail",
+        "Vaporeon",
+        "Crawdaunt",
+        "Sharpedo"
+      ],
+      "61-100": [
+        "Scyther",
+        "Starmie",
+        "Politoed",
+        "Dodrio",
+        "Beartic",
+        "Mandibuzz",
+        "Charizard",
+        "Gyarados",
+        "Poliwrath",
+        "Archeops",
+        "Staraptor",
+        "Salamence"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Delibird",
+        "Cryogonal",
+        "Sigilyph",
+        "Vespiquen",
+        "Glaceon"
+      ],
+      "17-36": [
+        "Gastrodon",
+        "Omastar",
+        "Fearow",
+        "Crawdaunt",
+        "Starmie"
+      ],
+      "37-60": [
+        "Relicanth",
+        "Dodrio",
+        "Floatzel",
+        "Blastoise",
+        "Poliwrath"
+      ],
+      "61-100": [
+        "Kingdra",
+        "Staraptor",
+        "Articuno",
+        "Kyogre",
+        "Kyurem"
       ]
     }
   }

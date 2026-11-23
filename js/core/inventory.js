@@ -25,7 +25,7 @@ export function attachInventory(root, signal) {
       function show() {
         tip.textContent = item.description;
         tip.hidden = false;
-        tip.style.bottom = (innerHeight - panel.getBoundingClientRect().top + 4) + 'px';
+        tip.style.bottom = ((innerHeight - panel.getBoundingClientRect().top) / 2 + 4) + 'px';
         button.setAttribute('aria-describedby', tip.id);
       }
       function hide() { tip.hidden = true; button.removeAttribute('aria-describedby'); }

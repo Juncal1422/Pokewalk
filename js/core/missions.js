@@ -1,3 +1,4 @@
+import { evolutionPayment } from './evolution.js';
 import { game } from './state.js';
 
 const layouts = {
@@ -86,44 +87,35 @@ export function exitKind(m, floor, cleared) {
 export function rewardOptions() {
   const m = game.mission, current = game.pokemon.get(game.player.dex);
   const defeated = [...new Set(m.defeated)].map(id => game.pokemon.get(id));
-  // Solo cuentan las esencias de un tipo individual. No se consumen al evolucionar.
-  function unlocked(row) {
-    if (row.root !== current.root || row.stage <= current.stage) return true;
-    const rule = current.evolutions.find(rule => rule.to === row.dex);
-    return !!rule && rule.essences.some(id => (game.essences[id] || 0) >= rule.amount);
-  }
-  if (!defeated.length) return [];
-  const hasBonus = row => Boolean(game.formEssence) && row.root === current.root;
-  const priority = id => id === game.formEssence ? 2 :
-    Number(defeated.some(row => hasBonus(row) && unlocked(row) && row.essences.includes(id)));
-  const groups = Object.entries(game.essences).map(([id, total]) => ({ id, total, tie: Math.random() }))
-    .sort((a,b) => b.total - a.total || priority(b.id) - priority(a.id) || a.tie - b.tie);
   const choices = [], used = new Set();
-  for (const { id } of groups) {
-    const continuation = id === game.formEssence && groups.slice(0, 3).some(entry => entry.id === id);
-    const evolutions = continuation ? current.next.map(dex => game.pokemon.get(dex)).filter(unlocked) : [];
-    const candidates = continuation ? (evolutions.length ? evolutions : [current]) :
-      defeated.filter(row => row.essences.includes(id));
-    const available = candidates.filter(row => !used.has(row.dex) && unlocked(row));
-    const family = available.filter(hasBonus);
-    const row = sample(family.length ? family : available);
-    if (!row) continue;
+  const otherLines = defeated.filter(row => row.root !== current.root);
+  const evolutions = current.evolutions.map(rule => ({
+    row: game.pokemon.get(rule.to), payment: evolutionPayment(rule, game.essences, game.formEssence),
+  })).filter(option => option.payment);
+  const balances = Object.entries(game.essences).filter(([,total]) => total > 0)
+    .map(([type,total]) => ({ type, total, tie: Math.random() }))
+    .sort((a,b) => b.total - a.total || Number(b.type === game.formEssence) - Number(a.type === game.formEssence) || a.tie - b.tie);
+  function add(row, essence, bonus = false, payment = null) {
+    choices.push({ row, essence, bonus, payment });
     used.add(row.dex);
-    choices.push({ row, essence: id, bonus: hasBonus(row) });
-    if (choices.length === 3) break;
   }
-  // Con dos o más bajas de la misma esencia aún podemos ofrecer tres especies
-  // diferentes. Las misiones con menos de tres candidatos muestran los disponibles.
-  for (const choice of [...choices]) {
-    if (choice.essence === game.formEssence) continue;
-    const remaining = defeated.filter(row => row.essences.includes(choice.essence) && !used.has(row.dex) && unlocked(row));
-    while (choices.length < 3 && remaining.length) {
-      const index = Math.floor(Math.random() * remaining.length);
-      const [row] = remaining.splice(index, 1);
-      if (used.has(row.dex)) continue;
-      used.add(row.dex);
-      choices.push({ row, essence: choice.essence, bonus: hasBonus(row) });
+  // Una rama pagable tiene prioridad incluso al completar una misión sin bajas.
+  for (const option of evolutions.slice().sort((a,b) =>
+    game.essences[b.payment.type] - game.essences[a.payment.type]).slice(0,3)) {
+    add(option.row, option.payment.type, true, option.payment);
+  }
+  for (const {type} of balances) {
+    if (choices.length === 3) break;
+    if (!evolutions.length && game.formEssence && current.essences.includes(type) && !used.has(current.dex)) {
+      add(current, type, true);
+    } else {
+      const row = sample(otherLines.filter(row => row.essences.includes(type) && !used.has(row.dex)));
+      if (row) add(row,type);
     }
+  }
+  for (const {type} of balances) {
+    const rest = otherLines.filter(row => row.essences.includes(type) && !used.has(row.dex));
+    while (choices.length < 3 && rest.length) add(rest.splice(Math.floor(Math.random()*rest.length),1)[0],type);
   }
   return choices;
 }

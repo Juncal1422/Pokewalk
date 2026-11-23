@@ -1,3 +1,4 @@
+import { attackMotion } from './attack-motion.js';
 import { updateEnemy, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
 import { collectItems, spawnFloorItems } from './items.js';
@@ -86,7 +87,8 @@ export function triggerAttack(attacker) {
 // Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
 function resolveImpact(attacker) {
   attacker.impactPending = false;
-  const [vx, vy] = DIR_VEC[attacker.dir];
+  const [dx, dy] = DIR_VEC[attacker.dir];
+  const norm = Math.hypot(dx, dy), vx = dx / norm, vy = dy / norm;
   const reach = attackReach(attacker.stats);
   const strikeRadius = BODY_RADIUS * attacker.stats.size / 100;
   // Distancia al segmento delantero, común al golpe y a la recogida al atacar.
@@ -119,7 +121,7 @@ function resolveImpact(attacker) {
     target.sidestep = null;
     // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
     // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
-    if (target.boss && target.hp && (target.bossResponse || target.finishingCounter)) continue;
+    if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack')) continue;
     if (target.boss && target.hp) {
       target.hitsWithoutAction = (target.hitsWithoutAction || 0) + 1;
       target.bossResponse = target.hitsWithoutAction >= 2;
@@ -225,19 +227,14 @@ export function updateEntity(entity) {
   const frameTime = animation.durs[entity.frame] || 8;
   const duration = hurt ? Math.ceil((frameTime + 2) / 0.55) : frameTime;
   entity.timer += hurt ? (entity.boss ? 2 : 1) : ANIM_SPEED * tempo;
-  if (entity.state === 'Attack' && entity.impactPending) {
-    // Sin marca de impacto usamos el centro de la animación. Una hoja de un
-    // fotograma impacta a media duración para conservar la anticipación.
-    const marker = Number.isInteger(animation.hitFrame) ? animation.hitFrame : Math.floor(animation.frames / 2);
-    const frame = Math.min(animation.frames - 1, Math.max(1, marker));
-    if (entity.frame === frame && (frame !== 0 || entity.timer >= duration / 2)) resolveImpact(entity);
+  if (entity.state === 'Attack' && entity.impactPending && attackMotion(entity, animation).impact) {
+    resolveImpact(entity);
   }
   if (entity.timer >= duration) {
     entity.timer = hurt ? entity.timer - duration : 0;
     entity.frame++;
     if (entity.frame >= animation.frames) {
       entity.frame = 0;
-      if (entity.state === 'Attack') entity.finishingCounter = false;
       if (entity.hp > 0 && (entity.state === 'Attack' || entity.state === 'Hurt'))
         setState(entity, 'Idle');
     }

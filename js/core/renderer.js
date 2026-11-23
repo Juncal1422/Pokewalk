@@ -1,3 +1,4 @@
+import { attackMotion } from './attack-motion.js';
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
 import { PLAYER_GRACE_MS, FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
@@ -126,6 +127,7 @@ export function draw() {
     ctx.fill();
 
     const animation = entity.anims[entity.state] || entity.anims.Idle;
+    const offset = entity.state === 'Attack' ? attackMotion(entity, animation) : { x: 0, y: 0 };
     const scale = ZOOM * entity.stats.size / 100;
     const drawW = animation.fw * scale, drawH = animation.fh * scale;
     const row = Math.min(
@@ -142,8 +144,8 @@ export function draw() {
       row * animation.fh,
       animation.fw,
       animation.fh,
-      Math.floor(px - drawW / 2),
-      Math.floor(py - drawH / 2),
+      Math.floor(px + offset.x * ZOOM - drawW / 2),
+      Math.floor(py + offset.y * ZOOM - drawH / 2),
       drawW,
       drawH,
     );
@@ -171,5 +173,8 @@ export function draw() {
     if (entity.missUntil > performance.now()) ctx.drawImage(missImage, px - 15, py - drawH / 2 - 22, 30, 16);
     ctx.restore();
   }
-  drawHud(ctx, canvas, player);
+  ctx.save();
+  ctx.scale(2, 2);
+  drawHud(ctx, { width: canvas.width / 2, height: canvas.height / 2 }, player);
+  ctx.restore();
 }

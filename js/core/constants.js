@@ -6,7 +6,7 @@ export const MAP_W = 44;
 export const MAP_H = 34;
 export const DEFAULT_DEX = 132;
 export const EXCLUDED_DEX = new Set([
-  514, 516, 520, 522, 523, 538, 558, 564, 565, 591, 592, 593, 616, 618, 626,
+  513, 514, 515, 516, 519, 520, 521, 522, 523, 538, 557, 558, 564, 565, 590, 591, 592, 593, 616, 617, 618, 626,
 ]);
 
 export const ANIM_SPEED = 0.72;
