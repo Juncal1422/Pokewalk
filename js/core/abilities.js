@@ -1,3 +1,4 @@
+import { gameTime } from './clock.js';
 import { game } from './state.js';
 import { DIR_VEC, TILE } from './constants.js';
 import { attackReach } from './stats.js';
@@ -23,26 +24,30 @@ export async function loadEffects() {
 }
 
 export function effect(kind,x,y,ms,dir=0) {
-  const sprite = { kind,x,y,ms,dir,start:performance.now() };
+  const sprite = { kind,x,y,ms,dir,start:gameTime() };
   game.effects.push(sprite);
   return sprite;
 }
 
 export function drawEffects(ctx, zoom, cx, cy) {
-  const now = performance.now();
+  const now = gameTime();
   for (const fx of game.effects) {
     const frames = sheets.get(fx.kind), progress = Math.min(1,(now-fx.start)/fx.ms);
     const img = frames[Math.max(0,Math.min(frames.length-1,Math.floor(progress*frames.length)))];
     const x = fx.x*zoom-cx, y = fx.y*zoom-cy;
-    if (fx.kind === 'fang') {
-      // El atlas agrupa abajo/arriba, izquierda/derecha y las diagonales.
-      const cell=[0,5,3,7,1,6,2,4][fx.dir];
-      ctx.drawImage(img,(cell%2)*16,Math.floor(cell/2)*16,16,16,x-12*zoom,y-12*zoom,24*zoom,24*zoom);
-    } else {
       const w = img.width*zoom, h = img.height*zoom;
       ctx.drawImage(img,x-w/2,y-h*(fx.kind==='purple'?.95:.5),w,h);
-    }
   }
+}
+
+// La hoja usa parejas abajo/arriba, izquierda/derecha y diagonales.
+export function drawFang(ctx,dir,x,y,scale,opacity) {
+  const cell = [0,5,3,7,1,6,2,4][dir];
+  ctx.save();
+  ctx.globalAlpha *= opacity;
+  ctx.drawImage(sheets.get('fang')[0],cell%2*16,Math.floor(cell/2)*16,16,16,
+    x-12*scale,y-12*scale,24*scale,24*scale);
+  ctx.restore();
 }
 
 function spendFive() {
@@ -70,7 +75,7 @@ function landing(player) {
 }
 
 export function useActive() {
-  const p=game.player, now=performance.now();
+  const p=game.player, now=gameTime();
   const id=[...game.held].find(key=>game.benefits.get(key).active);
   if (!id || !p.hp || game.changingLevel || game.cast || ['Attack','Hurt'].includes(p.state)) return;
   const benefit=game.benefits.get(id);
@@ -99,14 +104,14 @@ function spin(owner, cast, elapsed) {
     if (target.isPlayer === owner.isPlayer || !target.hp || cast.hit.has(target)) continue;
     if (Math.hypot(target.x-owner.x,target.y-owner.y) > attackReach(owner.stats)+bodyRadius(target)) continue;
     cast.hit.add(target);
-    inflictDamage(owner,target,owner.stats.attack);
+    inflictDamage(owner,target,owner.stats.attack,false,true);
   }
 }
 
 // El líder fija la dirección al anunciar la habilidad. Durante ese segundo
 // el jugador puede apartarse del disparo o salir del radio del giro.
 export function updateBossAbility(boss) {
-  const id = boss.activeBenefit, player = game.player, now = performance.now();
+  const id = boss.activeBenefit, player = game.player, now = gameTime();
   if (!id || !boss.hp || !player.hp) return false;
   const distance = Math.hypot(player.x-boss.x, player.y-boss.y);
   const range = attackReach(boss.stats)*(id==='fire_brooch'?4:1) + bodyRadius(player);
@@ -152,7 +157,7 @@ export function updateBossAbility(boss) {
 }
 
 export function tickAbilities() {
-  const now=performance.now(), p=game.player, cast=game.cast;
+  const now=gameTime(), p=game.player, cast=game.cast;
   if (cast && (!p.hp || p.state==='Hurt')) game.cast=null;
   else if (cast) {
     const elapsed=now-cast.start;
@@ -187,7 +192,7 @@ export function tickAbilities() {
           first=enemy;nearest=along;
         }
       }
-      if (first) { inflictDamage(fx.owner,first,fx.damage);return false; }
+      if (first) { inflictDamage(fx.owner,first,fx.damage,false,true);return false; }
       fx.travel=travel;
     }
     return t<1;

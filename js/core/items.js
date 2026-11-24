@@ -1,3 +1,4 @@
+import { gameTime } from './clock.js';
 import { canMove } from './entities.js';
 import { essenceIcon } from './hud.js';
 import { TILE } from './constants.js';
@@ -68,10 +69,10 @@ export function collectItems(player, strike = null) {
       Object.assign(player, spot);
     }
     player.bonuses = bonuses;
-    game.inventory.add(drop.id);
+    if (!item.consumable) game.inventory.add(drop.id);
     console.info('[Objeto] Recogido', item.name, item.duration);
     player.hp = Math.min(player.stats.hpMax, player.hp + item.heal + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (drop.id==='potion'?amount('mint_leaf'):0))));
-    const now = performance.now();
+    const now = gameTime();
     for (const key of [...Object.keys(item.stats), 'hp']) {
       const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];
       if (delta) game.pickups.push({ key, delta, time: now });

@@ -1,3 +1,4 @@
+import { gameTime, resetClock, advanceClock } from './core/clock.js';
 import { levelFor } from './core/stats.js';
 import { loadTerrain } from './core/terrain.js';
 import { attachInventory } from './core/inventory.js';
@@ -54,13 +55,15 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
-      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:1.6; }
+      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:.8; }
       #roster { zoom:1.2; }
       #inventory,#benefits { position:absolute; display:flex; gap:6px; }
       #inventory { left:205px; right:35%; bottom:8px; overflow-x:auto; }
       #benefits { left:8px; top:32%; flex-direction:column; flex-wrap:wrap; max-height:44vh; }
       #inventory img,#benefits img { width:54px; height:54px; object-fit:contain; image-rendering:pixelated; }
       #item-tip { position:absolute; left:205px; bottom:80px; max-width:440px; pointer-events:none; }
+      #benefits .active-benefit { position:relative; display:inline-flex; }
+      #benefits .active-benefit::after { content:""; position:absolute; inset:0; border-radius:50%; pointer-events:none; background:conic-gradient(rgb(5 10 20 / 70%) var(--remaining,0deg),transparent 0); }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
@@ -108,7 +111,7 @@ async function nextLevel() {
     } else {
       // Simulamos ambas elecciones para cobrar esencias y cambiar de activo
       // solo cuando la siguiente misión se ha cargado con éxito.
-      let state = { held:game.held, bonuses:game.player.bonuses, balances:game.essences,
+      let state = { benefitLevels:game.benefitLevels, held:game.held, bonuses:game.player.bonuses, balances:game.essences,
         row:game.pokemon.get(game.player.dex), essence:game.formEssence };
       for (let pick=0; pick < (state.held.has('golden_mask')?2:1); pick++) {
         const options = rewardOptions(state.row,state.balances,state.essence);
@@ -127,6 +130,7 @@ async function nextLevel() {
       game.held = state.held;
       try { await loadLevel(state.row.dex,next,1,state.bonuses); }
       catch (error) { game.held = previousHeld; throw error; }
+      game.benefitLevels=state.benefitLevels;
       game.essences=state.balances;
       game.formEssence=state.essence;
     }
@@ -194,12 +198,15 @@ function updateNearby() {
   }));
 }
 
-function frame() {
-  if (!game.changingLevel) {
+function frame(timestamp) {
+  advanceClock(timestamp, game.changingLevel, () => {
+    if (game.changingLevel) return;
     tickAbilities();
     game.entities.forEach(updateEntity);
+  });
+  if (!game.changingLevel) {
     collectItems(game.player);
-    const now = performance.now();
+    const now = gameTime();
     game.entities = game.entities.filter(
       (entity) => entity.hp > 0 || now - entity.deathAt < FADE_MS,
     );
@@ -243,6 +250,7 @@ export async function startGame({
 } = {}) {
   root.__pokeWalkCleanup?.();
   resetGameState();
+  resetClock();
   mountApp(root);
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
@@ -273,6 +281,7 @@ export async function startGame({
   game.essences = {};
   game.pickups = [];
   game.held = new Set();
+  game.benefitLevels = 0;
   game.cooldowns = {};
   game.formEssence = null;
   const biome = chooseBiome(biomes, 1);

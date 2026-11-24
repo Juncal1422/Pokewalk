@@ -1,4 +1,5 @@
-import { effect, updateBossAbility } from './abilities.js';
+import { gameTime } from './clock.js';
+import { updateBossAbility } from './abilities.js';
 import { amount, playerStats } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, trySidestep } from './enemy-ai.js';
@@ -86,6 +87,7 @@ export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
   if (attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
+  attacker.fangStrike = attacker.isPlayer && game.held.has('big_fang');
   setState(attacker, 'Attack');
 }
 
@@ -107,13 +109,10 @@ function resolveImpact(attacker) {
   if (attacker.isPlayer) collectItems(attacker, (drop) =>
     Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, strikeRadius));
 
-  if (attacker.isPlayer && game.held.has('big_fang')) {
-    effect('fang',attacker.x+vx*reach,attacker.y+vy*reach,250,attacker.dir);
-  }
   for (const target of game.entities) {
     if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
     if (!inStrike(target.x, target.y, strikeRadius + bodyRadius(target))) continue;
-    const now = performance.now();
+    const now = gameTime();
     if (target.isPlayer && now - target.lastHit < PLAYER_GRACE_MS) continue;
     const dodge = .05 + (target.isPlayer ? amount('silvercoat') : 0);
     if (Math.random() < dodge) {
@@ -124,6 +123,7 @@ function resolveImpact(attacker) {
     const critical = Math.random() < 0.10;
     inflictDamage(attacker,target,damageFor(attacker, target, critical),critical);
     if (target.boss && target.hp && (target.bossResponse || target.abilityCast || target.state==='Attack')) continue;
+    if (attacker.boss && target.isPlayer) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
     for (let step = 0; step < 10; step++) {
       if (!canMove(target, target.x + vx, target.y + vy)) break;
@@ -134,9 +134,9 @@ function resolveImpact(attacker) {
 }
 
 // Ataques normales, habilidades y reflejos comparten derrota, botín y Hurt.
-export function inflictDamage(attacker,target,raw,critical=false) {
+export function inflictDamage(attacker,target,raw,critical=false,ability=false) {
   if (!target.hp) return;
-  const now = performance.now();
+  const now = gameTime();
   if (target.isPlayer) {
     if (now - target.lastHit < PLAYER_GRACE_MS) return;
     const species = game.pokemon.get(attacker.dex), form = game.pokemon.get(target.dex);
@@ -144,7 +144,7 @@ export function inflictDamage(attacker,target,raw,critical=false) {
     if (Math.random() < amount('iron_tag')) raw *= .5;
   }
   let damage = Math.min(target.hp, Math.max(1, Math.round(raw)));
-  if (attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
+  if (ability && attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
   if (!damage) return;
   target.hitNumber = { damage, critical, time: now };
   target.hp = Math.max(0, target.hp - damage);
@@ -235,7 +235,7 @@ function moveEntity(entity, dx, dy) {
 
 export function updateEntity(entity) {
   if (entity.isPlayer) {
-    if (entity.hp > 0 && entity.state === 'Hurt' && performance.now() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
+    if (entity.hp > 0 && entity.state === 'Hurt' && gameTime() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
     let dx = 0,
       dy = 0;
     if (game.keys.w || game.keys.arrowup) dy--;
@@ -253,7 +253,7 @@ export function updateEntity(entity) {
       updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);
   }
 
-  const animation = entity.anims[entity.state] || entity.anims.Idle;
+  const animation = entity.state === 'Attack' && entity.fangStrike ? entity.anims.Charge : entity.anims[entity.state] || entity.anims.Idle;
   const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) :
     entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) * (entity.isPlayer ? 1 : 0.48) : 1;
   const hurt = entity.state === 'Hurt';
@@ -264,7 +264,7 @@ export function updateEntity(entity) {
     resolveImpact(entity);
   }
   if (entity.timer >= duration) {
-    entity.timer = hurt ? entity.timer - duration : 0;
+    entity.timer -= duration;
     entity.frame++;
     if (entity.frame >= animation.frames) {
       entity.frame = 0;

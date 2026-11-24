@@ -32,5 +32,5 @@ export function projectReward(state, option) {
     held.add(benefit.id);
   }
   if (option.payment) balances[option.payment.type] -= option.payment.amount;
-  return { held, bonuses, balances, row: option.row, essence: option.essence, benefit, allStats };
+  return { benefitLevels: (state.benefitLevels || 0) + Number(Boolean(allStats)), held, bonuses, balances, row: option.row, essence: option.essence, benefit, allStats };
 }
