@@ -22091,7 +22091,7 @@
     "final": true,
     "legendary": false,
     "mythical": false,
-    "fly": false,
+    "fly": true,
     "swim": false,
     "lavawalk": false
   },
