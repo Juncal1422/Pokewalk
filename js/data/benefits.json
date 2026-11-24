@@ -6,7 +6,27 @@
     "image": "assets/benefits/earth_ring.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Bulbasaur", "Vileplume", "Victreebel", "Exeggutor", "Bellossom", "Sunkern", "Quagsire", "Donphan", "Swampert", "Roselia", "Whiscash", "Torterra", "Roserade", "Cherubi", "Gabite", "Abomasnow", "Servine", "Seismitoad", "Petilil"],
+    "pokemon": [
+      "Bulbasaur",
+      "Vileplume",
+      "Victreebel",
+      "Exeggutor",
+      "Bellossom",
+      "Sunkern",
+      "Quagsire",
+      "Donphan",
+      "Swampert",
+      "Roselia",
+      "Whiscash",
+      "Torterra",
+      "Roserade",
+      "Cherubi",
+      "Gabite",
+      "Abomasnow",
+      "Servine",
+      "Seismitoad",
+      "Petilil"
+    ],
     "types": ["ground", "grass"]
   },
   {
@@ -16,7 +36,28 @@
     "image": "assets/benefits/air_ring.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Ivysaur", "Weedle", "Venomoth", "Haunter", "Natu", "Gligar", "Qwilfish", "Beautifly", "Masquerain", "Altaria", "Salamence", "Staravia", "Mothim", "Vespiquen", "Chatot", "Yanmega", "Swoobat", "Rufflet", "Braviary", "Mandibuzz"],
+    "pokemon": [
+      "Ivysaur",
+      "Weedle",
+      "Venomoth",
+      "Haunter",
+      "Natu",
+      "Gligar",
+      "Qwilfish",
+      "Beautifly",
+      "Masquerain",
+      "Altaria",
+      "Salamence",
+      "Staravia",
+      "Mothim",
+      "Vespiquen",
+      "Chatot",
+      "Yanmega",
+      "Swoobat",
+      "Rufflet",
+      "Braviary",
+      "Mandibuzz"
+    ],
     "types": ["flying", "poison"]
   },
   {
@@ -26,7 +67,23 @@
     "image": "assets/benefits/fire_ring.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Charizard", "Voltorb", "Chinchou", "Mareep", "Magcargo", "Elekid", "Numel", "Camerupt", "Magnezone", "Emolga", "Litwick", "Lampent", "Chandelure", "Larvesta", "Volcarona"],
+    "pokemon": [
+      "Charizard",
+      "Voltorb",
+      "Chinchou",
+      "Mareep",
+      "Magcargo",
+      "Elekid",
+      "Numel",
+      "Camerupt",
+      "Magnezone",
+      "Emolga",
+      "Litwick",
+      "Lampent",
+      "Chandelure",
+      "Larvesta",
+      "Volcarona"
+    ],
     "types": ["fire", "electric"]
   },
   {
@@ -36,7 +93,29 @@
     "image": "assets/benefits/water_ring.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Blastoise", "Golduck", "Poliwhirl", "Seel", "Horsea", "Goldeen", "Staryu", "Vaporeon", "Croconaw", "Azumarill", "Remoraid", "Mudkip", "Wailord", "Feebas", "Huntail", "Luvdisc", "Buizel", "Finneon", "Dewott", "Basculin", "Beartic"],
+    "pokemon": [
+      "Blastoise",
+      "Golduck",
+      "Poliwhirl",
+      "Seel",
+      "Horsea",
+      "Goldeen",
+      "Staryu",
+      "Vaporeon",
+      "Croconaw",
+      "Azumarill",
+      "Remoraid",
+      "Mudkip",
+      "Wailord",
+      "Feebas",
+      "Huntail",
+      "Luvdisc",
+      "Buizel",
+      "Finneon",
+      "Dewott",
+      "Basculin",
+      "Beartic"
+    ],
     "types": ["water", "ice"]
   },
   {
@@ -46,7 +125,29 @@
     "image": "assets/benefits/big_fang.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Pidgey", "Dodrio", "Porygon", "Togetic", "Porygon2", "Taillow", "Sableye", "Carvanha", "Sharpedo", "Cacturne", "Crawdaunt", "Staraptor", "Bibarel", "Honchkrow", "Drapion", "Sandile", "Deerling", "Sawsbuck", "Pawniard", "Deino", "Zweilous"]
+    "pokemon": [
+      "Sunkern",
+      "Dodrio",
+      "Porygon",
+      "Togetic",
+      "Porygon2",
+      "Taillow",
+      "Sableye",
+      "Carvanha",
+      "Sharpedo",
+      "Cacturne",
+      "Crawdaunt",
+      "Staraptor",
+      "Bibarel",
+      "Honchkrow",
+      "Drapion",
+      "Sandile",
+      "Deerling",
+      "Sawsbuck",
+      "Pawniard",
+      "Deino",
+      "Zweilous"
+    ]
   },
   {
     "id": "cog",
@@ -55,7 +156,27 @@
     "image": "assets/benefits/cog.png",
     "active": true,
     "amount": 5,
-    "pokemon": ["Raichu", "Electrode", "Pichu", "Ampharos", "Forretress", "Scizor", "Mawile", "Aron", "Lairon", "Metang", "Empoleon", "Shieldon", "Bronzor", "Probopass", "Excadrill", "Escavalier", "Ferroseed", "Ferrothorn", "Klinklang"]
+    "pokemon": [
+      "Magikarp",
+      "Electrode",
+      "Pichu",
+      "Ampharos",
+      "Forretress",
+      "Scizor",
+      "Mawile",
+      "Aron",
+      "Lairon",
+      "Metang",
+      "Empoleon",
+      "Shieldon",
+      "Bronzor",
+      "Probopass",
+      "Excadrill",
+      "Escavalier",
+      "Ferroseed",
+      "Ferrothorn",
+      "Klinklang"
+    ]
   },
   {
     "id": "deep_scale",
@@ -64,7 +185,28 @@
     "image": "assets/benefits/deep_scale.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Psyduck", "Poliwag", "Tentacool", "Shellder", "Seadra", "Seaking", "Magikarp", "Totodile", "Feraligatr", "Politoed", "Octillery", "Wailmer", "Corphish", "Milotic", "Gorebyss", "Piplup", "Floatzel", "Lumineon", "Tympole", "Haxorus"]
+    "pokemon": [
+      "Psyduck",
+      "Poliwag",
+      "Tentacool",
+      "Shellder",
+      "Seadra",
+      "Seaking",
+      "Magikarp",
+      "Totodile",
+      "Feraligatr",
+      "Politoed",
+      "Octillery",
+      "Wailmer",
+      "Corphish",
+      "Milotic",
+      "Gorebyss",
+      "Piplup",
+      "Floatzel",
+      "Lumineon",
+      "Tympole",
+      "Haxorus"
+    ]
   },
   {
     "id": "green_scale",
@@ -73,7 +215,28 @@
     "image": "assets/benefits/green_scale.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Caterpie", "Beedrill", "Pinsir", "Dratini", "Dragonair", "Shuckle", "Kingdra", "Silcoon", "Surskit", "Volbeat", "Anorith", "Bagon", "Shelgon", "Burmy", "Garchomp", "Sewaddle", "Swadloon", "Karrablast", "Fraxure", "Druddigon"]
+    "pokemon": [
+      "Caterpie",
+      "Beedrill",
+      "Pinsir",
+      "Dratini",
+      "Dragonair",
+      "Shuckle",
+      "Kingdra",
+      "Silcoon",
+      "Surskit",
+      "Volbeat",
+      "Anorith",
+      "Bagon",
+      "Shelgon",
+      "Burmy",
+      "Garchomp",
+      "Sewaddle",
+      "Swadloon",
+      "Karrablast",
+      "Fraxure",
+      "Druddigon"
+    ]
   },
   {
     "id": "golden_mask",
@@ -82,7 +245,30 @@
     "image": "assets/benefits/golden_mask.png",
     "active": false,
     "amount": 1,
-    "pokemon": ["Abra", "Kadabra", "Slowpoke", "Gengar", "Starmie", "Slowking", "Misdreavus", "Smoochum", "Kirlia", "Medicham", "Solrock", "Shuppet", "Duskull", "Drifloon", "Dusknoir", "Froslass", "Musharna", "Yamask", "Cofagrigus", "Gothitelle", "Duosion", "Elgyem"]
+    "pokemon": [
+      "Abra",
+      "Kadabra",
+      "Slowpoke",
+      "Gengar",
+      "Starmie",
+      "Slowking",
+      "Misdreavus",
+      "Smoochum",
+      "Kirlia",
+      "Medicham",
+      "Solrock",
+      "Shuppet",
+      "Duskull",
+      "Drifloon",
+      "Dusknoir",
+      "Froslass",
+      "Musharna",
+      "Yamask",
+      "Cofagrigus",
+      "Gothitelle",
+      "Duosion",
+      "Elgyem"
+    ]
   },
   {
     "id": "golden_spike",
@@ -91,7 +277,26 @@
     "image": "assets/benefits/golden_spike.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Nidoqueen", "Diglett", "Cubone", "Rhydon", "Omastar", "Kabutops", "Swinub", "Pupitar", "Nincada", "Flygon", "Baltoy", "Relicanth", "Rampardos", "Bonsly", "Hippopotas", "Gigalith", "Drilbur", "Golurk"]
+    "pokemon": [
+      "Nidoqueen",
+      "Diglett",
+      "Cubone",
+      "Rhydon",
+      "Omastar",
+      "Kabutops",
+      "Swinub",
+      "Pupitar",
+      "Nincada",
+      "Flygon",
+      "Baltoy",
+      "Relicanth",
+      "Rampardos",
+      "Bonsly",
+      "Hippopotas",
+      "Gigalith",
+      "Drilbur",
+      "Golurk"
+    ]
   },
   {
     "id": "green_spike",
@@ -100,7 +305,27 @@
     "image": "assets/benefits/green_spike.png",
     "active": false,
     "amount": 0.05,
-    "pokemon": ["Venusaur", "Paras", "Tentacruel", "Spinarak", "Hoppip", "Sunflora", "Sceptile", "Dustox", "Lotad", "Cacnea", "Cradily", "Budew", "Wormadam", "Cherrim", "Carnivine", "Tangrowth", "Serperior", "Cottonee", "Lilligant"]
+    "pokemon": [
+      "Venusaur",
+      "Paras",
+      "Tentacruel",
+      "Spinarak",
+      "Hoppip",
+      "Sunflora",
+      "Sceptile",
+      "Dustox",
+      "Lotad",
+      "Cacnea",
+      "Cradily",
+      "Budew",
+      "Wormadam",
+      "Cherrim",
+      "Carnivine",
+      "Tangrowth",
+      "Serperior",
+      "Cottonee",
+      "Lilligant"
+    ]
   },
   {
     "id": "iron_tag",
@@ -109,7 +334,27 @@
     "image": "assets/benefits/iron_tag.png",
     "active": false,
     "amount": 0.05,
-    "pokemon": ["Magnemite", "Onix", "Rhyhorn", "Omanyte", "Kabuto", "Corsola", "Larvitar", "Nosepass", "Aggron", "Lunatone", "Armaldo", "Cranidos", "Bronzong", "Roggenrola", "Boldore", "Archen", "Archeops", "Klink", "Bisharp"]
+    "pokemon": [
+      "Magnemite",
+      "Onix",
+      "Rhyhorn",
+      "Omanyte",
+      "Kabuto",
+      "Corsola",
+      "Larvitar",
+      "Nosepass",
+      "Aggron",
+      "Lunatone",
+      "Armaldo",
+      "Cranidos",
+      "Bronzong",
+      "Roggenrola",
+      "Boldore",
+      "Archen",
+      "Archeops",
+      "Klink",
+      "Bisharp"
+    ]
   },
   {
     "id": "lovefool",
@@ -118,7 +363,30 @@
     "image": "assets/benefits/lovefool.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Pidgeotto", "Alakazam", "Slowbro", "Drowzee", "Xatu", "Unown", "Wobbuffet", "Ralts", "Meditite", "Spoink", "Claydol", "Chimecho", "Wynaut", "Chingling", "Porygon_Z", "Munna", "Sigilyph", "Gothita", "Gothorita", "Solosis", "Reuniclus", "Beheeyem"]
+    "pokemon": [
+      "Pidgeotto",
+      "Alakazam",
+      "Slowbro",
+      "Drowzee",
+      "Xatu",
+      "Unown",
+      "Wobbuffet",
+      "Ralts",
+      "Meditite",
+      "Spoink",
+      "Claydol",
+      "Chimecho",
+      "Wynaut",
+      "Chingling",
+      "Porygon_Z",
+      "Munna",
+      "Sigilyph",
+      "Gothita",
+      "Gothorita",
+      "Solosis",
+      "Reuniclus",
+      "Beheeyem"
+    ]
   },
   {
     "id": "mamoswine_fang",
@@ -127,7 +395,28 @@
     "image": "assets/benefits/mamoswine_fang.png",
     "active": true,
     "amount": 30,
-    "pokemon": ["Nidoking", "Dugtrio", "Dewgong", "Jynx", "Lapras", "Wooper", "Phanpy", "Marshtomp", "Vibrava", "Barboach", "Spheal", "Sealeo", "Gastrodon", "Gible", "Hippowdon", "Mamoswine", "Palpitoad", "Vanillite", "Vanillish", "Cubchoo"]
+    "pokemon": [
+      "Nidoking",
+      "Dugtrio",
+      "Dewgong",
+      "Jynx",
+      "Lapras",
+      "Wooper",
+      "Phanpy",
+      "Marshtomp",
+      "Vibrava",
+      "Barboach",
+      "Spheal",
+      "Sealeo",
+      "Gastrodon",
+      "Gible",
+      "Hippowdon",
+      "Mamoswine",
+      "Palpitoad",
+      "Vanillite",
+      "Vanillish",
+      "Cubchoo"
+    ]
   },
   {
     "id": "mint_leaf",
@@ -136,7 +425,27 @@
     "image": "assets/benefits/mint_leaf.png",
     "active": false,
     "amount": 0.5,
-    "pokemon": ["Butterfree", "Parasect", "Exeggcute", "Ariados", "Skiploom", "Treecko", "Wurmple", "Cascoon", "Lombre", "Illumise", "Grotle", "Kricketot", "Kricketune", "Skorupi", "Snover", "Leafeon", "Simisage", "Whimsicott", "Durant"]
+    "pokemon": [
+      "Butterfree",
+      "Parasect",
+      "Exeggcute",
+      "Ariados",
+      "Skiploom",
+      "Treecko",
+      "Wurmple",
+      "Cascoon",
+      "Lombre",
+      "Illumise",
+      "Grotle",
+      "Kricketot",
+      "Kricketune",
+      "Skorupi",
+      "Snover",
+      "Leafeon",
+      "Simisage",
+      "Whimsicott",
+      "Durant"
+    ]
   },
   {
     "id": "silvercoat",
@@ -145,7 +454,27 @@
     "image": "assets/benefits/silvercoat.png",
     "active": false,
     "amount": 0.05,
-    "pokemon": ["Spearow", "Scyther", "Gyarados", "Dragonite", "Jumpluff", "Delibird", "Mantine", "Wingull", "Ninjask", "Tropius", "Starly", "Bastiodon", "Combee", "Drifblim", "Mantyke", "Woobat", "Ducklett", "Klang", "Vullaby"]
+    "pokemon": [
+      "Spearow",
+      "Scyther",
+      "Gyarados",
+      "Dragonite",
+      "Jumpluff",
+      "Delibird",
+      "Mantine",
+      "Wingull",
+      "Ninjask",
+      "Tropius",
+      "Starly",
+      "Bastiodon",
+      "Combee",
+      "Drifblim",
+      "Mantyke",
+      "Woobat",
+      "Ducklett",
+      "Klang",
+      "Vullaby"
+    ]
   },
   {
     "id": "fire_brooch",
@@ -154,6 +483,21 @@
     "image": "assets/benefits/fire_brooch.png",
     "active": true,
     "amount": 30,
-    "pokemon": ["Poliwrath", "Hitmonlee", "Hitmonchan", "Heracross", "Tyrogue", "Hitmontop", "Breloom", "Makuhita", "Hariyama", "Lucario", "Croagunk", "Toxicroak", "Gallade", "Mienshao"]
+    "pokemon": [
+      "Cottonee",
+      "Hitmonlee",
+      "Hitmonchan",
+      "Heracross",
+      "Tyrogue",
+      "Hitmontop",
+      "Breloom",
+      "Makuhita",
+      "Hariyama",
+      "Lucario",
+      "Croagunk",
+      "Toxicroak",
+      "Gallade",
+      "Mienshao"
+    ]
   }
 ]
