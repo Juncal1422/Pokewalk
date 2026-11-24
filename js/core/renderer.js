@@ -176,7 +176,7 @@ export function draw() {
   }
   ctx.save();
   drawEffects(ctx, ZOOM, cameraX, cameraY);
-  ctx.scale(.4, .4);
-  drawHud(ctx, { width: canvas.width / .4, height: canvas.height / .4 }, player);
+  ctx.scale(1.6, 1.6);
+  drawHud(ctx, { width: canvas.width / 1.6, height: canvas.height / 1.6 }, player);
   ctx.restore();
 }

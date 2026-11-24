@@ -27,16 +27,16 @@ const EMBEDDED_APP = `
       #nearby p { margin:3px 0; }
       #poke-walk-app .portrait, #poke-walk-app .essence { image-rendering:pixelated; vertical-align:middle; }
       #poke-walk-app .essence { width:32px; height:32px; }
-      #roster { position:absolute; top:69px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:15px; }
+      #roster { position:absolute; top:92px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:15px; }
       #roster ul { margin:4px 0; padding:0; list-style:none; display:grid; gap:3px; }
       #roster li, #rewards button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
       #roster li { display:grid; grid-template-columns:44px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
       #roster .portrait { width:44px; grid-row:span 2; }
-      #rewards { padding:4px; max-width:96vw; max-height:92dvh; overflow:auto; background:transparent; border:0; color:white; }
+      #rewards { padding:4px; max-width:59vw; max-height:57dvh; overflow:auto; background:transparent; border:0; color:white; }
       #rewards::backdrop { background:#080d16b0; }
       #rewards h1 { margin:0 0 5px; font:600 22px system-ui; text-align:center; }
       #rewards .cards { display:flex; gap:5px; align-items:stretch; }
-      #rewards button { flex:1 1 0; width:clamp(100px,30vw,274px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:18px/1.32 system-ui; cursor:pointer; }
+      #rewards button { flex:1 1 0; width:clamp(100px,18vw,274px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:18px/1.32 system-ui; cursor:pointer; }
       #rewards button:focus-visible, #rewards button:hover { outline:2px solid #d4efff; outline-offset:-4px; }
       #rewards .portrait { width:80px; height:80px; }
       #rewards table { width:100%; margin:4px 0; border-collapse:collapse; font:inherit; font-variant-numeric:tabular-nums; }
@@ -54,8 +54,8 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
-      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:.4; }
-      #roster { zoom:.8; }
+      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:1.6; }
+      #roster { zoom:1.2; }
       #inventory,#benefits { position:absolute; display:flex; gap:6px; }
       #inventory { left:205px; right:35%; bottom:8px; overflow-x:auto; }
       #benefits { left:8px; top:32%; flex-direction:column; flex-wrap:wrap; max-height:44vh; }
