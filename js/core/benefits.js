@@ -1,3 +1,4 @@
+import { gameTime } from './clock.js';
 import { statsFor } from './stats.js';
 import { game } from './state.js';
 
@@ -9,14 +10,17 @@ export function amount(id, held = game.held) {
 // el resultado de una transformación anterior.
 export function playerStats(row, progress, bonuses, held = game.held) {
   const stats = statsFor(row, progress, bonuses);
-  let attack = amount('big_fang', held);
+  const modifiers = {attack:0, range:0, speed:0, defense:0, attackSpeed:0};
   for (const id of held) {
-    const benefit = game.benefits.get(id);
-    if (benefit.types?.some(type => row.types.includes(type))) attack += benefit.amount;
+    for (const [key,value] of Object.entries(game.benefits.get(id).stats ?? {})) modifiers[key] += value;
   }
-  stats.range = Math.round(stats.range * (1 + amount('big_fang', held)));
-  stats.attack = Math.round(stats.attack * (1 + attack) + stats.range * amount('golden_spike', held));
-  stats.defense = Math.round(stats.defense * (1 + amount('deep_scale', held)));
+  if (held.has('amulet') && game.amuletUntil > gameTime()) {
+    for (const key of ['attack','speed','attackSpeed']) modifiers[key] += .5;
+  }
+  for (const [key,modifier] of Object.entries(modifiers)) {
+    stats[key] = Math.round(stats[key]*(1+modifier));
+    if (key === 'speed' || key === 'attackSpeed') stats[key] = Math.min(180,stats[key]);
+  }
   return stats;
 }
 
@@ -28,9 +32,9 @@ export function projectReward(state, option) {
     for (const key of Object.keys(bonuses)) bonuses[key]++;
   } else {
     if (!benefit) throw new Error('Falta el beneficio de ' + option.row.name);
-    if (benefit.active) for (const id of held) if (game.benefits.get(id).active) held.delete(id);
+    if (benefit.active) for (const id of held) if (game.benefits.get(id).slot === benefit.slot) held.delete(id);
     held.add(benefit.id);
   }
   if (option.payment) balances[option.payment.type] -= option.payment.amount;
-  return { benefitLevels: (state.benefitLevels || 0) + Number(Boolean(allStats)), held, bonuses, balances, row: option.row, essence: option.essence, benefit, allStats };
+  return { held, bonuses, balances, row: option.row, essence: option.essence, benefit, allStats };
 }

@@ -1,3 +1,4 @@
+import { awardExperience } from './experience.js';
 import { evolutionPayment } from './evolution.js';
 import { game } from './state.js';
 
@@ -63,6 +64,7 @@ export function onDefeat(target, attacker) {
   const amount = base * (target.boss ? 2 : 1);
   game.drops.push({ essence, amount, x: target.x, y: target.y });
   if (!attacker.isPlayer) return;
+  awardExperience(target);
   if (!target.boss) m.defeated.push(target.dex);
   if (m.target === target.dex) m.kills++;
   console.info('[Esencia]', essence, amount, target.dex);

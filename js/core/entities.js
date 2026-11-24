@@ -1,5 +1,5 @@
 import { gameTime } from './clock.js';
-import { updateBossAbility } from './abilities.js';
+import { updateBossAbility, releaseSpines } from './abilities.js';
 import { amount, playerStats } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, trySidestep } from './enemy-ai.js';
@@ -87,7 +87,7 @@ export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
   if (attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
-  attacker.fangStrike = attacker.isPlayer && game.held.has('big_fang');
+  attacker.fangStrike = attacker.isPlayer && (game.held.has('long_horn') || game.held.has('spike'));
   setState(attacker, 'Attack');
 }
 
@@ -138,10 +138,10 @@ export function inflictDamage(attacker,target,raw,critical=false,ability=false) 
   if (!target.hp) return;
   const now = gameTime();
   if (target.isPlayer) {
-    if (now - target.lastHit < PLAYER_GRACE_MS) return;
+    if (attacker !== target && now - target.lastHit < PLAYER_GRACE_MS) return;
     const species = game.pokemon.get(attacker.dex), form = game.pokemon.get(target.dex);
-    if (species.essences.some(type => form.essences.includes(type))) raw *= 1 - amount('lovefool');
-    if (Math.random() < amount('iron_tag')) raw *= .5;
+    if (attacker !== target && species.essences.some(type => form.essences.includes(type))) raw *= 1 - amount('lovefool');
+    if (attacker !== target && Math.random() < amount('iron_tag') + amount('deep_scale')) raw *= .5;
   }
   let damage = Math.min(target.hp, Math.max(1, Math.round(raw)));
   if (ability && attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
@@ -150,9 +150,7 @@ export function inflictDamage(attacker,target,raw,critical=false,ability=false) 
   target.hp = Math.max(0, target.hp - damage);
   target.lastHit = now;
   target.sidestep = null;
-  if (target.isPlayer && game.held.has('green_spike') && attacker.hp) {
-    inflictDamage(target, attacker, Math.max(1, target.stats.defense * amount('green_spike')));
-  }
+  if (critical && target.isPlayer && game.held.has('green_spike')) releaseSpines(target);
   // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
   // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
   if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return;
@@ -186,7 +184,7 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
   game.mission = mission;
   game.floor = floor;
   game.adventure = mission.number - 1;
-  game.progress = 4 + mission.number;
+  const enemyDifficulty = 4 + mission.number;
   const player = createEntity(playerData, game.rooms[0], true);
   player.bonuses = bonuses;
   player.stats = playerStats(game.pokemon.get(dex), game.progress, bonuses);
@@ -199,8 +197,8 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
     const enemy = createEntity(data, game.rooms[index + 1], false);
     enemy.boss = bossFloor;
     const species = game.pokemon.get(data.dex);
-    enemy.level = levelFor(species, enemyProgress(game.progress));
-    enemy.stats = statsFor(species, game.progress, {}, bossFloor, true);
+    enemy.level = levelFor(species, enemyProgress(enemyDifficulty));
+    enemy.stats = statsFor(species, enemyDifficulty, {}, bossFloor, true);
     if (bossFloor) {
       const benefit = game.donors.get(species.name);
       enemy.activeBenefit = benefit?.active ? benefit.id : null;

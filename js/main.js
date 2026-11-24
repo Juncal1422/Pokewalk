@@ -8,7 +8,7 @@ import { element, tones, portrait } from './core/pokemon-panel.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
 import { projectReward } from './core/benefits.js';
-import { loadEffects, tickAbilities } from './core/abilities.js';
+import { loadEffects, tickAbilities, pickupEffect } from './core/abilities.js';
 import { loadHud } from './core/hud.js';
 import { loadBiomes } from './data/biomes.js';
 import { DEFAULT_DEX, FADE_MS, TILE } from './core/constants.js';
@@ -27,17 +27,17 @@ const EMBEDDED_APP = `
       #nearby { position:absolute; right:8px; bottom:8px; box-sizing:border-box; width:max-content; max-width:min(57vw,380px); max-height:40vh; overflow:auto; padding:4px; border:12px solid transparent; border-image-repeat:stretch; background:rgb(0 0 0 / 50%) padding-box; }
       #nearby p { margin:3px 0; }
       #poke-walk-app .portrait, #poke-walk-app .essence { image-rendering:pixelated; vertical-align:middle; }
-      #poke-walk-app .essence { width:32px; height:32px; }
+      #poke-walk-app .essence { width:38.4px; height:38.4px; }
       #roster { position:absolute; top:92px; right:8px; max-width:44vw; max-height:56vh; overflow:auto; color:white; font-size:15px; }
       #roster ul { margin:4px 0; padding:0; list-style:none; display:grid; gap:3px; }
       #roster li, #rewards button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
       #roster li { display:grid; grid-template-columns:44px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
       #roster .portrait { width:44px; grid-row:span 2; }
-      #rewards { padding:4px; max-width:59vw; max-height:57dvh; overflow:auto; background:transparent; border:0; color:white; }
+      #rewards { padding:4px; width:max-content; max-width:none; max-height:none; overflow:visible; background:transparent; border:0; color:white; }
       #rewards::backdrop { background:#080d16b0; }
       #rewards h1 { margin:0 0 5px; font:600 22px system-ui; text-align:center; }
       #rewards .cards { display:flex; gap:5px; align-items:stretch; }
-      #rewards button { flex:1 1 0; width:clamp(100px,18vw,274px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:18px/1.32 system-ui; cursor:pointer; }
+      #rewards button { flex:1 1 0; width:clamp(180px,29vw,300px); min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px; background-color:#223040; color:white; font:18px/1.32 system-ui; cursor:pointer; }
       #rewards button:focus-visible, #rewards button:hover { outline:2px solid #d4efff; outline-offset:-4px; }
       #rewards .portrait { width:80px; height:80px; }
       #rewards table { width:100%; margin:4px 0; border-collapse:collapse; font:inherit; font-variant-numeric:tabular-nums; }
@@ -63,6 +63,7 @@ const EMBEDDED_APP = `
       #inventory img,#benefits img { width:54px; height:54px; object-fit:contain; image-rendering:pixelated; }
       #item-tip { position:absolute; left:205px; bottom:80px; max-width:440px; pointer-events:none; }
       #benefits .active-benefit { position:relative; display:inline-flex; }
+      #benefits .active-benefit::before { content:attr(data-key); position:absolute; z-index:1; color:white; background:#182333; padding:0 3px; font:bold 12px system-ui; }
       #benefits .active-benefit::after { content:""; position:absolute; inset:0; border-radius:50%; pointer-events:none; background:conic-gradient(rgb(5 10 20 / 70%) var(--remaining,0deg),transparent 0); }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
@@ -111,7 +112,7 @@ async function nextLevel() {
     } else {
       // Simulamos ambas elecciones para cobrar esencias y cambiar de activo
       // solo cuando la siguiente misión se ha cargado con éxito.
-      let state = { benefitLevels:game.benefitLevels, held:game.held, bonuses:game.player.bonuses, balances:game.essences,
+      let state = { held:game.held, bonuses:game.player.bonuses, balances:game.essences,
         row:game.pokemon.get(game.player.dex), essence:game.formEssence };
       for (let pick=0; pick < (state.held.has('golden_mask')?2:1); pick++) {
         const options = rewardOptions(state.row,state.balances,state.essence);
@@ -124,13 +125,12 @@ async function nextLevel() {
       }
       game.loadingEl.style.display = 'flex';
       const biome = chooseBiome(game.biomes.filter(b => b.id !== m.biome.id), m.number + 1);
-      const next = newMission(m.number + 1, biome, levelFor(state.row,game.progress+1));
+      const next = newMission(m.number + 1, biome, levelFor(state.row,game.progress));
       await changeBiome(biome);
       const previousHeld = game.held;
       game.held = state.held;
       try { await loadLevel(state.row.dex,next,1,state.bonuses); }
       catch (error) { game.held = previousHeld; throw error; }
-      game.benefitLevels=state.benefitLevels;
       game.essences=state.balances;
       game.formEssence=state.essence;
     }
@@ -185,7 +185,7 @@ function updateNearby() {
   }
   const goal = game.portal;
   if (goal?.kind === 'objective' && Math.hypot((goal.x + .5) * TILE - game.player.x, (goal.y + .5) * TILE - game.player.y) <= 3 * TILE)
-    counts.set('objective', 1);
+    counts.set('parcel', 1);
   const signature = JSON.stringify([...counts]);
   if (panel.dataset.signature === signature) return;
   panel.dataset.signature = signature;
@@ -232,6 +232,7 @@ function frame(timestamp) {
         const inside = portal.x === x && portal.y === y;
         if (inside && !portal.entered) {
           if (portal.kind === 'objective') {
+            pickupEffect(player,'boost');
             game.mission.recovered = true;
             game.portal = null;
             showToast('Objeto recuperado. Busca el teletransportador.');
@@ -252,6 +253,10 @@ export async function startGame({
   resetGameState();
   resetClock();
   mountApp(root);
+  const icon = document.querySelector('link[rel~="icon"]') ?? document.createElement('link');
+  icon.rel = 'icon';
+  icon.href = new URL('../assets/benefits/cog.png',import.meta.url).href;
+  document.head.append(icon);
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
   game.loadingEl = document.getElementById('loading');
@@ -276,12 +281,17 @@ export async function startGame({
   game.pokemon = pokemon;
   game.items = items;
   await loadItemImages(items);
+  game.progress = 5;
+  game.xp = 0;
+  game.xpNotes = [];
+  game.essenceRemainders = {};
+  game.cooldownDurations = {};
+  game.amuletUntil = 0;
   game.adventure = 0;
   game.inventory = new Set();
   game.essences = {};
   game.pickups = [];
   game.held = new Set();
-  game.benefitLevels = 0;
   game.cooldowns = {};
   game.formEssence = null;
   const biome = chooseBiome(biomes, 1);

@@ -1,9 +1,9 @@
 // Las esquinas conservan su forma; los cuatro bordes se estiran entre ellas.
-export function drawFrame(ctx, image, x, y, width, height) {
+export function drawFrame(ctx, image, x, y, width, height, opacity = .82) {
   const cap = Math.min(6, width / 3, height / 3);
   const cols = [x, x + cap, x + width - cap, x + width];
   const rows = [y, y + cap, y + height - cap, y + height];
-  ctx.fillStyle = 'rgba(12,20,34,.82)';
+  ctx.fillStyle = 'rgba(12,20,34,'+opacity+')';
   ctx.fillRect(x + cap / 2, y + cap / 2, width - cap, height - cap);
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 3; col++) {

@@ -1,108 +1,256 @@
 {
-  "potion": {
-    "name": "Poción",
-    "duration": "run",
+  "berry_oran": {
+    "name": "Baya Aranja",
+    "description": "Regenera el 10 % de los PV máximos.",
+    "image": "assets/items/berry_oran.png",
     "stats": {},
-    "heal": 0,
-    "image": "assets/items/potion.png",
-    "description": "Recupera el 80 % de los HP máximos.",
-    "healFraction": 0.8,
+    "healFraction": 0.1,
     "consumable": true
   },
-  "goldenapple": {
-    "name": "Manzana dorada",
-    "duration": "run",
-    "stats": {
-      "hpMax": 8
-    },
-    "heal": 8,
-    "image": "assets/items/goldenapple.png",
-    "description": "Recupera 8 PV. Bono permanente: +8 PV máximos.",
-    "consumable": false
+  "berry_sitrus": {
+    "name": "Baya Zidra",
+    "description": "Regenera el 40 % de los PV máximos.",
+    "image": "assets/items/berry_sitrus.png",
+    "stats": {},
+    "healFraction": 0.4,
+    "consumable": true
   },
-  "horn": {
-    "name": "Cuerno",
-    "duration": "run",
+  "boost_calcium": {
+    "name": "Calcio",
+    "description": "+5 rango.",
+    "image": "assets/items/boost_calcium.png",
     "stats": {
-      "attack": 8
-    },
-    "heal": 0,
-    "image": "assets/items/horn.png",
-    "description": "Bono permanente: +8 Ataque.",
-    "consumable": false
+      "range": 5
+    }
   },
-  "amulet": {
-    "name": "Amuleto",
-    "duration": "run",
+  "boost_carbos": {
+    "name": "Carburante",
+    "description": "+5 velocidad.",
+    "image": "assets/items/boost_carbos.png",
     "stats": {
-      "speed": 8,
-      "defense": 8
-    },
-    "heal": 0,
-    "image": "assets/items/amulet.png",
-    "description": "Bono permanente: +8 Velocidad, +8 Defensa.",
-    "consumable": false
+      "speed": 5
+    }
   },
-  "ambrose": {
-    "name": "Ambrosía",
-    "duration": "run",
+  "boost_hpplus": {
+    "name": "Más HP",
+    "description": "+5 PV máximos.",
+    "image": "assets/items/boost_hpplus.png",
     "stats": {
-      "attack": 8,
-      "defense": 8
-    },
-    "heal": 0,
-    "image": "assets/items/ambrose.png",
-    "description": "Bono permanente: +8 Ataque, +8 Defensa.",
-    "consumable": false
+      "hpMax": 5
+    }
   },
-  "ribbon": {
-    "name": "Lazo",
-    "duration": "run",
+  "boost_ipecac": {
+    "name": "Ipecac",
+    "description": "-8 tamaño, -2 ataque, -2 defensa, +4 velocidad.",
+    "image": "assets/items/boost_ipecac.png",
     "stats": {
-      "attackSpeed": 16
-    },
-    "heal": 0,
-    "image": "assets/items/ribbon.png",
-    "description": "Bono permanente: +16 Velocidad de ataque.",
-    "consumable": false
+      "size": -8,
+      "attack": -2,
+      "defense": -2,
+      "speed": 4
+    }
   },
-  "seed": {
-    "name": "Semilla",
-    "duration": "run",
+  "boost_iron": {
+    "name": "Hierro",
+    "description": "+5 defensa.",
+    "image": "assets/items/boost_iron.png",
     "stats": {
-      "attackSpeed": 8
-    },
-    "heal": 0,
-    "image": "assets/items/seed.png",
-    "description": "Bono permanente: +8 Velocidad de ataque.",
-    "consumable": false
+      "defense": 5
+    }
   },
-  "min_lens": {
-    "name": "Lente de reducción",
-    "duration": "run",
+  "boost_protein": {
+    "name": "Proteína",
+    "description": "+5 ataque.",
+    "image": "assets/items/boost_protein.png",
     "stats": {
-      "defense": -8,
-      "speed": 16,
-      "size": -40,
-      "range": 8
-    },
-    "heal": 0,
-    "image": "assets/items/min_lens.png",
-    "description": "Bono permanente: -8 Defensa, +16 Velocidad, -40 Tamaño, +8 Rango de ataque.",
-    "consumable": false
+      "attack": 5
+    }
   },
-  "max_lens": {
-    "name": "Lente de aumento",
-    "duration": "run",
+  "boost_vitamins": {
+    "name": "Vitaminas",
+    "description": "+8 tamaño, +4 ataque, +4 defensa, -4 velocidad.",
+    "image": "assets/items/boost_vitamins.png",
     "stats": {
-      "speed": -8,
-      "attack": 8,
-      "defense": 16,
-      "size": 40
+      "size": 8,
+      "attack": 4,
+      "defense": 4,
+      "speed": -4
+    }
+  },
+  "boost_zinc": {
+    "name": "Zinc",
+    "description": "+5 velocidad de ataque.",
+    "image": "assets/items/boost_zinc.png",
+    "stats": {
+      "attackSpeed": 5
+    }
+  },
+  "boost_steroids": {
+    "name": "Esteroides",
+    "description": "Reduce un 15 % la recarga de ambas activas.",
+    "image": "assets/items/boost_steroids.png",
+    "stats": {},
+    "cooldown": 0.15
+  },
+  "rarecandy": {
+    "name": "Carameloraro",
+    "description": "Sube un nivel y reinicia la experiencia acumulada.",
+    "image": "assets/items/rarecandy.png",
+    "stats": {},
+    "consumable": true,
+    "oncePerMission": true
+  },
+  "parcel": {
+    "name": "Paquete",
+    "description": "Recupéralo para abrir el teletransportador.",
+    "image": "assets/items/parcel.png",
+    "stats": {},
+    "consumable": true,
+    "objective": true
+  },
+  "candy_electric": {
+    "name": "Grajea Eléctrica",
+    "description": "Recoges un 50 % más de esencias de tipo Eléctrico.",
+    "image": "assets/items/candy_electric.png",
+    "stats": {},
+    "essence": "electric"
+  },
+  "candy_dragon": {
+    "name": "Grajea Dragón",
+    "description": "Recoges un 50 % más de esencias de tipo Dragón.",
+    "image": "assets/items/candy_dragon.png",
+    "stats": {},
+    "essence": "dragon"
+  },
+  "candy_water": {
+    "name": "Grajea Agua",
+    "description": "Recoges un 50 % más de esencias de tipo Agua.",
+    "image": "assets/items/candy_water.png",
+    "stats": {},
+    "essence": "water"
+  },
+  "candy_normal": {
+    "name": "Grajea Común",
+    "description": "Recoges un 50 % más de esencias de tipo Normal.",
+    "image": "assets/items/candy_normal.png",
+    "stats": {},
+    "essence": "normal"
+  },
+  "candy_flying": {
+    "name": "Grajea Pluma",
+    "description": "Recoges un 50 % más de esencias de tipo Volador.",
+    "image": "assets/items/candy_flying.png",
+    "stats": {},
+    "essence": "flying"
+  },
+  "candy_rock": {
+    "name": "Grajea Roca",
+    "description": "Recoges un 50 % más de esencias de tipo Roca.",
+    "image": "assets/items/candy_rock.png",
+    "stats": {},
+    "essence": "rock"
+  },
+  "candy_ice": {
+    "name": "Grajea Helada",
+    "description": "Recoges un 50 % más de esencias de tipo Hielo.",
+    "image": "assets/items/candy_ice.png",
+    "stats": {},
+    "essence": "ice"
+  },
+  "candy_ground": {
+    "name": "Grajea Tierra",
+    "description": "Recoges un 50 % más de esencias de tipo Tierra.",
+    "image": "assets/items/candy_ground.png",
+    "stats": {},
+    "essence": "ground"
+  },
+  "candy_ghost": {
+    "name": "Grajea Fantasma",
+    "description": "Recoges un 50 % más de esencias de tipo Fantasma.",
+    "image": "assets/items/candy_ghost.png",
+    "stats": {},
+    "essence": "ghost"
+  },
+  "candy_fight": {
+    "name": "Grajea Lucha",
+    "description": "Recoges un 50 % más de esencias de tipo Lucha.",
+    "image": "assets/items/candy_fight.png",
+    "stats": {},
+    "essence": "fighting"
+  },
+  "candy_dark": {
+    "name": "Grajea Oscura",
+    "description": "Recoges un 50 % más de esencias de tipo Siniestro.",
+    "image": "assets/items/candy_dark.png",
+    "stats": {},
+    "essence": "dark"
+  },
+  "candy_psychic": {
+    "name": "Grajea Psíquica",
+    "description": "Recoges un 50 % más de esencias de tipo Psíquico.",
+    "image": "assets/items/candy_psychic.png",
+    "stats": {},
+    "essence": "psychic"
+  },
+  "candy_grass": {
+    "name": "Grajea Planta",
+    "description": "Recoges un 50 % más de esencias de tipo Planta.",
+    "image": "assets/items/candy_grass.png",
+    "stats": {},
+    "essence": "grass"
+  },
+  "candy_steel": {
+    "name": "Grajea Metálica",
+    "description": "Recoges un 50 % más de esencias de tipo Acero.",
+    "image": "assets/items/candy_steel.png",
+    "stats": {},
+    "essence": "steel"
+  },
+  "candy_fire": {
+    "name": "Grajea Picante",
+    "description": "Recoges un 50 % más de esencias de tipo Fuego.",
+    "image": "assets/items/candy_fire.png",
+    "stats": {},
+    "essence": "fire"
+  },
+  "candy_poison": {
+    "name": "Grajea Venenosa",
+    "description": "Recoges un 50 % más de esencias de tipo Veneno.",
+    "image": "assets/items/candy_poison.png",
+    "stats": {},
+    "essence": "poison"
+  },
+  "candy_bug": {
+    "name": "Grajea Bicho",
+    "description": "Recoges un 50 % más de esencias de tipo Bicho.",
+    "image": "assets/items/candy_bug.png",
+    "stats": {},
+    "essence": "bug"
+  },
+  "fitobezoar": {
+    "name": "Fitobezoar",
+    "description": "Duplica tus tres esencias más abundantes y suma 2 a ataque, defensa, velocidad, velocidad de ataque y rango.",
+    "image": "assets/items/fitobezoar.png",
+    "stats": {
+      "attack": 2,
+      "defense": 2,
+      "speed": 2,
+      "attackSpeed": 2,
+      "range": 2
     },
-    "heal": 0,
-    "image": "assets/items/max_lens.png",
-    "description": "Bono permanente: -8 Velocidad, +8 Ataque, +16 Defensa, +40 Tamaño.",
-    "consumable": false
+    "doubleEssences": 3
+  },
+  "hemobezoar": {
+    "name": "Hemobezoar",
+    "description": "Duplica todas tus esencias y suma 2 a ataque, defensa, velocidad, velocidad de ataque y rango.",
+    "image": "assets/items/hemobezoar.png",
+    "stats": {
+      "attack": 2,
+      "defense": 2,
+      "speed": 2,
+      "attackSpeed": 2,
+      "range": 2
+    },
+    "doubleEssences": 17
   }
 }

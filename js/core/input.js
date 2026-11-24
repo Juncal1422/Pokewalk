@@ -23,10 +23,10 @@ export function attachInput() {
     if (event.target !== canvas && !isPanel(event.target)) return;
     if (game.changingLevel) return;
     const key = event.key.toLowerCase();
-    if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'e', ' '].includes(key)) return;
+    if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'q', 'e', ' '].includes(key)) return;
     event.preventDefault();
     if (event.repeat || game.changingLevel) return;
-    if (key === 'e') useActive();
+    if (key === 'e' || key === 'q') useActive(key);
     else if (key === ' ') attack();
     else game.keys[key] = true;
   });

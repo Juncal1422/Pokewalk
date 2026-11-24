@@ -28,7 +28,7 @@ function evolutionBars(row,state) {
 function rewardCard(option, state) {
   const { row, essence } = option;
   const projected = projectReward(state,option);
-  const progress = game.progress + 1;
+  const progress = game.progress;
   const stats = playerStats(row,progress,projected.bonuses,projected.held);
   const card = element('button');
   card.type = 'button';
@@ -43,7 +43,7 @@ function rewardCard(option, state) {
     icon.alt = ''; icon.className = 'essence';
     card.append(icon,element('strong',benefit.name),element('span',benefit.description));
     if (benefit.active) {
-      const old = [...state.held].map(id=>game.benefits.get(id)).find(item=>item.active);
+      const old = [...state.held].map(id=>game.benefits.get(id)).find(item=>item.slot === benefit.slot);
       if (old) card.append(element('small','Reemplaza '+old.name));
     }
   }
@@ -92,5 +92,14 @@ export function chooseReward(options, state, extra=false) {
     }
     dialog.oncancel = event => event.preventDefault();
     dialog.showModal();
+    // Ajusta las tres tarjetas completas, incluso con varias evoluciones ramificadas.
+    function fit() {
+      dialog.style.zoom = '1';
+      dialog.style.zoom = Math.min(1,(window.innerWidth-12)/dialog.offsetWidth,
+        (window.innerHeight-12)/dialog.offsetHeight);
+    }
+    fit();
+    window.addEventListener('resize',fit);
+    dialog.addEventListener('close',()=>window.removeEventListener('resize',fit),{once:true});
   });
 }

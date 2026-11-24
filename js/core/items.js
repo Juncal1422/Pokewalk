@@ -1,3 +1,5 @@
+import { levelUp } from './experience.js';
+import { pickupEffect } from './abilities.js';
 import { gameTime } from './clock.js';
 import { canMove } from './entities.js';
 import { essenceIcon } from './hud.js';
@@ -15,7 +17,7 @@ export async function loadItemImages(items) {
   }));
 }
 
-// Las pociones tienen una tirada independiente. El cupo cuenta apariciones,
+// Las bayas tienen una tirada independiente. El cupo cuenta apariciones,
 // incluso si el jugador abandona la planta sin recoger el objeto.
 export function spawnFloorItems() {
   const m = game.mission, block = Math.floor((game.floor - 1) / 5);
@@ -29,10 +31,15 @@ export function spawnFloorItems() {
     const [site] = sites.splice(Math.floor(Math.random() * sites.length), 1);
     game.drops.push({ id, ...site });
   }
-  if (sites.length && Math.random() < .5) place('potion');
-  const available = Object.keys(game.items).filter(id => !game.items[id].consumable && !game.inventory.has(id));
-  if (sites.length && available.length && m.itemsPlaced < 2 && Math.random() < 1 / 3 + amount('green_scale')) {
-    place(available[Math.floor(Math.random() * available.length)]);
+  if (sites.length && Math.random() < .5) place(Math.random()<.25 ? 'berry_sitrus' : 'berry_oran');
+  const available = Object.keys(game.items).filter(id => {
+    const item=game.items[id];
+    return !item.healFraction && !item.objective && !game.inventory.has(id) && !(item.oncePerMission && m.candyPlaced);
+  });
+  if (sites.length && available.length && m.itemsPlaced < 2 && Math.random() < .30 + amount('green_scale')) {
+    const id=available[Math.floor(Math.random() * available.length)];
+    place(id);
+    if (game.items[id].oncePerMission) m.candyPlaced=true;
     m.itemsPlaced++;
   }
 }
@@ -44,7 +51,12 @@ export function collectItems(player, strike = null) {
       if (game.grid[Math.floor(drop.y / TILE)][Math.floor(drop.x / TILE)] === 0 || !strike(drop)) return true;
     } else if (Math.hypot(drop.x - player.x, drop.y - player.y) > 12) return true;
     if (drop.essence) {
-      game.essences[drop.essence] = (game.essences[drop.essence] || 0) + drop.amount;
+      const type=drop.essence;
+      // Guardamos medios puntos para que dos recogidas de 1 otorguen 3, incluso en pisos distintos.
+      const candy = 'candy_'+(type==='fighting'?'fight':type);
+      const total=drop.amount*(game.inventory.has(candy)?1.5:1)+(game.essenceRemainders[type] || 0);
+      game.essences[type]=(game.essences[type] || 0)+Math.floor(total);
+      game.essenceRemainders[type]=total%1;
       return false;
     }
     const item = game.items[drop.id];
@@ -70,8 +82,14 @@ export function collectItems(player, strike = null) {
     }
     player.bonuses = bonuses;
     if (!item.consumable) game.inventory.add(drop.id);
-    console.info('[Objeto] Recogido', item.name, item.duration);
-    player.hp = Math.min(player.stats.hpMax, player.hp + item.heal + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (drop.id==='potion'?amount('mint_leaf'):0))));
+    if (drop.id==='rarecandy') { game.xp=0; levelUp(); }
+    if (item.doubleEssences) {
+      const top = Object.keys(game.essences).sort((a,b)=>game.essences[b]-game.essences[a]).slice(0,item.doubleEssences);
+      for (const type of top) game.essences[type]*=2;
+    }
+    pickupEffect(player,item.healFraction?'heal':'boost');
+    console.info('[Objeto] Recogido', item.name);
+    player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('mint_leaf'):0))));
     const now = gameTime();
     for (const key of [...Object.keys(item.stats), 'hp']) {
       const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];

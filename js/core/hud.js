@@ -1,3 +1,4 @@
+import { experienceCost } from './experience.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
 import { labels, statsFor } from './stats.js';
@@ -40,15 +41,17 @@ export function drawHud(ctx, canvas, player) {
   const baseWidth = Math.min(144, canvas.width * 0.22);
   const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
   const fraction = player.hp / player.stats.hpMax;
-  // El hueco del PNG ocupa las filas 10–13. Las tapas mantienen su
-  // proporción y el tramo central absorbe el crecimiento de los PV máximos.
+  // Los anchos del hueco siguen las seis filas interiores del nuevo marco.
   const scale = 2, cap = Math.min(16 * scale, length / 3);
   const left = 8, top = 2, bar = icons.hpbar;
-  const inset = cap * 10 / 16, innerWidth = length - inset * 2;
-  ctx.fillStyle = '#15202b';
-  ctx.fillRect(left + inset, top + 10 * scale, innerWidth, 4 * scale);
-  ctx.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
-  ctx.fillRect(left + inset, top + 10 * scale, innerWidth * fraction, 4 * scale);
+  const end = left + cap/2 + fraction*(length-cap);
+  [14,12,9,8,9,12].forEach((edge,i) => {
+    const inset = edge*cap/16, x=left+inset, y=top+(8+i)*scale, w=length-2*inset;
+    ctx.fillStyle = '#15202b';
+    ctx.fillRect(x,y,w,scale);
+    ctx.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
+    ctx.fillRect(x,y,Math.max(0,Math.min(w,end-x)),scale);
+  });
   const widths = [cap, length - 2 * cap, cap];
   let cursor = left;
   for (let part = 0; part < 3; part++) {
@@ -66,21 +69,21 @@ export function drawHud(ctx, canvas, player) {
   const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 146)));
   const essenceTop = canvas.width < 580 ? 109 : 48;
   const entries = Object.entries(game.essences);
-  if (entries.length) textBox(ctx, 4, essenceTop, Math.min(columns, entries.length) * 70 + 9, Math.ceil(entries.length / columns) * 32 + 10);
+  if (entries.length) textBox(ctx, 4, essenceTop, Math.min(columns, entries.length) * 80 + 9, Math.ceil(entries.length / columns) * 40 + 10);
   for (const [id, count] of entries) {
-    const x = 8 + (index % columns) * 70, y = essenceTop + 4 + Math.floor(index / columns) * 32;
-    ctx.drawImage(icons['essence-' + id], x, y, 32, 32);
+    const x = 8 + (index % columns) * 80, y = essenceTop + 4 + Math.floor(index / columns) * 40;
+    ctx.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
     ctx.fillStyle = '#fff';
-    ctx.fillText(formatValue(count), x + 33, y + 16);
+    ctx.fillText(formatValue(count), x + 40, y + 20);
     index++;
   }
   ctx.font = 'bold 13px system-ui';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
-  textBox(ctx, 4, y - 6, 185, canvas.height - y + 5);
+  drawFrame(ctx, icons['textbox-b'], 4, y - 25, 185, canvas.height - y + 25, .25);
+  ctx.fillStyle = '#fff';
+  ctx.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
-  const itemBonuses = Object.fromEntries(Object.entries(player.bonuses)
-    .map(([key, value]) => [key, value - game.benefitLevels]));
-  const baseStats = statsFor(game.pokemon.get(player.dex), game.progress, itemBonuses);
+  const baseStats = statsFor(game.pokemon.get(player.dex), game.progress, player.bonuses);
   for (const [key, label] of Object.entries(labels)) {
     const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
     ctx.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';

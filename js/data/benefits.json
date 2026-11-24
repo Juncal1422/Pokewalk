@@ -1,9 +1,9 @@
 [
   {
-    "id": "earth_ring",
-    "name": "Anillo de tierra",
-    "description": "Ataque +10 % en formas Tierra o Planta.",
-    "image": "assets/benefits/earth_ring.png",
+    "id": "heritage_earth",
+    "name": "Herencia de Tierra",
+    "description": "Defensa +10 %.",
+    "image": "assets/benefits/heritage_earth.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -24,15 +24,19 @@
       "Abomasnow",
       "Servine",
       "Seismitoad",
-      "Petilil"
+      "Petilil",
+      "Gliscor",
+      "Rhyperior"
     ],
-    "types": ["ground", "grass"]
+    "stats": {
+      "defense": 0.1
+    }
   },
   {
-    "id": "air_ring",
-    "name": "Anillo de aire",
-    "description": "Ataque +10 % en formas Volador o Veneno.",
-    "image": "assets/benefits/air_ring.png",
+    "id": "heritage_air",
+    "name": "Herencia de Aire",
+    "description": "Velocidad y velocidad de ataque +10 %.",
+    "image": "assets/benefits/heritage_air.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -57,13 +61,16 @@
       "Braviary",
       "Mandibuzz"
     ],
-    "types": ["flying", "poison"]
+    "stats": {
+      "speed": 0.1,
+      "attackSpeed": 0.1
+    }
   },
   {
-    "id": "fire_ring",
-    "name": "Anillo de fuego",
-    "description": "Ataque +10 % en formas Fuego o Eléctrico.",
-    "image": "assets/benefits/fire_ring.png",
+    "id": "heritage_fire",
+    "name": "Herencia de Fuego",
+    "description": "Ataque +10 %.",
+    "image": "assets/benefits/heritage_fire.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -81,15 +88,22 @@
       "Lampent",
       "Chandelure",
       "Larvesta",
-      "Volcarona"
+      "Volcarona",
+      "Eelektross",
+      "Minun",
+      "Plusle",
+      "Raichu",
+      "Rotom"
     ],
-    "types": ["fire", "electric"]
+    "stats": {
+      "attack": 0.1
+    }
   },
   {
-    "id": "water_ring",
-    "name": "Anillo de agua",
-    "description": "Ataque +10 % en formas Agua o Hielo.",
-    "image": "assets/benefits/water_ring.png",
+    "id": "heritage_water",
+    "name": "Herencia de Agua",
+    "description": "Rango +10 %. Reduce un 10 % la recarga de ambas activas.",
+    "image": "assets/benefits/heritage_water.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -113,74 +127,74 @@
       "Finneon",
       "Dewott",
       "Basculin",
-      "Beartic"
+      "Beartic",
+      "Alomomola",
+      "Keldeo",
+      "Kyogre",
+      "Lanturn",
+      "Ludicolo",
+      "Palkia",
+      "Pelipper",
+      "Poliwrath",
+      "Suicune"
     ],
-    "types": ["water", "ice"]
+    "stats": {
+      "range": 0.1
+    }
   },
   {
-    "id": "big_fang",
-    "name": "Colmillo grande",
-    "description": "Ataque y rango +10 %. Los ataques muestran un colmillo en su dirección.",
-    "image": "assets/benefits/big_fang.png",
+    "id": "long_horn",
+    "name": "Cuerno largo",
+    "description": "Ataque +10 %. Proyecta un cuerno en la dirección del golpe.",
+    "image": "assets/benefits/long_horn.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
       "Sunkern",
-      "Dodrio",
       "Porygon",
-      "Togetic",
       "Porygon2",
-      "Taillow",
       "Sableye",
-      "Carvanha",
       "Sharpedo",
-      "Cacturne",
       "Crawdaunt",
-      "Staraptor",
       "Bibarel",
-      "Honchkrow",
       "Drapion",
-      "Sandile",
       "Deerling",
-      "Sawsbuck",
       "Pawniard",
-      "Deino",
       "Zweilous"
-    ]
+    ],
+    "stats": {
+      "attack": 0.1
+    }
   },
   {
     "id": "cog",
     "name": "Engranaje",
-    "description": "E · Consume 5 esencias aleatorias para volver al inicio del piso. Un uso por misión.",
+    "description": "Q · Consume 5 esencias de uno de tus tres tipos principales y vuelve a la entrada. Recarga: 10 s.",
     "image": "assets/benefits/cog.png",
     "active": true,
-    "amount": 5,
+    "amount": 10,
     "pokemon": [
       "Magikarp",
-      "Electrode",
       "Pichu",
-      "Ampharos",
       "Forretress",
-      "Scizor",
       "Mawile",
-      "Aron",
       "Lairon",
-      "Metang",
       "Empoleon",
-      "Shieldon",
       "Bronzor",
-      "Probopass",
       "Excadrill",
-      "Escavalier",
       "Ferroseed",
-      "Ferrothorn",
-      "Klinklang"
-    ]
+      "Klinklang",
+      "Metagross",
+      "Registeel",
+      "Skarmory",
+      "Steelix"
+    ],
+    "slot": "q"
   },
   {
     "id": "deep_scale",
     "name": "Escama profunda",
-    "description": "Defensa +10 %.",
+    "description": "Defensa +10 %. Bloqueo crítico +10 puntos.",
     "image": "assets/benefits/deep_scale.png",
     "active": false,
     "amount": 0.1,
@@ -203,13 +217,35 @@
       "Floatzel",
       "Lumineon",
       "Tympole",
-      "Haxorus"
-    ]
+      "Haxorus",
+      "Arceus",
+      "Fearow",
+      "Galvantula",
+      "Genesect",
+      "Girafarig",
+      "Latias",
+      "Leavanny",
+      "Meganium",
+      "Mismagius",
+      "Pidgey",
+      "Primeape",
+      "Rayquaza",
+      "Regigigas",
+      "Reshiram",
+      "Scolipede",
+      "Shaymin",
+      "Shedinja",
+      "Spiritomb",
+      "Virizion"
+    ],
+    "stats": {
+      "defense": 0.1
+    }
   },
   {
     "id": "green_scale",
     "name": "Escama verde",
-    "description": "+10 puntos porcentuales de probabilidad de encontrar equipo.",
+    "description": "Defensa +5 %. Probabilidad de encontrar objetos +10 puntos.",
     "image": "assets/benefits/green_scale.png",
     "active": false,
     "amount": 0.1,
@@ -234,7 +270,10 @@
       "Karrablast",
       "Fraxure",
       "Druddigon"
-    ]
+    ],
+    "stats": {
+      "defense": 0.05
+    }
   },
   {
     "id": "golden_mask",
@@ -271,7 +310,7 @@
   {
     "id": "golden_spike",
     "name": "Espigadorada",
-    "description": "Suma al ataque el 10 % del rango.",
+    "description": "Ataque y rango +10 %. Tiñe de oro los efectos de ataque.",
     "image": "assets/benefits/golden_spike.png",
     "active": false,
     "amount": 0.1,
@@ -294,15 +333,19 @@
       "Gigalith",
       "Drilbur",
       "Golurk"
-    ]
+    ],
+    "stats": {
+      "attack": 0.1,
+      "range": 0.1
+    }
   },
   {
     "id": "green_spike",
-    "name": "Espina",
-    "description": "Al recibir un golpe, inflige al atacante el 5 % de tu defensa.",
+    "name": "Espinas",
+    "description": "Al recibir un crítico, libera ocho espinas de alcance 10 que infligen el 10 % de tu defensa.",
     "image": "assets/benefits/green_spike.png",
     "active": false,
-    "amount": 0.05,
+    "amount": 0.1,
     "pokemon": [
       "Venusaur",
       "Paras",
@@ -327,10 +370,10 @@
   {
     "id": "iron_tag",
     "name": "Chapa de hierro",
-    "description": "5 % de probabilidad de bloquear la mitad del daño recibido.",
+    "description": "10 % de probabilidad de bloquear la mitad del daño.",
     "image": "assets/benefits/iron_tag.png",
     "active": false,
-    "amount": 0.05,
+    "amount": 0.1,
     "pokemon": [
       "Magnemite",
       "Onix",
@@ -356,10 +399,10 @@
   {
     "id": "lovefool",
     "name": "Corazón",
-    "description": "Recibe un 10 % menos de daño de Pokémon con una esencia en común.",
+    "description": "Recibe un 25 % menos de daño de Pokémon con una esencia en común.",
     "image": "assets/benefits/lovefool.png",
     "active": false,
-    "amount": 0.1,
+    "amount": 0.25,
     "pokemon": [
       "Pidgeotto",
       "Alakazam",
@@ -412,13 +455,17 @@
       "Palpitoad",
       "Vanillite",
       "Vanillish",
-      "Cubchoo"
-    ]
+      "Cubchoo",
+      "Articuno",
+      "Cryogonal",
+      "Regice"
+    ],
+    "slot": "e"
   },
   {
     "id": "mint_leaf",
     "name": "Hoja de menta",
-    "description": "Las pociones curan un 50 % más.",
+    "description": "Las bayas curan un 50 % más.",
     "image": "assets/benefits/mint_leaf.png",
     "active": false,
     "amount": 0.5,
@@ -482,19 +529,87 @@
     "amount": 30,
     "pokemon": [
       "Cottonee",
-      "Hitmonlee",
       "Hitmonchan",
-      "Heracross",
       "Tyrogue",
-      "Hitmontop",
       "Breloom",
-      "Makuhita",
       "Hariyama",
-      "Lucario",
       "Croagunk",
-      "Toxicroak",
       "Gallade",
-      "Mienshao"
-    ]
+      "Infernape"
+    ],
+    "slot": "e"
+  },
+  {
+    "id": "spike",
+    "name": "Espiga",
+    "description": "Rango +10 %. Proyecta una espina en la dirección del golpe.",
+    "amount": 0.1,
+    "active": false,
+    "slot": null,
+    "pokemon": [
+      "Dodrio",
+      "Togetic",
+      "Taillow",
+      "Carvanha",
+      "Cacturne",
+      "Staraptor",
+      "Honchkrow",
+      "Sandile",
+      "Sawsbuck",
+      "Deino"
+    ],
+    "image": "assets/benefits/spike.png",
+    "stats": {
+      "range": 0.1
+    }
+  },
+  {
+    "id": "amulet",
+    "name": "Amuleto",
+    "description": "Q · Consume 1 PV. Tras 0,5 s, ganas un 50 % de ataque, velocidad de ataque y velocidad durante 10 s. Recarga: 90 s.",
+    "amount": 90,
+    "active": true,
+    "slot": "q",
+    "pokemon": [
+      "Electrode",
+      "Ampharos",
+      "Scizor",
+      "Aron",
+      "Metang",
+      "Shieldon",
+      "Probopass",
+      "Escavalier",
+      "Ferrothorn",
+      "Azelf",
+      "Celebi",
+      "Espeon",
+      "Gardevoir",
+      "Hypno",
+      "Mesprit",
+      "Mew",
+      "Mewtwo"
+    ],
+    "image": "assets/benefits/amulet.png"
+  },
+  {
+    "id": "gunpowder_rock",
+    "name": "Roca de pólvora",
+    "description": "E · Carga 0,5 s y explota en un radio de 50, dañándote también. Recarga: 60 s.",
+    "amount": 60,
+    "active": true,
+    "slot": "e",
+    "pokemon": [
+      "Hitmonlee",
+      "Heracross",
+      "Hitmontop",
+      "Makuhita",
+      "Lucario",
+      "Toxicroak",
+      "Mienshao",
+      "Aerodactyl",
+      "Golem",
+      "Regirock"
+    ],
+    "image": "assets/benefits/gunpowder_rock.png"
   }
 ]

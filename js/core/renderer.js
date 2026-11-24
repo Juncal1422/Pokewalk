@@ -61,7 +61,7 @@ missImage.src = new URL('../../assets/ui/miss.png', import.meta.url).href;
 const stairsImage = new Image();
 stairsImage.src = new URL('../../tiled/tilesets/Stairs.png', import.meta.url).href;
 const objectiveImage = new Image();
-objectiveImage.src = new URL('../../assets/items/goldenapple.png', import.meta.url).href;
+objectiveImage.src = new URL('../../assets/items/parcel.png', import.meta.url).href;
 
 export function preparePortal() {
   return Promise.all([portalImage, stairsImage, objectiveImage, missImage].map(image => image.decode()));
@@ -157,7 +157,12 @@ export function draw() {
     );
 
     ctx.restore();
-    if (fang) drawFang(ctx,entity.dir,px+offset.x*ZOOM,py+offset.y*ZOOM,ZOOM,offset.opacity);
+    if (fang) {
+      const filter = game.held.has('golden_spike') ? 'sepia(1) saturate(5)' : 'none';
+      const drawWeapon = (kind,scale) => drawFang(ctx,entity.dir,px+offset.x*ZOOM,py+offset.y*ZOOM,scale,offset.opacity,kind,filter);
+      if (game.held.has('long_horn')) drawWeapon('fang',ZOOM);
+      if (game.held.has('spike')) drawWeapon('spine',game.held.has('long_horn') ? ZOOM*.72 : ZOOM);
+    }
     if (!entity.isPlayer && gameTime() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;
       const x = px - 19, y = Math.round(py - drawH / 2 - 7);
@@ -165,6 +170,19 @@ export function draw() {
       ctx.fillRect(x, y, 38, 6);
       ctx.fillStyle = fraction < 0.25 ? '#ef5350' : fraction <= 0.5 ? '#ffd54f' : '#66cf77';
       ctx.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
+    }
+    if (entity.isPlayer) {
+      game.xpNotes = game.xpNotes.filter(note => gameTime()-note.time < 950);
+      ctx.font = 'bold 12px system-ui';
+      ctx.textAlign = 'center';
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#123';
+      ctx.fillStyle = '#8edfff';
+      game.xpNotes.forEach((note,i) => {
+        const y = py-drawH/2-18-(gameTime()-note.time)/48-i*12;
+        ctx.strokeText('+'+note.xp+' EXP',px,y);
+        ctx.fillText('+'+note.xp+' EXP',px,y);
+      });
     }
     const hit = entity.hitNumber;
     if (hit && gameTime() - hit.time < 750) {

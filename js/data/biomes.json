@@ -1179,5 +1179,109 @@
       "37-60": ["Relicanth", "Dodrio", "Floatzel", "Blastoise"],
       "61-100": ["Kingdra", "Staraptor", "Articuno", "Kyogre"]
     }
+  },
+  {
+    "id": "magma_cavern",
+    "name": "Magma Cavern",
+    "tileset": "tiled/tilesets/MagmaCavern-blob.png",
+    "terrain": "lava",
+    "canCross": [
+      "fly",
+      "lavawalk"
+    ],
+    "variants": {
+      "floors": {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6},
+      "walls": {"255": {"1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5}}
+    },
+    "layoutModifier": {
+      "pasillos": 1,
+      "habitaciones": 0,
+      "cruces": 1
+    },
+    "level": 7,
+    "wild": {
+      "1-16": [
+        "Litwick",
+        "Wooper",
+        "Diglett",
+        "Swinub",
+        "Baltoy",
+        "Numel",
+        "Barboach",
+        "Larvitar",
+        "Nincada",
+        "Omanyte",
+        "Gible",
+        "Lampent"
+      ],
+      "17-36": [
+        "Aron",
+        "Hippopotas",
+        "Drilbur",
+        "Kabuto",
+        "Larvesta",
+        "Magcargo",
+        "Palpitoad",
+        "Shuckle",
+        "Anorith",
+        "Pupitar",
+        "Marshtomp",
+        "Camerupt"
+      ],
+      "37-60": [
+        "Dugtrio",
+        "Gabite",
+        "Cradily",
+        "Onix",
+        "Omastar",
+        "Claydol",
+        "Bastiodon",
+        "Volcarona",
+        "Whiscash",
+        "Gligar",
+        "Lairon",
+        "Charizard"
+      ],
+      "61-100": [
+        "Torterra",
+        "Relicanth",
+        "Gigalith",
+        "Donphan",
+        "Rampardos",
+        "Hippowdon",
+        "Archeops",
+        "Excadrill",
+        "Rhydon",
+        "Mamoswine",
+        "Aggron",
+        "Garchomp"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Corsola",
+        "Magcargo",
+        "Shuckle",
+        "Camerupt"
+      ],
+      "17-36": [
+        "Omastar",
+        "Claydol",
+        "Bastiodon",
+        "Volcarona"
+      ],
+      "37-60": [
+        "Seismitoad",
+        "Kabutops",
+        "Swampert",
+        "Flygon"
+      ],
+      "61-100": [
+        "Excadrill",
+        "Mamoswine",
+        "Aggron",
+        "Garchomp"
+      ]
+    }
   }
 ]
