@@ -1,0 +1,1 @@
+Para trabajar en PokeWalk, consulta [la guía de continuidad](js/core/context.md) antes de modificar el juego. Actualízala en el mismo cambio que el código o los datos, incluidos los principios, reglas, índice de métodos y avance que correspondan.

@@ -1,5 +1,6 @@
 import { labels } from '../core/stats.js';
 
+// Lee un catálogo relativo al módulo y conserva el nombre del fichero en el error de carga.
 async function readData(filename) {
   const result = await fetch(new URL(filename, import.meta.url));
   if (!result.ok) throw new Error('No se pudo cargar ' + filename);
@@ -8,14 +9,14 @@ async function readData(filename) {
 
 // Las especies, sus recompensas y los objetos de piso se editan en JSON.
 export async function loadEncountersCatalog() {
-  const [rows, items] = await Promise.all([readData('pokemon.json'), readData('items.json')]);
+  const [speciesDefinitions, items] = await Promise.all([readData('pokemon.json'), readData('items.json')]);
   const pokemon = new Map();
-  for (const row of rows) {
-    if (pokemon.has(row.dex) ||
-        !Number.isInteger(row.maxLevel) || row.maxLevel < 1 || !Object.keys(labels).every(k => (k === 'range' && row.stats[k] === undefined) || (Number.isInteger(row.stats[k]) && row.stats[k] > 0))) {
-      throw new Error('Ficha Pokémon inválida: ' + row.dex);
+  for (const speciesDefinition of speciesDefinitions) {
+    if (pokemon.has(speciesDefinition.dex) ||
+        !Number.isInteger(speciesDefinition.maxLevel) || speciesDefinition.maxLevel < 1 || !Object.keys(labels).every(statKey => (statKey === 'range' && speciesDefinition.stats[statKey] === undefined) || (Number.isInteger(speciesDefinition.stats[statKey]) && speciesDefinition.stats[statKey] > 0))) {
+      throw new Error('Ficha Pokémon inválida: ' + speciesDefinition.dex);
     }
-    pokemon.set(row.dex, row);
+    pokemon.set(speciesDefinition.dex, speciesDefinition);
   }
   console.debug('[Encuentros] Catálogo validado', pokemon.size);
   return { pokemon, items };

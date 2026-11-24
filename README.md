@@ -1,27 +1,7 @@
 # PokeWalk
 
-## Archivos de entrada
+Ditto explora mazmorras, completa misiones y se transforma con las recompensas de cada aventura.
 
-- `index.html`: aplicación local servida desde este repositorio; carga los módulos de `js/`.
-- `PokeWalk.html`: banco de pruebas independiente con el nombre solicitado. Carga el código de una rama, etiqueta o commit del mismo repositorio a través de jsDelivr. Por defecto usa `develop`; se puede cambiar la referencia en el selector y guardar el enlace con `?ref=nombre-rama`.
-
-## Estructura
-
-```text
-index.html
-PokeWalk.html
-js/
-  main.js
-  core/
-    constants.js
-    state.js
-    dungeon.js
-    entities.js
-    input.js
-    renderer.js
-  data/
-    biomes.js
-    pokemon-data.js
-```
-
-El juego conserva los recursos de sprites de PMDCollab y el elenco funcional de las generaciones 1 a 5. `EXCLUDED_DEX` mantiene los IDs sin el conjunto mínimo de animaciones.
+- Para probar cambios locales, ejecuta `python -m http.server 8000` desde la raíz y abre [LOCAL_Pokewalk.html](http://localhost:8000/LOCAL_Pokewalk.html).
+- [PokeWalk.html](PokeWalk.html) obtiene la revisión publicada de `develop` y carga el juego desde jsDelivr.
+- La [guía de continuidad](js/core/context.md) reúne las reglas del juego, los catálogos, el índice de métodos y el procedimiento de desarrollo y publicación.

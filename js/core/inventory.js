@@ -3,21 +3,23 @@ import { game } from './state.js';
 
 // Los iconos conservan sus nodos durante el combate para no perder el hover.
 export function attachInventory(root) {
-  const tip = root.querySelector('#item-tip');
+  const tooltip = root.querySelector('#item-tip');
   let signature;
-  const actives = new Map();
+  const activeIcons = new Map();
+  // Convierte el tiempo restante de cada activa en el ángulo sombreado de su icono.
   function updateCooldown() {
-    for (const [id,icon] of actives) {
+    for (const [id,icon] of activeIcons) {
       const fraction = Math.max(0,Math.min(1,((game.cooldowns[id] ?? 0)-gameTime())/(game.cooldownDurations[id] || 1)));
       icon.style.setProperty('--remaining',fraction*360+'deg');
     }
   }
+  // Actualiza el sombreado en cada fotograma y reconstruye los nodos solo cuando cambie la colección.
   return () => {
-    const next = JSON.stringify([[...game.inventory], [...game.held]]);
-    if (signature === next) return updateCooldown();
-    actives.clear();
-    signature = next;
-    tip.hidden = true;
+    const inventorySignature = JSON.stringify([[...game.inventory], [...game.held]]);
+    if (signature === inventorySignature) return updateCooldown();
+    activeIcons.clear();
+    signature = inventorySignature;
+    tooltip.hidden = true;
     for (const [selector, entries] of [
       ['#inventory', [...game.inventory].map(id => game.items[id])],
       ['#benefits', [...game.held].map(id => game.benefits.get(id))],
@@ -25,23 +27,25 @@ export function attachInventory(root) {
       const panel = root.querySelector(selector);
       panel.replaceChildren();
       for (const entry of entries) {
-        const img = new Image();
-        img.src = new URL('../../' + entry.image, import.meta.url).href;
-        img.alt = entry.name;
-        img.onpointerenter = () => {
-          tip.textContent = entry.name + ' · ' + entry.description;
-          tip.hidden = false;
+        const iconImage = new Image();
+        iconImage.src = new URL('../../' + entry.image, import.meta.url).href;
+        iconImage.alt = entry.name;
+        // El tooltip describe el icono bajo el cursor y no captura el clic de ataque.
+        iconImage.onpointerenter = () => {
+          tooltip.textContent = entry.name + ' · ' + entry.description;
+          tooltip.hidden = false;
         };
-        img.onpointerleave = () => { tip.hidden = true; };
+        // Oculta la descripción en cuanto el cursor abandona el icono.
+        iconImage.onpointerleave = () => { tooltip.hidden = true; };
         if (entry.active) {
           const activeIcon = document.createElement('span');
-          actives.set(entry.id,activeIcon);
+          activeIcons.set(entry.id,activeIcon);
           activeIcon.dataset.key=entry.slot.toUpperCase();
           activeIcon.className = 'active-benefit';
-          activeIcon.append(img);
+          activeIcon.append(iconImage);
           panel.append(activeIcon);
           updateCooldown();
-        } else panel.append(img);
+        } else panel.append(iconImage);
       }
     }
   };

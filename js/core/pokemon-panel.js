@@ -1,25 +1,29 @@
 // Recursos compartidos entre las fichas de salvajes y las opciones de Ditto.
-export function portrait(row) {
-  const img = new Image();
-  const path = 'portrait/' + String(row.dex).padStart(4, '0') + '/Normal.png';
-  img.alt = '';
-  img.className = 'portrait';
-  img.onerror = () => {
-    img.onerror = null;
-    img.src = 'https://cdn.jsdelivr.net/gh/PMDCollab/SpriteCollab@master/' + path;
+export function portrait(species) {
+  const iconImage = new Image();
+  const path = 'portrait/' + String(species.dex).padStart(4, '0') + '/Normal.png';
+  iconImage.alt = '';
+  iconImage.className = 'portrait';
+  // Si falla el origen principal, intenta una sola vez el recurso de respaldo.
+  iconImage.onerror = () => {
+    // Si falla el origen principal, intenta una sola vez el recurso de respaldo.
+  iconImage.onerror = null;
+    iconImage.src = 'https://cdn.jsdelivr.net/gh/PMDCollab/SpriteCollab@master/' + path;
   };
-  img.src = 'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/' + path;
-  return img;
+  iconImage.src = 'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/' + path;
+  return iconImage;
 }
 
+// Crea el icono accesible de un tipo de esencia.
 export function gem(type) {
-  const img = new Image();
-  img.src = new URL('../../assets/ui/essence-' + type + '.png', import.meta.url).href;
-  img.alt = img.title = type;
-  img.className = 'essence';
-  return img;
+  const iconImage = new Image();
+  iconImage.src = new URL('../../assets/ui/essence-' + type + '.png', import.meta.url).href;
+  iconImage.alt = iconImage.title = type;
+  iconImage.className = 'essence';
+  return iconImage;
 }
 
+// Crea un nodo de interfaz y asigna su texto cuando se proporciona.
 export function element(tag, text) {
   const node = document.createElement(tag);
   if (text !== undefined) node.textContent = text;

@@ -4,24 +4,25 @@ import { game } from '../core/state.js';
 // Algunas hojas ya trasladan el dibujo dentro de la celda. Restamos esa
 // traslación al dibujar para que solo la trayectoria de combate mueva el sprite.
 function frameCenters(animation) {
-  const { img, fw, fh, frames } = animation;
+  const { img: spriteImage, fw: frameWidth, fh: frameHeight, frames } = animation;
   const canvas = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img,0,0);
-  const data = ctx.getImageData(0,0,img.width,img.height).data;
-  return Array.from({length:Math.floor(img.height/fh)}, (_,row) =>
-    Array.from({length:frames}, (_,col) => {
-      let count=0, sx=0, sy=0;
-      for (let y=0;y<fh;y++) for (let x=0;x<fw;x++) {
-        if (data[4*((row*fh+y)*img.width+col*fw+x)+3] < 128) continue;
-        sx+=x+.5; sy+=y+.5; count++;
+  canvas.width = spriteImage.width;
+  canvas.height = spriteImage.height;
+  const drawingContext = canvas.getContext('2d');
+  drawingContext.drawImage(spriteImage,0,0);
+  const rgbaPixels = drawingContext.getImageData(0,0,spriteImage.width,spriteImage.height).data;
+  return Array.from({length:Math.floor(spriteImage.height/frameHeight)}, (_,directionRow) =>
+    Array.from({length:frames}, (_,frameColumn) => {
+      let opaquePixelCount=0, sumPixelX=0, sumPixelY=0;
+      for (let y=0;y<frameHeight;y++) for (let x=0;x<frameWidth;x++) {
+        if (rgbaPixels[4*((directionRow*frameHeight+y)*spriteImage.width+frameColumn*frameWidth+x)+3] < 128) continue;
+        sumPixelX+=x+.5; sumPixelY+=y+.5; opaquePixelCount++;
       }
-      return count ? {x:sx/count-fw/2,y:sy/count-fh/2} : {x:0,y:0};
+      return opaquePixelCount ? {x:sumPixelX/opaquePixelCount-frameWidth/2,y:sumPixelY/opaquePixelCount-frameHeight/2} : {x:0,y:0};
     }));
 }
 
+// Prueba las acciones disponibles en orden y resuelve CopyOf antes de descargar la hoja y sus duraciones.
 async function fetchAnimation(baseUrl, animations, candidates) {
   for (const name of candidates) {
     let node = animations.find(
@@ -70,11 +71,12 @@ async function fetchAnimation(baseUrl, animations, candidates) {
   return null;
 }
 
-export async function loadPokemonData(dex) {
-  if (EXCLUDED_DEX.has(dex)) return null;
-  if (game.spriteCache.has(dex)) return game.spriteCache.get(dex);
-  const dexStr = String(dex).padStart(4, '0');
-  const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${dexStr}`;
+// Carga y almacena en caché las acciones de una especie, con alternativas cuando falta una animación.
+export async function loadPokemonData(pokedexNumber) {
+  if (EXCLUDED_DEX.has(pokedexNumber)) return null;
+  if (game.spriteCache.has(pokedexNumber)) return game.spriteCache.get(pokedexNumber);
+  const paddedDexNumber = String(pokedexNumber).padStart(4, '0');
+  const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${paddedDexNumber}`;
   try {
     const response = await fetch(`${baseUrl}/AnimData.xml`);
     if (!response.ok) return null;
@@ -98,9 +100,9 @@ export async function loadPokemonData(dex) {
       fetchAnimation(baseUrl, animations, ['Charge']),
     ]);
     if (!walk) return null;
-    const data = {
-      dex,
-      dexStr,
+    const spriteData = {
+      dex: pokedexNumber,
+      dexStr: paddedDexNumber,
       anims: {
         Walk: walk,
         Spin: walk, Charge: charge || idle || walk,
@@ -109,15 +111,15 @@ export async function loadPokemonData(dex) {
         Hurt: hurt || idle || walk,
       },
     };
-    console.debug('[Sprites] Animaciones preparadas', dex, Object.keys(data.anims));
-    const strike = data.anims.Attack, rest = data.anims.Idle;
-    const centers = frameCenters(strike), idleCenters = frameCenters(rest);
-    strike.offsets = centers.map((frames,dir) => {
-      const origin = idleCenters[Math.min(dir,idleCenters.length-1)][0];
+    console.debug('[Sprites] Animaciones preparadas', pokedexNumber, Object.keys(spriteData.anims));
+    const attackAnimation = spriteData.anims.Attack, idleAnimation = spriteData.anims.Idle;
+    const centers = frameCenters(attackAnimation), idleCenters = frameCenters(idleAnimation);
+    attackAnimation.offsets = centers.map((frames,directionIndex) => {
+      const origin = idleCenters[Math.min(directionIndex,idleCenters.length-1)][0];
       return frames.map(point => ({x:origin.x-point.x,y:origin.y-point.y}));
     });
-    game.spriteCache.set(dex, data);
-    return data;
+    game.spriteCache.set(pokedexNumber, spriteData);
+    return spriteData;
   } catch {
     return null;
   }

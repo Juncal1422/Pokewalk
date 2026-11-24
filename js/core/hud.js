@@ -6,11 +6,15 @@ import { labels, statsFor } from './stats.js';
 import { drawFrame } from './message-frame.js';
 
 const icons = {};
+// Obtiene la imagen precargada de un tipo de esencia.
 export const essenceIcon = id => icons['essence-' + id];
-export const textBox = (ctx,x,y,w,h) => drawFrame(ctx,icons['textbox-b'],x,y,w,h);
+// Dibuja el marco de mensajes con el recurso compartido de la interfaz.
+export const textBox = (drawingContext,x,y,width,height) => drawFrame(drawingContext,icons['textbox-b'],x,y,width,height);
 const compact = new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 });
-const formatValue = n => n >= 1000 ? compact.format(n) : String(n);
+// Abrevia cantidades grandes para que quepan en los contadores.
+const formatValue = value => value >= 1000 ? compact.format(value) : String(value);
 const essenceNames = 'normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon dark steel'.split(' ');
+// Precarga las esencias y los marcos utilizados por la interfaz del canvas.
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
   console.debug('[HUD] Cargando interfaz y esencias');
@@ -23,87 +27,88 @@ export async function loadHud() {
 }
 
 // Un indicador por recogida permite ver dos efectos consecutivos del mismo atributo.
-function indicators(ctx,key,x,y,now) {
-  ctx.save();
-  ctx.textBaseline = 'middle';
-  for (const note of game.pickups.filter(entry => entry.key === key)) {
-    ctx.globalAlpha = Math.min(1, (1500 - (now-note.time)) / 800);
-    ctx.fillStyle = (key === 'size' ? note.delta < 0 : note.delta > 0) ? '#79ed8e' : '#ff7474';
-    const text = (note.delta > 0 ? '+' : '') + formatValue(note.delta);
-    ctx.fillText(text,x,y); x += ctx.measureText(text).width + 6;
+function indicators(drawingContext,key,x,y,simulationTime) {
+  drawingContext.save();
+  drawingContext.textBaseline = 'middle';
+  for (const pickupIndicator of game.pickups.filter(entry => entry.key === key)) {
+    drawingContext.globalAlpha = Math.min(1, (1500 - (simulationTime-pickupIndicator.time)) / 800);
+    drawingContext.fillStyle = (key === 'size' ? pickupIndicator.delta < 0 : pickupIndicator.delta > 0) ? '#79ed8e' : '#ff7474';
+    const text = (pickupIndicator.delta > 0 ? '+' : '') + formatValue(pickupIndicator.delta);
+    drawingContext.fillText(text,x,y); x += drawingContext.measureText(text).width + 6;
   }
-  ctx.restore();
+  drawingContext.restore();
 }
 
-export function drawHud(ctx, canvas, player) {
-  const now = gameTime();
-  game.pickups = game.pickups.filter(note => now - note.time < 1500);
+// Compone la vida, experiencia, esencias, atributos y objetivo en coordenadas de interfaz.
+export function drawHud(drawingContext, canvas, player) {
+  const simulationTime = gameTime();
+  game.pickups = game.pickups.filter(pickupIndicator => simulationTime - pickupIndicator.time < 1500);
   const baseWidth = Math.min(144, canvas.width * 0.22);
   const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
   const fraction = player.hp / player.stats.hpMax;
   // Los anchos del hueco siguen las seis filas interiores del nuevo marco.
-  const scale = 2, cap = Math.min(16 * scale, length / 3);
-  const left = 8, top = 2, bar = icons.hpbar;
-  const end = left + cap/2 + fraction*(length-cap);
-  [14,12,9,8,9,12].forEach((edge,i) => {
-    const inset = edge*cap/16, x=left+inset, y=top+(8+i)*scale, w=length-2*inset;
-    ctx.fillStyle = '#15202b';
-    ctx.fillRect(x,y,w,scale);
-    ctx.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
-    ctx.fillRect(x,y,Math.max(0,Math.min(w,end-x)),scale);
+  const scale = 2, endCapWidth = Math.min(16 * scale, length / 3);
+  const left = 8, top = 2, healthBarImage = icons.hpbar;
+  const filledRightEdge = left + endCapWidth/2 + fraction*(length-endCapWidth);
+  [14,12,9,8,9,12].forEach((edge,rowIndex) => {
+    const inset = edge*endCapWidth/16, x=left+inset, y=top+(8+rowIndex)*scale, width=length-2*inset;
+    drawingContext.fillStyle = '#15202b';
+    drawingContext.fillRect(x,y,width,scale);
+    drawingContext.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
+    drawingContext.fillRect(x,y,Math.max(0,Math.min(width,filledRightEdge-x)),scale);
   });
-  const widths = [cap, length - 2 * cap, cap];
+  const widths = [endCapWidth, length - 2 * endCapWidth, endCapWidth];
   let cursor = left;
   for (let part = 0; part < 3; part++) {
-    ctx.drawImage(bar, part * 16, 0, 16, 16, cursor, top, widths[part], 16 * scale);
+    drawingContext.drawImage(healthBarImage, part * 16, 0, 16, 16, cursor, top, widths[part], 16 * scale);
     cursor += widths[part];
   }
-  ctx.font = 'bold 17px system-ui';
-  ctx.textBaseline = 'middle';
+  drawingContext.font = 'bold 17px system-ui';
+  drawingContext.textBaseline = 'middle';
   const health = player.hp + '/' + player.stats.hpMax;
-  textBox(ctx, cursor, 5, ctx.measureText(health).width + 18, 32);
-  ctx.fillStyle = '#fff';
-  ctx.fillText(health, cursor + 9, 21);
-  indicators(ctx, 'hp', cursor + 9, 43, now);
+  textBox(drawingContext, cursor, 5, drawingContext.measureText(health).width + 18, 32);
+  drawingContext.fillStyle = '#fff';
+  drawingContext.fillText(health, cursor + 9, 21);
+  indicators(drawingContext, 'hp', cursor + 9, 43, simulationTime);
   let index = 0;
   const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 146)));
   const essenceTop = canvas.width < 580 ? 109 : 48;
   const entries = Object.entries(game.essences);
-  if (entries.length) textBox(ctx, 4, essenceTop, Math.min(columns, entries.length) * 80 + 9, Math.ceil(entries.length / columns) * 40 + 10);
+  if (entries.length) textBox(drawingContext, 4, essenceTop, Math.min(columns, entries.length) * 80 + 9, Math.ceil(entries.length / columns) * 40 + 10);
   for (const [id, count] of entries) {
     const x = 8 + (index % columns) * 80, y = essenceTop + 4 + Math.floor(index / columns) * 40;
-    ctx.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
-    ctx.fillStyle = '#fff';
-    ctx.fillText(formatValue(count), x + 40, y + 20);
+    drawingContext.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
+    drawingContext.fillStyle = '#fff';
+    drawingContext.fillText(formatValue(count), x + 40, y + 20);
     index++;
   }
-  ctx.font = 'bold 13px system-ui';
+  drawingContext.font = 'bold 13px system-ui';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
-  drawFrame(ctx, icons['textbox-b'], 4, y - 25, 185, canvas.height - y + 25, .25);
-  ctx.fillStyle = '#fff';
-  ctx.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
+  drawFrame(drawingContext, icons['textbox-b'], 4, y - 25, 185, canvas.height - y + 25, .25);
+  drawingContext.fillStyle = '#fff';
+  drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
   const baseStats = statsFor(game.pokemon.get(player.dex), game.progress, player.bonuses);
   for (const [key, label] of Object.entries(labels)) {
     const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
-    ctx.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';
-    ctx.fillText(label + ' ' + player.stats[key], 12, y + 9);
-    indicators(ctx, key, 182, y + 9, now);
+    drawingContext.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';
+    drawingContext.fillText(label + ' ' + player.stats[key], 12, y + 9);
+    indicators(drawingContext, key, 182, y + 9, simulationTime);
     y += 19;
   }
-  ctx.save();
-  ctx.font = 'bold 17px system-ui';
-  ctx.textAlign = 'right';
-  ctx.textBaseline = 'top';
-  const m = game.mission;
-  const counter = 'Aventura ' + game.adventure + ' · Piso ' + game.floor + '/' + m.floors;
-  const goal = m.type === 'hunt' ? 'Caza: ' + game.pokemon.get(m.target).name + ' ' + m.kills + '/' + m.quota :
-    m.type === 'retrieve' && m.recovered ? 'Objeto recuperado' : m.name;
-  const width = Math.ceil(Math.max(ctx.measureText(counter).width, ctx.measureText(goal).width));
+  drawingContext.save();
+  drawingContext.font = 'bold 17px system-ui';
+  drawingContext.textAlign = 'right';
+  drawingContext.textBaseline = 'top';
+  const mission = game.mission;
+  const counter = 'Aventura ' + game.adventure + ' · Piso ' + game.floor + '/' + mission.floors;
+  const goal = mission.type === 'hunt' ? 'Caza: ' + game.pokemon.get(mission.target).name + ' ' + mission.kills + '/' + mission.quota :
+    mission.type === 'retrieve' && mission.recovered ? 'Objeto recuperado' : mission.name;
+  const width = Math.ceil(Math.max(drawingContext.measureText(counter).width, drawingContext.measureText(goal).width));
   const panelTop = canvas.width < 580 ? 46 : 5;
-  textBox(ctx, canvas.width - width - 27, panelTop, width + 22, 59);
-  ctx.fillStyle = '#fff';
-  ctx.fillText(counter, canvas.width - 15, panelTop + 8);
-  ctx.fillText(goal, canvas.width - 15, panelTop + 31);
-  ctx.restore();
+  textBox(drawingContext, canvas.width - width - 27, panelTop, width + 22, 59);
+  drawingContext.fillStyle = '#fff';
+  drawingContext.fillText(counter, canvas.width - 15, panelTop + 8);
+  drawingContext.fillText(goal, canvas.width - 15, panelTop + 31);
+  drawingContext.restore();
 }

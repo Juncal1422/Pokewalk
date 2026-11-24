@@ -1,7 +1,7 @@
 import { TILE } from './constants.js';
 import { game } from './state.js';
 
-let shapes;
+let wallShapes;
 
 // Agrupa tramos negros idénticos de filas contiguas. La colisión conserva
 // cada píxel del patrón sin recorrer la imagen en cada paso del Pokémon.
@@ -10,16 +10,17 @@ export function readWallShapes(pixels, width, height) {
   if (!Number.isInteger(size) || size < 3 || height !== size * 9) throw new Error('Máscara skeleton-blob inválida');
   const scale = TILE / size;
   return Array.from({ length: 47 }, (_, index) => {
-    const ox = index % 7 * size, oy = Math.floor(index / 7) * size;
+    const tileOriginX = index % 7 * size, tileOriginY = Math.floor(index / 7) * size;
     const boxes = [];
     let previous = new Map();
+    // Lee un píxel de la máscara prolongando su interior hasta el borde de la celda.
     function solid(x, y) {
       // El verde delimita las celdas del atlas. Prolongamos hasta ese borde
       // el negro o blanco interior para que no haya ranuras entre muros.
-      const px = ox + Math.max(1, Math.min(size - 2, x));
-      const py = oy + Math.max(1, Math.min(size - 2, y));
-      const i = (py * width + px) * 4;
-      return pixels[i + 3] > 0 && pixels[i] === 0 && pixels[i + 1] === 0 && pixels[i + 2] === 0;
+      const sampleX = tileOriginX + Math.max(1, Math.min(size - 2, x));
+      const sampleY = tileOriginY + Math.max(1, Math.min(size - 2, y));
+      const pixelOffset = (sampleY * width + sampleX) * 4;
+      return pixels[pixelOffset + 3] > 0 && pixels[pixelOffset] === 0 && pixels[pixelOffset + 1] === 0 && pixels[pixelOffset + 2] === 0;
     }
     for (let y = 0; y < size; y++) {
       const current = new Map();
@@ -28,13 +29,13 @@ export function readWallShapes(pixels, width, height) {
         const start = x;
         while (x < size && solid(x, y)) x++;
         const key = start * (size + 1) + x;
-        let rect = previous.get(key);
-        if (!rect) {
-          rect = { left: start * scale, right: x * scale, top: y * scale };
-          boxes.push(rect);
+        let solidRectangle = previous.get(key);
+        if (!solidRectangle) {
+          solidRectangle = { left: start * scale, right: x * scale, top: y * scale };
+          boxes.push(solidRectangle);
         }
-        rect.bottom = (y + 1) * scale;
-        current.set(key, rect);
+        solidRectangle.bottom = (y + 1) * scale;
+        current.set(key, solidRectangle);
       }
       previous = current;
     }
@@ -42,8 +43,9 @@ export function readWallShapes(pixels, width, height) {
   });
 }
 
+// Decodifica la máscara de referencia y conserva las formas de colisión comunes a los biomas.
 export async function loadTerrain() {
-  if (shapes) return;
+  if (wallShapes) return;
   const image = new Image();
   image.crossOrigin = 'anonymous';
   image.src = new URL('../../tiled/tilesets/skeleton-blob.png', import.meta.url).href;
@@ -51,10 +53,10 @@ export async function loadTerrain() {
   const canvas = document.createElement('canvas');
   canvas.width = image.naturalWidth;
   canvas.height = image.naturalHeight;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(image, 0, 0);
-  shapes = readWallShapes(ctx.getImageData(0, 0, canvas.width, canvas.height).data, canvas.width, canvas.height);
-  console.debug('[Terreno] Máscaras de colisión preparadas', shapes.length);
+  const drawingContext = canvas.getContext('2d');
+  drawingContext.drawImage(image, 0, 0);
+  wallShapes = readWallShapes(drawingContext.getImageData(0, 0, canvas.width, canvas.height).data, canvas.width, canvas.height);
+  console.debug('[Terreno] Máscaras de colisión preparadas', wallShapes.length);
 }
 
 // Distancia entre un cuerpo circular y las partes sólidas del autotile.
@@ -63,14 +65,14 @@ export function groundFree(x, y, radius, crosses = false) {
   const right = game.grid[0].length - 1, bottom = game.grid.length - 1;
   if (x - radius < TILE || y - radius < TILE || x + radius > right * TILE || y + radius > bottom * TILE) return false;
   if (crosses) return true;
-  for (let ty = Math.floor((y - radius) / TILE); ty <= Math.floor((y + radius) / TILE); ty++) {
-    for (let tx = Math.floor((x - radius) / TILE); tx <= Math.floor((x + radius) / TILE); tx++) {
-      if (game.grid[ty][tx] === 0) continue;
-      const lx = x - tx * TILE, ly = y - ty * TILE;
-      for (const rect of shapes[game.autotileGrid[ty][tx].index]) {
-        const dx = Math.max(rect.left - lx, 0, lx - rect.right);
-        const dy = Math.max(rect.top - ly, 0, ly - rect.bottom);
-        if (dx * dx + dy * dy < radius * radius) return false;
+  for (let tileRow = Math.floor((y - radius) / TILE); tileRow <= Math.floor((y + radius) / TILE); tileRow++) {
+    for (let tileColumn = Math.floor((x - radius) / TILE); tileColumn <= Math.floor((x + radius) / TILE); tileColumn++) {
+      if (game.grid[tileRow][tileColumn] === 0) continue;
+      const localX = x - tileColumn * TILE, localY = y - tileRow * TILE;
+      for (const solidRectangle of wallShapes[game.autotileGrid[tileRow][tileColumn].index]) {
+        const deltaX = Math.max(solidRectangle.left - localX, 0, localX - solidRectangle.right);
+        const deltaY = Math.max(solidRectangle.top - localY, 0, localY - solidRectangle.bottom);
+        if (deltaX * deltaX + deltaY * deltaY < radius * radius) return false;
       }
     }
   }

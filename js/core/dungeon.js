@@ -23,6 +23,7 @@ const diagonalRules = new Array(
   new Array(128, 65),
 );
 
+// Elimina diagonales desconectadas de los vecinos que las sostienen.
 function normalize(mask) {
   for (const [diagonal, sides] of diagonalRules) {
     if ((mask & sides) !== sides) mask &= ~diagonal;
@@ -39,11 +40,11 @@ for (let mask = 0; mask < 256; mask++) {
 // Calcula la máscara de terreno alrededor de una casilla y su índice de autotile.
 function autotile(grid, x, y) {
   const terrain = grid[y][x];
-  let raw = 0;
-  neighbors.forEach(([dx, dy], bit) => {
-    if ((grid[y + dy]?.[x + dx] ?? 1) === terrain) raw |= 1 << bit;
+  let neighborMask = 0;
+  neighbors.forEach(([deltaX, deltaY], bit) => {
+    if ((grid[y + deltaY]?.[x + deltaX] ?? 1) === terrain) neighborMask |= 1 << bit;
   });
-  const mask = normalize(raw);
+  const mask = normalize(neighborMask);
   return { mask, index: indices.get(mask) };
 }
 
@@ -60,18 +61,19 @@ function randomInt(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1));
 }
 
-function clampLevel(val) {
-  return Math.max(1, Math.min(5, Math.round(val)));
+// Ajusta la complejidad de generación al intervalo entero de uno a cinco.
+function clampLevel(complexity) {
+  return Math.max(1, Math.min(5, Math.round(complexity)));
 }
 
 // Talla una casilla asegurando no romper los bordes exteriores del mapa.
 function carveTile(grid, x, y, width = 1) {
-  for (let dy = 0; dy < width; dy++) {
-    for (let dx = 0; dx < width; dx++) {
-      const nx = x + dx;
-      const ny = y + dy;
-      if (nx > 0 && nx < MAP_W - 1 && ny > 0 && ny < MAP_H - 1) {
-        grid[ny][nx] = 0;
+  for (let deltaY = 0; deltaY < width; deltaY++) {
+    for (let deltaX = 0; deltaX < width; deltaX++) {
+      const tileX = x + deltaX;
+      const tileY = y + deltaY;
+      if (tileX > 0 && tileX < MAP_W - 1 && tileY > 0 && tileY < MAP_H - 1) {
+        grid[tileY][tileX] = 0;
       }
     }
   }
@@ -96,10 +98,10 @@ function connect(grid, from, to, pasillosLevel) {
 
   if (Math.random() < bendChance) {
     const numBends = pasillosLevel >= 4 ? randomInt(1, 2) : 1;
-    for (let i = 1; i <= numBends; i++) {
-      const t = i / (numBends + 1);
-      const midX = Math.round(x + (to.cx - x) * t + randomInt(-3, 3));
-      const midY = Math.round(y + (to.cy - y) * t + randomInt(-3, 3));
+    for (let bendIndex = 1; bendIndex <= numBends; bendIndex++) {
+      const bendFraction = bendIndex / (numBends + 1);
+      const midX = Math.round(x + (to.cx - x) * bendFraction + randomInt(-3, 3));
+      const midY = Math.round(y + (to.cy - y) * bendFraction + randomInt(-3, 3));
       waypoints.push({
         cx: Math.max(2, Math.min(MAP_W - 3, midX)),
         cy: Math.max(2, Math.min(MAP_H - 3, midY)),
@@ -109,39 +111,41 @@ function connect(grid, from, to, pasillosLevel) {
   waypoints.push({ cx: to.cx, cy: to.cy });
 
   for (const target of waypoints) {
-    const horizFirst = Math.random() < 0.5;
-    const stepH = () => {
+    const horizontalFirst = Math.random() < 0.5;
+    // Abre el tramo horizontal hasta la columna del siguiente punto.
+    const carveHorizontal = () => {
       while (x !== target.cx) {
         x += Math.sign(target.cx - x);
         carveTile(grid, x, y, width);
       }
     };
-    const stepV = () => {
+    // Abre el tramo vertical hasta la fila del siguiente punto.
+    const carveVertical = () => {
       while (y !== target.cy) {
         y += Math.sign(target.cy - y);
         carveTile(grid, x, y, width);
       }
     };
 
-    if (horizFirst) {
-      stepH();
-      stepV();
+    if (horizontalFirst) {
+      carveHorizontal();
+      carveVertical();
     } else {
-      stepV();
-      stepH();
+      carveVertical();
+      carveHorizontal();
     }
   }
 }
 
 // Construye una habitación o nodo de cruce según el nivel de 'habitaciones' (1 a 5).
-function createRoomInCell(grid, gx, gy, cellW, cellH, habitacionesLevel) {
+function createRoomInCell(grid, cellColumn, cellRow, cellWidth, cellHeight, habitacionesLevel) {
   const roomSpawnChance = [0, 0.15, 0.85, 1, 1, 1][habitacionesLevel];
 
   if (Math.random() > roomSpawnChance) {
-    const cx = gx * cellW + Math.floor(cellW / 2) + randomInt(-1, 1);
-    const cy = gy * cellH + Math.floor(cellH / 2) + randomInt(-1, 1);
-    const safeX = Math.max(2, Math.min(MAP_W - 3, cx));
-    const safeY = Math.max(2, Math.min(MAP_H - 3, cy));
+    const centerX = cellColumn * cellWidth + Math.floor(cellWidth / 2) + randomInt(-1, 1);
+    const centerY = cellRow * cellHeight + Math.floor(cellHeight / 2) + randomInt(-1, 1);
+    const safeX = Math.max(2, Math.min(MAP_W - 3, centerX));
+    const safeY = Math.max(2, Math.min(MAP_H - 3, centerY));
     grid[safeY][safeX] = 0;
     return {
       x: safeX,
@@ -155,38 +159,38 @@ function createRoomInCell(grid, gx, gy, cellW, cellH, habitacionesLevel) {
   }
 
   const minSize = habitacionesLevel >= 4 ? 6 : 4;
-  const maxW = Math.max(minSize, cellW - 2);
-  const maxH = Math.max(minSize, cellH - 2);
+  const maxRoomWidth = Math.max(minSize, cellWidth - 2);
+  const maxRoomHeight = Math.max(minSize, cellHeight - 2);
 
-  const w = randomInt(minSize, maxW);
-  const h = randomInt(minSize, maxH);
-  const x = gx * cellW + randomInt(1, Math.max(1, cellW - w - 1));
-  const y = gy * cellH + randomInt(1, Math.max(1, cellH - h - 1));
-  const cx = x + Math.floor(w / 2);
-  const cy = y + Math.floor(h / 2);
+  const roomWidth = randomInt(minSize, maxRoomWidth);
+  const roomHeight = randomInt(minSize, maxRoomHeight);
+  const x = cellColumn * cellWidth + randomInt(1, Math.max(1, cellWidth - roomWidth - 1));
+  const y = cellRow * cellHeight + randomInt(1, Math.max(1, cellHeight - roomHeight - 1));
+  const centerX = x + Math.floor(roomWidth / 2);
+  const centerY = y + Math.floor(roomHeight / 2);
 
   // 1. Tallar base rectangular.
-  for (let row = y; row < y + h; row++) {
-    grid[row].fill(0, x, x + w);
+  for (let row = y; row < y + roomHeight; row++) {
+    grid[row].fill(0, x, x + roomWidth);
   }
 
   // 2. Nivel 3+: Recortar esquinas para formas en L, cruz o irregulares.
-  if (habitacionesLevel >= 3 && w >= 6 && h >= 6) {
+  if (habitacionesLevel >= 3 && roomWidth >= 6 && roomHeight >= 6) {
     const corners = new Array(
       new Array(x, y),
-      new Array(x + w - 2, y),
-      new Array(x, y + h - 2),
-      new Array(x + w - 2, y + h - 2),
+      new Array(x + roomWidth - 2, y),
+      new Array(x, y + roomHeight - 2),
+      new Array(x + roomWidth - 2, y + roomHeight - 2),
     );
     const cuts = habitacionesLevel >= 4 ? randomInt(1, 3) : 1;
-    for (let i = 0; i < cuts; i++) {
-      const [kx, ky] = corners[randomInt(0, corners.length - 1)];
-      const cw = randomInt(1, 2);
-      const ch = randomInt(1, 2);
-      for (let ry = ky; ry < ky + ch; ry++) {
-        for (let rx = kx; rx < kx + cw; rx++) {
-          if (Math.abs(rx - cx) > 1 || Math.abs(ry - cy) > 1) {
-            grid[ry][rx] = 1;
+    for (let cutIndex = 0; cutIndex < cuts; cutIndex++) {
+      const [cutX, cutY] = corners[randomInt(0, corners.length - 1)];
+      const cutWidth = randomInt(1, 2);
+      const cutHeight = randomInt(1, 2);
+      for (let tileRow = cutY; tileRow < cutY + cutHeight; tileRow++) {
+        for (let tileColumn = cutX; tileColumn < cutX + cutWidth; tileColumn++) {
+          if (Math.abs(tileColumn - centerX) > 1 || Math.abs(tileRow - centerY) > 1) {
+            grid[tileRow][tileColumn] = 1;
           }
         }
       }
@@ -194,71 +198,72 @@ function createRoomInCell(grid, gx, gy, cellW, cellH, habitacionesLevel) {
   }
 
   // 3. Nivel 4-5: Añadir pilares centrales, muros interiores y loops dentro de la sala.
-  if (habitacionesLevel >= 4 && w >= 7 && h >= 7) {
+  if (habitacionesLevel >= 4 && roomWidth >= 7 && roomHeight >= 7) {
     const pattern = randomInt(1, 3);
     if (pattern === 1) {
-      for (let ry = cy - 1; ry <= cy + 1; ry++) {
-        for (let rx = cx - 1; rx <= cx + 1; rx++) {
-          grid[ry][rx] = 1;
+      for (let tileRow = centerY - 1; tileRow <= centerY + 1; tileRow++) {
+        for (let tileColumn = centerX - 1; tileColumn <= centerX + 1; tileColumn++) {
+          grid[tileRow][tileColumn] = 1;
         }
       }
       if (habitacionesLevel === 5) {
-        grid[cy][cx] = 0;
-        grid[cy - 1][cx] = 0;
+        grid[centerY][centerX] = 0;
+        grid[centerY - 1][centerX] = 0;
       } else {
-        grid[cy][cx] = 0;
-        grid[cy][cx + 1] = 0;
+        grid[centerY][centerX] = 0;
+        grid[centerY][centerX + 1] = 0;
       }
     } else if (pattern === 2) {
       grid[y + 2][x + 2] = 1;
-      grid[y + 2][x + w - 3] = 1;
-      grid[y + h - 3][x + 2] = 1;
-      grid[y + h - 3][x + w - 3] = 1;
+      grid[y + 2][x + roomWidth - 3] = 1;
+      grid[y + roomHeight - 3][x + 2] = 1;
+      grid[y + roomHeight - 3][x + roomWidth - 3] = 1;
     } else if (pattern === 3 && habitacionesLevel === 5) {
-      for (let rx = x + 2; rx < x + w - 2; rx++) {
-        if (rx !== cx) grid[y + 2][rx] = 1;
+      for (let tileColumn = x + 2; tileColumn < x + roomWidth - 2; tileColumn++) {
+        if (tileColumn !== centerX) grid[y + 2][tileColumn] = 1;
       }
-      for (let rx = x + 2; rx < x + w - 2; rx++) {
-        if (rx !== cx) grid[y + h - 3][rx] = 1;
+      for (let tileColumn = x + 2; tileColumn < x + roomWidth - 2; tileColumn++) {
+        if (tileColumn !== centerX) grid[y + roomHeight - 3][tileColumn] = 1;
       }
     }
   }
 
-  return { x, y, w, h, cx, cy, isNode: false };
+  return { x, y, w: roomWidth, h: roomHeight, cx: centerX, cy: centerY, isNode: false };
 }
 
-function carveRooms(grid, pLvl, hLvl, cLvl) {
+// Conecta salas y cruces y entrega primero los puntos aptos para situar combatientes.
+function carveRooms(grid, corridorComplexity, roomComplexity, junctionComplexity) {
   const rooms = [];
 
-  const cols = hLvl === 1 && cLvl >= 4 ? 5 : 4;
-  const rows = hLvl === 1 && cLvl >= 4 ? 4 : 3;
-  const cellW = Math.floor(MAP_W / cols);
-  const cellH = Math.floor(MAP_H / rows);
+  const columnCount = roomComplexity === 1 && junctionComplexity >= 4 ? 5 : 4;
+  const rowCount = roomComplexity === 1 && junctionComplexity >= 4 ? 4 : 3;
+  const cellWidth = Math.floor(MAP_W / columnCount);
+  const cellHeight = Math.floor(MAP_H / rowCount);
 
-  const extraLinkChance = [0, 0.15, 0.4, 0.65, 0.85, 1.0][cLvl];
+  const extraLinkChance = [0, 0.15, 0.4, 0.65, 0.85, 1.0][junctionComplexity];
 
-  for (let gy = 0; gy < rows; gy++) {
-    for (let gx = 0; gx < cols; gx++) {
-      const room = createRoomInCell(grid, gx, gy, cellW, cellH, hLvl);
-      const idx = rooms.length;
+  for (let cellRow = 0; cellRow < rowCount; cellRow++) {
+    for (let cellColumn = 0; cellColumn < columnCount; cellColumn++) {
+      const room = createRoomInCell(grid, cellColumn, cellRow, cellWidth, cellHeight, roomComplexity);
+      const roomIndex = rooms.length;
 
-      const left = gx > 0 ? rooms[idx - 1] : null;
-      const above = gy > 0 ? rooms[idx - cols] : null;
+      const left = cellColumn > 0 ? rooms[roomIndex - 1] : null;
+      const above = cellRow > 0 ? rooms[roomIndex - columnCount] : null;
 
       if (left && above) {
         const leftFirst = Math.random() < 0.5;
-        connect(grid, room, leftFirst ? left : above, pLvl);
+        connect(grid, room, leftFirst ? left : above, corridorComplexity);
         if (Math.random() < extraLinkChance) {
-          connect(grid, room, leftFirst ? above : left, pLvl);
+          connect(grid, room, leftFirst ? above : left, corridorComplexity);
         }
       } else if (left || above) {
-        connect(grid, room, left || above, pLvl);
+        connect(grid, room, left || above, corridorComplexity);
       }
 
-      if (cLvl >= 3 && gx > 0 && gy > 0) {
-        const diagLeft = rooms[idx - cols - 1];
-        if (diagLeft && Math.random() < (cLvl - 2) * 0.25) {
-          connect(grid, room, diagLeft, pLvl);
+      if (junctionComplexity >= 3 && cellColumn > 0 && cellRow > 0) {
+        const diagLeft = rooms[roomIndex - columnCount - 1];
+        if (diagLeft && Math.random() < (junctionComplexity - 2) * 0.25) {
+          connect(grid, room, diagLeft, corridorComplexity);
         }
       }
 
@@ -266,34 +271,35 @@ function carveRooms(grid, pLvl, hLvl, cLvl) {
     }
   }
 
-  if (cLvl >= 4) {
-    const extraBranches = cLvl === 5 ? 6 : 3;
-    for (let i = 0; i < extraBranches; i++) {
+  if (junctionComplexity >= 4) {
+    const extraBranches = junctionComplexity === 5 ? 6 : 3;
+    for (let branchIndex = 0; branchIndex < extraBranches; branchIndex++) {
       const randomRoom = rooms[randomInt(0, rooms.length - 1)];
-      const targetPt = {
+      const branchEndpoint = {
         cx: randomInt(3, MAP_W - 4),
         cy: randomInt(3, MAP_H - 4),
       };
-      connect(grid, randomRoom, targetPt, pLvl);
+      connect(grid, randomRoom, branchEndpoint, corridorComplexity);
     }
   }
 
   // Priorizar habitaciones reales al principio del array pero conservar todas las celdas
   // para que entities.js nunca reciba undefined al buscar salas por índice.
   return [
-    ...rooms.filter((r) => !r.isNode),
-    ...rooms.filter((r) => r.isNode),
+    ...rooms.filter((candidateRoom) => !candidateRoom.isNode),
+    ...rooms.filter((candidateRoom) => candidateRoom.isNode),
   ];
 
 }
 
 // La arena tiene dos puntos de aparición enfrentados dentro de una sola habitación.
 function carveArena(grid) {
-  const cx = Math.floor(MAP_W / 2), cy = Math.floor(MAP_H / 2);
-  for (let y = cy - 5; y <= cy + 5; y++) grid[y].fill(0, cx - 8, cx + 9);
-  return [{ cx: cx - 5, cy }, { cx: cx + 5, cy }];
+  const centerX = Math.floor(MAP_W / 2), centerY = Math.floor(MAP_H / 2);
+  for (let y = centerY - 5; y <= centerY + 5; y++) grid[y].fill(0, centerX - 8, centerX + 9);
+  return [{ cx: centerX - 5, cy: centerY }, { cx: centerX + 5, cy: centerY }];
 }
 
+// Genera el terreno lógico y deriva las capas de autotiles y variantes decorativas del bioma.
 export function generateDungeon({ pasillos = 5, habitaciones = 5, cruces = 5, open = false } = {}) {
   const grid = Array.from({ length: MAP_H }, () => Array(MAP_W).fill(1));
   const sortedRooms = open ? carveArena(grid) :

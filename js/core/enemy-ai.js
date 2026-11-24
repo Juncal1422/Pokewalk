@@ -4,10 +4,14 @@ import { movementRate, attackReach } from './stats.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 
+// Convierte una posición del mundo en índice de casilla.
 const cell = position => Math.floor(position / TILE);
+// Devuelve el centro de una casilla en píxeles del mundo.
 const center = index => (index + 0.5) * TILE;
+// Consulta si una casilla del mapa está marcada como suelo.
 const land = (x, y) => game.grid[y]?.[x] === 0;
 const neighbors = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+// Consulta la máscara de colisión en un punto para distinguir suelo y medio especial.
 const standingOnLand = (x, y) => groundFree(x, y, 0.01);
 
 // El destino depende del terreno del jugador; terrainFree valida la habilidad del enemigo.
@@ -18,79 +22,80 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, esca
   // La visión sigue el dibujo sólido del atlas, incluso para especies que
   // pueden cruzarlo. Sin visión directa buscamos un rodeo por ejes.
   const player = game.player;
-  const dx = player.x - enemy.x, dy = player.y - enemy.y;
-  const steps = Math.ceil(Math.hypot(dx, dy));
+  const deltaX = player.x - enemy.x, deltaY = player.y - enemy.y;
+  const steps = Math.ceil(Math.hypot(deltaX, deltaY));
   let visible = true;
-  for (let i = 1; i < steps && visible; i++) {
-    visible = standingOnLand(enemy.x + dx * i / steps, enemy.y + dy * i / steps);
+  for (let stepIndex = 1; stepIndex < steps && visible; stepIndex++) {
+    visible = standingOnLand(enemy.x + deltaX * stepIndex / steps, enemy.y + deltaY * stepIndex / steps);
   }
   const directions = visible ? neighbors : neighbors.slice(0, 4);
   const queue = [start];
   const previous = new Map([[start, -1]]);
-  let best = start;
+  let bestTile = start;
   let distance = Infinity;
-  for (let i = 0; i < queue.length; i++) {
-    const key = queue[i], x = key % width, y = Math.floor(key / width);
+  for (let stepIndex = 0; stepIndex < queue.length; stepIndex++) {
+    const tileIndex = queue[stepIndex], x = tileIndex % width, y = Math.floor(tileIndex / width);
     if (!playerOnLand || land(x, y)) {
-      const d = Math.hypot(x - goalX, y - goalY);
+      const distanceToGoal = Math.hypot(x - goalX, y - goalY);
       // En retirada buscamos la primera tierra a distancia segura por el camino más corto.
-      const score = escapeDistance ? -d : d;
+      const score = escapeDistance ? -distanceToGoal : distanceToGoal;
       if (score < distance) {
-        best = key;
+        bestTile = tileIndex;
         distance = score;
       }
-      if (nearestLand || (escapeDistance ? d >= escapeDistance : d === 0)) break;
+      if (nearestLand || (escapeDistance ? distanceToGoal >= escapeDistance : distanceToGoal === 0)) break;
     }
     // Entre rutas del mismo número de pasos, exploramos primero el vecino
     // que más nos acerca a la presa (diagonal cuando difieren ambos ejes).
-    const distanceAfter = ([dx, dy]) => (goalX - x - dx) ** 2 + (goalY - y - dy) ** 2;
-    const ordered = [...directions].sort((a, b) => distanceAfter(a) - distanceAfter(b));
-    for (const [dx, dy] of ordered) {
-      const nx = x + dx, ny = y + dy, next = ny * width + nx;
-      if (nx <= 0 || ny <= 0 || nx >= width - 1 || ny >= game.grid.length - 1 || previous.has(next)) continue;
-      if (dx && dy) {
-        if (!terrainFree(enemy, center(x) + dx * TILE / 2, center(y) + dy * TILE / 2)) continue;
+    const distanceAfter = ([deltaX, deltaY]) => (goalX - x - deltaX) ** 2 + (goalY - y - deltaY) ** 2;
+    const ordered = [...directions].sort((firstDirection, secondDirection) => distanceAfter(firstDirection) - distanceAfter(secondDirection));
+    for (const [deltaX, deltaY] of ordered) {
+      const neighborX = x + deltaX, neighborY = y + deltaY, next = neighborY * width + neighborX;
+      if (neighborX <= 0 || neighborY <= 0 || neighborX >= width - 1 || neighborY >= game.grid.length - 1 || previous.has(next)) continue;
+      if (deltaX && deltaY) {
+        if (!terrainFree(enemy, center(x) + deltaX * TILE / 2, center(y) + deltaY * TILE / 2)) continue;
       }
-      if (!terrainFree(enemy, center(nx), center(ny))) continue;
-      previous.set(next, key);
+      if (!terrainFree(enemy, center(neighborX), center(neighborY))) continue;
+      previous.set(next, tileIndex);
       queue.push(next);
     }
   }
   const path = [];
-  for (let key = best; key !== start; key = previous.get(key)) {
-    path.push([center(key % width), center(Math.floor(key / width))]);
+  for (let tileIndex = bestTile; tileIndex !== start; tileIndex = previous.get(tileIndex)) {
+    path.push([center(tileIndex % width), center(Math.floor(tileIndex / width))]);
   }
   return path.reverse();
 }
 
 // Tras un MISS, elige un flanco. Cada paso comprueba cuerpos,
 // paredes y tierra firme antes de mover al enemigo.
-export function trySidestep(enemy, attacker, canMove, now) {
-  if (now < (enemy.evadeAfter ?? 0)) return false;
-  const dx = enemy.x - attacker.x, dy = enemy.y - attacker.y;
-  const length = Math.hypot(dx, dy);
+export function trySidestep(enemy, attacker, canMove, simulationTime) {
+  if (simulationTime < (enemy.evadeAfter ?? 0)) return false;
+  const deltaX = enemy.x - attacker.x, deltaY = enemy.y - attacker.y;
+  const length = Math.hypot(deltaX, deltaY);
   if (!length) return false;
   const side = Math.random() < 0.5 ? -1 : 1;
   for (const sign of [side, -side]) {
-    const sx = -dy / length * sign, sy = dx / length * sign;
+    const sidestepDirectionX = -deltaY / length * sign, sidestepDirectionY = deltaX / length * sign;
     let distance = 0;
-    for (let d = 2; d <= TILE; d += 2) {
-      const x = enemy.x + sx * d, y = enemy.y + sy * d;
+    for (let testDistance = 2; testDistance <= TILE; testDistance += 2) {
+      const x = enemy.x + sidestepDirectionX * testDistance, y = enemy.y + sidestepDirectionY * testDistance;
       if ((standingOnLand(attacker.x, attacker.y) && !standingOnLand(x, y)) || !canMove(enemy, x, y)) break;
-      distance = d;
+      distance = testDistance;
     }
     if (distance < TILE / 2) continue;
-    enemy.sidestep = { sx, sy, remaining: distance };
+    enemy.sidestep = { sx: sidestepDirectionX, sy: sidestepDirectionY, remaining: distance };
     enemy.path = [];
     enemy.aimSince = null;
     enemy.tracking = true;
 
-    enemy.evadeAfter = now + 2600;
+    enemy.evadeAfter = simulationTime + 2600;
     return true;
   }
   return false;
 }
 
+// Decide la acción del enemigo según el terreno, la visibilidad, la distancia y los tiempos de reacción.
 export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove) {
   // Se ejecuta solo cuando Hurt y Attack han terminado. Revalida el tramo
   // en cada fotograma porque otro combatiente puede ocuparlo durante la esquiva.
@@ -112,9 +117,9 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     }
     return;
   }
-  const player = game.player, dx = player.x - enemy.x, dy = player.y - enemy.y;
+  const player = game.player, deltaX = player.x - enemy.x, deltaY = player.y - enemy.y;
   const reach = attackReach(enemy.stats);
-  const distance = Math.hypot(dx, dy);
+  const distance = Math.hypot(deltaX, deltaY);
   const onLand = standingOnLand(enemy.x, enemy.y);
   const returnToLand = playerOnLand && !onLand;
   const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
@@ -129,7 +134,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
   const inRange = pursuing && !fleeing && !returnToLand && distance <= reach + 5;
-  const now = gameTime();
+  const simulationTime = gameTime();
   if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
     enemy.retreatTicks = 0;
@@ -138,23 +143,23 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     return;
   }
   if (inRange) {
-    enemy.dir = (Math.round(Math.atan2(dx, dy) / (Math.PI / 4)) + 8) % 8;
+    enemy.dir = (Math.round(Math.atan2(deltaX, deltaY) / (Math.PI / 4)) + 8) % 8;
     enemy.path = [];
     enemy.aiTimer = 0;
     enemy.tracking = true;
     setState(enemy, 'Idle');
     // Exige exposición continua antes del primer golpe y deja respirar entre ataques.
-    enemy.aimSince ??= now;
-    const afterDodge = now < enemy.counterUntil;
-    const ready = now - enemy.aimSince >= (afterDodge ? 180 : 600) &&
-      (afterDodge || now >= (enemy.nextAttackAt ?? 0));
+    enemy.aimSince ??= simulationTime;
+    const afterDodge = simulationTime < enemy.counterUntil;
+    const ready = simulationTime - enemy.aimSince >= (afterDodge ? 180 : 600) &&
+      (afterDodge || simulationTime >= (enemy.nextAttackAt ?? 0));
     if (enemy.bossResponse || ready) {
       enemy.bossResponse = false;
       enemy.hitsWithoutAction = 0;
       attack(enemy);
       enemy.counterUntil = 0;
       enemy.aimSince = null;
-      enemy.nextAttackAt = now + (enemy.boss ? 1500 : 2000);
+      enemy.nextAttackAt = simulationTime + (enemy.boss ? 1500 : 2000);
     }
     return;
   }
@@ -162,30 +167,30 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   // Mientras cruza conserva el camino completo hasta la siguiente orilla.
   enemy.aiTimer--;
   if (!enemy.path?.length || enemy.bossResponse || enemy.playerOnLand !== playerOnLand || (!returnToLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
-    const gx = pursuing ? cell(player.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
-    const gy = pursuing ? cell(player.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
+    const goalTileX = pursuing ? cell(player.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
+    const goalTileY = pursuing ? cell(player.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
     // Tras un bloqueo buscamos otro camino a pie teniendo en cuenta los cuerpos.
     const passable = enemy.avoidBodies ? canMove : terrainFree;
-    enemy.path = route(enemy, gx, gy, passable, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
+    enemy.path = route(enemy, goalTileX, goalTileY, passable, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
     enemy.avoidBodies = false;
     enemy.playerOnLand = playerOnLand;
     enemy.fleeing = fleeing;
     enemy.aiTimer = pursuing ? 30 : 65;
     enemy.tracking = pursuing;
   }
-  const dest = enemy.path[0];
-  if (!dest) {
+  const nextWaypoint = enemy.path[0];
+  if (!nextWaypoint) {
     setState(enemy, 'Idle');
     return;
   }
   const oldX = enemy.x, oldY = enemy.y;
-  move(enemy, dest[0] - oldX, dest[1] - oldY);
+  move(enemy, nextWaypoint[0] - oldX, nextWaypoint[1] - oldY);
   if (oldX !== enemy.x || oldY !== enemy.y) {
     enemy.hitsWithoutAction = 0;
     enemy.bossResponse = false;
   }
   setState(enemy, 'Walk');
-  if (Math.hypot(dest[0] - enemy.x, dest[1] - enemy.y) < 1) enemy.path.shift();
+  if (Math.hypot(nextWaypoint[0] - enemy.x, nextWaypoint[1] - enemy.y) < 1) enemy.path.shift();
   enemy.stuck = Math.hypot(enemy.x - oldX, enemy.y - oldY) < 0.05 ? (enemy.stuck || 0) + 1 : 0;
   if (enemy.stuck >= 20) {
     enemy.avoidBodies = true;

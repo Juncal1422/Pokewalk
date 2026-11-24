@@ -1,3 +1,4 @@
+import { showWorldNotice } from './world-notices.js';
 import { levelUp } from './experience.js';
 import { pickupEffect } from './abilities.js';
 import { gameTime } from './clock.js';
@@ -8,42 +9,45 @@ import { game } from './state.js';
 import { playerStats, amount } from './benefits.js';
 
 const images = new Map();
+// Precarga las imágenes por identificador para reutilizarlas en cada piso.
 export async function loadItemImages(items) {
-  await Promise.all(Object.entries(items).map(async ([id, item]) => {
-    const img = new Image();
-    img.src = new URL('../../' + item.image, import.meta.url).href;
-    await img.decode();
-    images.set(id, img);
+  await Promise.all(Object.entries(items).map(async ([itemId, item]) => {
+    const spriteImage = new Image();
+    spriteImage.src = new URL('../../' + item.image, import.meta.url).href;
+    await spriteImage.decode();
+    images.set(itemId, spriteImage);
   }));
 }
 
 // Las bayas tienen una tirada independiente. El cupo cuenta apariciones,
 // incluso si el jugador abandona la planta sin recoger el objeto.
 export function spawnFloorItems() {
-  const m = game.mission, block = Math.floor((game.floor - 1) / 5);
-  if (m.itemBlock !== block) { m.itemBlock = block; m.itemsPlaced = 0; }
-  const occupied = new Set(game.entities.map(e => Math.floor(e.x / TILE) + ',' + Math.floor(e.y / TILE)));
+  const mission = game.mission, fiveFloorBlock = Math.floor((game.floor - 1) / 5);
+  if (mission.itemBlock !== fiveFloorBlock) { mission.itemBlock = fiveFloorBlock; mission.itemsPlaced = 0; }
+  const occupied = new Set(game.entities.map(combatant => Math.floor(combatant.x / TILE) + ',' + Math.floor(combatant.y / TILE)));
   const sites = [];
   game.grid.forEach((row, y) => row.forEach((tile, x) => {
     if (!tile && !occupied.has(x + ',' + y)) sites.push({ x: (x + .5) * TILE, y: (y + .5) * TILE });
   }));
-  function place(id) {
+  // Reserva una casilla libre del conjunto de ubicaciones y sitúa el objeto en su centro.
+  function place(itemId) {
     const [site] = sites.splice(Math.floor(Math.random() * sites.length), 1);
-    game.drops.push({ id, ...site });
+    game.drops.push({ id: itemId, ...site });
   }
   if (sites.length && Math.random() < .5) place(Math.random()<.25 ? 'berry_sitrus' : 'berry_oran');
-  const available = Object.keys(game.items).filter(id => {
-    const item=game.items[id];
-    return !item.healFraction && !item.objective && !game.inventory.has(id) && !(item.oncePerMission && m.candyPlaced);
+  const available = Object.keys(game.items).filter(itemId => {
+    const item=game.items[itemId];
+    return !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && m.itemsPlaced < 2 && Math.random() < .30 + amount('green_scale')) {
-    const id=available[Math.floor(Math.random() * available.length)];
-    place(id);
-    if (game.items[id].oncePerMission) m.candyPlaced=true;
-    m.itemsPlaced++;
+  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < .30 + amount('green_scale')) {
+    const itemId=available[Math.floor(Math.random() * available.length)];
+    place(itemId);
+    if (game.items[itemId].oncePerMission) mission.candyPlaced=true;
+    mission.itemsPlaced++;
   }
 }
 
+// Resuelve las recogidas por contacto o alcance y aplica sus efectos antes de retirar el objeto.
 export function collectItems(player, strike = null) {
   if (!player.hp) return;
   game.drops = game.drops.filter(drop => {
@@ -69,40 +73,43 @@ export function collectItems(player, strike = null) {
     // Al crecer junto a una pared empujamos el cuerpo al punto válido más
     // cercano. Si no cabe en las inmediaciones, el objeto sigue en el suelo.
     if (player.stats.size > oldStats.size && !canMove(player, player.x, player.y)) {
-      let spot;
-      for (let r = 1; r <= TILE / 2 && !spot; r++) {
-        for (let i = 0; i < 32; i++) {
-          const angle = i * Math.PI / 16;
-          const x = player.x + r * Math.cos(angle), y = player.y + r * Math.sin(angle);
-          if (canMove(player, x, y)) { spot = { x, y }; break; }
+      let freePosition;
+      for (let searchRadius = 1; searchRadius <= TILE / 2 && !freePosition; searchRadius++) {
+        for (let angleIndex = 0; angleIndex < 32; angleIndex++) {
+          const angle = angleIndex * Math.PI / 16;
+          const x = player.x + searchRadius * Math.cos(angle), y = player.y + searchRadius * Math.sin(angle);
+          if (canMove(player, x, y)) { freePosition = { x, y }; break; }
         }
       }
-      if (!spot) { player.stats = oldStats; return true; }
-      Object.assign(player, spot);
+      if (!freePosition) { player.stats = oldStats; return true; }
+      Object.assign(player, freePosition);
     }
     player.bonuses = bonuses;
     if (!item.consumable) game.inventory.add(drop.id);
     if (drop.id==='rarecandy') { game.xp=0; levelUp(); }
     if (item.doubleEssences) {
-      const top = Object.keys(game.essences).sort((a,b)=>game.essences[b]-game.essences[a]).slice(0,item.doubleEssences);
-      for (const type of top) game.essences[type]*=2;
+      const mostAbundantTypes = Object.keys(game.essences).sort((firstType,secondType)=>game.essences[secondType]-game.essences[firstType]).slice(0,item.doubleEssences);
+      for (const type of mostAbundantTypes) game.essences[type]*=2;
     }
     pickupEffect(player,item.healFraction?'heal':'boost');
     console.info('[Objeto] Recogido', item.name);
     player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('mint_leaf'):0))));
-    const now = gameTime();
+    // Usamos la diferencia después del límite de PV para mostrar solo la curación efectiva.
+    if (item.healFraction) showWorldNotice(player, player.hp - previous.hp, 'HP');
+    const simulationTime = gameTime();
     for (const key of [...Object.keys(item.stats), 'hp']) {
       const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];
-      if (delta) game.pickups.push({ key, delta, time: now });
+      if (delta) game.pickups.push({ key, delta, time: simulationTime });
     }
     return false;
   });
 }
 
-export function drawItems(ctx, zoom, cameraX, cameraY) {
-  for (const { id, essence, x, y } of game.drops) {
-    const side = essence ? 20 : 24;
-    ctx.drawImage(essence ? essenceIcon(essence) : images.get(id), Math.round((x - side / 2) * zoom - cameraX),
-      Math.round((y - side / 2) * zoom - cameraY), side * zoom, side * zoom);
+// Proyecta las posiciones de los objetos y las esencias del suelo respecto de la cámara.
+export function drawItems(drawingContext, renderZoom, cameraX, cameraY) {
+  for (const { id: itemId, essence, x, y } of game.drops) {
+    const iconSize = essence ? 20 : 24;
+    drawingContext.drawImage(essence ? essenceIcon(essence) : images.get(itemId), Math.round((x - iconSize / 2) * renderZoom - cameraX),
+      Math.round((y - iconSize / 2) * renderZoom - cameraY), iconSize * renderZoom, iconSize * renderZoom);
   }
 }

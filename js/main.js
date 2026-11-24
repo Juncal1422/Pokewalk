@@ -75,13 +75,14 @@ const EMBEDDED_APP = `
     <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
 
+// Monta el canvas y los paneles una sola vez en el contenedor del juego.
 function mountApp(root) {
   if (root.querySelector('#game')) return;
   root.innerHTML = EMBEDDED_APP;
 }
 
 // El portal sustituye un suelo común y nunca se genera bajo el jugador.
-function placePortal(px, py, kind) {
+function placePortal(playerTileX, playerTileY, kind) {
   const floors = [];
   game.grid.forEach((row, y) =>
     row.forEach((terrain, x) => {
@@ -89,7 +90,7 @@ function placePortal(px, py, kind) {
         terrain === 0 &&
 
         !game.drops.some(drop => Math.floor(drop.x / TILE) === x && Math.floor(drop.y / TILE) === y) &&
-        (x !== px || y !== py)
+        (x !== playerTileX || y !== playerTileY)
       ) {
         floors.push({ x, y, kind, entered: false });
       }
@@ -98,38 +99,39 @@ function placePortal(px, py, kind) {
   game.portal = floors[Math.floor(Math.random() * floors.length)];
 }
 
+// Pausa los controles y gestiona el paso de piso o la selección de mejora y el cambio de misión.
 async function nextLevel() {
   game.changingLevel = true;
   game.keys = Object.create(null);
   game.canvas.blur();
   const previousBiome = game.currentBiome;
-  const previousSheet = game.tileSheet;
+  const previousTileset = game.tileSheet;
   try {
-    const m = game.mission;
+    const mission = game.mission;
     if (game.portal.kind === 'stairs') {
       game.loadingEl.style.display = 'flex';
-      await loadLevel(game.player.dex, m, game.floor + 1);
+      await loadLevel(game.player.dex, mission, game.floor + 1);
     } else {
       // Simulamos ambas elecciones para cobrar esencias y cambiar de activo
       // solo cuando la siguiente misión se ha cargado con éxito.
       let state = { held:game.held, bonuses:game.player.bonuses, balances:game.essences,
         row:game.pokemon.get(game.player.dex), essence:game.formEssence };
-      for (let pick=0; pick < (state.held.has('golden_mask')?2:1); pick++) {
+      for (let choiceIndex=0; choiceIndex < (state.held.has('golden_mask')?2:1); choiceIndex++) {
         const options = rewardOptions(state.row,state.balances,state.essence);
-        if (pick && !options.length) {
+        if (choiceIndex && !options.length) {
           state = projectReward(state,{row:state.row,essence:state.essence,bonus:true});
           break;
         }
-        const option = await chooseReward(options,state,pick>0);
+        const option = await chooseReward(options,state,choiceIndex>0);
         if (option) state = projectReward(state,option);
       }
       game.loadingEl.style.display = 'flex';
-      const biome = chooseBiome(game.biomes.filter(b => b.id !== m.biome.id), m.number + 1);
-      const next = newMission(m.number + 1, biome, levelFor(state.row,game.progress));
+      const biome = chooseBiome(game.biomes.filter(biomeCandidate => biomeCandidate.id !== mission.biome.id), mission.number + 1);
+      const nextMission = newMission(mission.number + 1, biome, levelFor(state.row,game.progress));
       await changeBiome(biome);
       const previousHeld = game.held;
       game.held = state.held;
-      try { await loadLevel(state.row.dex,next,1,state.bonuses); }
+      try { await loadLevel(state.row.dex,nextMission,1,state.bonuses); }
       catch (error) { game.held = previousHeld; throw error; }
       game.essences=state.balances;
       game.formEssence=state.essence;
@@ -137,7 +139,7 @@ async function nextLevel() {
     if (document.hasFocus()) game.canvas.focus();
   } catch (error) {
     game.currentBiome = previousBiome;
-    game.tileSheet = previousSheet;
+    game.tileSheet = previousTileset;
     showToast(error.message);
     if (document.hasFocus()) game.canvas.focus();
   } finally {
@@ -148,27 +150,27 @@ async function nextLevel() {
 
 // El panel comparte los valores de combate y solo cambia el DOM cuando varían.
 function updateRoster() {
-  const list = document.querySelector('#roster ul');
-  const alive = game.entities.filter(e => !e.isPlayer && e.hp > 0);
+  const rosterList = document.querySelector('#roster ul');
+  const livingEnemies = game.entities.filter(combatant => !combatant.isPlayer && combatant.hp > 0);
   // Conservamos el nodo y el retrato durante los cambios de PV.
-  for (const li of Array.from(list.children)) if (!alive.includes(li.combatant)) li.remove();
-  for (const enemy of alive) {
-    const row = game.pokemon.get(enemy.dex);
-    let li = enemy.rosterCard;
-    if (!li || li.parentNode !== list) {
-      li = element('li');
-      li.combatant = enemy;
-      enemy.rosterCard = li;
-      const [first, second] = row.essences;
-      li.style.backgroundColor = tones[first];
-      if (second) li.style.backgroundImage = 'linear-gradient(135deg,' + tones[first] + ' 50%,' + tones[second] + ' 50%)';
-      li.setAttribute('aria-label', row.name + ' · ' + row.essences.join(', '));
-      li.title = row.essences.join(' / ');
-      li.append(portrait(row), element('strong', row.name + (enemy.boss ? ' · Líder' : '')), element('span'));
-      list.append(li);
+  for (const rosterCard of Array.from(rosterList.children)) if (!livingEnemies.includes(rosterCard.combatant)) rosterCard.remove();
+  for (const enemy of livingEnemies) {
+    const species = game.pokemon.get(enemy.dex);
+    let rosterCard = enemy.rosterCard;
+    if (!rosterCard || rosterCard.parentNode !== rosterList) {
+      rosterCard = element('li');
+      rosterCard.combatant = enemy;
+      enemy.rosterCard = rosterCard;
+      const [first, second] = species.essences;
+      rosterCard.style.backgroundColor = tones[first];
+      if (second) rosterCard.style.backgroundImage = 'linear-gradient(135deg,' + tones[first] + ' 50%,' + tones[second] + ' 50%)';
+      rosterCard.setAttribute('aria-label', species.name + ' · ' + species.essences.join(', '));
+      rosterCard.title = species.essences.join(' / ');
+      rosterCard.append(portrait(species), element('strong', species.name + (enemy.boss ? ' · Líder' : '')), element('span'));
+      rosterList.append(rosterCard);
     }
     const stats = 'HP ' + enemy.hp + '/' + enemy.stats.hpMax + ' · ATQ ' + enemy.stats.attack + ' · DEF ' + enemy.stats.defense;
-    if (li.children[2].textContent !== stats) li.children[2].textContent = stats;
+    if (rosterCard.children[2].textContent !== stats) rosterCard.children[2].textContent = stats;
   }
 }
 
@@ -183,21 +185,22 @@ function updateNearby() {
         counts.set(key, (counts.get(key) || 0) + (drop.amount ?? 1));
       }
   }
-  const goal = game.portal;
-  if (goal?.kind === 'objective' && Math.hypot((goal.x + .5) * TILE - game.player.x, (goal.y + .5) * TILE - game.player.y) <= 3 * TILE)
+  const objectivePortal = game.portal;
+  if (objectivePortal?.kind === 'objective' && Math.hypot((objectivePortal.x + .5) * TILE - game.player.x, (objectivePortal.y + .5) * TILE - game.player.y) <= 3 * TILE)
     counts.set('parcel', 1);
   const signature = JSON.stringify([...counts]);
   if (panel.dataset.signature === signature) return;
   panel.dataset.signature = signature;
   panel.hidden = !counts.size;
   panel.replaceChildren(...Array.from(counts, ([id, count]) => {
-    const p = document.createElement('p');
+    const descriptionParagraph = document.createElement('p');
     const item = game.items[id] ?? (id.startsWith('essence-') ? { name: 'Esencia ' + id.slice(8), description: 'Recógela para acumularla.' } : { name: 'Objeto de misión', description: 'Recógelo para desbloquear el teletransportador.' });
-    p.textContent = item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
-    return p;
+    descriptionParagraph.textContent = item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
+    return descriptionParagraph;
   }));
 }
 
+// Ejecuta pasos fijos, procesa recogidas y objetivos y solicita el siguiente repintado.
 function frame(timestamp) {
   advanceClock(timestamp, game.changingLevel, () => {
     if (game.changingLevel) return;
@@ -206,9 +209,9 @@ function frame(timestamp) {
   });
   if (!game.changingLevel) {
     collectItems(game.player);
-    const now = gameTime();
+    const simulationTime = gameTime();
     game.entities = game.entities.filter(
-      (entity) => entity.hp > 0 || now - entity.deathAt < FADE_MS,
+      (entity) => entity.hp > 0 || simulationTime - entity.deathAt < FADE_MS,
     );
     updateRoster();
     updateNearby();
@@ -246,6 +249,7 @@ function frame(timestamp) {
   game.animationFrame = requestAnimationFrame(frame);
 }
 
+// Prepara interfaz y catálogos, inicia la primera misión y enlaza el ciclo de vida del juego.
 export async function startGame({
   root = document.querySelector('#game-root') || document.body,
 } = {}) {
@@ -261,15 +265,16 @@ export async function startGame({
   game.ctx = game.canvas.getContext('2d');
   game.loadingEl = document.getElementById('loading');
   game.toastEl = document.getElementById('toast');
+  // Adapta el búfer del canvas al tamaño real de la ventana y vuelve a dibujar.
   const resize = () => {
     game.canvas.width = Math.max(1, game.canvas.clientWidth);
     game.canvas.height = Math.max(1, game.canvas.clientHeight);
     draw();
   };
   resize();
-  const url = new URL('./data/benefits.json',import.meta.url);
-  const [benefits] = await Promise.all([fetch(url).then(r=>r.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
-  game.benefits = new Map(benefits.map(b=>[b.id,b]));
+  const benefitsUrl = new URL('./data/benefits.json',import.meta.url);
+  const [benefits] = await Promise.all([fetch(benefitsUrl).then(response=>response.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
+  game.benefits = new Map(benefits.map(benefit=>[benefit.id,benefit]));
   game.donors = new Map();
   for (const benefit of benefits) for (const name of benefit.pokemon) {
     if (game.donors.has(name)) throw new Error('Beneficio duplicado para '+name);
@@ -283,7 +288,6 @@ export async function startGame({
   await loadItemImages(items);
   game.progress = 5;
   game.xp = 0;
-  game.xpNotes = [];
   game.essenceRemainders = {};
   game.cooldownDurations = {};
   game.amuletUntil = 0;
@@ -301,6 +305,7 @@ export async function startGame({
   game.updateInventory = attachInventory(root, input.signal);
   const observer = new ResizeObserver(resize);
   observer.observe(game.canvas);
+  // Libera observador, entradas y temporizadores si se vuelve a montar el juego.
   root.__pokeWalkCleanup = () => {
     observer.disconnect();
     input.abort();

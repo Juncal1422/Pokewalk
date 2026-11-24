@@ -21,6 +21,7 @@ export const game = {
   toastTimer: 0,
 };
 
+// Cancela el bucle anterior y descarta las referencias al mapa, al jugador y a la interfaz.
 export function resetGameState() {
   console.info('[Partida] Reiniciando la simulación');
   cancelAnimationFrame(game.animationFrame);

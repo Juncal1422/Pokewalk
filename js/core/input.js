@@ -2,25 +2,31 @@ import { useActive } from './abilities.js';
 import { setState, triggerAttack } from './entities.js';
 import { game } from './state.js';
 
+// Vincula teclado, puntero y pérdida de foco al canvas y devuelve el controlador de los eventos.
 export function attachInput() {
   console.debug('[Controles] Activando teclado y puntero');
   const controller = new AbortController();
   const { signal } = controller;
-  const canvas = game.canvas;
-  const on = (target, type, listener) => target.addEventListener(type, listener, { signal });
+  const gameCanvas = game.canvas;
+  // Registra cada evento con la misma señal para poder desmontar todos los controles.
+  const listen = (target, type, listener) => target.addEventListener(type, listener, { signal });
 
+  // Vacía las direcciones pulsadas y detiene la marcha al perder el foco.
   function cancelInput() {
     game.keys = Object.create(null);
     const player = game.player;
     if (player?.state === 'Walk') setState(player, 'Idle');
   }
+  // Inicia el ataque del jugador si el piso está activo y el jugador sigue vivo.
   function attack() {
     if (!game.changingLevel && game.player?.hp) triggerAttack(game.player);
   }
 
+  // Reconoce los paneles que permiten transmitir el clic como ataque.
   const isPanel = target => !!target?.closest?.('#benefits, #inventory, #nearby, #roster');
-  on(document, 'keydown', event => {
-    if (event.target !== canvas && !isPanel(event.target)) return;
+  // Las acciones puntuales ignoran la repetición de tecla. El movimiento conserva su estado hasta keyup.
+  listen(document, 'keydown', event => {
+    if (event.target !== gameCanvas && !isPanel(event.target)) return;
     if (game.changingLevel) return;
     const key = event.key.toLowerCase();
     if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'q', 'e', ' '].includes(key)) return;
@@ -30,25 +36,25 @@ export function attachInput() {
     else if (key === ' ') attack();
     else game.keys[key] = true;
   });
-  on(window, 'keyup', event => {
+  listen(window, 'keyup', event => {
     const key = event.key.toLowerCase();
     delete game.keys[key];
   });
-  on(document, 'pointerdown', event => {
-    if (event.target !== canvas && !isPanel(event.target)) return;
+  listen(document, 'pointerdown', event => {
+    if (event.target !== gameCanvas && !isPanel(event.target)) return;
     event.preventDefault();
     if (event.button !== 0 || !event.isPrimary) return;
-    canvas.focus();
+    gameCanvas.focus();
     attack();
   });
-  on(document, 'pointerdown', event => { if (event.target !== canvas && !isPanel(event.target)) cancelInput(); });
-  on(document, 'focusout', event => {
-    if ((event.target === canvas || isPanel(event.target)) &&
-        event.relatedTarget !== canvas && !isPanel(event.relatedTarget)) cancelInput();
+  listen(document, 'pointerdown', event => { if (event.target !== gameCanvas && !isPanel(event.target)) cancelInput(); });
+  listen(document, 'focusout', event => {
+    if ((event.target === gameCanvas || isPanel(event.target)) &&
+        event.relatedTarget !== gameCanvas && !isPanel(event.relatedTarget)) cancelInput();
   });
-  on(window, 'blur', cancelInput);
-  on(document, 'visibilitychange', () => { if (document.hidden) cancelInput(); });
+  listen(window, 'blur', cancelInput);
+  listen(document, 'visibilitychange', () => { if (document.hidden) cancelInput(); });
   signal.addEventListener('abort', cancelInput, { once: true });
-  canvas.focus();
+  gameCanvas.focus();
   return controller;
 }
