@@ -1,5 +1,5 @@
 import { groundFree } from './terrain.js';
-import { attackReach } from './stats.js';
+import { movementRate, attackReach } from './stats.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 
@@ -62,22 +62,6 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, esca
   return path.reverse();
 }
 
-// Si un retroceso o varios cuerpos bloquean la salida, una casilla libre de
-// la orilla permite seguir combatiendo incluso con un Ditto que no sabe cruzar.
-function recoverOnLand(enemy, canMove) {
-  let best = Infinity;
-  let dest;
-  game.grid.forEach((row, y) => row.forEach((tile, x) => {
-    if (tile !== 0) return;
-    const px = center(x), py = center(y), d = Math.hypot(px - enemy.x, py - enemy.y);
-    if (d < best && canMove(enemy, px, py)) {
-      best = d;
-      dest = [px, py];
-    }
-  }));
-  if (dest) [enemy.x, enemy.y] = dest;
-}
-
 // Tras un MISS, elige un flanco. Cada paso comprueba cuerpos,
 // paredes y tierra firme antes de mover al enemigo.
 export function trySidestep(enemy, attacker, canMove, now) {
@@ -112,7 +96,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const playerOnLand = standingOnLand(game.player.x, game.player.y);
   if (enemy.sidestep && !enemy.bossResponse) {
     const step = enemy.sidestep;
-    const length = Math.min(2, step.remaining);
+    const length = Math.min(2 * enemy.speed * movementRate(enemy.stats.speed), step.remaining);
     const x = enemy.x + length * step.sx, y = enemy.y + length * step.sy;
     if ((!playerOnLand || standingOnLand(x, y)) && canMove(enemy, x, y)) {
       setState(enemy, 'Walk');
@@ -179,7 +163,10 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   if (!enemy.path?.length || enemy.bossResponse || enemy.playerOnLand !== playerOnLand || (!returnToLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
     const gx = pursuing ? cell(player.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
     const gy = pursuing ? cell(player.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
-    enemy.path = route(enemy, gx, gy, terrainFree, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
+    // Tras un bloqueo buscamos otro camino a pie teniendo en cuenta los cuerpos.
+    const passable = enemy.avoidBodies ? canMove : terrainFree;
+    enemy.path = route(enemy, gx, gy, passable, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
+    enemy.avoidBodies = false;
     enemy.playerOnLand = playerOnLand;
     enemy.fleeing = fleeing;
     enemy.aiTimer = pursuing ? 30 : 65;
@@ -187,7 +174,6 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const dest = enemy.path[0];
   if (!dest) {
-    if (returnToLand) recoverOnLand(enemy, canMove);
     setState(enemy, 'Idle');
     return;
   }
@@ -201,7 +187,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   if (Math.hypot(dest[0] - enemy.x, dest[1] - enemy.y) < 1) enemy.path.shift();
   enemy.stuck = Math.hypot(enemy.x - oldX, enemy.y - oldY) < 0.05 ? (enemy.stuck || 0) + 1 : 0;
   if (enemy.stuck >= 20) {
-    if (returnToLand) recoverOnLand(enemy, canMove);
+    enemy.avoidBodies = true;
     enemy.path = [];
     enemy.stuck = 0;
   }

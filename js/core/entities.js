@@ -1,4 +1,4 @@
-import { effect } from './abilities.js';
+import { effect, updateBossAbility } from './abilities.js';
 import { amount, playerStats } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, trySidestep } from './enemy-ai.js';
@@ -62,7 +62,10 @@ export function setState(entity, state) {
   }
 }
 
-function bodyRadius(entity) { return Math.min(TILE / 2 - 1, BODY_RADIUS * entity.stats.size / 100); }
+export function bodyRadius(entity) {
+  const radius = BODY_RADIUS * entity.stats.size / 100;
+  return entity.boss ? radius : Math.min(TILE / 2 - 1, radius);
+}
 
 function terrainFree(entity, x, y) {
   const radius = bodyRadius(entity);
@@ -119,17 +122,8 @@ function resolveImpact(attacker) {
       continue;
     }
     const critical = Math.random() < 0.10;
-    let damage = damageFor(attacker, target, critical);
-    if (target.isPlayer) {
-      const species = game.pokemon.get(attacker.dex), form = game.pokemon.get(target.dex);
-      if (species.essences.some(type=>form.essences.includes(type))) damage *= 1-amount('lovefool');
-      if (Math.random() < amount('iron_tag')) damage *= .5;
-    }
-    inflictDamage(attacker,target,damage,critical);
-    if (target.isPlayer && game.held.has('green_spike') && attacker.hp) {
-      inflictDamage(target,attacker,Math.max(1,target.stats.defense*amount('green_spike')));
-    }
-    if (target.boss && target.hp && (target.bossResponse || target.state==='Attack')) continue;
+    inflictDamage(attacker,target,damageFor(attacker, target, critical),critical);
+    if (target.boss && target.hp && (target.bossResponse || target.abilityCast || target.state==='Attack')) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
     for (let step = 0; step < 10; step++) {
       if (!canMove(target, target.x + vx, target.y + vy)) break;
@@ -142,14 +136,26 @@ function resolveImpact(attacker) {
 // Ataques normales, habilidades y reflejos comparten derrota, botín y Hurt.
 export function inflictDamage(attacker,target,raw,critical=false) {
   if (!target.hp) return;
-  const now=performance.now(), damage=Math.min(target.hp,Math.max(1,Math.round(raw)));
+  const now = performance.now();
+  if (target.isPlayer) {
+    if (now - target.lastHit < PLAYER_GRACE_MS) return;
+    const species = game.pokemon.get(attacker.dex), form = game.pokemon.get(target.dex);
+    if (species.essences.some(type => form.essences.includes(type))) raw *= 1 - amount('lovefool');
+    if (Math.random() < amount('iron_tag')) raw *= .5;
+  }
+  let damage = Math.min(target.hp, Math.max(1, Math.round(raw)));
+  if (attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
+  if (!damage) return;
   target.hitNumber = { damage, critical, time: now };
   target.hp = Math.max(0, target.hp - damage);
   target.lastHit = now;
   target.sidestep = null;
+  if (target.isPlayer && game.held.has('green_spike') && attacker.hp) {
+    inflictDamage(target, attacker, Math.max(1, target.stats.defense * amount('green_spike')));
+  }
   // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
   // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
-  if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack')) return;
+  if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return;
   if (target.boss && target.hp) {
     target.hitsWithoutAction = (target.hitsWithoutAction || 0) + 1;
     target.bossResponse = target.hitsWithoutAction >= 2;
@@ -196,6 +202,9 @@ export async function loadLevel(dex, mission, floor, bonuses = game.player?.bonu
     enemy.level = levelFor(species, enemyProgress(game.progress));
     enemy.stats = statsFor(species, game.progress, {}, bossFloor, true);
     if (bossFloor) {
+      const benefit = game.donors.get(species.name);
+      enemy.activeBenefit = benefit?.active ? benefit.id : null;
+      enemy.home = { x: enemy.x, y: enemy.y };
       enemy.tracking = true;
     }
     enemy.hp = enemy.stats.hpMax;
@@ -240,7 +249,8 @@ export function updateEntity(entity) {
       } else setState(entity, 'Idle');
     }
   } else if (!['Attack', 'Hurt'].includes(entity.state)) {
-    updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);
+    if (!entity.boss || !updateBossAbility(entity))
+      updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);
   }
 
   const animation = entity.anims[entity.state] || entity.anims.Idle;

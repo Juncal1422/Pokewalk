@@ -102,11 +102,5 @@ export function damageFor(attacker, target, critical) {
         50,
     ) + 2;
   const damage = Math.floor(base * (critical ? 1.5 : 1));
-  // Protección para formas frágiles, incluso ante un crítico de un jefe tardío.
-  return Math.max(
-    1,
-    attacker.boss && target.isPlayer
-      ? Math.min(damage, Math.floor(target.stats.hpMax * 0.45))
-      : damage,
-  );
+  return Math.max(1, damage);
 }
