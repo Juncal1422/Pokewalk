@@ -1,6 +1,27 @@
 import { EXCLUDED_DEX } from '../core/constants.js';
 import { game } from '../core/state.js';
 
+// Algunas hojas ya trasladan el dibujo dentro de la celda. Restamos esa
+// traslación al dibujar para que solo la trayectoria de combate mueva el sprite.
+function frameCenters(animation) {
+  const { img, fw, fh, frames } = animation;
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img,0,0);
+  const data = ctx.getImageData(0,0,img.width,img.height).data;
+  return Array.from({length:Math.floor(img.height/fh)}, (_,row) =>
+    Array.from({length:frames}, (_,col) => {
+      let count=0, sx=0, sy=0;
+      for (let y=0;y<fh;y++) for (let x=0;x<fw;x++) {
+        if (data[4*((row*fh+y)*img.width+col*fw+x)+3] < 128) continue;
+        sx+=x+.5; sy+=y+.5; count++;
+      }
+      return count ? {x:sx/count-fw/2,y:sy/count-fh/2} : {x:0,y:0};
+    }));
+}
+
 async function fetchAnimation(baseUrl, animations, candidates) {
   for (const name of candidates) {
     let node = animations.find(
@@ -89,6 +110,12 @@ export async function loadPokemonData(dex) {
       },
     };
     console.debug('[Sprites] Animaciones preparadas', dex, Object.keys(data.anims));
+    const strike = data.anims.Attack, rest = data.anims.Idle;
+    const centers = frameCenters(strike), idleCenters = frameCenters(rest);
+    strike.offsets = centers.map((frames,dir) => {
+      const origin = idleCenters[Math.min(dir,idleCenters.length-1)][0];
+      return frames.map(point => ({x:origin.x-point.x,y:origin.y-point.y}));
+    });
     game.spriteCache.set(dex, data);
     return data;
   } catch {

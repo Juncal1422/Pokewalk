@@ -1,3 +1,4 @@
+import { gameTime } from './clock.js';
 import { groundFree } from './terrain.js';
 import { movementRate, attackReach } from './stats.js';
 import { TILE } from './constants.js';
@@ -107,7 +108,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     } else step.remaining = 0;
     if (step.remaining <= 0) {
       enemy.sidestep = null;
-      enemy.counterUntil = performance.now() + 1400;
+      enemy.counterUntil = gameTime() + 1400;
     }
     return;
   }
@@ -128,7 +129,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
   const inRange = pursuing && !fleeing && !returnToLand && distance <= reach + 5;
-  const now = performance.now();
+  const now = gameTime();
   if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
     enemy.retreatTicks = 0;

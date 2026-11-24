@@ -13,9 +13,15 @@ export function attackMotion(entity, animation) {
     if (frame === hit) peak = total + duration / 2;
     total += duration;
   }
-  const fraction = elapsed <= peak ? elapsed / peak : (total - elapsed) / (total - peak);
-  const distance = attackReach(entity.stats) * Math.max(0, fraction);
+  // Algunas hojas (Mothim) marcan impacto en el primer cuadro. Reservamos
+  // tiempo para que la aproximación y el regreso sean visibles en ambos extremos.
+  peak = Math.max(total * .25, Math.min(total * .75, peak));
+  const impact = elapsed >= peak;
+  const phase = Math.min(1, Math.max(0, impact ? (total-elapsed)/(total-peak) : elapsed/peak));
+  // La derivada es cero en el impacto: la embestida cambia de sentido sin tirón.
+  const ease = phase * phase * (3 - 2 * phase);
+  const distance = attackReach(entity.stats) * (entity.fangStrike && impact ? 1 : ease);
   const [vx, vy] = DIR_VEC[entity.dir];
   const norm = Math.hypot(vx, vy);
-  return { x: vx / norm * distance, y: vy / norm * distance, impact: elapsed >= peak };
+  return { x: vx / norm * distance, y: vy / norm * distance, impact, opacity: impact ? phase : 1 };
 }

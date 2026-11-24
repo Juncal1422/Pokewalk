@@ -1,4 +1,5 @@
-import { drawEffects } from './abilities.js';
+import { gameTime } from './clock.js';
+import { drawEffects, drawFang } from './abilities.js';
 import { attackMotion } from './attack-motion.js';
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
@@ -117,7 +118,7 @@ export function draw() {
   drawItems(ctx, ZOOM, cameraX, cameraY);
   for (const entity of [...game.entities].sort((a, b) => a.y - b.y)) {
     ctx.save();
-    if (entity.hp === 0) ctx.globalAlpha = Math.max(0, 1 - (performance.now() - entity.deathAt) / FADE_MS);
+    if (entity.hp === 0) ctx.globalAlpha = Math.max(0, 1 - (gameTime() - entity.deathAt) / FADE_MS);
     const px = Math.floor(entity.x * ZOOM - cameraX),
       py = Math.floor(entity.y * ZOOM - cameraY);
     ctx.fillStyle = entity.isPlayer
@@ -127,7 +128,8 @@ export function draw() {
     ctx.ellipse(px, py + 7, 15, 7, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    const animation = entity.anims[entity.state] || entity.anims.Idle;
+    const fang = entity.state === 'Attack' && entity.fangStrike;
+    const animation = fang ? entity.anims.Charge : entity.anims[entity.state] || entity.anims.Idle;
     const offset = entity.state === 'Attack' ? attackMotion(entity, animation) : { x: 0, y: 0 };
     const scale = ZOOM * entity.stats.size / 100;
     const drawW = animation.fw * scale, drawH = animation.fh * scale;
@@ -135,7 +137,10 @@ export function draw() {
       entity.dir,
       Math.floor(animation.img.height / animation.fh) - 1,
     );
-    const elapsed = performance.now() - entity.lastHit;
+    const correction = entity.state === 'Attack' && !fang ? animation.offsets?.[row]?.[entity.frame] : null;
+    const shiftX = (fang ? 0 : offset.x*ZOOM) + (correction?.x ?? 0)*scale;
+    const shiftY = (fang ? 0 : offset.y*ZOOM) + (correction?.y ?? 0)*scale;
+    const elapsed = gameTime() - entity.lastHit;
     ctx.save();
     if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2) ctx.globalAlpha *= 0.28;
     if (elapsed < 110) ctx.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
@@ -145,14 +150,15 @@ export function draw() {
       row * animation.fh,
       animation.fw,
       animation.fh,
-      Math.floor(px + offset.x * ZOOM - drawW / 2),
-      Math.floor(py + offset.y * ZOOM - drawH / 2),
+      Math.floor(px + shiftX - drawW / 2),
+      Math.floor(py + shiftY - drawH / 2),
       drawW,
       drawH,
     );
 
     ctx.restore();
-    if (!entity.isPlayer && performance.now() - entity.lastHit < 3000) {
+    if (fang) drawFang(ctx,entity.dir,px+offset.x*ZOOM,py+offset.y*ZOOM,ZOOM,offset.opacity);
+    if (!entity.isPlayer && gameTime() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;
       const x = px - 19, y = Math.round(py - drawH / 2 - 7);
       ctx.fillStyle = '#131921';
@@ -161,8 +167,8 @@ export function draw() {
       ctx.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
     }
     const hit = entity.hitNumber;
-    if (hit && performance.now() - hit.time < 750) {
-      const rise = (performance.now() - hit.time) / 45;
+    if (hit && gameTime() - hit.time < 750) {
+      const rise = (gameTime() - hit.time) / 45;
       ctx.font = 'bold 17px system-ui';
       ctx.textAlign = 'center';
       ctx.lineWidth = 3;
@@ -171,12 +177,12 @@ export function draw() {
       ctx.strokeText(hit.damage, px, py - drawH / 2 - rise);
       ctx.fillText(hit.damage, px, py - drawH / 2 - rise);
     }
-    if (entity.missUntil > performance.now()) ctx.drawImage(missImage, px - 15, py - drawH / 2 - 22, 30, 16);
+    if (entity.missUntil > gameTime()) ctx.drawImage(missImage, px - 15, py - drawH / 2 - 22, 30, 16);
     ctx.restore();
   }
   ctx.save();
   drawEffects(ctx, ZOOM, cameraX, cameraY);
-  ctx.scale(1.6, 1.6);
-  drawHud(ctx, { width: canvas.width / 1.6, height: canvas.height / 1.6 }, player);
+  ctx.scale(.8, .8);
+  drawHud(ctx, { width: canvas.width / .8, height: canvas.height / .8 }, player);
   ctx.restore();
 }

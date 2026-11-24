@@ -5,104 +5,104 @@
     "stats": {},
     "heal": 0,
     "image": "assets/items/potion.png",
-    "description": "Recupera el 40 % de los HP máximos.",
-    "healFraction": 0.4,
+    "description": "Recupera el 80 % de los HP máximos.",
+    "healFraction": 0.8,
     "consumable": true
   },
   "goldenapple": {
     "name": "Manzana dorada",
     "duration": "run",
     "stats": {
-      "hpMax": 4
+      "hpMax": 8
     },
-    "heal": 4,
+    "heal": 8,
     "image": "assets/items/goldenapple.png",
-    "description": "Recupera 4 PV. Bono permanente: +4 PV máximos.",
+    "description": "Recupera 8 PV. Bono permanente: +8 PV máximos.",
     "consumable": false
   },
   "horn": {
     "name": "Cuerno",
     "duration": "run",
     "stats": {
-      "attack": 4
+      "attack": 8
     },
     "heal": 0,
     "image": "assets/items/horn.png",
-    "description": "Bono permanente: +4 Ataque.",
+    "description": "Bono permanente: +8 Ataque.",
     "consumable": false
   },
   "amulet": {
     "name": "Amuleto",
     "duration": "run",
     "stats": {
-      "speed": 4,
-      "defense": 4
+      "speed": 8,
+      "defense": 8
     },
     "heal": 0,
     "image": "assets/items/amulet.png",
-    "description": "Bono permanente: +4 Velocidad, +4 Defensa.",
+    "description": "Bono permanente: +8 Velocidad, +8 Defensa.",
     "consumable": false
   },
   "ambrose": {
     "name": "Ambrosía",
     "duration": "run",
     "stats": {
-      "attack": 4,
-      "defense": 4
+      "attack": 8,
+      "defense": 8
     },
     "heal": 0,
     "image": "assets/items/ambrose.png",
-    "description": "Bono permanente: +4 Ataque, +4 Defensa.",
+    "description": "Bono permanente: +8 Ataque, +8 Defensa.",
     "consumable": false
   },
   "ribbon": {
     "name": "Lazo",
     "duration": "run",
     "stats": {
-      "attackSpeed": 8
+      "attackSpeed": 16
     },
     "heal": 0,
     "image": "assets/items/ribbon.png",
-    "description": "Bono permanente: +8 Velocidad de ataque.",
+    "description": "Bono permanente: +16 Velocidad de ataque.",
     "consumable": false
   },
   "seed": {
     "name": "Semilla",
     "duration": "run",
     "stats": {
-      "attackSpeed": 4
+      "attackSpeed": 8
     },
     "heal": 0,
     "image": "assets/items/seed.png",
-    "description": "Bono permanente: +4 Velocidad de ataque.",
+    "description": "Bono permanente: +8 Velocidad de ataque.",
     "consumable": false
   },
   "min_lens": {
     "name": "Lente de reducción",
     "duration": "run",
     "stats": {
-      "defense": -4,
-      "speed": 8,
-      "size": -20,
-      "range": 4
+      "defense": -8,
+      "speed": 16,
+      "size": -40,
+      "range": 8
     },
     "heal": 0,
     "image": "assets/items/min_lens.png",
-    "description": "Bono permanente: -4 Defensa, +8 Velocidad, -20 Tamaño, +4 Rango de ataque.",
+    "description": "Bono permanente: -8 Defensa, +16 Velocidad, -40 Tamaño, +8 Rango de ataque.",
     "consumable": false
   },
   "max_lens": {
     "name": "Lente de aumento",
     "duration": "run",
     "stats": {
-      "speed": -4,
-      "attack": 4,
-      "defense": 8,
-      "size": 20
+      "speed": -8,
+      "attack": 8,
+      "defense": 16,
+      "size": 40
     },
     "heal": 0,
     "image": "assets/items/max_lens.png",
-    "description": "Bono permanente: -4 Velocidad, +4 Ataque, +8 Defensa, +20 Tamaño.",
+    "description": "Bono permanente: -8 Velocidad, +8 Ataque, +16 Defensa, +40 Tamaño.",
     "consumable": false
   }
 }

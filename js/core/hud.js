@@ -1,5 +1,6 @@
+import { gameTime } from './clock.js';
 import { game } from './state.js';
-import { labels } from './stats.js';
+import { labels, statsFor } from './stats.js';
 
 import { drawFrame } from './message-frame.js';
 
@@ -34,7 +35,7 @@ function indicators(ctx,key,x,y,now) {
 }
 
 export function drawHud(ctx, canvas, player) {
-  const now = performance.now();
+  const now = gameTime();
   game.pickups = game.pickups.filter(note => now - note.time < 1500);
   const baseWidth = Math.min(144, canvas.width * 0.22);
   const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
@@ -76,8 +77,13 @@ export function drawHud(ctx, canvas, player) {
   ctx.font = 'bold 13px system-ui';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
   textBox(ctx, 4, y - 6, 185, canvas.height - y + 5);
+  // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
+  const itemBonuses = Object.fromEntries(Object.entries(player.bonuses)
+    .map(([key, value]) => [key, value - game.benefitLevels]));
+  const baseStats = statsFor(game.pokemon.get(player.dex), game.progress, itemBonuses);
   for (const [key, label] of Object.entries(labels)) {
-    ctx.fillStyle = '#fff';
+    const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
+    ctx.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';
     ctx.fillText(label + ' ' + player.stats[key], 12, y + 9);
     indicators(ctx, key, 182, y + 9, now);
     y += 19;
