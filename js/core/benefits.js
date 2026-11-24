@@ -2,6 +2,12 @@ import { gameTime } from './clock.js';
 import { statsFor } from './stats.js';
 import { game } from './state.js';
 
+// Resuelve las combinaciones del catálogo sobre los beneficios equipados.
+export function synergyActive(effect, held = game.held) {
+  const rule = game.synergies.get(effect);
+  return rule.requires.every(id => held.has(id)) && (!rule.anyOf || rule.anyOf.some(id => held.has(id)));
+}
+
 // Devuelve la magnitud del beneficio si pertenece a la colección consultada.
 export function amount(benefitId, heldBenefits = game.held) {
   return heldBenefits?.has(benefitId) ? game.benefits.get(benefitId).amount : 0;
@@ -29,7 +35,8 @@ export function playerStats(species, playerLevel, bonuses, heldBenefits = game.h
 export function projectReward(state, option) {
   const heldBenefits = new Set(state.held), bonuses = { ...state.bonuses }, balances = { ...state.balances };
   const benefit = game.donors.get(option.row.name);
-  const allStats = option.bonus || heldBenefits.has(benefit?.id);
+  const replacesActive = benefit?.active && [...heldBenefits].some(id => game.benefits.get(id).slot === benefit.slot);
+  const allStats = option.bonus || heldBenefits.has(benefit?.id) || (heldBenefits.size >= 27 && !replacesActive);
   if (allStats) {
     for (const statKey of Object.keys(bonuses)) bonuses[statKey]++;
   } else {

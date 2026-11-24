@@ -1,3 +1,4 @@
+import { evolutionCost } from './evolution.js';
 import { game } from './state.js';
 import { labels, levelFor } from './stats.js';
 import { projectReward, playerStats } from './benefits.js';
@@ -16,10 +17,10 @@ function evolutionBars(species,state) {
       const count = state.balances[type] || 0;
       const line = element('div');
       const progressBar = element('progress');
-      progressBar.max = rule.amount;
-      progressBar.value = Math.min(count, rule.amount);
+      progressBar.max = evolutionCost(rule);
+      progressBar.value = Math.min(count, evolutionCost(rule));
       progressBar.setAttribute('aria-label', name + ' · ' + type);
-      line.append(gem(type), progressBar, element('small', count + '/' + rule.amount));
+      line.append(gem(type), progressBar, element('small', count + '/' + evolutionCost(rule)));
       footer.append(line);
     }
   }
@@ -73,7 +74,7 @@ function rewardCard(option, state) {
 // Abre las opciones de final de misión y devuelve la elección o la decisión de conservar la forma.
 export function chooseReward(options, state, extra=false) {
   const dialog = document.getElementById('rewards');
-  dialog.querySelector('h1').textContent = extra ? 'Máscara de oro · Mejora adicional' : 'Mejoras';
+  dialog.querySelector('h1').textContent = extra ? 'Cambiacaras · Mejora adicional' : 'Mejoras';
   const cards = dialog.querySelector('.cards');
   cards.replaceChildren();
   return new Promise(resolve => {

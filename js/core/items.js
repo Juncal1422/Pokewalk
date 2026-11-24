@@ -6,7 +6,7 @@ import { canMove } from './entities.js';
 import { essenceIcon } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
-import { playerStats, amount } from './benefits.js';
+import { playerStats, amount, synergyActive } from './benefits.js';
 
 const images = new Map();
 // Precarga las imágenes por identificador para reutilizarlas en cada piso.
@@ -34,12 +34,12 @@ export function spawnFloorItems() {
     const [site] = sites.splice(Math.floor(Math.random() * sites.length), 1);
     game.drops.push({ id: itemId, ...site });
   }
-  if (sites.length && Math.random() < .5) place(Math.random()<.25 ? 'berry_sitrus' : 'berry_oran');
+  if (sites.length && Math.random() < .5) place(synergyActive('sitrusBerries') || Math.random()<.25 ? 'berry_sitrus' : 'berry_oran');
   const available = Object.keys(game.items).filter(itemId => {
     const item=game.items[itemId];
-    return !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
+    return (item.consumable || game.inventory.size < 75) && !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < .30 + amount('green_scale')) {
+  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < .225 + amount('green_scale')) {
     const itemId=available[Math.floor(Math.random() * available.length)];
     place(itemId);
     if (game.items[itemId].oncePerMission) mission.candyPlaced=true;
@@ -56,14 +56,12 @@ export function collectItems(player, strike = null) {
     } else if (Math.hypot(drop.x - player.x, drop.y - player.y) > 12) return true;
     if (drop.essence) {
       const type=drop.essence;
-      // Guardamos medios puntos para que dos recogidas de 1 otorguen 3, incluso en pisos distintos.
       const candy = 'candy_'+(type==='fighting'?'fight':type);
-      const total=drop.amount*(game.inventory.has(candy)?1.5:1)+(game.essenceRemainders[type] || 0);
-      game.essences[type]=(game.essences[type] || 0)+Math.floor(total);
-      game.essenceRemainders[type]=total%1;
+      game.essences[type]=(game.essences[type] || 0)+drop.amount*(game.inventory.has(candy)?2:1);
       return false;
     }
     const item = game.items[drop.id];
+    if (!item.consumable && game.inventory.size >= 75 && !game.inventory.has(drop.id)) return true;
     if (!item.consumable && game.inventory.has(drop.id)) return false;
     const bonuses = { ...player.bonuses };
     for (const [key, delta] of Object.entries(item.stats)) bonuses[key] += delta;

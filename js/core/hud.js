@@ -82,6 +82,10 @@ export function drawHud(drawingContext, canvas, player) {
     drawingContext.fillText(formatValue(count), x + 40, y + 20);
     index++;
   }
+  drawingContext.save();
+  drawingContext.translate(0,canvas.height);
+  drawingContext.scale(1.15,1.15);
+  drawingContext.translate(0,-canvas.height);
   drawingContext.font = 'bold 13px system-ui';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
   drawFrame(drawingContext, icons['textbox-b'], 4, y - 25, 185, canvas.height - y + 25, .25);
@@ -92,10 +96,15 @@ export function drawHud(drawingContext, canvas, player) {
   for (const [key, label] of Object.entries(labels)) {
     const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
     drawingContext.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';
-    drawingContext.fillText(label + ' ' + player.stats[key], 12, y + 9);
+    drawingContext.textAlign = 'left';
+    drawingContext.fillText(label,12,y+9);
+    drawingContext.textAlign = 'right';
+    drawingContext.fillText(String(player.stats[key]),178,y+9);
+    drawingContext.textAlign = 'left';
     indicators(drawingContext, key, 182, y + 9, simulationTime);
     y += 19;
   }
+  drawingContext.restore();
   drawingContext.save();
   drawingContext.font = 'bold 17px system-ui';
   drawingContext.textAlign = 'right';

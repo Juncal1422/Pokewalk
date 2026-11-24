@@ -26,10 +26,14 @@ export function attachInventory(root) {
     ]) {
       const panel = root.querySelector(selector);
       panel.replaceChildren();
-      for (const entry of entries) {
+      for (const [index,entry] of entries.entries()) {
         const iconImage = new Image();
         iconImage.src = new URL('../../' + entry.image, import.meta.url).href;
         iconImage.alt = entry.name;
+        if (selector === '#inventory') {
+          iconImage.style.gridColumn = String(1 + index%25);
+          iconImage.style.gridRow = String(3 - Math.floor(index/25));
+        }
         // El tooltip describe el icono bajo el cursor y no captura el clic de ataque.
         iconImage.onpointerenter = () => {
           tooltip.textContent = entry.name + ' · ' + entry.description;

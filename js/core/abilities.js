@@ -1,7 +1,8 @@
 import { gameTime } from './clock.js';
 import { game } from './state.js';
 import { DIR_VEC, TILE } from './constants.js';
-import { playerStats } from './benefits.js';
+import { hasSight } from './terrain.js';
+import { playerStats, synergyActive } from './benefits.js';
 import { attackReach, damageFor } from './stats.js';
 import { bodyRadius, canMove, inflictDamage, setState, showToast } from './entities.js';
 
@@ -48,16 +49,16 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     const frames = effectFrames.get(visualEffect.kind), animationProgress = Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms);
     const spriteImage = frames[Math.max(0,Math.min(frames.length-1,Math.floor(animationProgress*frames.length)))];
     const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX, y = (visualEffect.follow?.y ?? visualEffect.y)*renderZoom-cameraY;
-    const scale = renderZoom*(visualEffect.follow?.stats.size ?? 100)/100;
+    const scale = renderZoom*(visualEffect.follow?.stats.size ?? 100)/100*(visualEffect.kind==='mine'?1.6:1);
     if (visualEffect.kind === 'spine') {
       drawFang(drawingContext,visualEffect.dir,x,y,scale,1-animationProgress,'spine','sepia(1) saturate(6) hue-rotate(65deg)');
       continue;
     }
     const width = spriteImage.width*scale, height = spriteImage.height*scale;
     drawingContext.save();
-    if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && ['flare','fangaround','mine'].includes(visualEffect.kind) && game.held.has('golden_spike'))
+    if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
-    drawingContext.drawImage(spriteImage,x-width/2,y-height*(visualEffect.kind==='purple'?.95:.5),width,height);
+    drawingContext.drawImage(spriteImage,x-width/2,y-height*(visualEffect.kind==='purple'?.95:visualEffect.kind==='fangaround'?.72:.5),width,height);
     drawingContext.restore();
   }
 }
@@ -117,7 +118,7 @@ export function useActive(slot) {
 
 // Fija el origen, alcance y daño del proyectil en el instante del disparo.
 function launchFlare(owner, directionIndex) {
-  const projectile = effect('flare',owner.x,owner.y,500,directionIndex);
+  const projectile = effect('flare',owner.x,owner.y,750,directionIndex);
   const fiery = game.pokemon.get(owner.dex).types.includes('fire');
   Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:4*attackReach(owner.stats),
     damage:Math.round(owner.stats.attack*(fiery?1.5:1))});
@@ -126,17 +127,17 @@ function launchFlare(owner, directionIndex) {
 // Crea ocho proyectiles equidistantes cuyo daño depende de la defensa al recibir el crítico.
 export function releaseSpines(owner) {
   for (let directionIndex=0;directionIndex<8;directionIndex++) {
-    const projectile=effect('spine',owner.x,owner.y,300,directionIndex);
-    Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:10,damage:Math.max(1,Math.round(owner.stats.defense*.1))});
+    const projectile=effect('spine',owner.x,owner.y,680,directionIndex);
+    Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:32,damage:Math.max(1,Math.round(owner.stats.defense*.1))});
   }
 }
 
 // Resuelve la explosión circular, incluido el daño que recibe su propietario.
 function blast(owner) {
-  effect('mine',owner.x,owner.y,600).owner=owner;
+  effect('mine',owner.x,owner.y,1000).owner=owner;
   for (const target of game.entities) {
     if (!target.hp || (target!==owner && owner.isPlayer===target.isPlayer)) continue;
-    if (Math.hypot(target.x-owner.x,target.y-owner.y)<=50+(target===owner?0:bodyRadius(target))) {
+    if (Math.hypot(target.x-owner.x,target.y-owner.y)<=72+(target===owner?0:bodyRadius(target))) {
       inflictDamage(owner,target,damageFor(owner,target,false),false,true);
     }
   }
@@ -159,10 +160,10 @@ export function updateBossAbility(boss) {
   const benefitId = boss.activeBenefit, player = game.player, simulationTime = gameTime();
   if (!benefitId || !boss.hp || !player.hp) return false;
   const distance = Math.hypot(player.x-boss.x, player.y-boss.y);
-  const range = (benefitId==='gunpowder_rock'?50:attackReach(boss.stats)*(benefitId==='fire_brooch'?4:1)) + bodyRadius(player);
+  const range = (benefitId==='gunpowder_rock'?72:attackReach(boss.stats)*(benefitId==='fire_brooch'?4:1)) + bodyRadius(player);
   let activeCast = boss.abilityCast;
   if (!activeCast) {
-    if (boss.bossResponse || boss.sidestep || simulationTime < (boss.abilityReadyAt ?? 0) || distance > range) return false;
+    if (boss.bossResponse || boss.sidestep || simulationTime < (boss.abilityReadyAt ?? 0) || (distance > range || !hasSight(boss,player))) return false;
     if (benefitId==='cog' && Math.hypot(boss.x-boss.home.x,boss.y-boss.home.y)<TILE) return false;
     boss.dir = (Math.round(Math.atan2(player.x-boss.x,player.y-boss.y)/(Math.PI/4))+8)%8;
     boss.abilityCast = {start:simulationTime,dir:boss.dir,hit:new Set()};
@@ -172,7 +173,7 @@ export function updateBossAbility(boss) {
   }
   if (simulationTime-activeCast.start < 1000) return true;
   if (boss.state==='Charge') {
-    if (distance > range) {
+    if ((distance > range || !hasSight(boss,player))) {
       boss.abilityReadyAt = simulationTime+1000;
     } else if (benefitId==='mamoswine_fang') {
       setState(boss,'Spin');
@@ -224,7 +225,7 @@ export function tickAbilities() {
   else if (activeCast) {
     const castElapsedMs=simulationTime-activeCast.start;
     if (activeCast.id==='mamoswine_fang') spin(player,activeCast,castElapsedMs);
-    if (castElapsedMs >= (activeCast.id==='mamoswine_fang'?560:['amulet','gunpowder_rock'].includes(activeCast.id)?500:200)) {
+    if (castElapsedMs >= (activeCast.id==='mamoswine_fang'?560:activeCast.id==='amulet'?500:activeCast.id==='gunpowder_rock'?350:200)) {
       if (activeCast.id==='cog') {
         const site=landing(player);
         if (site && game.essences[activeCast.currency]>=5) {
@@ -242,7 +243,10 @@ export function tickAbilities() {
       if (player.hp && player.state!=='Hurt') setState(player,'Idle');
     }
   }
-  game.effects=game.effects.filter(visualEffect=>{
+  // Una colisión puede crear espinas. Se acumulan aparte hasta el paso siguiente.
+  const previousEffects = game.effects;
+  game.effects = [];
+  const survivingEffects = previousEffects.filter(visualEffect=>{
     const lifetimeFraction=Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
     if (visualEffect.kind==='flare' || visualEffect.kind==='spine') {
       const [deltaX,deltaY]=DIR_VEC[visualEffect.dir], directionLength=Math.hypot(deltaX,deltaY);
@@ -263,4 +267,5 @@ export function tickAbilities() {
     }
     return lifetimeFraction<1;
   });
+  game.effects = survivingEffects.concat(game.effects);
 }

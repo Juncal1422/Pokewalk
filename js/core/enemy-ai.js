@@ -1,5 +1,5 @@
 import { gameTime } from './clock.js';
-import { groundFree } from './terrain.js';
+import { groundFree, hasSight } from './terrain.js';
 import { movementRate, attackReach } from './stats.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
@@ -21,14 +21,7 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, esca
   const start = cell(enemy.y) * width + cell(enemy.x);
   // La visión sigue el dibujo sólido del atlas, incluso para especies que
   // pueden cruzarlo. Sin visión directa buscamos un rodeo por ejes.
-  const player = game.player;
-  const deltaX = player.x - enemy.x, deltaY = player.y - enemy.y;
-  const steps = Math.ceil(Math.hypot(deltaX, deltaY));
-  let visible = true;
-  for (let stepIndex = 1; stepIndex < steps && visible; stepIndex++) {
-    visible = standingOnLand(enemy.x + deltaX * stepIndex / steps, enemy.y + deltaY * stepIndex / steps);
-  }
-  const directions = visible ? neighbors : neighbors.slice(0, 4);
+  const directions = hasSight(enemy,game.player) ? neighbors : neighbors.slice(0,4);
   const queue = [start];
   const previous = new Map([[start, -1]]);
   let bestTile = start;
@@ -122,7 +115,11 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const distance = Math.hypot(deltaX, deltaY);
   const onLand = standingOnLand(enemy.x, enemy.y);
   const returnToLand = playerOnLand && !onLand;
-  const pursuing = player.hp > 0 && (enemy.tracking || distance <= 10 * reach);
+  const seesPlayer = player.hp > 0 && (enemy.tracking || distance <= 10*reach) && hasSight(enemy,player);
+  if (seesPlayer) enemy.lastSeen = {x:player.x,y:player.y};
+  // Al perder visión solo puede investigar la última posición observada.
+  if (!seesPlayer && enemy.lastSeen && Math.hypot(enemy.x-enemy.lastSeen.x,enemy.y-enemy.lastSeen.y)<TILE/2) enemy.lastSeen=null;
+  const pursuing = !!enemy.lastSeen && player.hp>0;
   const species = game.pokemon.get(enemy.dex);
   // Una sola retirada breve por enemigo terrestre. Tras ella vuelve a combatir.
   const canRetreat = !enemy.boss && !species.fly && !species.swim && !species.lavawalk;
@@ -133,7 +130,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
-  const inRange = pursuing && !fleeing && !returnToLand && distance <= reach + 5;
+  const inRange = seesPlayer && !fleeing && !returnToLand && distance <= reach + 5;
   const simulationTime = gameTime();
   if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
@@ -167,8 +164,8 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   // Mientras cruza conserva el camino completo hasta la siguiente orilla.
   enemy.aiTimer--;
   if (!enemy.path?.length || enemy.bossResponse || enemy.playerOnLand !== playerOnLand || (!returnToLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
-    const goalTileX = pursuing ? cell(player.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
-    const goalTileY = pursuing ? cell(player.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
+    const goalTileX = pursuing ? cell(enemy.lastSeen.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
+    const goalTileY = pursuing ? cell(enemy.lastSeen.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
     // Tras un bloqueo buscamos otro camino a pie teniendo en cuenta los cuerpos.
     const passable = enemy.avoidBodies ? canMove : terrainFree;
     enemy.path = route(enemy, goalTileX, goalTileY, passable, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);

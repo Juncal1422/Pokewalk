@@ -110,119 +110,119 @@
   },
   "candy_electric": {
     "name": "Grajea Eléctrica",
-    "description": "Recoges un 50 % más de esencias de tipo Eléctrico.",
+    "description": "Recoges el doble de esencias de tipo Eléctrico.",
     "image": "assets/items/candy_electric.png",
     "stats": {},
     "essence": "electric"
   },
   "candy_dragon": {
     "name": "Grajea Dragón",
-    "description": "Recoges un 50 % más de esencias de tipo Dragón.",
+    "description": "Recoges el doble de esencias de tipo Dragón.",
     "image": "assets/items/candy_dragon.png",
     "stats": {},
     "essence": "dragon"
   },
   "candy_water": {
     "name": "Grajea Agua",
-    "description": "Recoges un 50 % más de esencias de tipo Agua.",
+    "description": "Recoges el doble de esencias de tipo Agua.",
     "image": "assets/items/candy_water.png",
     "stats": {},
     "essence": "water"
   },
   "candy_normal": {
     "name": "Grajea Común",
-    "description": "Recoges un 50 % más de esencias de tipo Normal.",
+    "description": "Recoges el doble de esencias de tipo Normal.",
     "image": "assets/items/candy_normal.png",
     "stats": {},
     "essence": "normal"
   },
   "candy_flying": {
     "name": "Grajea Pluma",
-    "description": "Recoges un 50 % más de esencias de tipo Volador.",
+    "description": "Recoges el doble de esencias de tipo Volador.",
     "image": "assets/items/candy_flying.png",
     "stats": {},
     "essence": "flying"
   },
   "candy_rock": {
     "name": "Grajea Roca",
-    "description": "Recoges un 50 % más de esencias de tipo Roca.",
+    "description": "Recoges el doble de esencias de tipo Roca.",
     "image": "assets/items/candy_rock.png",
     "stats": {},
     "essence": "rock"
   },
   "candy_ice": {
     "name": "Grajea Helada",
-    "description": "Recoges un 50 % más de esencias de tipo Hielo.",
+    "description": "Recoges el doble de esencias de tipo Hielo.",
     "image": "assets/items/candy_ice.png",
     "stats": {},
     "essence": "ice"
   },
   "candy_ground": {
     "name": "Grajea Tierra",
-    "description": "Recoges un 50 % más de esencias de tipo Tierra.",
+    "description": "Recoges el doble de esencias de tipo Tierra.",
     "image": "assets/items/candy_ground.png",
     "stats": {},
     "essence": "ground"
   },
   "candy_ghost": {
     "name": "Grajea Fantasma",
-    "description": "Recoges un 50 % más de esencias de tipo Fantasma.",
+    "description": "Recoges el doble de esencias de tipo Fantasma.",
     "image": "assets/items/candy_ghost.png",
     "stats": {},
     "essence": "ghost"
   },
   "candy_fight": {
     "name": "Grajea Lucha",
-    "description": "Recoges un 50 % más de esencias de tipo Lucha.",
+    "description": "Recoges el doble de esencias de tipo Lucha.",
     "image": "assets/items/candy_fight.png",
     "stats": {},
     "essence": "fighting"
   },
   "candy_dark": {
     "name": "Grajea Oscura",
-    "description": "Recoges un 50 % más de esencias de tipo Siniestro.",
+    "description": "Recoges el doble de esencias de tipo Siniestro.",
     "image": "assets/items/candy_dark.png",
     "stats": {},
     "essence": "dark"
   },
   "candy_psychic": {
     "name": "Grajea Psíquica",
-    "description": "Recoges un 50 % más de esencias de tipo Psíquico.",
+    "description": "Recoges el doble de esencias de tipo Psíquico.",
     "image": "assets/items/candy_psychic.png",
     "stats": {},
     "essence": "psychic"
   },
   "candy_grass": {
     "name": "Grajea Planta",
-    "description": "Recoges un 50 % más de esencias de tipo Planta.",
+    "description": "Recoges el doble de esencias de tipo Planta.",
     "image": "assets/items/candy_grass.png",
     "stats": {},
     "essence": "grass"
   },
   "candy_steel": {
     "name": "Grajea Metálica",
-    "description": "Recoges un 50 % más de esencias de tipo Acero.",
+    "description": "Recoges el doble de esencias de tipo Acero.",
     "image": "assets/items/candy_steel.png",
     "stats": {},
     "essence": "steel"
   },
   "candy_fire": {
     "name": "Grajea Picante",
-    "description": "Recoges un 50 % más de esencias de tipo Fuego.",
+    "description": "Recoges el doble de esencias de tipo Fuego.",
     "image": "assets/items/candy_fire.png",
     "stats": {},
     "essence": "fire"
   },
   "candy_poison": {
     "name": "Grajea Venenosa",
-    "description": "Recoges un 50 % más de esencias de tipo Veneno.",
+    "description": "Recoges el doble de esencias de tipo Veneno.",
     "image": "assets/items/candy_poison.png",
     "stats": {},
     "essence": "poison"
   },
   "candy_bug": {
     "name": "Grajea Bicho",
-    "description": "Recoges un 50 % más de esencias de tipo Bicho.",
+    "description": "Recoges el doble de esencias de tipo Bicho.",
     "image": "assets/items/candy_bug.png",
     "stats": {},
     "essence": "bug"

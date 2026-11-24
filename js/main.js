@@ -57,10 +57,15 @@ const EMBEDDED_APP = `
       @media(max-width:579px) { #roster { top:110px; } }
       #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:.8; }
       #roster { zoom:1.2; }
-      #inventory,#benefits { position:absolute; display:flex; gap:6px; }
-      #inventory { left:205px; right:35%; bottom:8px; overflow-x:auto; }
-      #benefits { left:8px; top:32%; flex-direction:column; flex-wrap:wrap; max-height:44vh; }
-      #inventory img,#benefits img { width:54px; height:54px; object-fit:contain; image-rendering:pixelated; }
+      #inventory,#benefits { position:absolute; display:grid; pointer-events:none; gap:1px; }
+      #inventory { left:min(223px,38vw); right:min(30vw,380px); bottom:8px;
+        grid-template-columns:repeat(25,minmax(0,1fr)); align-items:end; }
+      #benefits { left:8px; top:29%; --benefit-side:min(50px,4.6dvh);
+        grid-auto-flow:column; grid-template-rows:repeat(9,var(--benefit-side));
+        grid-template-columns:repeat(3,var(--benefit-side)); }
+      #inventory img,#benefits img { object-fit:contain; pointer-events:auto; image-rendering:pixelated; }
+      #inventory img { width:100%; max-width:50px; aspect-ratio:1; }
+      #benefits img { width:var(--benefit-side); height:var(--benefit-side); }
       #item-tip { position:absolute; left:205px; bottom:80px; max-width:440px; pointer-events:none; }
       #benefits .active-benefit { position:relative; display:inline-flex; }
       #benefits .active-benefit::before { content:attr(data-key); position:absolute; z-index:1; color:white; background:#182333; padding:0 3px; font:bold 12px system-ui; }
@@ -116,7 +121,7 @@ async function nextLevel() {
       // solo cuando la siguiente misión se ha cargado con éxito.
       let state = { held:game.held, bonuses:game.player.bonuses, balances:game.essences,
         row:game.pokemon.get(game.player.dex), essence:game.formEssence };
-      for (let choiceIndex=0; choiceIndex < (state.held.has('golden_mask')?2:1); choiceIndex++) {
+      for (let choiceIndex=0; choiceIndex < (state.held.has('facechanger')?2:1); choiceIndex++) {
         const options = rewardOptions(state.row,state.balances,state.essence);
         if (choiceIndex && !options.length) {
           state = projectReward(state,{row:state.row,essence:state.essence,bonus:true});
@@ -273,7 +278,8 @@ export async function startGame({
   };
   resize();
   const benefitsUrl = new URL('./data/benefits.json',import.meta.url);
-  const [benefits] = await Promise.all([fetch(benefitsUrl).then(response=>response.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
+  const [synergies, benefits] = await Promise.all([fetch(new URL('./data/synergies.json',import.meta.url)).then(response=>response.json()),fetch(benefitsUrl).then(response=>response.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
+  game.synergies = new Map(synergies.map(rule=>[rule.effect,rule]));
   game.benefits = new Map(benefits.map(benefit=>[benefit.id,benefit]));
   game.donors = new Map();
   for (const benefit of benefits) for (const name of benefit.pokemon) {
@@ -288,7 +294,6 @@ export async function startGame({
   await loadItemImages(items);
   game.progress = 5;
   game.xp = 0;
-  game.essenceRemainders = {};
   game.cooldownDurations = {};
   game.amuletUntil = 0;
   game.adventure = 0;

@@ -16,12 +16,16 @@ export function attackMotion(entity, animation) {
   // Algunas hojas (Mothim) marcan impacto en el primer cuadro. Reservamos
   // tiempo para que la aproximación y el regreso sean visibles en ambos extremos.
   impactTime = Math.max(animationDuration * .25, Math.min(animationDuration * .75, impactTime));
-  const impact = elapsed >= impactTime;
-  const phase = Math.min(1, Math.max(0, impact ? (animationDuration-elapsed)/(animationDuration-impactTime) : elapsed/impactTime));
+  // Cada arma recorre el alcance completo durante su mitad de la animación.
+  const secondWeapon = entity.doubleStrike && elapsed >= animationDuration/2;
+  const localTime = entity.doubleStrike ? 2*elapsed-(secondWeapon?animationDuration:0) : elapsed;
+  const impact = localTime >= impactTime;
+  const impactsDue = Number(!!secondWeapon) + Number(impact);
+  const phase = Math.min(1, Math.max(0, impact ? (animationDuration-localTime)/(animationDuration-impactTime) : localTime/impactTime));
   // La derivada es cero en el impacto: la embestida cambia de sentido sin tirón.
   const easedProgress = phase * phase * (3 - 2 * phase);
   const distance = attackReach(entity.stats) * (entity.fangStrike && impact ? 1 : easedProgress);
   const [directionX, directionY] = DIR_VEC[entity.dir];
   const directionLength = Math.hypot(directionX, directionY);
-  return { x: directionX / directionLength * distance, y: directionY / directionLength * distance, impact, opacity: impact ? phase : 1 };
+  return { x: directionX / directionLength * distance, y: directionY / directionLength * distance, impact, impactsDue, secondWeapon, opacity: impact ? phase : 1 };
 }

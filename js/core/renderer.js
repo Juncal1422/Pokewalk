@@ -1,4 +1,5 @@
 import { drawWorldNotices } from './world-notices.js';
+import { synergyActive } from './benefits.js';
 import { gameTime } from './clock.js';
 import { drawEffects, drawFang } from './abilities.js';
 import { attackMotion } from './attack-motion.js';
@@ -148,6 +149,7 @@ export function draw() {
     const elapsed = gameTime() - entity.lastHit;
     drawingContext.save();
     if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2) drawingContext.globalAlpha *= 0.28;
+    if (entity.isPlayer && game.amuletUntil > gameTime()) drawingContext.filter = 'sepia(.35) hue-rotate(235deg) saturate(1.45)';
     if (elapsed < 110) drawingContext.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
     drawingContext.drawImage(
       animation.img,
@@ -163,11 +165,10 @@ export function draw() {
 
     drawingContext.restore();
     if (usesWeaponEffect) {
-      const filter = game.held.has('golden_spike') ? 'sepia(1) saturate(5)' : 'none';
-      // Dibuja un arma en el punto de la trayectoria del ataque usando la opacidad del impacto.
-      const drawWeapon = (kind,scale) => drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,scale,offset.opacity,kind,filter);
-      if (game.held.has('long_horn')) drawWeapon('fang',ZOOM);
-      if (game.held.has('spike')) drawWeapon('spine',game.held.has('long_horn') ? ZOOM*.72 : ZOOM);
+      const horn = entity.doubleStrike ? offset.secondWeapon : game.held.has('long_horn');
+      const gold = synergyActive(horn?'goldHorn':'goldSpike');
+      drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,
+        ZOOM,offset.opacity,horn?'fang':'spine',gold?'sepia(1) saturate(5)':'none');
     }
     if (!entity.isPlayer && gameTime() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;
