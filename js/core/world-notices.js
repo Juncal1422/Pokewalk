@@ -27,7 +27,7 @@ export function drawWorldNotices(context, renderZoom, cameraX, cameraY) {
   game.worldNotices = game.worldNotices.filter(notice => simulationTime - notice.startedAt < lifetimeMs);
   context.save();
   context.textAlign = 'center';
-  context.font = 'bold 12px system-ui';
+  context.font = 'bold 12px Wondermail';
   context.lineWidth = 2;
   context.strokeStyle = '#123';
   for (const notice of game.worldNotices) {

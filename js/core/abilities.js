@@ -1,3 +1,4 @@
+import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
 import { DIR_VEC, TILE } from './constants.js';
@@ -13,6 +14,7 @@ const sequence = (id, count, path) => [id, Array.from({length:count}, (_,frameIn
 export async function loadEffects() {
   const groups = [
     ['fang',['fang/fang.png']],
+    sequence('battery',9,index=>'battery_burst/'+String(index-1).padStart(3,'0')+'.png'),
     ['spine',['spine/spine.png']],
     ...[['heal',13],['boost',15],['fangaround',12]].map(([name,count]) =>
       sequence(name,count,frameIndex=>name+'/'+String(frameIndex-1).padStart(3,'0')+'.png')),
@@ -34,6 +36,7 @@ export async function loadEffects() {
 export function effect(kind,x,y,durationMs,directionIndex=0) {
   const sprite = { kind,x,y,ms: durationMs,dir: directionIndex,start:gameTime() };
   game.effects.push(sprite);
+  playSound(({fangaround:'spin',purple:'cog'})[kind]??kind);
   return sprite;
 }
 
@@ -54,7 +57,7 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
       drawFang(drawingContext,visualEffect.dir,x,y,scale,1-animationProgress,'spine','sepia(1) saturate(6) hue-rotate(65deg)');
       continue;
     }
-    const width = spriteImage.width*scale, height = spriteImage.height*scale;
+    const width = visualEffect.diameter ? visualEffect.diameter*renderZoom : spriteImage.width*scale, height = visualEffect.diameter ? width : spriteImage.height*scale;
     drawingContext.save();
     if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
@@ -95,6 +98,16 @@ function landing(player) {
 // Valida la tecla, el estado del jugador y el coste antes de iniciar el lanzamiento y su recarga.
 export function useActive(slot) {
   const player=game.player, simulationTime=gameTime();
+  if(slot==='e' && game.runRelics?.has('depleted_battery')){
+    if(!player.hp||game.changingLevel||game.cast||['Attack','Hurt'].includes(player.state))return;
+    if(game.batteryEnergy<10)return showToast('Batería · '+game.batteryEnergy+'/10 esencias eléctricas');
+    game.batteryEnergy-=10;
+    const radius=attackReach(player.stats)*3;
+    effect('battery',player.x,player.y,650).diameter=radius*2;
+    for(const enemy of game.entities) if(!enemy.isPlayer&&!enemy.ally&&enemy.hp&&Math.hypot(enemy.x-player.x,enemy.y-player.y)<=radius+bodyRadius(enemy))
+      elementalHit(player,enemy,4*player.stats.attack,'electric');
+    return;
+  }
   const benefitId=[...game.held].find(key=>game.benefits.get(key).slot === slot);
   if (!benefitId || !player.hp || game.changingLevel || game.cast || ['Attack','Hurt'].includes(player.state)) return;
   const benefit=game.benefits.get(benefitId);
@@ -121,7 +134,18 @@ function launchFlare(owner, directionIndex) {
   const projectile = effect('flare',owner.x,owner.y,750,directionIndex);
   const fiery = game.pokemon.get(owner.dex).types.includes('fire');
   Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:4*attackReach(owner.stats),
-    damage:Math.round(owner.stats.attack*(fiery?1.5:1))});
+    element:'fire',damage:Math.round(owner.stats.attack*(fiery?1.5:1))});
+}
+
+// Solo los efectos tipados consultan afinidades. Los dos tipos defensivos
+// se combinan multiplicando, incluida la inmunidad eléctrica de Tierra.
+export function elementalHit(owner,target,power,element) {
+  const chart={
+    fire:{grass:2,ice:2,bug:2,steel:2,fire:.5,water:.5,rock:.5,dragon:.5},
+    electric:{water:2,flying:2,electric:.5,grass:.5,dragon:.5,ground:0}
+  };
+  const factor=game.pokemon.get(target.dex).types.reduce((value,type)=>value*(chart[element]?.[type]??1),1);
+  if(factor)inflictDamage(owner,target,power*factor,false,true);
 }
 
 // Crea ocho proyectiles equidistantes cuyo daño depende de la defensa al recibir el crítico.
@@ -136,7 +160,7 @@ export function releaseSpines(owner) {
 function blast(owner) {
   effect('mine',owner.x,owner.y,1000).owner=owner;
   for (const target of game.entities) {
-    if (!target.hp || (target!==owner && owner.isPlayer===target.isPlayer)) continue;
+    if (target.ally || !target.hp || (target!==owner && owner.isPlayer===target.isPlayer)) continue;
     if (Math.hypot(target.x-owner.x,target.y-owner.y)<=72+(target===owner?0:bodyRadius(target))) {
       inflictDamage(owner,target,damageFor(owner,target,false),false,true);
     }
@@ -147,65 +171,67 @@ function blast(owner) {
 function spin(owner, activeCast, elapsed) {
   owner.dir = (activeCast.dir + Math.min(16,Math.floor(16*elapsed/560))) % 8;
   for (const target of game.entities) {
-    if (target.isPlayer === owner.isPlayer || !target.hp || activeCast.hit.has(target)) continue;
+    if (target.ally || target.isPlayer === owner.isPlayer || !target.hp || activeCast.hit.has(target)) continue;
     if (Math.hypot(target.x-owner.x,target.y-owner.y) > attackReach(owner.stats)+bodyRadius(target)) continue;
     activeCast.hit.add(target);
     inflictDamage(owner,target,owner.stats.attack,false,true);
   }
 }
 
-// El líder fija la dirección al anunciar la habilidad. Durante ese segundo
-// el jugador puede apartarse del disparo o salir del radio del giro.
-export function updateBossAbility(boss) {
-  const benefitId = boss.activeBenefit, player = game.player, simulationTime = gameTime();
-  if (!benefitId || !boss.hp || !player.hp) return false;
-  const distance = Math.hypot(player.x-boss.x, player.y-boss.y);
-  const range = (benefitId==='gunpowder_rock'?72:attackReach(boss.stats)*(benefitId==='fire_brooch'?4:1)) + bodyRadius(player);
-  let activeCast = boss.abilityCast;
+// Cada salvaje anuncia su activa durante 100 ms y comprueba la presa,
+// la distancia y la visibilidad al resolverla. La recarga es la mitad de la del jugador.
+export function updateWildAbility(wild) {
+  const benefitId = wild.activeBenefit, player = game.player, simulationTime = gameTime();
+  if (!benefitId || !wild.hp || !player.hp) return false;
+  const distance = Math.hypot(player.x-wild.x, player.y-wild.y);
+  const range = (benefitId==='gunpowder_rock'?72:attackReach(wild.stats)*(benefitId==='fire_brooch'?4:1)) + bodyRadius(player);
+  let activeCast = wild.abilityCast;
   if (!activeCast) {
-    if (boss.bossResponse || boss.sidestep || simulationTime < (boss.abilityReadyAt ?? 0) || (distance > range || !hasSight(boss,player))) return false;
-    if (benefitId==='cog' && Math.hypot(boss.x-boss.home.x,boss.y-boss.home.y)<TILE) return false;
-    boss.dir = (Math.round(Math.atan2(player.x-boss.x,player.y-boss.y)/(Math.PI/4))+8)%8;
-    boss.abilityCast = {start:simulationTime,dir:boss.dir,hit:new Set()};
-    boss.path = [];
-    setState(boss,'Charge');
+    if ((benefitId==='amulet' && wild.hp<=1) || wild.bossResponse || wild.sidestep || simulationTime < (wild.abilityReadyAt ?? 0) || (distance > range || !hasSight(wild,player))) return false;
+    if (benefitId==='cog' && Math.hypot(wild.x-wild.home.x,wild.y-wild.home.y)<TILE) return false;
+    wild.dir = (Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
+    playSound('charge');
+    wild.abilityCast = {start:simulationTime,dir:wild.dir,hit:new Set()};
+    wild.path = [];
+    setState(wild,'Charge');
     return true;
   }
-  if (simulationTime-activeCast.start < 1000) return true;
-  if (boss.state==='Charge') {
-    if ((distance > range || !hasSight(boss,player))) {
-      boss.abilityReadyAt = simulationTime+1000;
+  if (simulationTime-activeCast.start < 100) return true;
+  if (wild.state==='Charge') {
+    if ((wild.prey!==player || distance > range || !hasSight(wild,player))) {
+      wild.abilityReadyAt = simulationTime+1000;
     } else if (benefitId==='mamoswine_fang') {
-      setState(boss,'Spin');
+      setState(wild,'Spin');
       activeCast.spinStart=simulationTime;
-      effect('fangaround',boss.x,boss.y,560).follow=boss;
+      effect('fangaround',wild.x,wild.y,560).follow=wild;
     } else if (benefitId==='fire_brooch') {
-      launchFlare(boss,activeCast.dir);
+      const direction=(Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
+      launchFlare(wild,direction);
     } else if (benefitId==='gunpowder_rock') {
-      blast(boss);
-    } else if (benefitId==='amulet' && boss.hp>1) {
-      boss.hp--;
-      boss.unbuffedStats={...boss.stats};
-      for (const key of ['attack','speed','attackSpeed']) boss.stats[key]=Math.round(boss.stats[key]*1.5);
-      boss.buffUntil=simulationTime+10000;
+      blast(wild);
+    } else if (benefitId==='amulet' && wild.hp>1) {
+      wild.hp--;
+      wild.unbuffedStats={...wild.stats};
+      for (const key of ['attack','speed','attackSpeed']) wild.stats[key]=Math.round(wild.stats[key]*1.5);
+      wild.buffUntil=simulationTime+10000;
     } else if (benefitId==='cog') {
-      const site=landing(boss);
+      const site=landing(wild);
       if (site) {
-        effect('purple',boss.x,boss.y,520);
-        boss.x=site.x; boss.y=site.y;
-        effect('purple',boss.x,boss.y,520);
+        effect('purple',wild.x,wild.y,520);
+        wild.x=site.x; wild.y=site.y;
+        effect('purple',wild.x,wild.y,520);
 
       }
     }
   }
-  if (boss.state==='Spin') {
-    spin(boss,activeCast,simulationTime-activeCast.spinStart);
+  if (wild.state==='Spin') {
+    spin(wild,activeCast,simulationTime-activeCast.spinStart);
     if (simulationTime-activeCast.spinStart<560) return true;
   }
-  if (!(boss.abilityReadyAt > simulationTime)) boss.abilityReadyAt=simulationTime+game.benefits.get(benefitId).amount*1000;
-  boss.abilityCast=null;
-  boss.dir=activeCast.dir;
-  if (boss.hp && boss.state!=='Hurt') setState(boss,'Idle');
+  if (!(wild.abilityReadyAt > simulationTime)) wild.abilityReadyAt=simulationTime+game.benefits.get(benefitId).amount*500;
+  wild.abilityCast=null;
+  wild.dir=activeCast.dir;
+  if (wild.hp && wild.state!=='Hurt') setState(wild,'Idle');
   return true;
 }
 
@@ -255,14 +281,14 @@ export function tickAbilities() {
       // Colisión continua del proyectil aunque un fotograma tarde en llegar.
       let closestTarget, nearestDistance=Infinity;
       for (const enemy of game.entities) {
-        if (enemy.isPlayer === visualEffect.owner.isPlayer || !enemy.hp) continue;
+        if (enemy.ally || enemy.isPlayer === visualEffect.owner.isPlayer || !enemy.hp) continue;
         const x=enemy.x-visualEffect.originX,y=enemy.y-visualEffect.originY,along=(x*deltaX+y*deltaY)/directionLength;
         const closestDistance=Math.max(previousDistance,Math.min(travel,along));
         if (Math.hypot(x-closestDistance*deltaX/directionLength,y-closestDistance*deltaY/directionLength)<=10+bodyRadius(enemy) && along<nearestDistance) {
           closestTarget=enemy;nearestDistance=along;
         }
       }
-      if (closestTarget) { inflictDamage(visualEffect.owner,closestTarget,visualEffect.damage,false,true);return false; }
+      if (closestTarget) { elementalHit(visualEffect.owner,closestTarget,visualEffect.damage,visualEffect.element);return false; }
       visualEffect.travel=travel;
     }
     return lifetimeFraction<1;

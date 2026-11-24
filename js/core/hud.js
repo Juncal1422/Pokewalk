@@ -1,7 +1,8 @@
 import { experienceCost } from './experience.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
-import { labels, statsFor } from './stats.js';
+import { playerStats } from './benefits.js';
+import { labels } from './stats.js';
 
 import { drawFrame } from './message-frame.js';
 
@@ -63,7 +64,7 @@ export function drawHud(drawingContext, canvas, player) {
     drawingContext.drawImage(healthBarImage, part * 16, 0, 16, 16, cursor, top, widths[part], 16 * scale);
     cursor += widths[part];
   }
-  drawingContext.font = 'bold 17px system-ui';
+  drawingContext.font = 'bold 17px Wondermail';
   drawingContext.textBaseline = 'middle';
   const health = player.hp + '/' + player.stats.hpMax;
   textBox(drawingContext, cursor, 5, drawingContext.measureText(health).width + 18, 32);
@@ -86,13 +87,13 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.translate(0,canvas.height);
   drawingContext.scale(1.15,1.15);
   drawingContext.translate(0,-canvas.height);
-  drawingContext.font = 'bold 13px system-ui';
+  drawingContext.font = 'bold 13px Wondermail';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
   drawFrame(drawingContext, icons['textbox-b'], 4, y - 25, 185, canvas.height - y + 25, .25);
   drawingContext.fillStyle = '#fff';
   drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
-  const baseStats = statsFor(game.pokemon.get(player.dex), game.progress, player.bonuses);
+  const baseStats = playerStats(game.pokemon.get(player.dex), game.progress, player.bonuses, new Set());
   for (const [key, label] of Object.entries(labels)) {
     const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
     drawingContext.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';
@@ -106,12 +107,12 @@ export function drawHud(drawingContext, canvas, player) {
   }
   drawingContext.restore();
   drawingContext.save();
-  drawingContext.font = 'bold 17px system-ui';
+  drawingContext.font = 'bold 17px Wondermail';
   drawingContext.textAlign = 'right';
   drawingContext.textBaseline = 'top';
   const mission = game.mission;
-  const counter = 'Aventura ' + game.adventure + ' · Piso ' + game.floor + '/' + mission.floors;
-  const goal = mission.type === 'hunt' ? 'Caza: ' + game.pokemon.get(mission.target).name + ' ' + mission.kills + '/' + mission.quota :
+  const counter = 'Aventura ' + game.adventure + ' · Misión '+mission.number+' · Piso ' + game.floor + '/' + mission.floors;
+  const goal = mission.type==='rescue' && game.rescueAlly ? (mission.failed?'Rescate fallido':'Aliado · '+game.rescueAlly.hp+' HP') : mission.type === 'hunt' ? 'Caza: ' + game.pokemon.get(mission.target).name + ' ' + mission.kills + '/' + mission.quota :
     mission.type === 'retrieve' && mission.recovered ? 'Objeto recuperado' : mission.name;
   const width = Math.ceil(Math.max(drawingContext.measureText(counter).width, drawingContext.measureText(goal).width));
   const panelTop = canvas.width < 580 ? 46 : 5;
@@ -119,5 +120,12 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.fillStyle = '#fff';
   drawingContext.fillText(counter, canvas.width - 15, panelTop + 8);
   drawingContext.fillText(goal, canvas.width - 15, panelTop + 31);
+  if(game.runRelics?.has('depleted_battery')){
+    const battery='E · Batería '+Math.floor(game.batteryEnergy/10)+' · '+game.batteryEnergy%10+'/10';
+    const batteryWidth=drawingContext.measureText(battery).width;
+    textBox(drawingContext,canvas.width-batteryWidth-27,panelTop+60,batteryWidth+22,30);
+    drawingContext.fillStyle='#c8edff';
+    drawingContext.fillText(battery,canvas.width-15,panelTop+65);
+  }
   drawingContext.restore();
 }

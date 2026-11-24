@@ -165,8 +165,8 @@ export function draw() {
 
     drawingContext.restore();
     if (usesWeaponEffect) {
-      const horn = entity.doubleStrike ? offset.secondWeapon : game.held.has('long_horn');
-      const gold = synergyActive(horn?'goldHorn':'goldSpike');
+      const horn = entity.doubleStrike ? offset.secondWeapon : (entity.isPlayer?game.held:entity.benefits).has('long_horn');
+      const gold = entity.isPlayer && synergyActive(horn?'goldHorn':'goldSpike');
       drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,
         ZOOM,offset.opacity,horn?'fang':'spine',gold?'sepia(1) saturate(5)':'none');
     }
@@ -181,7 +181,7 @@ export function draw() {
     const hitNumber = entity.hitNumber;
     if (hitNumber && gameTime() - hitNumber.time < 750) {
       const risePixels = (gameTime() - hitNumber.time) / 45;
-      drawingContext.font = 'bold 17px system-ui';
+      drawingContext.font = 'bold 17px Wondermail';
       drawingContext.textAlign = 'center';
       drawingContext.lineWidth = 3;
       drawingContext.strokeStyle = '#231720';

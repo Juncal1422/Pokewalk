@@ -1,8 +1,9 @@
+import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
-import { updateBossAbility, releaseSpines } from './abilities.js';
-import { amount, playerStats, synergyActive } from './benefits.js';
+import { updateWildAbility, releaseSpines } from './abilities.js';
+import { amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
-import { updateEnemy, trySidestep } from './enemy-ai.js';
+import { updateEnemy, fleeRescue, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
 import { collectItems, spawnFloorItems } from './items.js';
 import {
@@ -94,7 +95,7 @@ export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
   if (attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
-  attacker.fangStrike = attacker.isPlayer && (game.held.has('long_horn') || game.held.has('spike'));
+  attacker.fangStrike = (combatBenefits(attacker)?.has('long_horn') || combatBenefits(attacker)?.has('spike'));
   attacker.doubleStrike = attacker.isPlayer && synergyActive('doubleStrike');
   attacker.strikesDone = 0;
   setState(attacker, 'Attack');
@@ -120,13 +121,14 @@ function resolveImpact(attacker) {
     Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, strikeRadius));
 
   for (const target of game.entities) {
-    if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
+    if (!target.hp || target===attacker || (attacker.isPlayer ? target.ally : target!==(attacker.prey??game.player))) continue;
     if (!hasSight(attacker,target)) continue;
     if (!inStrike(target.x, target.y, strikeRadius + bodyRadius(target))) continue;
     const simulationTime = gameTime();
     if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) continue;
-    const dodge = .05 + (target.isPlayer ? amount('silvercoat') : 0);
+    const dodge = .05 + amount('silvercoat',combatBenefits(target)??new Set());
     if (Math.random() < dodge) {
+      playSound('miss');
       target.missUntil = simulationTime + 750;
       if (attacker.isPlayer && !target.isPlayer) trySidestep(target, attacker, canMove, simulationTime);
       continue;
@@ -149,11 +151,12 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   if (!target.hp) return;
   const simulationTime = gameTime();
   let blocked = false;
-  if (target.isPlayer) {
-    if (attacker !== target && simulationTime - target.lastHit < PLAYER_GRACE_MS) return;
+  const defendingBenefits=combatBenefits(target)??new Set();
+  if (attacker!==target) {
+    if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) return;
     const species = game.pokemon.get(attacker.dex), targetSpecies = game.pokemon.get(target.dex);
-    if (attacker !== target && species.essences.some(type => targetSpecies.essences.includes(type))) incomingDamage *= 1 - amount('lovefool');
-    blocked = attacker !== target && Math.random() < amount('iron_tag') + amount('deep_scale');
+    if (attacker !== target && species.essences.some(type => targetSpecies.essences.includes(type))) incomingDamage *= 1 - amount('lovefool',defendingBenefits);
+    blocked = attacker !== target && Math.random() < amount('iron_tag',defendingBenefits) + amount('deep_scale',defendingBenefits);
     if (blocked) incomingDamage *= .5;
   }
   let damage = Math.min(target.hp, Math.max(1, Math.round(incomingDamage)));
@@ -161,10 +164,12 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   if (!damage) return;
   target.hitNumber = { damage, critical, time: simulationTime };
   target.hp = Math.max(0, target.hp - damage);
+  playSound('hit');
+  if(attacker.isPlayer&&!target.isPlayer&&!target.provoked){target.provoked=true;target.prey=attacker;target.aimSince=null;}
   target.lastHit = simulationTime;
   target.sidestep = null;
-  if (target.isPlayer && game.held.has('green_spike') &&
-      (critical || synergyActive('damageSpines') || (blocked && synergyActive('blockSpines')))) releaseSpines(target);
+  if (defendingBenefits.has('green_spike') &&
+      (critical || synergyActive('damageSpines',defendingBenefits) || (blocked && synergyActive('blockSpines',defendingBenefits)))) releaseSpines(target);
   // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
   // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
   if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return;
@@ -199,7 +204,9 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
   game.portal = null;
   game.mission = mission;
   game.floor = floor;
-  game.adventure = mission.number - 1;
+  game.adventure = game.collection?.history.length || 1;
+  game.rescueAlly=null;
+  if(previousPlayer?.dex!==pokedexNumber)game.defenseEntryLevel=game.progress;
   const enemyDifficulty = 4 + mission.number;
   const player = createEntity(playerData, game.rooms[0], true);
   player.bonuses = bonuses;
@@ -215,11 +222,24 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
     const species = game.pokemon.get(spriteData.dex);
     enemy.level = levelFor(species, enemyProgress(enemyDifficulty));
     enemy.stats = statsFor(species, enemyDifficulty, {}, bossFloor, true);
-    if (bossFloor) {
+    enemy.ally=mission.type==='rescue' && floor===mission.floors && index===opponents.length-1;
+    if(mission.red || enemy.ally){
+      const level=enemy.ally ? (mission.red?player.level:Math.min(100,player.level+5)) : Math.min(100,Math.max(enemy.level,player.level)+15);
+      enemy.level=enemy.ally && mission.red ? player.level : levelFor(species,level);
+      // Los límites del líder progresan con el encargo rojo, además del nivel efectivo.
+      enemy.stats=statsFor(species,enemyDifficulty+(mission.red?15:0),{},bossFloor,true,enemy.level);
+    }
+    if(enemy.ally)game.rescueAlly=enemy;
+    {
       const benefit = game.donors.get(species.name);
       enemy.activeBenefit = benefit?.active ? benefit.id : null;
       enemy.home = { x: enemy.x, y: enemy.y };
-      enemy.tracking = true;
+      enemy.benefits=new Set(benefit?[benefit.id]:[]);
+      for(const [key,modifier] of Object.entries(benefit?.stats??{})){
+        enemy.stats[key]=Math.round(enemy.stats[key]*(1+modifier));
+        if(['speed','attackSpeed'].includes(key))enemy.stats[key]=Math.min(180,enemy.stats[key]);
+      }
+      enemy.tracking = bossFloor;
     }
     enemy.hp = enemy.stats.hpMax;
     game.entities.push(enemy);
@@ -265,7 +285,9 @@ export function updateEntity(entity) {
       } else setState(entity, 'Idle');
     }
   } else if (!['Attack', 'Hurt'].includes(entity.state)) {
-    if (!entity.boss || !updateBossAbility(entity))
+    entity.prey=!entity.provoked && game.rescueAlly?.hp && !entity.ally ? game.rescueAlly : game.player;
+    if (entity.ally) fleeRescue(entity,moveEntity,setState,canMove);
+    else if ((entity.prey!==game.player && !entity.abilityCast) || !updateWildAbility(entity))
       updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);
   }
 

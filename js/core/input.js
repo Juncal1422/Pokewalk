@@ -41,13 +41,15 @@ export function attachInput() {
     delete game.keys[key];
   });
   listen(document, 'pointerdown', event => {
+    if(event.target.closest?.('nav button'))return;
     if (event.target !== gameCanvas && !isPanel(event.target)) return;
     event.preventDefault();
     if (event.button !== 0 || !event.isPrimary) return;
     gameCanvas.focus();
     attack();
   });
-  listen(document, 'pointerdown', event => { if (event.target !== gameCanvas && !isPanel(event.target)) cancelInput(); });
+  listen(document, 'pointerdown', event => {
+    if(event.target.closest?.('nav button'))return; if (event.target !== gameCanvas && !isPanel(event.target)) cancelInput(); });
   listen(document, 'focusout', event => {
     if ((event.target === gameCanvas || isPanel(event.target)) &&
         event.relatedTarget !== gameCanvas && !isPanel(event.relatedTarget)) cancelInput();

@@ -57,13 +57,14 @@ export function statsFor(
   bonuses = {},
   isBoss = false,
   isWild = isBoss,
+  effectiveLevel,
 ) {
-  const level = levelFor(species, isWild ? enemyProgress(progressionLevel) : progressionLevel);
+  const level = effectiveLevel ?? levelFor(species, isWild ? enemyProgress(progressionLevel) : progressionLevel);
   const result = {};
   for (const statKey of Object.keys(labels)) {
     // Los PV del líder parten exactamente de la curva anterior antes del ×10.
     const statLevel =
-      isBoss && statKey === 'hpMax' ? levelFor(species, progressionLevel) : level;
+      effectiveLevel==null && isBoss && statKey === 'hpMax' ? levelFor(species, progressionLevel) : level;
     let value = naturalStat(species, statKey, statLevel);
     // El ajuste inicial pertenece al jugador; los bonos adquiridos se suman íntegros.
     if (!isWild) value -= Math.round(naturalStat(species,statKey,5)*.2);

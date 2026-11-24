@@ -1,6 +1,6 @@
 # PokeWalk · guía de continuidad
 
-Ditto explora una mazmorra en tiempo real, derrota Pokémon, recoge esencias y cambia de forma al terminar misiones. Una **partida** comprende varias misiones; una **misión** tiene uno o más pisos de un mismo bioma. El contador de aventura empieza en cero y cuenta teletransportadores usados. El nivel del jugador, el nivel del bioma y el número de misión son tres valores distintos.
+Ditto explora una mazmorra en tiempo real, derrota Pokémon, recoge esencias y cambia de forma al terminar misiones. Una **partida** comprende varias misiones; una **misión** tiene uno o más pisos de un mismo bioma. Cada run es una aventura numerada desde uno. El teletransportador conduce al tablón para elegir la siguiente misión. El nivel del jugador, el nivel del bioma y el número de misión son tres valores distintos.
 
 ## Retomar el desarrollo
 
@@ -15,7 +15,7 @@ git log -5 --oneline
 python -m http.server 8000
 ```
 
-Abre [LOCAL_Pokewalk.html](http://localhost:8000/LOCAL_Pokewalk.html) y recarga después de editar los módulos. El servidor debe usar la raíz del repositorio. Los módulos ES y las lecturas de JSON necesitan HTTP. La versión local sigue descargando los sprites externos de PMDCollab. El juego arranca al importar `startGame` desde `js/main.js`, sin compilación ni instalación de paquetes. Recargar la página inicia una partida nueva.
+Abre [LOCAL_Pokewalk.html](http://localhost:8000/LOCAL_Pokewalk.html) y recarga después de editar los módulos. El servidor debe usar la raíz del repositorio. Los módulos ES y las lecturas de JSON necesitan HTTP. La versión local sigue descargando los sprites externos de PMDCollab. El juego arranca al importar `startGame` desde `js/main.js`, sin compilación ni instalación de paquetes. Recargar interrumpe la aventura y devuelve al gremio con los descubrimientos guardados.
 
 `PokeWalk.html` consulta la API pública de GitHub para obtener el SHA de la punta de `develop` e importa `js/main.js` desde jsDelivr fijado a ese SHA. Los recursos propios se resuelven respecto de la URL del módulo. Para publicar con una sesión de Git autorizada, revisa `git diff`, prepara los archivos de la tarea **incluido este contexto**, crea el commit y ejecuta `git push origin develop`. Verifica que `git ls-remote origin refs/heads/develop` devuelve el commit publicado. El acceso de escritura corresponde a la cuenta autorizada; las credenciales se gestionan fuera del proyecto.
 
@@ -31,16 +31,26 @@ Si se usa el conector GitHub, lee primero la referencia de `develop`. Construye 
 
 ## Flujo de una partida
 
-1. **Arranque.** `startGame` reinicia el estado y el reloj, monta la interfaz, valida los catálogos, precarga efectos y elige el primer bioma. Ditto comienza en el nivel 5. El favicon se establece desde JavaScript. El estado vive en memoria.
+1. **Arranque.** `startGame` reinicia el estado y el reloj, monta la interfaz, valida los catálogos, precarga efectos y abre el gremio. Ditto comienza en el nivel 5. El favicon se establece desde JavaScript. El mundo vive en memoria. La colección, los emblemas, las preferencias y las crónicas se guardan en el navegador.
 2. **Piso.** La generación trabaja con suelo y medio sólido, añade autotiles y variantes, y coloca los combatientes en centros de sala. Las habilidades `fly`, `swim` y `lavawalk` de la especie se cruzan con las permitidas por el bioma. El mapa lógico tiene 44 × 34 casillas de 24 píxeles. La cámara sigue al jugador. El dibujo del techo interior puede variar en el autotile 46.
 3. **Controles y simulación.** WASD o flechas mueven, clic principal o espacio atacan y Q/E usan activas. Perder el foco cancela el movimiento. El reloj avanza a pasos de 1/60 s, a velocidad global ×1,1, y se pausa durante las transiciones. El bucle actualiza habilidades y entidades, recoge objetos, comprueba salidas y dibuja.
 4. **Combate.** Un ataque normal prepara un impacto que se consume al alcanzar el instante de contacto. Rango y tamaño determinan la distancia. El nivel, ataque y defensa determinan el daño. Evasión base del 5 %, crítico del 10 % y gracia del jugador tras recibir daño. El límite de medio máximo de PV del jugador corresponde a habilidades de líder. Hurt, reacción del líder y fundido de derrota tienen tiempos propios.
-5. **IA.** La detección inicial requiere línea de visión y alcanza diez veces el rango de ataque. Un muro bloquea la visión y el vuelo. Si la presa desaparece tras un muro, el enemigo solo investiga la última posición observada. La persecución favorece diagonales si hay visión directa. La búsqueda en anchura usa las mismas restricciones de terreno que el movimiento. Un MISS puede activar una esquiva lateral progresiva. Los terrestres con menos del 15 % de PV pueden hacer una retirada breve. Los líderes anuncian sus activas durante un segundo.
+5. **IA.** La detección inicial requiere línea de visión y alcanza diez veces el rango de ataque. Un muro bloquea la visión y el vuelo. Si la presa desaparece tras un muro, el enemigo solo investiga la última posición observada. La persecución favorece diagonales si hay visión directa. La búsqueda en anchura usa las mismas restricciones de terreno que el movimiento. Un MISS puede activar una esquiva lateral progresiva. Los terrestres con menos del 15 % de PV pueden hacer una retirada breve. Los salvajes reciben el beneficio de su especie, anuncian las activas durante 0,1 s y tienen la mitad de recarga. Los efectos ofensivos se dirigen al jugador en rango.
 6. **Experiencia.** La recompensa es el nivel del rival multiplicado por la suma de sus PV, ataque, defensa y velocidad **base** dividida entre 500, redondeada con mínimo uno. Los líderes dan el doble. El siguiente umbral es `ceil(26 × 1,105^(nivel − 5))`. Se conserva el excedente; el nivel de partida llega a 100 y la forma respeta el máximo de su ficha. Las estadísticas salvajes progresan con la misión. Subir de nivel recalcula los PV máximos sin rellenar la vida actual.
 7. **Recogidas.** Las esencias caen en el lugar de la derrota. Los objetos de equipo tienen una tirada base del 22,5 %, con un máximo de dos por bloque de cinco pisos de la misión. Las bayas tienen una tirada separada del 50 % por piso; si sale baya, el 25 % son Zidra. Aranja y Zidra curan el 10 % y el 40 % respectivamente, sujetos al máximo de PV y a Hoja de menta. Los consumibles salen de la lista de equipo. El Carameloraro puede aparecer una vez por misión. Las grajeas duplican las unidades recogidas de su tipo.
-8. **Objetivo y salida.** Recuperar objeto exige alcanzar el paquete del último piso. Limpiar exige derrotar a los enemigos de cada piso. Cazar permite subir si ya no queda la presa en el piso y abre el teletransportador al alcanzar la cuota. Cada cuarta misión enfrenta a un líder en una sola sala. Escaleras y teletransportador tienen efectos distintos sobre la partida.
-9. **Transformación.** Al salir de una misión se proyectan hasta tres opciones. Se priorizan evoluciones pagables, se consideran esencias acumuladas y especies derrotadas, y el líder queda fuera del conjunto de formas obtenibles por esa baja. Una evolución consume el saldo requerido de un solo tipo. La cantidad efectiva es el coste de la ficha multiplicado por 1,30 y redondeado hacia arriba. Se aplican la forma, los beneficios y el pago al cargar la misión siguiente. Continuar con la misma línea o repetir un beneficio suma uno a los atributos. Conservar la forma sin elegir tarjeta no da ese aumento. Cambiacaras permite una elección adicional.
+8. **Objetivo y salida.** Recuperar objeto exige alcanzar el paquete del último piso. Limpiar exige derrotar a los enemigos de cada piso. Cazar permite subir si ya no queda la presa en el piso y abre el teletransportador al alcanzar la cuota. Líder es una oferta del tablón y abre una sola arena. Rescate permite subir hasta la última planta. Allí el aliado huye y los salvajes lo buscan a cualquier distancia hasta que el jugador les hace daño. Si muere, la salida permite continuar sin mejora ni emblemas. Escaleras y teletransportador tienen efectos distintos sobre la partida.
+9. **Transformación.** Al salir de una misión se proyectan hasta tres opciones. Se priorizan evoluciones pagables, se consideran esencias acumuladas y especies derrotadas, y el líder de un encargo rojo derrotado se ofrece expresamente como forma. Una evolución consume el saldo requerido de un solo tipo. La cantidad efectiva es el coste de la ficha multiplicado por 1,30 y redondeado hacia arriba. Se aplican la forma, los beneficios y el pago al cargar la misión siguiente. Continuar con la misma línea o repetir un beneficio suma uno a los atributos. Conservar la forma sin elegir tarjeta no da ese aumento. Cambiacaras permite una elección adicional.
 10. **Beneficios y equipo.** Los pasivos se acumulan hasta 27 beneficios (3 columnas de 9). Con la colección llena, una nueva alta sin sustitución da el bono de atributos. El equipo admite 75 objetos (3 filas de 25, desde abajo). Una activa nueva sustituye la de su propia tecla. Q y E conservan recargas independientes y el icono muestra su progreso radial. Los objetos permanentes se muestran abajo y los beneficios a la izquierda. Los colores del panel de atributos comparan el resultado de los beneficios con el mismo nivel, forma y bonos permanentes.
+
+## Pommedew y el tablón
+
+La bienvenida se muestra una vez por colección. Los cuatro mensajes usan Wondermail y textbox-g. Nueva Aventura y los teletransportadores muestran dos encargos ya generados con tipos y biomas distintos. El par tiene un 15 % de probabilidad de contener un único papel rojo. Este usa la franja de especies de nivel +15 y aumenta el nivel efectivo enemigo en 15 sobre el mayor entre su nivel normal y el del jugador, respetando el límite de especie. El aliado rojo usa el nivel actual del jugador. Los pisos de rescate siguen el intervalo de recuperar objeto.
+
+El pago base es el nivel de bioma ×0,7 redondeado hacia arriba, más 0 por recuperar, 1 por cazar o limpiar, 2 por rescatar o 3 por líder, acotado a 1–10. El papel rojo triplica ese importe. La crónica marca el pago antes de abrir las tarjetas y evita volver a cobrar durante un reintento. Al caer Ditto se registra la derrota y se regresa al gremio. La EXP y el equipo de combate empiezan de nuevo en cada aventura.
+
+La clave local `pokewalk.pommedew.collection.v1` conserva metadatos, identificadores y datos históricos. No serializar catálogos, combatientes, inventarios jugables ni mapas. En historial se guardan las formas, el equipo descubierto, los beneficios, el nivel, los atributos y las misiones con su bioma, piso, estado y pago. El reinicio no reanuda una crónica interrumpida. Los ID desconocidos siguen siendo consultables tras importar. Exportar e importar usan el mismo JSON; se valida antes de reemplazar.
+
+La tienda inicial vende Cinta Negra por 12 emblemas y Batería agotada por 18. Las compras quedan activadas y se pueden alternar en Colección → Reliquias. Los interruptores se fijan al aceptar el primer encargo. Cinta Negra limita defensa a la base de entrada de cada forma y convierte la mitad entera del excedente en ataque. La batería ocupa E mientras esté equipada; cada 10 esencias eléctricas compran una descarga en la aventura. Las afinidades de Fuego y Eléctrico se multiplican por cada tipo defensor; la inmunidad evita el impacto. Espiga y los ataques normales conservan daño neutro.
 
 ## Archivos y ámbitos de estado
 
@@ -57,9 +67,12 @@ Si se usa el conector GitHub, lee primero la referencia de `develop`. Construye 
 
 ## Avance y comprobaciones para continuar
 
+La introducción, el gremio, el tablón, Rescate, las reliquias y los sonidos se incorporaron sobre `eca3bf7`. Para ampliar el futuro mapa del gremio, reutiliza las acciones de tienda, colección y selección de misión de `guild.js`. Las páginas largas usan las flechas de `assets/ui`. `audio.js` vincula eventos del juego con el banco `sounds/`; todos los textos de la aplicación y el canvas usan `assets/ui/wondermail.ttf`.
+
+
 La revisión del 24 de noviembre de 2026 parte de `85bffb3`, que incorporó experiencia, objetos, activas Q/E y Magma Cavern. La base incluye 627 fichas, 14 biomas, 32 objetos y 20 beneficios. Esta revisión documenta los módulos y separa los avisos de EXP y curación del dibujo de la entidad. Ambos guardan una posición del mundo al nacer y duran 950 ms de simulación. Una baya muestra los HP efectivamente recuperados. La animación gráfica de curación sigue al Pokémon.
 
-Revisión de equilibrio posterior a `bf968d0`. Los atributos del jugador parten de una reducción del 20 % sobre el valor de nivel 5 de la forma, antes de los bonos y respetando los mínimos. Desde la misión 5 aumenta el crecimiento de nivel enemigo y hay un aumento acumulativo de ataque, defensa y PV. Las combinaciones del catálogo cubren los tres efectos dorados, Espiga seguida de Cuerno con tiradas independientes, sustitución de bayas y descargas de ocho espinas al bloquear o recibir daño. Las espinas recorren 32 unidades en 680 ms. Flare recorre su alcance en 750 ms. Roca de pólvora carga 350 ms para el jugador y explota durante 1 s con radio 72. El líder mantiene su aviso de 1 s. El amuleto tiñe el sprite mientras dura su bonificación.
+Revisión de equilibrio posterior a `bf968d0`. Los atributos del jugador parten de una reducción del 20 % sobre el valor de nivel 5 de la forma, antes de los bonos y respetando los mínimos. Desde la misión 5 aumenta el crecimiento de nivel enemigo y hay un aumento acumulativo de ataque, defensa y PV. Las combinaciones del catálogo cubren los tres efectos dorados, Espiga seguida de Cuerno con tiradas independientes, sustitución de bayas y descargas de ocho espinas al bloquear o recibir daño. Las espinas recorren 32 unidades en 680 ms. Flare recorre su alcance en 750 ms. Roca de pólvora carga 350 ms para el jugador y explota durante 1 s con radio 72. El amuleto tiñe el sprite mientras dura su bonificación.
 
 Para comprobar cambios en este flujo, recoge una baya a pocos PV, a un PV del máximo y con la vida llena. Derrota enemigos, ataca y camina mientras se ve el aviso azul. Dos avisos simultáneos deben conservar líneas separadas y desaparecer al cambiar de piso. Comprueba también una transición de misión, una transformación y una activa de cada tecla. Para revisar la sintaxis desde la raíz, usa `find js -name '*.js' -exec node --check {} \;` con Node moderno.
 
@@ -82,7 +95,7 @@ Las rutas son relativas a este documento. Se incluyen funciones exportadas, auxi
 - `releaseSpines` — Crea ocho proyectiles equidistantes cuyo daño depende de la defensa al recibir el crítico.
 - `blast` — Resuelve la explosión circular, incluido el daño que recibe su propietario.
 - `spin` — Gira al atacante y registra a quién ha alcanzado para evitar impactos repetidos durante las dos vueltas.
-- `updateBossAbility` — Alterna entre apuntar, anunciar y ejecutar la activa del líder, y vuelve a comprobar la distancia.
+- `updateWildAbility` — Alterna entre apuntar, anunciar y ejecutar la activa de un salvaje, y vuelve a comprobar la distancia.
 - `tickAbilities` — Actualiza lanzamientos, bonificaciones temporales y colisiones continuas de proyectiles.
 
 ### [js/core/attack-motion.js](attack-motion.js)
@@ -281,3 +294,15 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 - `frame` — Ejecuta pasos fijos, procesa recogidas y objetivos y solicita el siguiente repintado.
 - `startGame` — Prepara interfaz y catálogos, inicia la primera misión y enlaza el ciclo de vida del juego.
 - `resize` — Adapta el búfer del canvas al tamaño real de la ventana y vuelve a dibujar.
+
+
+### Gremio, sonido y persistencia
+
+- [guild.js](guild.js) — `visitGuild`, `home`, `introduction`, `screen`, `button` e `icon` presentan la bienvenida y la navegación. `selectMission` espera la selección de una oferta. `listPage`, `historyDetail`, `collectionMenu` y `open` paginan y consultan descubrimientos. `shop`, `settings`, `confirmChange` y `guildMessage` gestionan compras, archivos y avisos.
+- [collection.js](collection.js) — `emptyCollection`, `parseCollection`, `saveCollection` y `loadCollection` gestionan el esquema y la persistencia. `beginChronicle`, `discover`, `checkpoint`, `recordFloor` y `settleMission` registran la aventura y liquidan el pago una vez.
+- [audio.js](audio.js) — `playSound` reproduce el efecto con el volumen de la colección.
+- [missions.js](missions.js) — `missionOffers` genera la pareja de contratos.
+- [enemy-ai.js](enemy-ai.js) — `fleeRescue` escoge un paso transitable que aumente la separación respecto de las amenazas.
+- [abilities.js](abilities.js) — `elementalHit` aplica afinidades antes del daño compartido.
+- [benefits.js](benefits.js) — `combatBenefits` obtiene el conjunto del combatiente que recibe o ejecuta el golpe.
+- [main.js](../main.js) — `pagePanel` pagina los avisos y fichas del piso con las flechas de interfaz.

@@ -21,7 +21,7 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, esca
   const start = cell(enemy.y) * width + cell(enemy.x);
   // La visión sigue el dibujo sólido del atlas, incluso para especies que
   // pueden cruzarlo. Sin visión directa buscamos un rodeo por ejes.
-  const directions = hasSight(enemy,game.player) ? neighbors : neighbors.slice(0,4);
+  const directions = hasSight(enemy,enemy.prey??game.player) ? neighbors : neighbors.slice(0,4);
   const queue = [start];
   const previous = new Map([[start, -1]]);
   let bestTile = start;
@@ -92,7 +92,8 @@ export function trySidestep(enemy, attacker, canMove, simulationTime) {
 export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove) {
   // Se ejecuta solo cuando Hurt y Attack han terminado. Revalida el tramo
   // en cada fotograma porque otro combatiente puede ocuparlo durante la esquiva.
-  const playerOnLand = standingOnLand(game.player.x, game.player.y);
+  const player=enemy.prey??game.player;
+  const playerOnLand = standingOnLand(player.x, player.y);
   if (enemy.sidestep && !enemy.bossResponse) {
     const step = enemy.sidestep;
     const length = Math.min(2 * enemy.speed * movementRate(enemy.stats.speed), step.remaining);
@@ -110,12 +111,12 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     }
     return;
   }
-  const player = game.player, deltaX = player.x - enemy.x, deltaY = player.y - enemy.y;
+  const deltaX = player.x - enemy.x, deltaY = player.y - enemy.y;
   const reach = attackReach(enemy.stats);
   const distance = Math.hypot(deltaX, deltaY);
   const onLand = standingOnLand(enemy.x, enemy.y);
   const returnToLand = playerOnLand && !onLand;
-  const seesPlayer = player.hp > 0 && (enemy.tracking || distance <= 10*reach) && hasSight(enemy,player);
+  const seesPlayer = player.hp > 0 && (player.ally || ((enemy.tracking || distance <= 10*reach) && hasSight(enemy,player)));
   if (seesPlayer) enemy.lastSeen = {x:player.x,y:player.y};
   // Al perder visión solo puede investigar la última posición observada.
   if (!seesPlayer && enemy.lastSeen && Math.hypot(enemy.x-enemy.lastSeen.x,enemy.y-enemy.lastSeen.y)<TILE/2) enemy.lastSeen=null;
@@ -130,7 +131,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
-  const inRange = seesPlayer && !fleeing && !returnToLand && distance <= reach + 5;
+  const inRange = seesPlayer && hasSight(enemy,player) && !fleeing && !returnToLand && distance <= reach + 5;
   const simulationTime = gameTime();
   if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
@@ -194,4 +195,19 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     enemy.path = [];
     enemy.stuck = 0;
   }
+}
+
+// La víctima busca espacio respecto de todos los cuerpos. Comprueba cada paso
+// y se queda quieta si no puede ganar distancia en ninguna dirección.
+export function fleeRescue(ally,move,setState,canMove) {
+  const threats=game.entities.filter(entity=>entity!==ally && entity.hp);
+  const clearance=(x,y)=>Math.min(...threats.map(entity=>Math.hypot(entity.x-x,entity.y-y)));
+  let best=clearance(ally.x,ally.y), heading=null;
+  for(const [dx,dy] of neighbors){
+    const length=Math.hypot(dx,dy), x=ally.x+dx*3/length,y=ally.y+dy*3/length;
+    const score=clearance(x,y);
+    if(score>best && canMove(ally,x,y)){best=score;heading=[dx,dy]}
+  }
+  setState(ally,heading?'Walk':'Idle');
+  if(heading)move(ally,...heading);
 }

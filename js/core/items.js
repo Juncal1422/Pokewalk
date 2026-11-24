@@ -1,4 +1,6 @@
 import { showWorldNotice } from './world-notices.js';
+import {discover,checkpoint} from './collection.js';
+import {playSound} from './audio.js';
 import { levelUp } from './experience.js';
 import { pickupEffect } from './abilities.js';
 import { gameTime } from './clock.js';
@@ -57,7 +59,9 @@ export function collectItems(player, strike = null) {
     if (drop.essence) {
       const type=drop.essence;
       const candy = 'candy_'+(type==='fighting'?'fight':type);
-      game.essences[type]=(game.essences[type] || 0)+drop.amount*(game.inventory.has(candy)?2:1);
+      const quantity=drop.amount*(game.inventory.has(candy)?2:1);
+      if(type==='electric' && game.runRelics?.has('depleted_battery'))game.batteryEnergy+=quantity;
+      else game.essences[type]=(game.essences[type] || 0)+quantity;
       return false;
     }
     const item = game.items[drop.id];
@@ -93,6 +97,7 @@ export function collectItems(player, strike = null) {
     console.info('[Objeto] Recogido', item.name);
     player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('mint_leaf'):0))));
     // Usamos la diferencia después del límite de PV para mostrar solo la curación efectiva.
+    discover('items',drop.id);checkpoint();playSound(item.healFraction?'berry':'item');
     if (item.healFraction) showWorldNotice(player, player.hp - previous.hp, 'HP');
     const simulationTime = gameTime();
     for (const key of [...Object.keys(item.stats), 'hp']) {

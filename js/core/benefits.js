@@ -13,6 +13,11 @@ export function amount(benefitId, heldBenefits = game.held) {
   return heldBenefits?.has(benefitId) ? game.benefits.get(benefitId).amount : 0;
 }
 
+// Las reglas de combate leen la colección del propietario de cada golpe.
+export function combatBenefits(entity) {
+  return entity.isPlayer ? game.held : entity.benefits;
+}
+
 // Los porcentajes se calculan de nuevo sobre la forma actual, nunca sobre
 // el resultado de una transformación anterior.
 export function playerStats(species, playerLevel, bonuses, heldBenefits = game.held) {
@@ -27,6 +32,13 @@ export function playerStats(species, playerLevel, bonuses, heldBenefits = game.h
   for (const [statKey,modifier] of Object.entries(modifiers)) {
     stats[statKey] = Math.round(stats[statKey]*(1+modifier));
     if (statKey === 'speed' || statKey === 'attackSpeed') stats[statKey] = Math.min(180,stats[statKey]);
+  }
+  if(game.runRelics?.has('black_sash')){
+    // Una transformación fija un nuevo valor base al nivel de entrada de esa forma.
+    const entryLevel=game.player?.dex===species.dex ? (game.defenseEntryLevel??5) : playerLevel;
+    const base=statsFor(species,entryLevel).defense;
+    stats.attack+=Math.floor(Math.max(0,stats.defense-base)/2);
+    stats.defense=Math.min(base,stats.defense);
   }
   return stats;
 }
