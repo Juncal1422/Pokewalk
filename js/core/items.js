@@ -40,9 +40,9 @@ export function spawnFloorItems() {
   if (sites.length && Math.random() < .5) place(synergyActive('sitrusBerries') || Math.random()<.25 ? 'berry_sitrus' : 'berry_oran');
   const available = Object.keys(game.items).filter(itemId => {
     const item=game.items[itemId];
-    return (item.consumable || game.inventory.size < 75) && !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
+    return !(itemId==='revive' && game.reviveSpent) && (item.consumable || game.inventory.size < 75) && !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < .225 + amount('green_scale')) {
+  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < .225 + amount('scaled')) {
     const itemId=available[Math.floor(Math.random() * available.length)];
     place(itemId);
     if (game.items[itemId].oncePerMission) mission.candyPlaced=true;
@@ -60,7 +60,18 @@ export function collectItems(player, strike = null) {
     if (drop.essence) {
       const type=drop.essence;
       const candy = 'candy_'+(type==='fighting'?'fight':type);
-      const quantity=drop.amount*(game.inventory.has(candy)?2:1);
+      let quantity=drop.amount*(game.inventory.has(candy)?2:1);
+      if(type==='water' && synergyActive('waterGrowth')){
+        player.bonuses.size+=quantity;
+        player.bonuses.attack+=quantity;
+        player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
+      }
+      if(type==='water' && game.held.has('blooming')){
+        const healed=Math.min(quantity,player.stats.hpMax-player.hp);
+        player.hp+=healed; quantity-=healed;
+        if(healed)showWorldNotice(player,healed,'HP');
+        if(!quantity)return false;
+      }
       if(type==='electric' && game.runRelics?.has('depleted_battery'))game.batteryEnergy+=quantity;
       else game.essences[type]=(game.essences[type] || 0)+quantity;
       return false;
@@ -72,6 +83,7 @@ export function collectItems(player, strike = null) {
     for (const [key, delta] of Object.entries(item.stats)) bonuses[key] += delta;
     const oldStats = player.stats;
     const previous = { ...oldStats, hp: player.hp };
+    if (!item.consumable) game.inventory.add(drop.id);
     player.stats = playerStats(game.pokemon.get(player.dex), game.progress, bonuses);
     // Al crecer junto a una pared empujamos el cuerpo al punto válido más
     // cercano. Si no cabe en las inmediaciones, el objeto sigue en el suelo.
@@ -84,11 +96,10 @@ export function collectItems(player, strike = null) {
           if (canMove(player, x, y)) { freePosition = { x, y }; break; }
         }
       }
-      if (!freePosition) { player.stats = oldStats; return true; }
+      if (!freePosition) { player.stats = oldStats; if(!item.consumable)game.inventory.delete(drop.id); return true; }
       Object.assign(player, freePosition);
     }
     player.bonuses = bonuses;
-    if (!item.consumable) game.inventory.add(drop.id);
     if (drop.id==='rarecandy') { game.xp=0; levelUp(); }
     if (item.doubleEssences) {
       const mostAbundantTypes = Object.keys(game.essences).sort((firstType,secondType)=>game.essences[secondType]-game.essences[firstType]).slice(0,item.doubleEssences);
@@ -96,7 +107,7 @@ export function collectItems(player, strike = null) {
     }
     pickupEffect(player,item.healFraction?'heal':'boost');
     console.info('[Objeto] Recogido', item.name);
-    player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('mint_leaf'):0))));
+    player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('minty'):0))));
     // Usamos la diferencia después del límite de PV para mostrar solo la curación efectiva.
     discover('items',drop.id);checkpoint();playSound(item.healFraction?'berry':'item');
     if (item.healFraction) showWorldNotice(player, player.hp - previous.hp, 'HP');

@@ -20,7 +20,7 @@ const essenceNames = 'normal fire water electric grass ice fighting poison groun
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
   console.debug('[HUD] Cargando interfaz y esencias');
-  await Promise.all([...essenceNames.map(id => 'essence-' + id), 'textbox-b', 'hpbar'].map(async key => {
+  await Promise.all([...essenceNames.map(id => 'essence-' + id), 'textbox-b', 'textbox-b-thin', 'hpbar'].map(async key => {
     const image = new Image();
     image.src = assetUrl('../../assets/ui/' + key + '.png', import.meta.url).href;
     await image.decode();
@@ -33,7 +33,7 @@ function indicators(drawingContext,key,x,y,simulationTime) {
   drawingContext.save();
   drawingContext.textBaseline = 'middle';
   for (const pickupIndicator of game.pickups.filter(entry => entry.key === key)) {
-    drawingContext.globalAlpha = Math.min(1, (1500 - (simulationTime-pickupIndicator.time)) / 800);
+    drawingContext.globalAlpha = Math.min(1, ((pickupIndicator.duration??1500) - (simulationTime-pickupIndicator.time)) / 800);
     drawingContext.fillStyle = (key === 'size' ? pickupIndicator.delta < 0 : pickupIndicator.delta > 0) ? '#79ed8e' : '#ff7474';
     const text = (pickupIndicator.delta > 0 ? '+' : '') + formatValue(pickupIndicator.delta);
     drawingContext.fillText(text,x,y); x += drawingContext.measureText(text).width + 6;
@@ -44,20 +44,19 @@ function indicators(drawingContext,key,x,y,simulationTime) {
 // Compone la vida, experiencia, esencias, atributos y objetivo en coordenadas de interfaz.
 export function drawHud(drawingContext, canvas, player) {
   const simulationTime = gameTime();
-  game.pickups = game.pickups.filter(pickupIndicator => simulationTime - pickupIndicator.time < 1500);
+  game.pickups = game.pickups.filter(pickupIndicator => simulationTime - pickupIndicator.time < (pickupIndicator.duration??1500));
   const baseWidth = Math.min(144, canvas.width * 0.22);
   const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
   const fraction = player.hp / player.stats.hpMax;
   // Los anchos del hueco siguen las seis filas interiores del nuevo marco.
   const scale = 2, endCapWidth = Math.min(16 * scale, length / 3);
   const left = 8, top = 2, healthBarImage = icons.hpbar;
-  const filledRightEdge = left + endCapWidth/2 + fraction*(length-endCapWidth);
   [14,12,9,8,9,12].forEach((edge,rowIndex) => {
     const inset = edge*endCapWidth/16, x=left+inset, y=top+(8+rowIndex)*scale, width=length-2*inset;
     drawingContext.fillStyle = '#15202b';
     drawingContext.fillRect(x,y,width,scale);
     drawingContext.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
-    drawingContext.fillRect(x,y,Math.max(0,Math.min(width,filledRightEdge-x)),scale);
+    drawingContext.fillRect(x,y,Math.max(0,Math.min(width,width*fraction)),scale);
   });
   const widths = [endCapWidth, length - 2 * endCapWidth, endCapWidth];
   let cursor = left;
@@ -90,7 +89,7 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.translate(0,-canvas.height);
   drawingContext.font = 'bold 13px Wondermail';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
-  drawFrame(drawingContext, icons['textbox-b'], 4, y - 25, 185, canvas.height - y + 25, .25);
+  drawFrame(drawingContext, icons['textbox-b-thin'], 4, y - 25, 185, canvas.height - y + 25, .25);
   drawingContext.fillStyle = '#fff';
   drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.

@@ -94,6 +94,7 @@ export function statsFor(
       value = Math.min(limits[statKey], Math.ceil(value * factors[statKey]));
       if (statKey === 'hpMax') value *= 4;
     }
+    if (!isWild && statKey==='size' && species.dex===132) value=100;
     value += bonuses[statKey] || 0;
     result[statKey] =
       statKey === 'speed' || statKey === 'attackSpeed'

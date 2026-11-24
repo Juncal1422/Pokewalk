@@ -32,16 +32,23 @@ const EMBEDDED_APP = `
       #guild[open] { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:min(1.4dvh,12px); }
       #guild h1,#guild p { margin:0; }
       #guild h1 { color:#ead197;font-size:clamp(20px,5vmin,42px); }
-      #guild button,#guild label,#guild .guild-list p { box-sizing:border-box; padding:clamp(3px,1vmin,12px); color:#fff; background:#24364a; border:2px solid #74938b; font-size:clamp(13px,2.8vmin,23px); }
+      #guild button,#guild label,#guild .guild-list p { box-sizing:border-box; padding:clamp(3px,1vmin,12px); color:#fff; background:#24364a; border:2px solid #74938b; font-size:clamp(16px,3.5vmin,29px); }
       #guild button { cursor:pointer; } #guild button:disabled { opacity:.65; }
       #guild .offers { width:min(850px,97%);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2vmin; }
       #guild .offers button { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; display:grid;justify-items:center;align-content:center;gap:1vmin; }
-      #guild .offers .red { background:#531e26; }
+      #guild .offers .red { background-color:#531e26; }
       #guild img { width:clamp(20px,5vmin,44px);vertical-align:middle;image-rendering:pixelated; }
       #guild .offers .portrait {width:clamp(15px,4.5vmin,38px);}
       #guild .guild-list { display:grid;gap:4px;max-width:min(94vw,800px); }
+      #guild .catalog-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(22vw,120px),1fr));gap:1vmin;width:min(92vw,800px);}
+      #guild .catalog-grid button {display:grid;justify-items:center;align-content:center;min-width:0;font-size:clamp(12px,2.6vmin,23px);}
+      #guild .catalog-grid img {width:clamp(26px,7vmin,70px);}
+      #guild .contracts {width:min(98vw,1200px);grid-template-columns:repeat(var(--cards),minmax(0,1fr));}
+      @media(max-aspect-ratio:1/1){#guild .contracts {grid-template-columns:repeat(2,minmax(0,1fr));}}
+      #guild .offers button,#guild .letterbox,#guild .offers .red {background-clip:padding-box;}
+      #guild .offers .red {border-image-source:url("${assetUrl('../assets/ui/textbox-p.png',import.meta.url).href}");}
       #guild nav {display:flex;align-items:center;gap:10px;}
-      #guild.story {background:black;} #guild .letterbox { text-align:left;width:min(760px,96%);min-height:5em;background:#15211d;
+      #guild.story {background:black;} #guild .letterbox { text-align:left;width:min(760px,96%);min-height:5em;background:#15211d padding-box;
        border:12px solid transparent;border-image:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; }
       #guild strong {color:#f0cf7e;}
       #emblem-award {position:fixed;inset:65px 8px auto auto;margin:0;color:white;background:#192b39;border:2px solid #91a886;pointer-events:none;font-size:22px;}
@@ -84,7 +91,7 @@ const EMBEDDED_APP = `
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
-      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:.8; }
+      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:1; }
       #roster { zoom:1.2; }
       #inventory,#benefits { position:absolute; display:grid; pointer-events:none; gap:1px; }
       #inventory { left:min(223px,38vw); right:min(30vw,380px); bottom:8px;
@@ -340,7 +347,7 @@ export async function startGame({
   loadCollection();game.chronicle=null;
   const icon = document.querySelector('link[rel~="icon"]') ?? document.createElement('link');
   icon.rel = 'icon';
-  icon.href = assetUrl('../assets/benefits/cog.png',import.meta.url).href;
+  icon.href = assetUrl('../assets/benefits/machinery.png',import.meta.url).href;
   document.head.append(icon);
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
@@ -374,6 +381,7 @@ export async function startGame({
   game.amuletUntil = 0;
   game.adventure = 0;
   game.inventory = new Set();
+  game.reviveSpent=false;
   game.essences = {};
   game.pickups = [];
   game.held = new Set();

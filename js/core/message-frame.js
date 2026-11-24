@@ -4,7 +4,7 @@ export function drawFrame(drawingContext, image, x, y, width, height, opacity = 
   const columnEdges = [x, x + cornerSize, x + width - cornerSize, x + width];
   const rowEdges = [y, y + cornerSize, y + height - cornerSize, y + height];
   drawingContext.fillStyle = 'rgba(12,20,34,'+opacity+')';
-  drawingContext.fillRect(x + cornerSize / 2, y + cornerSize / 2, width - cornerSize, height - cornerSize);
+  drawingContext.fillRect(x + cornerSize, y + cornerSize, width - 2*cornerSize, height - 2*cornerSize);
   for (let row = 0; row < 3; row++) {
     for (let column = 0; column < 3; column++) {
       if (row === 1 && column === 1) continue;

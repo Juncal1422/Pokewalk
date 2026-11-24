@@ -7,7 +7,6 @@
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Bulbasaur",
       "Vileplume",
       "Victreebel",
       "Exeggutor",
@@ -15,11 +14,9 @@
       "Quagsire",
       "Donphan",
       "Swampert",
-      "Roselia",
       "Whiscash",
       "Torterra",
       "Roserade",
-      "Cherubi",
       "Gabite",
       "Abomasnow",
       "Servine",
@@ -43,7 +40,6 @@
       "Ivysaur",
       "Weedle",
       "Venomoth",
-      "Haunter",
       "Natu",
       "Gligar",
       "Qwilfish",
@@ -123,7 +119,6 @@
       "Feebas",
       "Huntail",
       "Luvdisc",
-      "Buizel",
       "Finneon",
       "Dewott",
       "Basculin",
@@ -143,10 +138,10 @@
     }
   },
   {
-    "id": "long_horn",
-    "name": "Cuerno largo",
+    "id": "rhyhorn_horn",
+    "name": "Cuerno de Rhyhorn",
     "description": "Ataque +10 %. Proyecta un cuerno en la dirección del golpe.",
-    "image": "assets/benefits/long_horn.png",
+    "image": "assets/benefits/rhyhorn_horn.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -160,19 +155,20 @@
       "Drapion",
       "Deerling",
       "Pawniard",
-      "Zweilous"
+      "Zweilous",
+      "Rhyhorn"
     ],
     "stats": {
       "attack": 0.1
     }
   },
   {
-    "id": "cog",
-    "name": "Engranaje",
-    "description": "Q · Consume 5 esencias de uno de tus tres tipos principales y vuelve a la entrada. Recarga: 10 s.",
-    "image": "assets/benefits/cog.png",
+    "id": "machinery",
+    "name": "Maquinaria",
+    "description": "Q · Teletranspórtate a un punto aleatorio de suelo del piso. Recarga: 15 s.",
+    "image": "assets/benefits/machinery.png",
     "active": true,
-    "amount": 10,
+    "amount": 15,
     "pokemon": [
       "Magikarp",
       "Pichu",
@@ -192,10 +188,10 @@
     "slot": "q"
   },
   {
-    "id": "deep_scale",
-    "name": "Escama Abisal",
+    "id": "reinforced",
+    "name": "Reforzado",
     "description": "Defensa +10 %. Bloqueo crítico +10 puntos.",
-    "image": "assets/benefits/deep_scale.png",
+    "image": "assets/benefits/reinforced.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -214,7 +210,6 @@
       "Milotic",
       "Gorebyss",
       "Piplup",
-      "Floatzel",
       "Lumineon",
       "Tympole",
       "Haxorus",
@@ -243,10 +238,10 @@
     }
   },
   {
-    "id": "green_scale",
-    "name": "Escama verde",
+    "id": "scaled",
+    "name": "Escamado",
     "description": "Defensa +5 %. Probabilidad de encontrar objetos +10 puntos.",
-    "image": "assets/benefits/green_scale.png",
+    "image": "assets/benefits/scaled.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -286,9 +281,7 @@
       "Abra",
       "Kadabra",
       "Slowpoke",
-      "Gengar",
       "Starmie",
-      "Slowking",
       "Misdreavus",
       "Smoochum",
       "Kirlia",
@@ -308,14 +301,13 @@
     ]
   },
   {
-    "id": "golden_spike",
-    "name": "Espigadorada",
-    "description": "Ataque y rango +10 %. Tiñe de oro Cuerno largo, Espiga y Colmillo de Mamoswine.",
-    "image": "assets/benefits/golden_spike.png",
+    "id": "golden",
+    "name": "Dorado",
+    "description": "Ataque y rango +10 %. Tiñe de oro Cuerno de Rhyhorn, Punzante y Colmillo de Mamoswine.",
+    "image": "assets/benefits/golden.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Nidoqueen",
       "Diglett",
       "Cubone",
       "Rhydon",
@@ -340,10 +332,10 @@
     }
   },
   {
-    "id": "green_spike",
-    "name": "Espinas",
+    "id": "spiked",
+    "name": "Espinoso",
     "description": "Al recibir un crítico, libera ocho espinas de alcance 32 que infligen el 10 % de tu defensa.",
-    "image": "assets/benefits/green_spike.png",
+    "image": "assets/benefits/spiked.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
@@ -368,16 +360,15 @@
     ]
   },
   {
-    "id": "iron_tag",
-    "name": "Chapa de hierro",
+    "id": "protected",
+    "name": "Protegido",
     "description": "10 % de probabilidad de bloquear la mitad del daño.",
-    "image": "assets/benefits/iron_tag.png",
+    "image": "assets/benefits/protected.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
       "Magnemite",
       "Onix",
-      "Rhyhorn",
       "Omanyte",
       "Kabuto",
       "Corsola",
@@ -397,10 +388,10 @@
     ]
   },
   {
-    "id": "lovefool",
-    "name": "Corazón",
+    "id": "heartbreaker",
+    "name": "Rompecorazones",
     "description": "Recibe un 25 % menos de daño de Pokémon con una esencia en común.",
-    "image": "assets/benefits/lovefool.png",
+    "image": "assets/benefits/heartbreaker.png",
     "active": false,
     "amount": 0.25,
     "pokemon": [
@@ -413,7 +404,6 @@
       "Wobbuffet",
       "Ralts",
       "Meditite",
-      "Spoink",
       "Claydol",
       "Chimecho",
       "Wynaut",
@@ -436,7 +426,6 @@
     "active": true,
     "amount": 30,
     "pokemon": [
-      "Nidoking",
       "Dugtrio",
       "Dewgong",
       "Jynx",
@@ -463,10 +452,10 @@
     "slot": "e"
   },
   {
-    "id": "mint_leaf",
-    "name": "Hoja de menta",
+    "id": "minty",
+    "name": "Mentolado",
     "description": "Las bayas curan un 50 % más.",
-    "image": "assets/benefits/mint_leaf.png",
+    "image": "assets/benefits/minty.png",
     "active": false,
     "amount": 0.5,
     "pokemon": [
@@ -492,10 +481,10 @@
     ]
   },
   {
-    "id": "silvercoat",
-    "name": "Capaplateada",
+    "id": "swift",
+    "name": "Ágil",
     "description": "+5 puntos porcentuales de evasión.",
-    "image": "assets/benefits/silvercoat.png",
+    "image": "assets/benefits/swift.png",
     "active": false,
     "amount": 0.05,
     "pokemon": [
@@ -521,10 +510,10 @@
     ]
   },
   {
-    "id": "fire_brooch",
-    "name": "Broche de fuego",
+    "id": "hooh_brooch",
+    "name": "Broche de Ho-oh",
     "description": "E · Carga 0,2 s y lanza una llamarada hasta 4 veces tu rango. Inflige tu Ataque o el 150 % en forma Fuego. Recarga en 30 s.",
-    "image": "assets/benefits/fire_brooch.png",
+    "image": "assets/benefits/hooh_brooch.png",
     "active": true,
     "amount": 30,
     "pokemon": [
@@ -540,8 +529,8 @@
     "slot": "e"
   },
   {
-    "id": "spike",
-    "name": "Espiga",
+    "id": "spiky",
+    "name": "Punzante",
     "description": "Rango +10 %. Proyecta una espina en la dirección del golpe.",
     "amount": 0.1,
     "active": false,
@@ -558,14 +547,14 @@
       "Sawsbuck",
       "Deino"
     ],
-    "image": "assets/benefits/spike.png",
+    "image": "assets/benefits/spiky.png",
     "stats": {
       "range": 0.1
     }
   },
   {
-    "id": "amulet",
-    "name": "Amuleto",
+    "id": "seer",
+    "name": "Oráculo",
     "description": "Q · Consume 1 PV. Tras 0,5 s, ganas un 50 % de ataque, velocidad de ataque y velocidad durante 10 s. Recarga: 90 s.",
     "amount": 90,
     "active": true,
@@ -589,11 +578,11 @@
       "Mew",
       "Mewtwo"
     ],
-    "image": "assets/benefits/amulet.png"
+    "image": "assets/benefits/seer.png"
   },
   {
-    "id": "gunpowder_rock",
-    "name": "Roca de pólvora",
+    "id": "gunpowder_core",
+    "name": "Núcleo de pólvora",
     "description": "E · Carga 0,35 s y explota en un radio de 72, dañándote también. Recarga: 60 s.",
     "amount": 60,
     "active": true,
@@ -610,6 +599,79 @@
       "Golem",
       "Regirock"
     ],
-    "image": "assets/benefits/gunpowder_rock.png"
+    "image": "assets/benefits/gunpowder_core.png"
+  },
+  {
+    "id": "blooming",
+    "name": "Floreciente",
+    "description": "Las esencias de agua curan 1 PV por unidad mientras falten PV.",
+    "image": "assets/benefits/blooming.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Bulbasaur",
+      "Roselia",
+      "Cherubi"
+    ],
+    "stats": {}
+  },
+  {
+    "id": "royalty",
+    "name": "Realeza",
+    "description": "Q · Paraliza durante 1,5 s a los enemigos cercanos. Recarga: 30 s.",
+    "image": "assets/benefits/royalty.png",
+    "active": true,
+    "amount": 30,
+    "pokemon": [
+      "Nidoking",
+      "Nidoqueen",
+      "Slowking"
+    ],
+    "stats": {},
+    "slot": "q"
+  },
+  {
+    "id": "spoink_pearl",
+    "name": "Perla de Spoink",
+    "description": "Q · Salta a un punto de suelo de la habitación. Recarga: 10 s.",
+    "image": "assets/benefits/spoink_pearl.png",
+    "active": true,
+    "amount": 10,
+    "pokemon": [
+      "Spoink"
+    ],
+    "stats": {},
+    "slot": "q"
+  },
+  {
+    "id": "tailed",
+    "name": "Caudato",
+    "description": "Defensa −15 %. Velocidad y velocidad de ataque +25 %.",
+    "image": "assets/benefits/tailed.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Buizel",
+      "Floatzel"
+    ],
+    "stats": {
+      "defense": -0.15,
+      "speed": 0.25,
+      "attackSpeed": 0.25
+    }
+  },
+  {
+    "id": "transparent",
+    "name": "Transparente",
+    "description": "Q · Evasión +20 puntos durante 5 s. Recarga: 5 min.",
+    "image": "assets/benefits/transparent.png",
+    "active": true,
+    "amount": 300,
+    "pokemon": [
+      "Haunter",
+      "Gengar"
+    ],
+    "stats": {},
+    "slot": "q"
   }
 ]

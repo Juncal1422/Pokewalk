@@ -25,6 +25,8 @@ export function parseCollection(text) {
       !list(data.history,run=>run && id(run.date)&&id(run.status)&&list(run.forms,count)&&list(run.items,id)&&list(run.benefits,id)&&stats(run.stats)&&count(run.level)&&
         list(run.missions,m=>m&&id(m.name)&&id(m.biome)&&id(m.status)&&count(m.floor)&&count(m.floors)&&count(m.reward)&&typeof m.red==='boolean')))
     throw Error('El archivo no contiene una colección válida.');
+  const aliases = {"long_horn": "rhyhorn_horn", "cog": "machinery", "deep_scale": "reinforced", "green_scale": "scaled", "golden_spike": "golden", "green_spike": "spiked", "iron_tag": "protected", "lovefool": "heartbreaker", "mint_leaf": "minty", "silvercoat": "swift", "fire_brooch": "hooh_brooch", "spike": "spiky", "amulet": "seer", "gunpowder_rock": "gunpowder_core"};
+  for (const record of [data,...data.history]) record.benefits=[...new Set(record.benefits.map(id=>aliases[id]??id))];
   return data;
 }
 
@@ -64,7 +66,7 @@ export function checkpoint() {
   if(current && game.mission){current.kills=game.mission.kills;current.quota=game.mission.quota;current.form=game.player.dex;}
   for(const id of game.held) discover('benefits',id);
   discover('forms',game.player.dex);
-  for(const rule of game.synergies.values()) if(rule.requires.every(id=>game.held.has(id))&&(!rule.anyOf||rule.anyOf.some(id=>game.held.has(id)))) discover('synergies',rule.effect);
+  for(const rule of game.synergies.values()) if((rule.items??[]).every(id=>game.inventory.has(id)) && rule.requires.every(id=>game.held.has(id))&&(!rule.anyOf||rule.anyOf.some(id=>game.held.has(id)))) discover('synergies',rule.effect);
   saveCollection();
 }
 

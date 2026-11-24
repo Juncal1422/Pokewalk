@@ -1,3 +1,4 @@
+import {gameTime} from './clock.js';
 import {checkpoint} from './collection.js';
 import {playSound} from './audio.js';
 import { game } from './state.js';
@@ -12,7 +13,12 @@ export function levelUp() {
   game.progress = Math.min(100, game.progress + 1);
   const player = game.player, species = game.pokemon.get(player.dex);
   player.level = levelFor(species, game.progress);
+  const previous=player.stats;
   player.stats = playerStats(species, game.progress, player.bonuses);
+  for (const [key,value] of Object.entries(player.stats)) {
+    const delta=value-previous[key];
+    if(delta>0)game.pickups.push({key,delta,time:gameTime(),duration:4000});
+  }
   playSound('xp');checkpoint();
 }
 // Pondera la recompensa por nivel y estadísticas base y reparte el excedente entre niveles sucesivos.

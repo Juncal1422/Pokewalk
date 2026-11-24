@@ -2,61 +2,90 @@
   {
     "effect": "goldHorn",
     "requires": [
-      "golden_spike",
-      "long_horn"
+      "golden",
+      "rhyhorn_horn"
     ],
-    "description": "Aplica el filtro dorado a Cuerno largo."
+    "description": "Aplica el filtro dorado a Cuerno de Rhyhorn.",
+    "name": "Cuerno dorado"
   },
   {
     "effect": "goldSpike",
     "requires": [
-      "golden_spike",
-      "spike"
+      "golden",
+      "spiky"
     ],
-    "description": "Aplica el filtro dorado a Espiga."
+    "description": "Aplica el filtro dorado a Punzante.",
+    "name": "Espina dorada"
   },
   {
     "effect": "goldSpin",
     "requires": [
-      "golden_spike",
+      "golden",
       "mamoswine_fang"
     ],
-    "description": "Aplica el filtro dorado a Colmillo de Mamoswine."
+    "description": "Aplica el filtro dorado a Colmillo de Mamoswine.",
+    "name": "Colmillo dorado"
   },
   {
     "effect": "doubleStrike",
     "requires": [
-      "long_horn",
-      "spike"
+      "rhyhorn_horn",
+      "spiky"
     ],
-    "description": "Lanza Espiga y después Cuerno largo con dos impactos independientes."
+    "description": "Lanza Punzante y después Cuerno de Rhyhorn con dos impactos independientes.",
+    "name": "Doble estocada"
   },
   {
     "effect": "sitrusBerries",
     "requires": [
-      "green_scale",
-      "mint_leaf"
+      "scaled",
+      "minty"
     ],
-    "description": "Toda baya generada es Zidra."
+    "description": "Toda baya generada es Zidra.",
+    "name": "Cosecha de Zidra"
   },
   {
     "effect": "blockSpines",
     "requires": [
-      "green_spike"
+      "spiked"
     ],
     "description": "Dispara espinas también al bloquear.",
     "anyOf": [
-      "deep_scale",
-      "iron_tag"
-    ]
+      "reinforced",
+      "protected"
+    ],
+    "name": "Guardia espinosa"
   },
   {
     "effect": "damageSpines",
     "requires": [
-      "green_spike",
-      "deep_scale",
-      "iron_tag"
+      "spiked",
+      "reinforced",
+      "protected"
     ],
-    "description": "Dispara espinas una vez por golpe recibido."
+    "description": "Dispara espinas una vez por golpe recibido.",
+    "name": "Coraza espinosa"
+  },
+  {
+    "effect": "royalCrown",
+    "name": "Corona real",
+    "requires": [
+      "royalty"
+    ],
+    "items": [
+      "kings_rock"
+    ],
+    "description": "Tamaño +50 %, demás atributos +15 % y recargas −50 %."
+  },
+  {
+    "effect": "waterGrowth",
+    "name": "Brote acuático",
+    "requires": [
+      "blooming"
+    ],
+    "items": [
+      "seed"
+    ],
+    "description": "Cada esencia de agua recogida añade 1 al tamaño y al ataque."
   }
 ]

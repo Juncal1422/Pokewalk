@@ -252,5 +252,69 @@
       "range": 2
     },
     "doubleEssences": 17
+  },
+  "drill": {
+    "name": "Taladro",
+    "description": "+5 ataque y rango.",
+    "image": "assets/items/drill.png",
+    "stats": {
+      "attack": 5,
+      "range": 5
+    }
+  },
+  "golden_disk": {
+    "name": "Disco Dorado",
+    "description": "Reduce las recargas un 25 %.",
+    "image": "assets/items/golden_disc.png",
+    "stats": {}
+  },
+  "kings_rock": {
+    "name": "Roca del Rey",
+    "description": "+2 ataque, defensa, velocidad, velocidad de ataque y rango.",
+    "image": "assets/items/kings_rock.png",
+    "stats": {
+      "attack": 2,
+      "defense": 2,
+      "speed": 2,
+      "attackSpeed": 2,
+      "range": 2
+    }
+  },
+  "lost_map": {
+    "name": "Mapa perdido",
+    "description": "Aumenta la probabilidad de papel rojo un 50 %.",
+    "image": "assets/items/lost_map.png",
+    "stats": {}
+  },
+  "lost_ticket": {
+    "name": "Ticket perdido",
+    "description": "Añade un cuarto encargo al tablón.",
+    "image": "assets/items/lost_ticket.png",
+    "stats": {}
+  },
+  "ribbon": {
+    "name": "Cinta",
+    "description": "+3 velocidad y velocidad de ataque.",
+    "image": "assets/items/ribbon.png",
+    "stats": {
+      "speed": 3,
+      "attackSpeed": 3
+    }
+  },
+  "seed": {
+    "name": "Semilla",
+    "description": "+10 tamaño, +4 velocidad y ataque.",
+    "image": "assets/items/seed.png",
+    "stats": {
+      "size": 10,
+      "speed": 4,
+      "attack": 4
+    }
+  },
+  "revive": {
+    "name": "Revivir",
+    "description": "Una vez por aventura, recupera el 20 % de los PV al caer y gana invulnerabilidad.",
+    "image": "assets/items/revive.png",
+    "stats": {}
   }
 }

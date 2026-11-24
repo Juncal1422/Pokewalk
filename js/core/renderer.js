@@ -151,6 +151,7 @@ export function draw() {
     drawingContext.save();
     if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2) drawingContext.globalAlpha *= 0.28;
     if (entity.isPlayer && game.amuletUntil > gameTime()) drawingContext.filter = 'sepia(.35) hue-rotate(235deg) saturate(1.45)';
+    if(entity.evasionUntil>gameTime())drawingContext.filter='saturate(.5)';
     if (elapsed < 110) drawingContext.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
     drawingContext.drawImage(
       animation.img,
@@ -166,7 +167,7 @@ export function draw() {
 
     drawingContext.restore();
     if (usesWeaponEffect) {
-      const horn = entity.doubleStrike ? offset.secondWeapon : (entity.isPlayer?game.held:entity.benefits).has('long_horn');
+      const horn = entity.doubleStrike ? offset.secondWeapon : (entity.isPlayer?game.held:entity.benefits).has('rhyhorn_horn');
       const gold = entity.isPlayer && synergyActive(horn?'goldHorn':'goldSpike');
       drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,
         ZOOM,offset.opacity,horn?'fang':'spine',gold?'sepia(1) saturate(5)':'none');
@@ -197,7 +198,7 @@ export function draw() {
   drawEffects(drawingContext, ZOOM, cameraX, cameraY);
   // Los avisos se superponen a todos los combatientes y efectos, incluso cuando cambia la profundidad del jugador.
   drawWorldNotices(drawingContext, ZOOM, cameraX, cameraY);
-  drawingContext.scale(.8, .8);
-  drawHud(drawingContext, { width: canvas.width / .8, height: canvas.height / .8 }, player);
+
+  drawHud(drawingContext, canvas, player);
   drawingContext.restore();
 }

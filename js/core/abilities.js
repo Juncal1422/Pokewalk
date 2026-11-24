@@ -15,6 +15,7 @@ const sequence = (id, count, path) => [id, Array.from({length:count}, (_,frameIn
 export async function loadEffects() {
   const groups = [
     ['fang',['fang/fang.png']],
+    sequence('revive',39,index=>'revive/'+String(index-1).padStart(3,'0')+'.png'),
     sequence('battery',9,index=>'battery_burst/'+String(index-1).padStart(3,'0')+'.png'),
     ['spine',['spine/spine.png']],
     ...[['heal',13],['boost',15],['fangaround',12]].map(([name,count]) =>
@@ -37,7 +38,7 @@ export async function loadEffects() {
 export function effect(kind,x,y,durationMs,directionIndex=0) {
   const sprite = { kind,x,y,ms: durationMs,dir: directionIndex,start:gameTime() };
   game.effects.push(sprite);
-  playSound(({fangaround:'spin',purple:'cog'})[kind]??kind);
+  playSound(({fangaround:'spin',purple:'machinery'})[kind]??kind);
   return sprite;
 }
 
@@ -80,25 +81,43 @@ export function drawFang(drawingContext,directionIndex,x,y,scale,opacity,kind='f
   drawingContext.restore();
 }
 
-// Se paga con un único tipo entre los tres saldos más altos.
-function cogCurrency() {
-  const eligibleCurrencies = Object.entries(game.essences).sort((firstBalance,secondBalance)=>secondBalance[1]-firstBalance[1]).slice(0,3).filter(([,balance])=>balance>=5);
-  return eligibleCurrencies.length ? eligibleCurrencies[Math.floor(Math.random()*eligibleCurrencies.length)][0] : null;
+// Selecciona suelo libre del piso o de la sala que contiene al lanzador.
+// En un pasillo la perla toma como referencia la habitación más cercana.
+function landing(owner, roomOnly) {
+  const tileX=Math.floor(owner.x/TILE), tileY=Math.floor(owner.y/TILE);
+  const contains=(room,x,y)=>x>=room.x && x<room.x+room.w && y>=room.y && y<room.y+room.h;
+  const rooms=game.rooms.filter(room=>!room.isNode && room.w>1);
+  const room=roomOnly && rooms.length>0 && (rooms.find(room=>contains(room,tileX,tileY)) ??
+    rooms.reduce((best,next)=>Math.hypot(next.cx-tileX,next.cy-tileY)<Math.hypot(best.cx-tileX,best.cy-tileY)?next:best));
+  const sites=[];
+  game.grid.forEach((row,y)=>row.forEach((tile,x)=>{
+    if(tile || (x===tileX && y===tileY) || (room && !contains(room,x,y)))return;
+    const site={x:(x+.5)*TILE,y:(y+.5)*TILE};
+    if(canMove(owner,site.x,site.y))sites.push(site);
+  }));
+  return sites[Math.floor(Math.random()*sites.length)];
 }
 
-// Busca una casilla libre junto al punto inicial si un enemigo ocupa la entrada.
-function landing(player) {
-  const room = game.rooms[0], sites = [];
-  const home = player.home ?? {x:(room.cx+.5)*TILE, y:(room.cy+.5)*TILE};
-  game.grid.forEach((row,y)=>row.forEach((tile,x)=>{
-    if (!tile) sites.push({ x:(x+.5)*TILE,y:(y+.5)*TILE,d:((x+.5)*TILE-home.x)**2+((y+.5)*TILE-home.y)**2 });
-  }));
-  return sites.sort((firstSite,secondSite)=>firstSite.d-secondSite.d).find(site=>canMove(player,site.x,site.y));
+// Ejecuta las activas sin proyectil mediante el mismo comportamiento para ambas IAs y Ditto.
+function utilityCast(id,owner) {
+  if(id==='transparent'){owner.evasionUntil=gameTime()+5000;return;}
+  if(id==='royalty'){
+    for(const target of game.entities){
+      if(!target.hp || target.ally || target.isPlayer===owner.isPlayer)continue;
+      if(Math.hypot(owner.x-target.x,owner.y-target.y)<=attackReach(owner.stats)+bodyRadius(target))
+        target.paralyzedUntil=gameTime()+1500;
+    }
+    return;
+  }
+  const site=landing(owner,id==='spoink_pearl');
+  if(site){effect('purple',owner.x,owner.y,624);Object.assign(owner,site);effect('purple',owner.x,owner.y,624);}
 }
+const utilities=new Set(['machinery','spoink_pearl','transparent','royalty']);
 
 // Valida la tecla, el estado del jugador y el coste antes de iniciar el lanzamiento y su recarga.
 export function useActive(slot) {
   const player=game.player, simulationTime=gameTime();
+  if(player.paralyzedUntil>simulationTime)return;
   if(slot==='e' && game.runRelics?.has('depleted_battery')){
     if(!player.hp||game.changingLevel||game.cast||['Attack','Hurt'].includes(player.state))return;
     if(game.batteryEnergy<10)return showToast('Batería · '+game.batteryEnergy+'/10 esencias eléctricas');
@@ -113,20 +132,18 @@ export function useActive(slot) {
   if (!benefitId || !player.hp || game.changingLevel || game.cast || ['Attack','Hurt'].includes(player.state)) return;
   const benefit=game.benefits.get(benefitId);
   if ((game.cooldowns[benefitId]??0)>simulationTime) return showToast('Recarga: '+Math.ceil((game.cooldowns[benefitId]-simulationTime)/1000)+' s');
-  const currency = benefitId==='cog' ? cogCurrency() : null;
-  if (benefitId==='cog' && (!currency || !landing(player))) return showToast('Necesitas 5 esencias del mismo tipo entre tus tres principales y una entrada libre.');
-  if (benefitId==='amulet') {
+  if (benefitId==='seer') {
     if (player.hp <= 1) return showToast('Necesitas más de 1 PV');
     player.hp--;
   }
   // La reducción de cada fuente se multiplica una vez, al iniciar la recarga de esta tecla.
   const duration = benefit.amount*1000 * (game.held.has('heritage_water')?.9:1)
-    * (game.inventory.has('boost_steroids')?.85:1);
+    * (game.inventory.has('boost_steroids')?.85:1) * (game.inventory.has('golden_disk')?.75:1) * (synergyActive('royalCrown')?.5:1);
   game.cooldownDurations[benefitId]=duration;
   game.cooldowns[benefitId]=simulationTime+duration;
-  game.cast={id: benefitId,start:simulationTime,dir:player.dir,hit:new Set(),currency};
+  game.cast={id: benefitId,start:simulationTime,dir:player.dir,hit:new Set()};
   setState(player,benefitId==='mamoswine_fang'?'Spin':'Charge');
-  if (benefitId==='cog') effect('purple',player.x,player.y,520);
+
   if (benefitId==='mamoswine_fang') effect('fangaround',player.x,player.y,560).follow=player;
 }
 
@@ -179,17 +196,17 @@ function spin(owner, activeCast, elapsed) {
   }
 }
 
-// Cada salvaje anuncia su activa durante 100 ms y comprueba la presa,
-// la distancia y la visibilidad al resolverla. La recarga es la mitad de la del jugador.
+// Cada salvaje anuncia su activa durante 200 ms y comprueba la presa,
+// la distancia y la visibilidad antes de empezar. La recarga es la mitad de la del jugador.
 export function updateWildAbility(wild) {
   const benefitId = wild.activeBenefit, player = game.player, simulationTime = gameTime();
   if (!benefitId || !wild.hp || !player.hp) return false;
   const distance = Math.hypot(player.x-wild.x, player.y-wild.y);
-  const range = (benefitId==='gunpowder_rock'?72:attackReach(wild.stats)*(benefitId==='fire_brooch'?4:1)) + bodyRadius(player);
+  const range = (benefitId==='gunpowder_core'?72:attackReach(wild.stats)*(benefitId==='hooh_brooch'?4:1)) + bodyRadius(player);
   let activeCast = wild.abilityCast;
   if (!activeCast) {
-    if ((benefitId==='amulet' && wild.hp<=1) || wild.bossResponse || wild.sidestep || simulationTime < (wild.abilityReadyAt ?? 0) || (distance > range || !hasSight(wild,player))) return false;
-    if (benefitId==='cog' && Math.hypot(wild.x-wild.home.x,wild.y-wild.home.y)<TILE) return false;
+    if ((benefitId==='seer' && wild.hp<=1) || wild.bossResponse || wild.sidestep || simulationTime < (wild.abilityReadyAt ?? 0) || (distance > range || !hasSight(wild,player))) return false;
+
     wild.dir = (Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
     playSound('charge');
     wild.abilityCast = {start:simulationTime,dir:wild.dir,hit:new Set()};
@@ -197,33 +214,23 @@ export function updateWildAbility(wild) {
     setState(wild,'Charge');
     return true;
   }
-  if (simulationTime-activeCast.start < 100) return true;
+  if (simulationTime-activeCast.start < 200) return true;
   if (wild.state==='Charge') {
-    if ((wild.prey!==player || distance > range || !hasSight(wild,player))) {
-      wild.abilityReadyAt = simulationTime+1000;
-    } else if (benefitId==='mamoswine_fang') {
+    if (benefitId==='mamoswine_fang') {
       setState(wild,'Spin');
       activeCast.spinStart=simulationTime;
       effect('fangaround',wild.x,wild.y,560).follow=wild;
-    } else if (benefitId==='fire_brooch') {
+    } else if (benefitId==='hooh_brooch') {
       const direction=(Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
       launchFlare(wild,direction);
-    } else if (benefitId==='gunpowder_rock') {
+    } else if (benefitId==='gunpowder_core') {
       blast(wild);
-    } else if (benefitId==='amulet' && wild.hp>1) {
-      wild.hp--;
+    } else if (benefitId==='seer') {
+      wild.hp=Math.max(1,wild.hp-1);
       wild.unbuffedStats={...wild.stats};
       for (const key of ['attack','speed','attackSpeed']) wild.stats[key]=Math.round(wild.stats[key]*1.5);
       wild.buffUntil=simulationTime+10000;
-    } else if (benefitId==='cog') {
-      const site=landing(wild);
-      if (site) {
-        effect('purple',wild.x,wild.y,520);
-        wild.x=site.x; wild.y=site.y;
-        effect('purple',wild.x,wild.y,520);
-
-      }
-    }
+    } else if (utilities.has(benefitId)) utilityCast(benefitId,wild);
   }
   if (wild.state==='Spin') {
     spin(wild,activeCast,simulationTime-activeCast.spinStart);
@@ -252,19 +259,13 @@ export function tickAbilities() {
   else if (activeCast) {
     const castElapsedMs=simulationTime-activeCast.start;
     if (activeCast.id==='mamoswine_fang') spin(player,activeCast,castElapsedMs);
-    if (castElapsedMs >= (activeCast.id==='mamoswine_fang'?560:activeCast.id==='amulet'?500:activeCast.id==='gunpowder_rock'?350:200)) {
-      if (activeCast.id==='cog') {
-        const site=landing(player);
-        if (site && game.essences[activeCast.currency]>=5) {
-          game.essences[activeCast.currency]-=5;
-          player.x=site.x; player.y=site.y;
-          effect('purple',player.x,player.y,520);
-        }
-      } else if (activeCast.id==='amulet') {
+    if (castElapsedMs >= (activeCast.id==='mamoswine_fang'?560:activeCast.id==='seer'?500:activeCast.id==='gunpowder_core'?350:200)) {
+      if (utilities.has(activeCast.id)) utilityCast(activeCast.id,player);
+      else if (activeCast.id==='seer') {
         game.amuletUntil=simulationTime+10000;
         player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
-      } else if (activeCast.id==='gunpowder_rock') blast(player);
-      else if (activeCast.id==='fire_brooch') launchFlare(player,activeCast.dir);
+      } else if (activeCast.id==='gunpowder_core') blast(player);
+      else if (activeCast.id==='hooh_brooch') launchFlare(player,activeCast.dir);
       player.dir=activeCast.dir;
       game.cast=null;
       if (player.hp && player.state!=='Hurt') setState(player,'Idle');

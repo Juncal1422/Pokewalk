@@ -1,8 +1,9 @@
 import { assetUrl } from './asset-url.js';
 import {game} from './state.js';
-import {element,portrait} from './pokemon-panel.js';
+import {element,portrait,gem} from './pokemon-panel.js';
 import {playSound} from './audio.js';
 import {relics,saveCollection,emptyCollection,parseCollection} from './collection.js';
+import {synergyText} from './benefits.js';
 import {labels} from './stats.js';
 
 const story=[
@@ -53,10 +54,12 @@ async function introduction() {
 
 // Pagina también las listas largas en pantallas pequeñas sin desbordar el diálogo.
 function listPage(title,entries,page,back) {
-  const dialog=screen(title),pageSize=innerHeight<460?2:4;
+  const dialog=screen(title), tiled=Object.hasOwn(sectionArt,title);
+  if(tiled)dialog.querySelector('h1').prepend(icon('ui/'+sectionArt[title]+'.png'));
+  const pageSize=tiled?(innerHeight<460?4:12):(innerHeight<460?2:4);
   const pages=Math.max(1,Math.ceil(entries.length/pageSize));
   page=Math.min(page,pages-1);
-  const body=element('section');body.className='guild-list';
+  const body=element('section');body.className=tiled?'catalog-grid':'guild-list';
   for(const build of entries.slice(page*pageSize,(page+1)*pageSize))body.append(build());
   if(!entries.length)body.append(element('p','Todavía no hay registros.'));
   dialog.append(body);
@@ -84,27 +87,58 @@ function historyDetail(run,back) {
   listPage('Aventura · Nv. '+run.level,rows.map(text=>()=>element('p',text)),0,back);
 }
 
+const sectionArt={'Pokédex':'pokedex',Objetos:'objetos',Beneficios:'beneficios',Reliquias:'reliquias'};
+
+// Muestra la ficha base y el don asociado con la misma fuente que usa el combate.
+function speciesPage(row,back){
+  const dialog=screen(row.name), card=element('section');card.className='species-card';
+  card.append(portrait(row),...row.essences.map(gem));
+  for(const [key,value] of Object.entries(row.stats))card.append(element('p',(labels[key]??key)+' · '+value));
+  const benefit=game.donors.get(row.name);
+  if(benefit)card.append(element('p',benefit.name+' · '+benefit.description));
+  dialog.append(card,button('Volver',back));
+}
+
+// El mismo texto de sinergias está disponible al señalar o enfocar un icono.
+function catalogCard(id,record,action){
+  if(!record)return element('p',id);
+  const card=button(record.name,action??(()=>{}));card.prepend(icon(record.image.replace('assets/','')));
+  card.title=[record.description,synergyText(id)].filter(Boolean).join(' · ');
+  return card;
+}
+
 // Las listas guardan identificadores. Los nombres e iconos se resuelven con el catálogo actual.
 function collectionMenu(back) {
   const dialog=screen('Colección'),again=()=>collectionMenu(back),data=game.collection;
   const lists={
     Historial:data.history.slice().reverse().map(run=>()=>button(new Date(run.date).toLocaleDateString('es')+' · '+run.status+' · '+run.missions.length+' misiones',()=>historyDetail(run,again))),
-    Pokédex:data.forms.map(id=>()=>{const row=game.pokemon.get(id),card=element('p',row?.name??String(id));if(row)card.prepend(portrait(row));return card}),
-    Objetos:data.items.map(id=>()=>element('p',(game.items[id]?.name??id)+' · '+(game.items[id]?.description??''))),
-    Beneficios:[...data.benefits.map(id=>()=>element('p',(game.benefits.get(id)?.name??id)+' · '+(game.benefits.get(id)?.description??''))),
-      ...data.synergies.map(id=>()=>element('p','Sinergia · '+(game.synergies.get(id)?.description??id)))],
+    Pokédex:data.forms.map(id=>()=>{const row=game.pokemon.get(id);
+      if(!row)return element('p',String(id));
+      const card=button(row.name,()=>speciesPage(row,()=>open('Pokédex')));
+      card.prepend(portrait(row));return card;
+    }),
+    Objetos:data.items.map(id=>()=>catalogCard(id,game.items[id])),
+    Beneficios:data.benefits.map(id=>()=>catalogCard(id,game.benefits.get(id),()=>{
+      const benefit=game.benefits.get(id);
+      const donors=[...game.pokemon.values()].filter(row=>benefit?.pokemon.includes(row.name));
+      listPage(benefit?.name??id,donors.map(row=>()=>{const entry=element('p',row.name);entry.prepend(portrait(row));return entry}),0,()=>open('Beneficios'));
+    })),
     Reliquias:data.relics.map(id=>()=>{const enabled=data.enabled.includes(id);const control=button((enabled?'Activa · ':'Inactiva · ')+(relics[id]?.name??id),()=>{
-      data.enabled=enabled?data.enabled.filter(key=>key!==id):[...data.enabled,id];saveCollection();open('Reliquias')});return control})
+      data.enabled=enabled?data.enabled.filter(key=>key!==id):[...data.enabled,id];saveCollection();open('Reliquias')});control.prepend(icon('relics/'+id+'.png'));return control})
   };
   // Reconstruye la página para reflejar inmediatamente la activación de reliquias.
   function open(name){listPage(name,lists[name],0,again)}
-  for(const name of Object.keys(lists))dialog.append(button(name,()=>open(name)));
+  const grid=element('section');grid.className='catalog-grid';
+  for(const name of Object.keys(lists)){
+    const entry=button(name,()=>open(name));if(sectionArt[name])entry.prepend(icon('ui/'+sectionArt[name]+'.png'));grid.append(entry);
+  }
+  dialog.append(grid);
   dialog.append(button('Volver',back));
 }
 
 // Compra y saldo se escriben juntos. Las reliquias nuevas quedan activadas.
 function shop(back) {
-  const dialog=screen('Tienda de Aventureros');dialog.append(element('p',game.collection.emblems+' emblemas'));
+  const dialog=screen('Tienda de Aventureros');dialog.querySelector('h1').prepend(icon('ui/shop.png'));dialog.append(element('p',game.collection.emblems+' emblemas'));
   const grid=element('section');grid.className='offers';
   for(const [id,relic] of Object.entries(relics)){
     const owned=game.collection.relics.includes(id),card=button('',()=>{
@@ -153,7 +187,7 @@ export async function visitGuild() {
 // Conserva las dos ofertas generadas hasta que se selecciona una de ellas.
 export function selectMission(offers) {
   return new Promise(resolve=>{
-    const dialog=screen('Tablón de misiones'),grid=element('section');grid.className='offers';
+    const dialog=screen('Tablón de misiones'),grid=element('section');grid.className='offers contracts';grid.style.setProperty('--cards',offers.length);
     for(const mission of offers){
       const card=button('',()=>{dialog.close();resolve(mission)});if(mission.red){card.className='red';card.append(element('small','Papel rojo · +15 niveles'))}
       card.append(element('strong',mission.name),element('span',mission.biome.name+' · '+mission.floors+' pisos'));

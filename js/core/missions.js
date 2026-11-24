@@ -99,10 +99,12 @@ export function newMission(
 
 // La tirada roja pertenece al par completo; como máximo hay un papel rojo.
 export function missionOffers(number, level) {
+  const count=game.inventory?.has('lost_ticket')?4:3;
+  const redChance=game.inventory?.has('lost_map')?.225:.15;
   const types = Object.keys(layouts),
-    redIndex = Math.random() < 0.15 ? Math.floor(Math.random() * 2) : -1;
+    redIndex = Math.random() < redChance ? Math.floor(Math.random() * count) : -1;
   const offers = [];
-  for (let index = 0; index < 2; index++) {
+  for (let index = 0; index < count; index++) {
     const biome = chooseBiome(
       game.biomes.filter((row) => !offers.some((offer) => offer.biome === row)),
       number,
@@ -125,8 +127,7 @@ export function encounters(mission, floor) {
     ];
   const count = between(Math.ceil(max / 2), max);
   while (speciesIds.length < count) {
-    const unused = mission.pool.filter((id) => !speciesIds.includes(id));
-    speciesIds.push(sample(unused.length ? unused : mission.pool));
+    speciesIds.push(sample(mission.pool));
   }
   if (mission.type === 'rescue' && floor === mission.floors)
     speciesIds.push(sample(mission.pool));

@@ -16,7 +16,7 @@ const sounds = {
   battery: 'Thunder',
   mine: 'Earthquake Hit',
   spin: 'Fury Swipes',
-  cog: 'Warp Orb',
+  machinery: 'Warp Orb',
   charge: 'Charge',
 };
 

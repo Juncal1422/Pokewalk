@@ -1,4 +1,5 @@
 import { assetUrl } from './asset-url.js';
+import {synergyText} from './benefits.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
 
@@ -37,7 +38,8 @@ export function attachInventory(root) {
         }
         // El tooltip describe el icono bajo el cursor y no captura el clic de ataque.
         iconImage.onpointerenter = () => {
-          tooltip.textContent = entry.name + ' · ' + entry.description;
+          const id=entry.id??[...game.inventory][index];
+          tooltip.textContent = [entry.name,entry.description,synergyText(id)].filter(Boolean).join(' · ');
           tooltip.hidden = false;
         };
         // Oculta la descripción en cuanto el cursor abandona el icono.
