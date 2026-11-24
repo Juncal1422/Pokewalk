@@ -1,0 +1,19 @@
+# Los archivos de distribución incluyen los efectos usados por el juego.
+sounds/*.wav export-ignore
+"sounds/Applause.wav" -export-ignore
+"sounds/Charge.wav" -export-ignore
+"sounds/Correct.wav" -export-ignore
+"sounds/Disappearing 1.wav" -export-ignore
+"sounds/Earthquake Hit.wav" -export-ignore
+"sounds/Eating.wav" -export-ignore
+"sounds/Flamethrower.wav" -export-ignore
+"sounds/Fury Swipes.wav" -export-ignore
+"sounds/Highlight.wav" -export-ignore
+"sounds/Level Up.wav" -export-ignore
+"sounds/Mach Punch.wav" -export-ignore
+"sounds/Pick up Item.wav" -export-ignore
+"sounds/Pokemon Joined.wav" -export-ignore
+"sounds/Stairs Up.wav" -export-ignore
+"sounds/Thunder.wav" -export-ignore
+"sounds/Warp Orb.wav" -export-ignore
+"sounds/Wrong.wav" -export-ignore
