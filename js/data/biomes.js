@@ -1,6 +1,7 @@
+import { assetUrl } from '../core/asset-url.js';
 // Los medios, permisos y encuentros se resuelven desde el mismo catálogo editable.
 export async function loadBiomes(pokemon) {
-  const response = await fetch(new URL('./biomes.json', import.meta.url));
+  const response = await fetch(assetUrl('./biomes.json', import.meta.url));
   if (!response.ok) throw new Error('No se pudo leer biomes.json');
   const biomeDefinitions = await response.json();
   console.info('[Biomas] Catálogo cargado', biomeDefinitions.length);
@@ -19,6 +20,6 @@ export async function loadBiomes(pokemon) {
   return biomeDefinitions.map(biomeDefinition => {
     if (!Number.isInteger(biomeDefinition.level) || biomeDefinition.level < 1 || biomeDefinition.level > 10) throw new Error('Nivel de bioma inválido: ' + biomeDefinition.name);
     return { ...biomeDefinition, wild: roster(biomeDefinition.wild, biomeDefinition.name), leaders: roster(biomeDefinition.leaders, biomeDefinition.name),
-      tileset: new URL('../../' + biomeDefinition.tileset, import.meta.url).href };
+      tileset: assetUrl('../../' + biomeDefinition.tileset, import.meta.url).href };
   });
 }

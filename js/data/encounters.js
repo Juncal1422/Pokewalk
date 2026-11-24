@@ -1,8 +1,9 @@
+import { assetUrl } from '../core/asset-url.js';
 import { labels } from '../core/stats.js';
 
 // Lee un catálogo relativo al módulo y conserva el nombre del fichero en el error de carga.
 async function readData(filename) {
-  const result = await fetch(new URL(filename, import.meta.url));
+  const result = await fetch(assetUrl(filename, import.meta.url));
   if (!result.ok) throw new Error('No se pudo cargar ' + filename);
   return result.json();
 }

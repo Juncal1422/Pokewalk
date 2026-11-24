@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 
@@ -48,7 +49,7 @@ export async function loadTerrain() {
   if (wallShapes) return;
   const image = new Image();
   image.crossOrigin = 'anonymous';
-  image.src = new URL('../../tiled/tilesets/skeleton-blob.png', import.meta.url).href;
+  image.src = assetUrl('../../tiled/tilesets/skeleton-blob.png', import.meta.url).href;
   await image.decode();
   const canvas = document.createElement('canvas');
   canvas.width = image.naturalWidth;

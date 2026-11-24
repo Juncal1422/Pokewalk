@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
 
@@ -28,7 +29,7 @@ export function attachInventory(root) {
       panel.replaceChildren();
       for (const [index,entry] of entries.entries()) {
         const iconImage = new Image();
-        iconImage.src = new URL('../../' + entry.image, import.meta.url).href;
+        iconImage.src = assetUrl('../../' + entry.image, import.meta.url).href;
         iconImage.alt = entry.name;
         if (selector === '#inventory') {
           iconImage.style.gridColumn = String(1 + index%25);

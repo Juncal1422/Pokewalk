@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import { drawWorldNotices } from './world-notices.js';
 import { synergyActive } from './benefits.js';
 import { gameTime } from './clock.js';
@@ -58,14 +59,14 @@ export async function changeBiome(biome) {
 }
 
 const portalImage = new Image();
-portalImage.src = new URL('../../tiled/tilesets/Teleporter.png', import.meta.url).href;
+portalImage.src = assetUrl('../../tiled/tilesets/Teleporter.png', import.meta.url).href;
 
 const missImage = new Image();
-missImage.src = new URL('../../assets/ui/miss.png', import.meta.url).href;
+missImage.src = assetUrl('../../assets/ui/miss.png', import.meta.url).href;
 const stairsImage = new Image();
-stairsImage.src = new URL('../../tiled/tilesets/Stairs.png', import.meta.url).href;
+stairsImage.src = assetUrl('../../tiled/tilesets/Stairs.png', import.meta.url).href;
 const objectiveImage = new Image();
-objectiveImage.src = new URL('../../assets/items/parcel.png', import.meta.url).href;
+objectiveImage.src = assetUrl('../../assets/items/parcel.png', import.meta.url).href;
 
 // Espera a los recursos de las salidas, el paquete y la indicación de fallo.
 export function preparePortal() {

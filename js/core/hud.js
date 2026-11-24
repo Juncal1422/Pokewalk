@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import { experienceCost } from './experience.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
@@ -21,7 +22,7 @@ export async function loadHud() {
   console.debug('[HUD] Cargando interfaz y esencias');
   await Promise.all([...essenceNames.map(id => 'essence-' + id), 'textbox-b', 'hpbar'].map(async key => {
     const image = new Image();
-    image.src = new URL('../../assets/ui/' + key + '.png', import.meta.url).href;
+    image.src = assetUrl('../../assets/ui/' + key + '.png', import.meta.url).href;
     await image.decode();
     icons[key] = image;
   }));

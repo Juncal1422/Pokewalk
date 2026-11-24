@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
@@ -25,7 +26,7 @@ export async function loadEffects() {
   await Promise.all(groups.map(async ([id,paths]) => {
     effectFrames.set(id, await Promise.all(paths.map(async path => {
       const spriteImage = new Image();
-      spriteImage.src = new URL('../../assets/effects/'+path,import.meta.url).href;
+      spriteImage.src = assetUrl('../../assets/effects/'+path,import.meta.url).href;
       await spriteImage.decode();
       return spriteImage;
     })));

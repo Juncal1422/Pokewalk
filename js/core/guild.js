@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import {game} from './state.js';
 import {element,portrait} from './pokemon-panel.js';
 import {playSound} from './audio.js';
@@ -10,7 +11,7 @@ const story=[
   'Puedes consultar tus *Aventuras* y descubrimientos en el menú de *Colección*. Las *Misiones* que completes te darán *Emblemas de Aventurero*, que te permitirán comprar en nuestra *Tienda de Aventureros*.',
   'Eso es todo, Aventurero, suerte y cuidado con las misiones en papel rojo.'
 ];
-const asset=path=>new URL('../../assets/'+path,import.meta.url).href;
+const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
 // Crea un control nativo que también funciona con teclado.
 function button(label,action) {

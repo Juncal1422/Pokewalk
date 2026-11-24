@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import { showWorldNotice } from './world-notices.js';
 import {discover,checkpoint} from './collection.js';
 import {playSound} from './audio.js';
@@ -15,7 +16,7 @@ const images = new Map();
 export async function loadItemImages(items) {
   await Promise.all(Object.entries(items).map(async ([itemId, item]) => {
     const spriteImage = new Image();
-    spriteImage.src = new URL('../../' + item.image, import.meta.url).href;
+    spriteImage.src = assetUrl('../../' + item.image, import.meta.url).href;
     await spriteImage.decode();
     images.set(itemId, spriteImage);
   }));

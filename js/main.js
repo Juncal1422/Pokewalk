@@ -1,3 +1,4 @@
+import { assetUrl } from './core/asset-url.js';
 import {visitGuild,selectMission,guildMessage} from './core/guild.js';
 import {loadCollection,beginChronicle,recordFloor,settleMission,checkpoint,discover} from './core/collection.js';
 import {playSound} from './core/audio.js';
@@ -23,7 +24,7 @@ import { game, resetGameState } from './core/state.js';
 const EMBEDDED_APP = `
   <div id="poke-walk-app">
     <style>
-      @font-face { font-family:Wondermail; src:url("${new URL('../assets/ui/wondermail.ttf',import.meta.url).href}") format('truetype'); }
+      @font-face { font-family:Wondermail; src:url("${assetUrl('../assets/ui/wondermail.ttf',import.meta.url).href}") format('truetype'); }
       html *,html *::before,html *::after { font-family:Wondermail !important; scrollbar-width:none; }
       *::-webkit-scrollbar { display:none; }
       #guild { position:fixed; inset:0; max-width:none; max-height:none; width:100%; height:100%; margin:0; box-sizing:border-box;
@@ -34,14 +35,14 @@ const EMBEDDED_APP = `
       #guild button,#guild label,#guild .guild-list p { box-sizing:border-box; padding:clamp(3px,1vmin,12px); color:#fff; background:#24364a; border:2px solid #74938b; font-size:clamp(13px,2.8vmin,23px); }
       #guild button { cursor:pointer; } #guild button:disabled { opacity:.65; }
       #guild .offers { width:min(850px,97%);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2vmin; }
-      #guild .offers button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; display:grid;justify-items:center;align-content:center;gap:1vmin; }
+      #guild .offers button { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; display:grid;justify-items:center;align-content:center;gap:1vmin; }
       #guild .offers .red { background:#531e26; }
       #guild img { width:clamp(20px,5vmin,44px);vertical-align:middle;image-rendering:pixelated; }
       #guild .offers .portrait {width:clamp(15px,4.5vmin,38px);}
       #guild .guild-list { display:grid;gap:4px;max-width:min(94vw,800px); }
       #guild nav {display:flex;align-items:center;gap:10px;}
       #guild.story {background:black;} #guild .letterbox { text-align:left;width:min(760px,96%);min-height:5em;background:#15211d;
-       border:12px solid transparent;border-image:url("${new URL('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; }
+       border:12px solid transparent;border-image:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; }
       #guild strong {color:#f0cf7e;}
       #emblem-award {position:fixed;inset:65px 8px auto auto;margin:0;color:white;background:#192b39;border:2px solid #91a886;pointer-events:none;font-size:22px;}
       #emblem-award img {width:24px;vertical-align:middle;image-rendering:pixelated;}
@@ -55,7 +56,7 @@ const EMBEDDED_APP = `
       #poke-walk-app .essence { width:38.4px; height:38.4px; }
       #roster { position:absolute; top:92px; right:8px; max-width:44vw; max-height:56vh; overflow:hidden; color:white; font-size:15px; }
       #roster ul { margin:4px 0; padding:0; list-style:none; display:grid; gap:3px; }
-      #roster li, #rewards button { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
+      #roster li, #rewards button { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background-clip:padding-box; }
       #roster li { display:grid; grid-template-columns:44px 1fr; gap:1px 5px; background-color:#141c27db; font-variant-numeric:tabular-nums; }
       #roster [hidden],#nearby [hidden] {display:none!important;}
       #roster nav img,#nearby nav img {width:18px;height:18px;}
@@ -79,7 +80,7 @@ const EMBEDDED_APP = `
       @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:15px; } }
       #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1.25rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:1.05rem; font-weight:600; display:none; z-index:12; }
-      #poke-walk-app .box { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background:rgb(12 20 34 / 82%) padding-box; color:white; }
+      #poke-walk-app .box { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background:rgb(12 20 34 / 82%) padding-box; color:white; }
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
@@ -155,7 +156,7 @@ async function nextLevel() {
       if(earned){
         playSound('reward');
         const notice=document.querySelector('#emblem-award'),image=new Image();
-        image.src=new URL('../assets/ui/emblem.png',import.meta.url);
+        image.src=assetUrl('../assets/ui/emblem.png',import.meta.url);
         notice.replaceChildren(image,' +'+earned);
         setTimeout(()=>notice.showPopover(),0);
         setTimeout(()=>notice.hidePopover(),3000);
@@ -210,7 +211,7 @@ function pagePanel(panel,list,pageSize) {
     nav=element('nav');
     for(const [delta,arrow] of [[-1,'w'],[1,'e']]){
       const control=element('button');control.type='button';control.setAttribute('aria-label',delta<0?'Anterior':'Siguiente');
-      const img=new Image();img.alt='';img.src=new URL('../assets/ui/arrow_'+arrow+'.png',import.meta.url);
+      const img=new Image();img.alt='';img.src=assetUrl('../assets/ui/arrow_'+arrow+'.png',import.meta.url);
       control.append(img);control.onclick=()=>{panel.dataset.page=String(Number(panel.dataset.page)+delta);pagePanel(panel,list,Number(panel.dataset.size))};
       nav.append(control);
     }
@@ -339,7 +340,7 @@ export async function startGame({
   loadCollection();game.chronicle=null;
   const icon = document.querySelector('link[rel~="icon"]') ?? document.createElement('link');
   icon.rel = 'icon';
-  icon.href = new URL('../assets/benefits/cog.png',import.meta.url).href;
+  icon.href = assetUrl('../assets/benefits/cog.png',import.meta.url).href;
   document.head.append(icon);
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
@@ -352,8 +353,8 @@ export async function startGame({
     draw();
   };
   resize();
-  const benefitsUrl = new URL('./data/benefits.json',import.meta.url);
-  const [synergies, benefits] = await Promise.all([fetch(new URL('./data/synergies.json',import.meta.url)).then(response=>response.json()),fetch(benefitsUrl).then(response=>response.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
+  const benefitsUrl = assetUrl('./data/benefits.json',import.meta.url);
+  const [synergies, benefits] = await Promise.all([fetch(assetUrl('./data/synergies.json',import.meta.url)).then(response=>response.json()),fetch(benefitsUrl).then(response=>response.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
   game.synergies = new Map(synergies.map(rule=>[rule.effect,rule]));
   game.benefits = new Map(benefits.map(benefit=>[benefit.id,benefit]));
   game.donors = new Map();

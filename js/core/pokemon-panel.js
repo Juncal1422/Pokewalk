@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 // Recursos compartidos entre las fichas de salvajes y las opciones de Ditto.
 export function portrait(species) {
   const iconImage = new Image();
@@ -17,7 +18,7 @@ export function portrait(species) {
 // Crea el icono accesible de un tipo de esencia.
 export function gem(type) {
   const iconImage = new Image();
-  iconImage.src = new URL('../../assets/ui/essence-' + type + '.png', import.meta.url).href;
+  iconImage.src = assetUrl('../../assets/ui/essence-' + type + '.png', import.meta.url).href;
   iconImage.alt = iconImage.title = type;
   iconImage.className = 'essence';
   return iconImage;

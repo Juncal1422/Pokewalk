@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.js';
 import { evolutionCost } from './evolution.js';
 import { game } from './state.js';
 import { labels, levelFor } from './stats.js';
@@ -42,7 +43,7 @@ function rewardCard(option, state) {
   if (projected.allStats) card.append(element('span', '+1 a todos los atributos'));
   else {
     const benefit = projected.benefit, icon = new Image();
-    icon.src = new URL('../../'+benefit.image,import.meta.url).href;
+    icon.src = assetUrl('../../'+benefit.image,import.meta.url).href;
     icon.alt = ''; icon.className = 'essence';
     card.append(icon,element('strong',benefit.name),element('span',benefit.description));
     if (benefit.active) {
