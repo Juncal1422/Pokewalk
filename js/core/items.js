@@ -2,7 +2,7 @@ import { canMove } from './entities.js';
 import { essenceIcon } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
-import { statsFor } from './stats.js';
+import { playerStats, amount } from './benefits.js';
 
 const images = new Map();
 export async function loadItemImages(items) {
@@ -30,7 +30,7 @@ export function spawnFloorItems() {
   }
   if (sites.length && Math.random() < .5) place('potion');
   const available = Object.keys(game.items).filter(id => !game.items[id].consumable && !game.inventory.has(id));
-  if (sites.length && available.length && m.itemsPlaced < 2 && Math.random() < 1 / 3 + game.perks.loot) {
+  if (sites.length && available.length && m.itemsPlaced < 2 && Math.random() < 1 / 3 + amount('green_scale')) {
     place(available[Math.floor(Math.random() * available.length)]);
     m.itemsPlaced++;
   }
@@ -52,7 +52,7 @@ export function collectItems(player, strike = null) {
     for (const [key, delta] of Object.entries(item.stats)) bonuses[key] += delta;
     const oldStats = player.stats;
     const previous = { ...oldStats, hp: player.hp };
-    player.stats = statsFor(game.pokemon.get(player.dex), game.progress, bonuses);
+    player.stats = playerStats(game.pokemon.get(player.dex), game.progress, bonuses);
     // Al crecer junto a una pared empujamos el cuerpo al punto válido más
     // cercano. Si no cabe en las inmediaciones, el objeto sigue en el suelo.
     if (player.stats.size > oldStats.size && !canMove(player, player.x, player.y)) {
@@ -70,7 +70,7 @@ export function collectItems(player, strike = null) {
     player.bonuses = bonuses;
     game.inventory.add(drop.id);
     console.info('[Objeto] Recogido', item.name, item.duration);
-    player.hp = Math.min(player.stats.hpMax, player.hp + item.heal + Math.ceil(player.stats.hpMax * (item.healFraction || 0)));
+    player.hp = Math.min(player.stats.hpMax, player.hp + item.heal + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (drop.id==='potion'?amount('mint_leaf'):0))));
     const now = performance.now();
     for (const key of [...Object.keys(item.stats), 'hp']) {
       const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];

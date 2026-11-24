@@ -7,12 +7,11 @@ async function readData(filename) {
 }
 
 // Las especies, sus recompensas y los objetos de piso se editan en JSON.
-export async function loadEncountersCatalog(upgrades) {
+export async function loadEncountersCatalog() {
   const [rows, items] = await Promise.all([readData('pokemon.json'), readData('items.json')]);
   const pokemon = new Map();
-  const rewards = new Set(upgrades.map(item => item.id));
   for (const row of rows) {
-    if (pokemon.has(row.dex) || !rewards.has(row.mejora) ||
+    if (pokemon.has(row.dex) ||
         !Number.isInteger(row.maxLevel) || row.maxLevel < 1 || !Object.keys(labels).every(k => (k === 'range' && row.stats[k] === undefined) || (Number.isInteger(row.stats[k]) && row.stats[k] > 0))) {
       throw new Error('Ficha Pokémon inválida: ' + row.dex);
     }

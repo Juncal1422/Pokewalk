@@ -60,7 +60,7 @@ export function onDefeat(target, attacker) {
   const essence = sample(game.pokemon.get(target.dex).essences);
   const row = game.pokemon.get(target.dex);
   const base = row.legendary ? 5 : row.mythical ? 4 : row.stage >= 3 ? 3 : row.stage === 2 || row.final ? 2 : 1;
-  const amount = (base + game.perks.essence) * (target.boss ? 2 : 1);
+  const amount = base * (target.boss ? 2 : 1);
   game.drops.push({ essence, amount, x: target.x, y: target.y });
   if (!attacker.isPlayer) return;
   if (!target.boss) m.defeated.push(target.dex);
@@ -84,29 +84,29 @@ export function exitKind(m, floor, cleared) {
 
 // Ordenamos por el total de la run; un sorteo previo resuelve empates sin
 // alterar la prioridad. Solo la esencia de la forma actual conserva su línea.
-export function rewardOptions() {
-  const m = game.mission, current = game.pokemon.get(game.player.dex);
+export function rewardOptions(current = game.pokemon.get(game.player.dex), balancesByType = game.essences, formEssence = game.formEssence) {
+  const m = game.mission;
   const defeated = [...new Set(m.defeated)].map(id => game.pokemon.get(id));
   const choices = [], used = new Set();
   const otherLines = defeated.filter(row => row.root !== current.root);
   const evolutions = current.evolutions.map(rule => ({
-    row: game.pokemon.get(rule.to), payment: evolutionPayment(rule, game.essences, game.formEssence),
+    row: game.pokemon.get(rule.to), payment: evolutionPayment(rule, balancesByType, formEssence),
   })).filter(option => option.payment);
-  const balances = Object.entries(game.essences).filter(([,total]) => total > 0)
+  const balances = Object.entries(balancesByType).filter(([,total]) => total > 0)
     .map(([type,total]) => ({ type, total, tie: Math.random() }))
-    .sort((a,b) => b.total - a.total || Number(b.type === game.formEssence) - Number(a.type === game.formEssence) || a.tie - b.tie);
+    .sort((a,b) => b.total - a.total || Number(b.type === formEssence) - Number(a.type === formEssence) || a.tie - b.tie);
   function add(row, essence, bonus = false, payment = null) {
     choices.push({ row, essence, bonus, payment });
     used.add(row.dex);
   }
   // Una rama pagable tiene prioridad incluso al completar una misión sin bajas.
   for (const option of evolutions.slice().sort((a,b) =>
-    game.essences[b.payment.type] - game.essences[a.payment.type]).slice(0,3)) {
+    balancesByType[b.payment.type] - balancesByType[a.payment.type]).slice(0,3)) {
     add(option.row, option.payment.type, true, option.payment);
   }
   for (const {type} of balances) {
     if (choices.length === 3) break;
-    if (!evolutions.length && game.formEssence && current.essences.includes(type) && !used.has(current.dex)) {
+    if (!evolutions.length && formEssence && current.essences.includes(type) && !used.has(current.dex)) {
       add(current, type, true);
     } else {
       const row = sample(otherLines.filter(row => row.essences.includes(type) && !used.has(row.dex)));

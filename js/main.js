@@ -6,7 +6,8 @@ import { collectItems, loadItemImages } from './core/items.js';
 import { element, tones, portrait } from './core/pokemon-panel.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
-import { loadUpgrades, applyUpgrade, rewardBonuses } from './data/upgrades.js';
+import { projectReward } from './core/benefits.js';
+import { loadEffects, tickAbilities } from './core/abilities.js';
 import { loadHud } from './core/hud.js';
 import { loadBiomes } from './data/biomes.js';
 import { DEFAULT_DEX, FADE_MS, TILE } from './core/constants.js';
@@ -50,31 +51,22 @@ const EMBEDDED_APP = `
       #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1.25rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:1.05rem; font-weight:600; display:none; z-index:12; }
       #poke-walk-app .box { border:8px solid transparent; border-image:url("${new URL('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background:rgb(12 20 34 / 82%) padding-box; color:white; }
-      #bag, #inventory, #item-tip { position:absolute; left:50%; transform:translateX(-50%); }
-      #bag { bottom:5px; cursor:pointer; padding:1px 5px; }
-      #bag img { width:44px; height:44px; display:block; image-rendering:pixelated; }
-      #inventory { bottom:74px; width:max-content; max-width:min(92vw,440px); max-height:42vh; overflow:auto; }
-      #inventory button { font:inherit; display:inline-flex; align-items:center; gap:4px; padding:3px; color:white; background:transparent; border:0; cursor:pointer; }
-      #inventory button:hover,#inventory button:focus-visible { background:#42577b; }
-      #inventory img { width:32px; height:32px; image-rendering:pixelated; }
-      #item-tip { width:max-content; max-width:min(90vw,330px); pointer-events:none; }
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
       #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
-      #bag, #inventory, #item-tip, #nearby, #roster, #rewards, #toast, #loading { zoom:2; }
-      #rewards { max-width:47vw; max-height:45dvh; }
-      #rewards .cards { max-width:46vw; }
-      #roster { max-width:22vw; max-height:28vh; }
-      #inventory { max-width:46vw; max-height:21vh; }
-      #nearby,#item-tip { max-width:40vw; }
-      @media(max-width:1159px) { #roster { top:110px; } }
-      @media(max-width:720px) { #rewards .cards { flex-direction:column; } #rewards button { flex:none; width:43vw; } }
+      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:.4; }
+      #roster { zoom:.8; }
+      #inventory,#benefits { position:absolute; display:flex; gap:6px; }
+      #inventory { left:205px; right:35%; bottom:8px; overflow-x:auto; }
+      #benefits { left:8px; top:32%; flex-direction:column; flex-wrap:wrap; max-height:44vh; }
+      #inventory img,#benefits img { width:54px; height:54px; object-fit:contain; image-rendering:pixelated; }
+      #item-tip { position:absolute; left:205px; bottom:80px; max-width:440px; pointer-events:none; }
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
     <aside id="roster" aria-label="Pokémon del piso"><ul></ul></aside>
-    <button type="button" id="bag" class="box" aria-label="Mochila" aria-controls="inventory" aria-expanded="false"><img alt="" src="${new URL('../assets/ui/bag.png', import.meta.url).href}"></button>
-    <section id="inventory" class="box" aria-label="Objetos obtenidos" hidden></section>
+    <aside id="benefits" aria-label="Beneficios de especie"></aside>
+    <section id="inventory" aria-label="Objetos obtenidos"></section>
     <div id="item-tip" class="box" role="tooltip" hidden></div>
     <dialog id="rewards" aria-labelledby="reward-title"><h1 id="reward-title">Mejoras</h1><div class="cards"></div></dialog>
   </div>`;
@@ -114,20 +106,29 @@ async function nextLevel() {
       game.loadingEl.style.display = 'flex';
       await loadLevel(game.player.dex, m, game.floor + 1);
     } else {
-      const option = await chooseReward(rewardOptions(), game.catalog);
+      // Simulamos ambas elecciones para cobrar esencias y cambiar de activo
+      // solo cuando la siguiente misión se ha cargado con éxito.
+      let state = { held:game.held, bonuses:game.player.bonuses, balances:game.essences,
+        row:game.pokemon.get(game.player.dex), essence:game.formEssence };
+      for (let pick=0; pick < (state.held.has('golden_mask')?2:1); pick++) {
+        const options = rewardOptions(state.row,state.balances,state.essence);
+        if (pick && !options.length) {
+          state = projectReward(state,{row:state.row,essence:state.essence,bonus:true});
+          break;
+        }
+        const option = await chooseReward(options,state,pick>0);
+        if (option) state = projectReward(state,option);
+      }
       game.loadingEl.style.display = 'flex';
       const biome = chooseBiome(game.biomes.filter(b => b.id !== m.biome.id), m.number + 1);
-      const next = newMission(m.number + 1, biome, levelFor(option?.row ?? game.pokemon.get(game.player.dex), game.progress + 1));
+      const next = newMission(m.number + 1, biome, levelFor(state.row,game.progress+1));
       await changeBiome(biome);
-      const reward = option && game.catalog.find(item => item.id === option.row.mejora);
-      const bonuses = rewardBonuses(game.player.bonuses, option, reward);
-      await loadLevel(option?.row.dex ?? game.player.dex, next, 1, bonuses);
-      if (option) {
-        if (option.payment) game.essences[option.payment.type] -= option.payment.amount;
-        if (reward.effect === 'runPerk') applyUpgrade(bonuses, reward);
-        game.formEssence = option.essence;
-        console.info('[Ditto] Transformación', option.row.name, reward.id);
-      }
+      const previousHeld = game.held;
+      game.held = state.held;
+      try { await loadLevel(state.row.dex,next,1,state.bonuses); }
+      catch (error) { game.held = previousHeld; throw error; }
+      game.essences=state.balances;
+      game.formEssence=state.essence;
     }
     if (document.hasFocus()) game.canvas.focus();
   } catch (error) {
@@ -195,6 +196,7 @@ function updateNearby() {
 
 function frame() {
   if (!game.changingLevel) {
+    tickAbilities();
     game.entities.forEach(updateEntity);
     collectItems(game.player);
     const now = performance.now();
@@ -252,9 +254,15 @@ export async function startGame({
     draw();
   };
   resize();
-  const [catalog] = await Promise.all([loadUpgrades(), preparePortal(), loadHud(), loadTerrain()]);
-  game.catalog = catalog;
-  const { pokemon, items } = await loadEncountersCatalog(catalog);
+  const url = new URL('./data/benefits.json',import.meta.url);
+  const [benefits] = await Promise.all([fetch(url).then(r=>r.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
+  game.benefits = new Map(benefits.map(b=>[b.id,b]));
+  game.donors = new Map();
+  for (const benefit of benefits) for (const name of benefit.pokemon) {
+    if (game.donors.has(name)) throw new Error('Beneficio duplicado para '+name);
+    game.donors.set(name,benefit);
+  }
+  const { pokemon, items } = await loadEncountersCatalog();
   const biomes = await loadBiomes(pokemon);
   game.biomes = biomes;
   game.pokemon = pokemon;
@@ -264,7 +272,8 @@ export async function startGame({
   game.inventory = new Set();
   game.essences = {};
   game.pickups = [];
-  game.perks = { loot: 0, essence: 0, dodge: 0 };
+  game.held = new Set();
+  game.cooldowns = {};
   game.formEssence = null;
   const biome = chooseBiome(biomes, 1);
   await changeBiome(biome);

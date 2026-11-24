@@ -5,7 +5,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 45, "attack": 49, "defense": 49, "speed": 45, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -63,7 +62,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 62, "defense": 63, "speed": 60, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -99,7 +97,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 80, "attack": 82, "defense": 83, "speed": 80, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -135,7 +132,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 39, "attack": 52, "defense": 43, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -192,7 +188,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 58, "attack": 64, "defense": 58, "speed": 80, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -249,7 +244,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 78, "attack": 84, "defense": 78, "speed": 100, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -285,7 +279,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 44, "attack": 48, "defense": 65, "speed": 43, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -342,7 +335,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 59, "attack": 63, "defense": 80, "speed": 58, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -377,7 +369,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 79, "attack": 83, "defense": 100, "speed": 78, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -412,7 +403,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 45, "attack": 30, "defense": 35, "speed": 45, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -447,7 +437,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 50, "attack": 20, "defense": 55, "speed": 30, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -482,7 +471,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 60, "attack": 45, "defense": 50, "speed": 70, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -517,7 +505,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 35, "defense": 30, "speed": 50, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -552,7 +539,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 45, "attack": 25, "defense": 50, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -587,7 +573,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 90, "defense": 40, "speed": 75, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -622,7 +607,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 45, "defense": 40, "speed": 56, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -679,7 +663,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 63, "attack": 60, "defense": 55, "speed": 71, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -714,7 +697,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 83, "attack": 80, "defense": 75, "speed": 101, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -749,7 +731,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 30, "attack": 56, "defense": 35, "speed": 72, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -784,7 +765,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 55, "attack": 81, "defense": 60, "speed": 97, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -819,7 +799,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 60, "defense": 30, "speed": 70, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -854,7 +833,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 65, "attack": 90, "defense": 65, "speed": 100, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -889,7 +867,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 35, "attack": 60, "defense": 44, "speed": 55, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -946,7 +923,6 @@
     "heightDm": 35,
     "stats": {"hpMax": 60, "attack": 95, "defense": 69, "speed": 80, "size": 141, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -981,7 +957,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 35, "attack": 55, "defense": 40, "speed": 90, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1038,7 +1013,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 60, "attack": 90, "defense": 55, "speed": 110, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1095,7 +1069,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 75, "defense": 85, "speed": 40, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1152,7 +1125,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 75, "attack": 100, "defense": 110, "speed": 65, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1209,7 +1181,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 47, "defense": 52, "speed": 41, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1244,7 +1215,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 70, "attack": 62, "defense": 67, "speed": 56, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1279,7 +1249,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 90, "attack": 92, "defense": 87, "speed": 76, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1314,7 +1283,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 46, "attack": 57, "defense": 40, "speed": 50, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1351,7 +1319,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 61, "attack": 72, "defense": 57, "speed": 65, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1388,7 +1355,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 81, "attack": 102, "defense": 77, "speed": 85, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1425,7 +1391,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 70, "attack": 45, "defense": 48, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1460,7 +1425,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 95, "attack": 70, "defense": 73, "speed": 60, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1495,7 +1459,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 38, "attack": 41, "defense": 40, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1554,7 +1517,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 73, "attack": 76, "defense": 75, "speed": 100, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1613,7 +1575,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 115, "attack": 45, "defense": 20, "speed": 20, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1670,7 +1631,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 140, "attack": 70, "defense": 45, "speed": 45, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1705,7 +1665,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 40, "attack": 45, "defense": 35, "speed": 55, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1740,7 +1699,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 75, "attack": 80, "defense": 70, "speed": 90, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1775,7 +1733,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 45, "attack": 50, "defense": 55, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1810,7 +1767,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 60, "attack": 65, "defense": 70, "speed": 40, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1845,7 +1801,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 75, "attack": 80, "defense": 85, "speed": 50, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1880,7 +1835,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 35, "attack": 70, "defense": 55, "speed": 25, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1915,7 +1869,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 95, "defense": 80, "speed": 30, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -1950,7 +1903,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 55, "defense": 50, "speed": 45, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2007,7 +1959,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 70, "attack": 65, "defense": 60, "speed": 90, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2042,7 +1993,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 10, "attack": 55, "defense": 25, "speed": 95, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2078,7 +2028,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 35, "attack": 100, "defense": 50, "speed": 120, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2114,7 +2063,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 40, "attack": 45, "defense": 35, "speed": 90, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2171,7 +2119,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 70, "defense": 60, "speed": 115, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2206,7 +2153,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 50, "attack": 52, "defense": 48, "speed": 55, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2242,7 +2188,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 80, "attack": 82, "defense": 78, "speed": 85, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2277,7 +2222,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 80, "defense": 35, "speed": 70, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2313,7 +2257,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 105, "defense": 60, "speed": 95, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2348,7 +2291,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 55, "attack": 70, "defense": 45, "speed": 60, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2387,7 +2329,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 90, "attack": 110, "defense": 80, "speed": 95, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2423,7 +2364,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 40, "attack": 50, "defense": 40, "speed": 90, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2459,7 +2399,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 65, "defense": 65, "speed": 90, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2494,7 +2433,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 90, "attack": 95, "defense": 95, "speed": 70, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2529,7 +2467,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 25, "attack": 20, "defense": 15, "speed": 90, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2587,7 +2524,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 40, "attack": 35, "defense": 30, "speed": 105, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2622,7 +2558,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 55, "attack": 50, "defense": 45, "speed": 120, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2657,7 +2592,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 70, "attack": 80, "defense": 50, "speed": 35, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2713,7 +2647,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 80, "attack": 100, "defense": 70, "speed": 45, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2748,7 +2681,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 90, "attack": 130, "defense": 80, "speed": 55, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2783,7 +2715,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 50, "attack": 75, "defense": 35, "speed": 40, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2818,7 +2749,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 90, "defense": 50, "speed": 55, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2853,7 +2783,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 80, "attack": 105, "defense": 65, "speed": 70, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2888,7 +2817,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 40, "attack": 40, "defense": 35, "speed": 70, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2924,7 +2852,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 80, "attack": 70, "defense": 65, "speed": 100, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2960,7 +2887,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 40, "attack": 80, "defense": 100, "speed": 20, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -2995,7 +2921,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 55, "attack": 95, "defense": 115, "speed": 35, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3035,7 +2960,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 80, "attack": 120, "defense": 130, "speed": 45, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3071,7 +2995,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 50, "attack": 85, "defense": 55, "speed": 90, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3128,7 +3051,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 65, "attack": 100, "defense": 70, "speed": 105, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3163,7 +3085,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 90, "attack": 65, "defense": 65, "speed": 15, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3198,7 +3119,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 95, "attack": 75, "defense": 110, "speed": 30, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3234,7 +3154,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 25, "attack": 35, "defense": 70, "speed": 45, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3269,7 +3188,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 50, "attack": 60, "defense": 95, "speed": 70, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3304,7 +3222,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 52, "attack": 90, "defense": 55, "speed": 60, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3339,7 +3256,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 35, "attack": 85, "defense": 45, "speed": 75, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3374,7 +3290,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 60, "attack": 110, "defense": 70, "speed": 110, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3409,7 +3324,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 65, "attack": 45, "defense": 55, "speed": 45, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3444,7 +3358,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 90, "attack": 70, "defense": 80, "speed": 70, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3479,7 +3392,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 80, "attack": 80, "defense": 50, "speed": 25, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3514,7 +3426,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 105, "attack": 105, "defense": 75, "speed": 50, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3549,7 +3460,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 30, "attack": 65, "defense": 100, "speed": 40, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3584,7 +3494,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 50, "attack": 95, "defense": 180, "speed": 70, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3619,7 +3528,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 30, "attack": 35, "defense": 30, "speed": 80, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3654,7 +3562,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 45, "attack": 50, "defense": 45, "speed": 95, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3689,7 +3596,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 60, "attack": 65, "defense": 60, "speed": 110, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3747,7 +3653,6 @@
     "heightDm": 88,
     "stats": {"hpMax": 35, "attack": 45, "defense": 160, "speed": 70, "size": 164, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3782,7 +3687,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 48, "defense": 45, "speed": 42, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3817,7 +3721,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 85, "attack": 73, "defense": 70, "speed": 67, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3852,7 +3755,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 30, "attack": 105, "defense": 90, "speed": 50, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3887,7 +3789,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 55, "attack": 130, "defense": 115, "speed": 75, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3922,7 +3823,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 30, "defense": 50, "speed": 100, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -3980,7 +3880,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 50, "defense": 70, "speed": 150, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4016,7 +3915,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 60, "attack": 40, "defense": 80, "speed": 40, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4051,7 +3949,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 95, "attack": 95, "defense": 85, "speed": 55, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4087,7 +3984,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 50, "attack": 50, "defense": 95, "speed": 35, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4144,7 +4040,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 80, "defense": 110, "speed": 45, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4179,7 +4074,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 50, "attack": 120, "defense": 53, "speed": 87, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4214,7 +4108,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 50, "attack": 105, "defense": 79, "speed": 76, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4249,7 +4142,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 90, "attack": 55, "defense": 75, "speed": 30, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4284,7 +4176,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 40, "attack": 65, "defense": 95, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4319,7 +4210,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 65, "attack": 90, "defense": 120, "speed": 60, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4355,7 +4245,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 80, "attack": 85, "defense": 95, "speed": 25, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4390,7 +4279,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 105, "attack": 130, "defense": 120, "speed": 40, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4425,7 +4313,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 250, "attack": 5, "defense": 5, "speed": 50, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4460,7 +4347,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 55, "defense": 115, "speed": 60, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4495,7 +4381,6 @@
     "heightDm": 22,
     "stats": {"hpMax": 105, "attack": 95, "defense": 80, "speed": 90, "size": 131, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4530,7 +4415,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 30, "attack": 40, "defense": 70, "speed": 60, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4565,7 +4449,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 55, "attack": 65, "defense": 95, "speed": 85, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4600,7 +4483,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 45, "attack": 67, "defense": 60, "speed": 63, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4635,7 +4517,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 80, "attack": 92, "defense": 65, "speed": 68, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4670,7 +4551,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 30, "attack": 45, "defense": 55, "speed": 85, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4705,7 +4585,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 60, "attack": 75, "defense": 85, "speed": 115, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4740,7 +4619,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 40, "attack": 45, "defense": 65, "speed": 90, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4775,7 +4653,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 70, "attack": 110, "defense": 80, "speed": 105, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4810,7 +4687,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 65, "attack": 50, "defense": 35, "speed": 95, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4845,7 +4721,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 65, "attack": 83, "defense": 57, "speed": 105, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4880,7 +4755,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 65, "attack": 95, "defense": 57, "speed": 93, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4915,7 +4789,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 65, "attack": 125, "defense": 100, "speed": 85, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4950,7 +4823,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 75, "attack": 100, "defense": 95, "speed": 110, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -4985,7 +4857,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 20, "attack": 10, "defense": 55, "speed": 80, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5020,7 +4891,6 @@
     "heightDm": 65,
     "stats": {"hpMax": 95, "attack": 125, "defense": 79, "speed": 81, "size": 156, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5056,7 +4926,6 @@
     "heightDm": 25,
     "stats": {"hpMax": 130, "attack": 85, "defense": 80, "speed": 60, "size": 134, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5092,7 +4961,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 48, "attack": 48, "defense": 48, "speed": 48, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5149,7 +5017,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 55, "attack": 55, "defense": 50, "speed": 55, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5207,7 +5074,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 130, "attack": 65, "defense": 60, "speed": 65, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5243,7 +5109,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 65, "attack": 65, "defense": 60, "speed": 130, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5300,7 +5165,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 65, "attack": 130, "defense": 60, "speed": 65, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5358,7 +5222,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 65, "attack": 60, "defense": 70, "speed": 40, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5394,7 +5257,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 35, "attack": 40, "defense": 100, "speed": 35, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5429,7 +5291,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 70, "attack": 60, "defense": 125, "speed": 55, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5464,7 +5325,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 30, "attack": 80, "defense": 90, "speed": 55, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5521,7 +5381,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 60, "attack": 115, "defense": 105, "speed": 80, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5556,7 +5415,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 80, "attack": 105, "defense": 65, "speed": 130, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5591,7 +5449,6 @@
     "heightDm": 21,
     "stats": {"hpMax": 160, "attack": 110, "defense": 65, "speed": 30, "size": 130, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5626,7 +5483,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 90, "attack": 85, "defense": 100, "speed": 85, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5662,7 +5518,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 90, "attack": 90, "defense": 85, "speed": 100, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5698,7 +5553,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 90, "attack": 100, "defense": 90, "speed": 90, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5733,7 +5587,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 41, "attack": 64, "defense": 45, "speed": 50, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5776,7 +5629,6 @@
     "heightDm": 40,
     "stats": {"hpMax": 61, "attack": 84, "defense": 65, "speed": 70, "size": 145, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5811,7 +5663,6 @@
     "heightDm": 22,
     "stats": {"hpMax": 91, "attack": 134, "defense": 95, "speed": 80, "size": 131, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5848,7 +5699,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 106, "attack": 110, "defense": 90, "speed": 130, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5907,7 +5757,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 100, "attack": 100, "defense": 100, "speed": 100, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -5964,7 +5813,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 45, "attack": 49, "defense": 65, "speed": 45, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6022,7 +5870,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 62, "defense": 80, "speed": 60, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6057,7 +5904,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 80, "attack": 82, "defense": 100, "speed": 80, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6092,7 +5938,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 39, "attack": 52, "defense": 43, "speed": 65, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6149,7 +5994,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 58, "attack": 64, "defense": 58, "speed": 80, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6206,7 +6050,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 78, "attack": 84, "defense": 78, "speed": 100, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6263,7 +6106,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 65, "defense": 64, "speed": 43, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6320,7 +6162,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 65, "attack": 80, "defense": 80, "speed": 58, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6355,7 +6196,6 @@
     "heightDm": 23,
     "stats": {"hpMax": 85, "attack": 105, "defense": 100, "speed": 78, "size": 132, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6390,7 +6230,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 35, "attack": 46, "defense": 34, "speed": 20, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6448,7 +6287,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 85, "attack": 76, "defense": 64, "speed": 90, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6487,7 +6325,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 30, "defense": 30, "speed": 50, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6522,7 +6359,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 100, "attack": 50, "defense": 50, "speed": 70, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6559,7 +6395,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 40, "attack": 20, "defense": 30, "speed": 55, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6616,7 +6451,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 55, "attack": 35, "defense": 50, "speed": 85, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6651,7 +6485,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 60, "defense": 40, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6686,7 +6519,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 70, "attack": 90, "defense": 70, "speed": 40, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6721,7 +6553,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 85, "attack": 90, "defense": 80, "speed": 130, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6756,7 +6587,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 75, "attack": 38, "defense": 38, "speed": 67, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6791,7 +6621,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 125, "attack": 58, "defense": 58, "speed": 67, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6848,7 +6677,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 20, "attack": 40, "defense": 15, "speed": 60, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6906,7 +6734,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 50, "attack": 25, "defense": 28, "speed": 15, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6942,7 +6769,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 90, "attack": 30, "defense": 15, "speed": 15, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -6978,7 +6804,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 35, "attack": 20, "defense": 65, "speed": 20, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7013,7 +6838,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 55, "attack": 40, "defense": 85, "speed": 40, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7071,7 +6895,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 40, "attack": 50, "defense": 45, "speed": 70, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7128,7 +6951,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 65, "attack": 75, "defense": 70, "speed": 95, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7163,7 +6985,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 55, "attack": 40, "defense": 40, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7221,7 +7042,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 70, "attack": 55, "defense": 55, "speed": 45, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7280,7 +7100,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 90, "attack": 75, "defense": 85, "speed": 55, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7315,7 +7134,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 75, "attack": 80, "defense": 95, "speed": 50, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7350,7 +7168,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 70, "attack": 20, "defense": 50, "speed": 40, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7408,7 +7225,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 100, "attack": 50, "defense": 80, "speed": 50, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7444,7 +7260,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 70, "attack": 100, "defense": 115, "speed": 30, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7479,7 +7294,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 90, "attack": 75, "defense": 75, "speed": 70, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7514,7 +7328,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 35, "attack": 35, "defense": 40, "speed": 50, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7550,7 +7363,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 55, "attack": 45, "defense": 50, "speed": 80, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7586,7 +7398,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 75, "attack": 55, "defense": 70, "speed": 110, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7621,7 +7432,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 55, "attack": 70, "defense": 55, "speed": 85, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7678,7 +7488,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 30, "attack": 30, "defense": 30, "speed": 30, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7728,7 +7537,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 75, "attack": 75, "defense": 55, "speed": 30, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7764,7 +7572,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 65, "attack": 65, "defense": 45, "speed": 95, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7799,7 +7606,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 45, "defense": 45, "speed": 15, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7856,7 +7662,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 95, "attack": 85, "defense": 85, "speed": 35, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7892,7 +7697,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 65, "attack": 65, "defense": 60, "speed": 110, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7927,7 +7731,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 95, "attack": 65, "defense": 110, "speed": 65, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -7985,7 +7788,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 60, "attack": 85, "defense": 42, "speed": 91, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8042,7 +7844,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 95, "attack": 75, "defense": 80, "speed": 30, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8077,7 +7878,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 60, "defense": 60, "speed": 85, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8134,7 +7934,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 48, "attack": 72, "defense": 48, "speed": 48, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8169,7 +7968,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 190, "attack": 33, "defense": 58, "speed": 33, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8205,7 +8003,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 70, "attack": 80, "defense": 65, "speed": 85, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8262,7 +8059,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 65, "defense": 90, "speed": 15, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8298,7 +8094,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 75, "attack": 90, "defense": 140, "speed": 40, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8333,7 +8128,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 100, "attack": 70, "defense": 70, "speed": 45, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8391,7 +8185,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 65, "attack": 75, "defense": 105, "speed": 85, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8448,7 +8241,6 @@
     "heightDm": 92,
     "stats": {"hpMax": 75, "attack": 85, "defense": 200, "speed": 30, "size": 165, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8485,7 +8277,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 60, "attack": 80, "defense": 50, "speed": 30, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8522,7 +8313,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 90, "attack": 120, "defense": 75, "speed": 45, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8557,7 +8347,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 65, "attack": 95, "defense": 85, "speed": 85, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8592,7 +8381,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 70, "attack": 130, "defense": 100, "speed": 65, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8627,7 +8415,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 20, "attack": 10, "defense": 230, "speed": 5, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8662,7 +8449,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 80, "attack": 125, "defense": 75, "speed": 85, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8697,7 +8483,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 55, "attack": 95, "defense": 55, "speed": 115, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8754,7 +8539,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 60, "attack": 80, "defense": 50, "speed": 40, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8792,7 +8576,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 90, "attack": 130, "defense": 75, "speed": 55, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8827,7 +8610,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 40, "attack": 40, "defense": 40, "speed": 20, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8863,7 +8645,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 60, "attack": 50, "defense": 120, "speed": 30, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8899,7 +8680,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 50, "attack": 50, "defense": 40, "speed": 50, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8942,7 +8722,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 100, "attack": 100, "defense": 80, "speed": 50, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -8977,7 +8756,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 65, "attack": 55, "defense": 95, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9012,7 +8790,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 35, "attack": 65, "defense": 35, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9047,7 +8824,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 75, "attack": 105, "defense": 75, "speed": 45, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9083,7 +8859,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 45, "attack": 55, "defense": 45, "speed": 75, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9140,7 +8915,6 @@
     "heightDm": 21,
     "stats": {"hpMax": 85, "attack": 40, "defense": 70, "speed": 70, "size": 130, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9175,7 +8949,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 65, "attack": 80, "defense": 140, "speed": 70, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9210,7 +8983,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 45, "attack": 60, "defense": 30, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9267,7 +9039,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 75, "attack": 90, "defense": 50, "speed": 95, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9302,7 +9073,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 75, "attack": 95, "defense": 95, "speed": 85, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9337,7 +9107,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 90, "attack": 60, "defense": 60, "speed": 40, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9395,7 +9164,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 90, "attack": 120, "defense": 120, "speed": 50, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9435,7 +9203,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 85, "attack": 80, "defense": 90, "speed": 60, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9471,7 +9238,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 73, "attack": 95, "defense": 62, "speed": 85, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9506,7 +9272,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 55, "attack": 20, "defense": 35, "speed": 75, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9563,7 +9328,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 35, "attack": 35, "defense": 35, "speed": 35, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9600,7 +9364,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 50, "attack": 95, "defense": 95, "speed": 70, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9635,7 +9398,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 45, "attack": 30, "defense": 15, "speed": 65, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9693,7 +9455,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 45, "attack": 63, "defense": 37, "speed": 95, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9728,7 +9489,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 45, "attack": 75, "defense": 37, "speed": 83, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9785,7 +9545,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 95, "attack": 80, "defense": 105, "speed": 100, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9821,7 +9580,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 255, "attack": 10, "defense": 10, "speed": 55, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9857,7 +9615,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 90, "attack": 85, "defense": 75, "speed": 115, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9892,7 +9649,6 @@
     "heightDm": 21,
     "stats": {"hpMax": 115, "attack": 115, "defense": 85, "speed": 100, "size": 130, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9928,7 +9684,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 100, "attack": 75, "defense": 115, "speed": 85, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -9964,7 +9719,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 64, "defense": 50, "speed": 41, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10021,7 +9775,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 70, "attack": 84, "defense": 70, "speed": 51, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10056,7 +9809,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 100, "attack": 134, "defense": 110, "speed": 61, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10091,7 +9843,6 @@
     "heightDm": 52,
     "stats": {"hpMax": 106, "attack": 90, "defense": 130, "speed": 110, "size": 151, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10126,7 +9877,6 @@
     "heightDm": 38,
     "stats": {"hpMax": 106, "attack": 130, "defense": 90, "speed": 90, "size": 143, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10161,7 +9911,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 100, "attack": 100, "defense": 100, "speed": 100, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10218,7 +9967,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 45, "defense": 35, "speed": 70, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10276,7 +10024,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 50, "attack": 65, "defense": 45, "speed": 95, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10333,7 +10080,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 70, "attack": 85, "defense": 65, "speed": 120, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10368,7 +10114,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 45, "attack": 60, "defense": 40, "speed": 45, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10426,7 +10171,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 60, "attack": 85, "defense": 60, "speed": 55, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10461,7 +10205,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 80, "attack": 120, "defense": 70, "speed": 80, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10497,7 +10240,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 50, "attack": 70, "defense": 50, "speed": 40, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10554,7 +10296,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 70, "attack": 85, "defense": 70, "speed": 50, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10591,7 +10332,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 100, "attack": 110, "defense": 90, "speed": 60, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10650,7 +10390,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 35, "attack": 55, "defense": 35, "speed": 35, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10707,7 +10446,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 70, "attack": 90, "defense": 70, "speed": 70, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10764,7 +10502,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 38, "attack": 30, "defense": 41, "speed": 60, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10809,7 +10546,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 78, "attack": 70, "defense": 61, "speed": 100, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10844,7 +10580,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 45, "attack": 45, "defense": 35, "speed": 20, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10879,7 +10614,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 35, "defense": 55, "speed": 15, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10914,7 +10648,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 70, "defense": 50, "speed": 65, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10949,7 +10682,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 50, "attack": 35, "defense": 55, "speed": 15, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -10984,7 +10716,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 50, "defense": 70, "speed": 65, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11019,7 +10750,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 30, "defense": 30, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11056,7 +10786,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 50, "defense": 50, "speed": 50, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11091,7 +10820,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 80, "attack": 70, "defense": 70, "speed": 70, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11126,7 +10854,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 40, "defense": 50, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11166,7 +10893,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 70, "attack": 70, "defense": 40, "speed": 60, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11223,7 +10949,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 90, "attack": 100, "defense": 60, "speed": 80, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11258,7 +10983,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 55, "defense": 30, "speed": 85, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11293,7 +11017,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 85, "defense": 60, "speed": 125, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11332,7 +11055,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 40, "attack": 30, "defense": 30, "speed": 85, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11367,7 +11089,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 50, "defense": 100, "speed": 65, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11402,7 +11123,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 28, "attack": 25, "defense": 25, "speed": 40, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11459,7 +11179,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 38, "attack": 35, "defense": 35, "speed": 50, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11517,7 +11236,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 68, "attack": 65, "defense": 65, "speed": 80, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11553,7 +11271,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 30, "defense": 32, "speed": 65, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11588,7 +11305,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 70, "attack": 60, "defense": 62, "speed": 80, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11623,7 +11339,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 60, "attack": 40, "defense": 60, "speed": 35, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11659,7 +11374,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 130, "defense": 80, "speed": 70, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11717,7 +11431,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 60, "attack": 60, "defense": 60, "speed": 30, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11753,7 +11466,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 80, "attack": 80, "defense": 80, "speed": 90, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11789,7 +11501,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 150, "attack": 160, "defense": 100, "speed": 100, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11825,7 +11536,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 31, "attack": 45, "defense": 90, "speed": 40, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11860,7 +11570,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 61, "attack": 90, "defense": 45, "speed": 160, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11895,7 +11604,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 1, "attack": 90, "defense": 45, "speed": 40, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11931,7 +11639,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 64, "attack": 51, "defense": 23, "speed": 28, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -11967,7 +11674,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 84, "attack": 71, "defense": 43, "speed": 48, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12005,7 +11711,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 104, "attack": 91, "defense": 63, "speed": 68, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12041,7 +11746,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 72, "attack": 60, "defense": 30, "speed": 25, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12098,7 +11802,6 @@
     "heightDm": 23,
     "stats": {"hpMax": 144, "attack": 120, "defense": 60, "speed": 50, "size": 132, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12133,7 +11836,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 50, "attack": 20, "defense": 40, "speed": 20, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12168,7 +11870,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 30, "attack": 45, "defense": 135, "speed": 30, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12205,7 +11906,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 45, "defense": 45, "speed": 50, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12262,7 +11962,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 70, "attack": 65, "defense": 65, "speed": 90, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12320,7 +12019,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 50, "attack": 75, "defense": 75, "speed": 50, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12355,7 +12053,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 85, "defense": 85, "speed": 50, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12390,7 +12087,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 50, "attack": 70, "defense": 100, "speed": 30, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12450,7 +12146,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 60, "attack": 90, "defense": 140, "speed": 40, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12488,7 +12183,6 @@
     "heightDm": 21,
     "stats": {"hpMax": 70, "attack": 110, "defense": 180, "speed": 50, "size": 130, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12526,7 +12220,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 30, "attack": 40, "defense": 55, "speed": 60, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12561,7 +12254,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 60, "attack": 60, "defense": 75, "speed": 80, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12596,7 +12288,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 40, "attack": 45, "defense": 40, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12653,7 +12344,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 70, "attack": 75, "defense": 60, "speed": 105, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12691,7 +12381,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 60, "attack": 50, "defense": 40, "speed": 95, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12748,7 +12437,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 60, "attack": 40, "defense": 50, "speed": 95, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12805,7 +12493,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 65, "attack": 73, "defense": 75, "speed": 85, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12840,7 +12527,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 65, "attack": 47, "defense": 75, "speed": 85, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12876,7 +12562,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 50, "attack": 60, "defense": 45, "speed": 65, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12934,7 +12619,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 70, "attack": 43, "defense": 53, "speed": 40, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -12971,7 +12655,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 100, "attack": 73, "defense": 83, "speed": 55, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13008,7 +12691,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 45, "attack": 90, "defense": 20, "speed": 65, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13043,7 +12725,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 70, "attack": 120, "defense": 40, "speed": 95, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13078,7 +12759,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 130, "attack": 70, "defense": 35, "speed": 60, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13114,7 +12794,6 @@
     "heightDm": 145,
     "stats": {"hpMax": 170, "attack": 90, "defense": 45, "speed": 60, "size": 178, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13150,7 +12829,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 60, "defense": 40, "speed": 35, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13186,7 +12864,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 70, "attack": 100, "defense": 70, "speed": 40, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13222,7 +12899,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 70, "attack": 85, "defense": 140, "speed": 20, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13258,7 +12934,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 25, "defense": 35, "speed": 60, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13293,7 +12968,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 80, "attack": 45, "defense": 65, "speed": 80, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13328,7 +13002,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 60, "attack": 60, "defense": 60, "speed": 60, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13385,7 +13058,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 45, "attack": 100, "defense": 45, "speed": 10, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13442,7 +13114,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 50, "attack": 70, "defense": 50, "speed": 70, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13477,7 +13148,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 80, "attack": 100, "defense": 80, "speed": 100, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13512,7 +13182,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 50, "attack": 85, "defense": 40, "speed": 35, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13547,7 +13216,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 70, "attack": 115, "defense": 60, "speed": 55, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13582,7 +13250,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 45, "attack": 40, "defense": 60, "speed": 50, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13639,7 +13306,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 75, "attack": 70, "defense": 90, "speed": 80, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13696,7 +13362,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 73, "attack": 115, "defense": 60, "speed": 90, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13753,7 +13418,6 @@
     "heightDm": 27,
     "stats": {"hpMax": 73, "attack": 100, "defense": 60, "speed": 65, "size": 136, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13788,7 +13452,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 90, "attack": 55, "defense": 65, "speed": 70, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13824,7 +13487,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 90, "attack": 95, "defense": 85, "speed": 70, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13860,7 +13522,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 50, "attack": 48, "defense": 43, "speed": 60, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13897,7 +13558,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 110, "attack": 78, "defense": 73, "speed": 60, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13934,7 +13594,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 43, "attack": 80, "defense": 65, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -13991,7 +13650,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 63, "attack": 120, "defense": 85, "speed": 55, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14026,7 +13684,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 40, "attack": 40, "defense": 55, "speed": 55, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14062,7 +13719,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 60, "attack": 70, "defense": 105, "speed": 75, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14098,7 +13754,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 66, "attack": 41, "defense": 77, "speed": 23, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14133,7 +13788,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 86, "attack": 81, "defense": 97, "speed": 43, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14190,7 +13844,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 45, "attack": 95, "defense": 50, "speed": 75, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14225,7 +13878,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 75, "attack": 125, "defense": 100, "speed": 45, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14260,7 +13912,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 20, "attack": 15, "defense": 20, "speed": 80, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14296,7 +13947,6 @@
     "heightDm": 62,
     "stats": {"hpMax": 95, "attack": 60, "defense": 79, "speed": 81, "size": 155, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14331,7 +13981,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 70, "attack": 70, "defense": 70, "speed": 70, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14366,7 +14015,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 90, "defense": 70, "speed": 40, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14423,7 +14071,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 44, "attack": 75, "defense": 35, "speed": 45, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14480,7 +14127,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 64, "attack": 115, "defense": 65, "speed": 65, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14515,7 +14161,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 20, "attack": 40, "defense": 90, "speed": 25, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14551,7 +14196,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 40, "attack": 70, "defense": 130, "speed": 25, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14586,7 +14230,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 99, "attack": 68, "defense": 83, "speed": 51, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14622,7 +14265,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 75, "attack": 50, "defense": 80, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14659,7 +14301,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 65, "attack": 130, "defense": 60, "speed": 75, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14716,7 +14357,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 95, "attack": 23, "defense": 48, "speed": 23, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14752,7 +14392,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 50, "attack": 50, "defense": 50, "speed": 50, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14809,7 +14448,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 80, "attack": 80, "defense": 80, "speed": 80, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14844,7 +14482,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 70, "attack": 40, "defense": 50, "speed": 25, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14885,7 +14522,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 90, "attack": 60, "defense": 70, "speed": 45, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14922,7 +14558,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 110, "attack": 80, "defense": 90, "speed": 65, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14959,7 +14594,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 35, "attack": 64, "defense": 85, "speed": 32, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -14994,7 +14628,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 55, "attack": 104, "defense": 105, "speed": 52, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15029,7 +14662,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 55, "attack": 84, "defense": 105, "speed": 52, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15065,7 +14697,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 100, "attack": 90, "defense": 130, "speed": 55, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15100,7 +14731,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 43, "attack": 30, "defense": 55, "speed": 97, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15135,7 +14765,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 45, "attack": 75, "defense": 60, "speed": 50, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15193,7 +14822,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 65, "attack": 95, "defense": 100, "speed": 50, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15229,7 +14857,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 95, "attack": 135, "defense": 80, "speed": 100, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15287,7 +14914,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 40, "attack": 55, "defense": 80, "speed": 30, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15322,7 +14948,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 60, "attack": 75, "defense": 100, "speed": 50, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15357,7 +14982,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 80, "attack": 135, "defense": 130, "speed": 70, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15392,7 +15016,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 80, "attack": 100, "defense": 200, "speed": 50, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15429,7 +15052,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 80, "attack": 50, "defense": 100, "speed": 50, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15466,7 +15088,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 80, "attack": 75, "defense": 150, "speed": 50, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15503,7 +15124,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 80, "attack": 80, "defense": 90, "speed": 110, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15562,7 +15182,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 80, "attack": 90, "defense": 80, "speed": 110, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15599,7 +15218,6 @@
     "heightDm": 45,
     "stats": {"hpMax": 100, "attack": 100, "defense": 90, "speed": 90, "size": 147, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15634,7 +15252,6 @@
     "heightDm": 35,
     "stats": {"hpMax": 100, "attack": 150, "defense": 140, "speed": 90, "size": 141, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15670,7 +15287,6 @@
     "heightDm": 70,
     "stats": {"hpMax": 105, "attack": 150, "defense": 90, "speed": 95, "size": 158, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15707,7 +15323,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 100, "attack": 100, "defense": 100, "speed": 100, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15764,7 +15379,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 50, "attack": 150, "defense": 50, "speed": 150, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15800,7 +15414,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 68, "defense": 64, "speed": 31, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15858,7 +15471,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 75, "attack": 89, "defense": 85, "speed": 36, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15899,7 +15511,6 @@
     "heightDm": 22,
     "stats": {"hpMax": 95, "attack": 109, "defense": 105, "speed": 56, "size": 131, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15935,7 +15546,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 44, "attack": 58, "defense": 44, "speed": 61, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -15992,7 +15602,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 64, "attack": 78, "defense": 52, "speed": 81, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16027,7 +15636,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 76, "attack": 104, "defense": 71, "speed": 108, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16066,7 +15674,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 53, "attack": 51, "defense": 53, "speed": 40, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16124,7 +15731,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 64, "attack": 66, "defense": 68, "speed": 50, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16160,7 +15766,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 84, "attack": 86, "defense": 88, "speed": 60, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16196,7 +15801,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 55, "defense": 30, "speed": 60, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16253,7 +15857,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 55, "attack": 75, "defense": 50, "speed": 80, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16288,7 +15891,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 85, "attack": 120, "defense": 70, "speed": 100, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16323,7 +15925,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 59, "attack": 45, "defense": 40, "speed": 31, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16380,7 +15981,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 79, "attack": 85, "defense": 60, "speed": 71, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16415,7 +16015,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 37, "attack": 25, "defense": 41, "speed": 25, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16452,7 +16051,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 77, "attack": 85, "defense": 51, "speed": 65, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16487,7 +16085,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 45, "attack": 65, "defense": 34, "speed": 45, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16545,7 +16142,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 60, "attack": 85, "defense": 49, "speed": 60, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16603,7 +16199,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 80, "attack": 120, "defense": 79, "speed": 70, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16639,7 +16234,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 40, "attack": 30, "defense": 35, "speed": 55, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16696,7 +16290,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 60, "attack": 70, "defense": 65, "speed": 90, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16738,7 +16331,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 67, "attack": 125, "defense": 40, "speed": 58, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16774,7 +16366,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 97, "attack": 165, "defense": 60, "speed": 58, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16810,7 +16401,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 30, "attack": 42, "defense": 118, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16846,7 +16436,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 60, "attack": 52, "defense": 168, "speed": 30, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16882,7 +16471,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 40, "attack": 29, "defense": 45, "speed": 36, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16939,7 +16527,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 60, "attack": 59, "defense": 85, "speed": 36, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -16974,7 +16561,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 70, "attack": 94, "defense": 50, "speed": 66, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17009,7 +16595,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 30, "attack": 30, "defense": 42, "speed": 70, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17044,7 +16629,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 70, "attack": 80, "defense": 102, "speed": 40, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17079,7 +16663,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 60, "attack": 45, "defense": 70, "speed": 95, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17136,7 +16719,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 55, "attack": 65, "defense": 35, "speed": 85, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17195,7 +16777,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 85, "attack": 105, "defense": 55, "speed": 115, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17231,7 +16812,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 45, "attack": 35, "defense": 45, "speed": 35, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17267,7 +16847,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 70, "attack": 60, "defense": 70, "speed": 85, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17302,7 +16881,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 76, "attack": 48, "defense": 48, "speed": 34, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17338,7 +16916,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 111, "attack": 83, "defense": 68, "speed": 39, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17375,7 +16952,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 75, "attack": 100, "defense": 66, "speed": 115, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17411,7 +16987,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 90, "attack": 50, "defense": 34, "speed": 70, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17446,7 +17021,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 150, "attack": 80, "defense": 44, "speed": 80, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17481,7 +17055,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 66, "defense": 44, "speed": 85, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17538,7 +17111,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 65, "attack": 76, "defense": 84, "speed": 105, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17573,7 +17145,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 60, "attack": 60, "defense": 60, "speed": 105, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17610,7 +17181,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 100, "attack": 125, "defense": 52, "speed": 71, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17654,7 +17224,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 49, "attack": 55, "defense": 42, "speed": 85, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17713,7 +17282,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 71, "attack": 82, "defense": 64, "speed": 112, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17750,7 +17318,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 45, "attack": 30, "defense": 50, "speed": 45, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17810,7 +17377,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 63, "attack": 63, "defense": 47, "speed": 74, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17867,7 +17433,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 103, "attack": 93, "defense": 67, "speed": 84, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17902,7 +17467,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 57, "attack": 24, "defense": 86, "speed": 23, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17937,7 +17501,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 67, "attack": 89, "defense": 116, "speed": 33, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -17973,7 +17536,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 50, "attack": 80, "defense": 95, "speed": 10, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18008,7 +17570,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 20, "attack": 25, "defense": 45, "speed": 60, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18065,7 +17626,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 100, "attack": 5, "defense": 5, "speed": 30, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18124,7 +17684,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 76, "attack": 65, "defense": 45, "speed": 91, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18181,7 +17740,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 50, "attack": 92, "defense": 108, "speed": 35, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18216,7 +17774,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 58, "attack": 70, "defense": 45, "speed": 42, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18252,7 +17809,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 68, "attack": 90, "defense": 65, "speed": 82, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18288,7 +17844,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 108, "attack": 130, "defense": 95, "speed": 102, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18324,7 +17879,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 135, "attack": 85, "defense": 40, "speed": 5, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18381,7 +17935,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 40, "attack": 70, "defense": 40, "speed": 60, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18439,7 +17992,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 70, "attack": 110, "defense": 70, "speed": 90, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18497,7 +18049,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 68, "attack": 72, "defense": 78, "speed": 32, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18534,7 +18085,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 108, "attack": 112, "defense": 118, "speed": 47, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18571,7 +18121,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 40, "attack": 50, "defense": 90, "speed": 65, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18606,7 +18155,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 70, "attack": 90, "defense": 110, "speed": 95, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18641,7 +18189,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 48, "attack": 61, "defense": 40, "speed": 50, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18699,7 +18246,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 83, "attack": 106, "defense": 65, "speed": 85, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18735,7 +18281,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 74, "attack": 100, "defense": 72, "speed": 46, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18770,7 +18315,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 49, "attack": 49, "defense": 56, "speed": 66, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18827,7 +18371,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 69, "attack": 69, "defense": 76, "speed": 91, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18862,7 +18405,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 45, "attack": 20, "defense": 50, "speed": 50, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18897,7 +18439,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 62, "defense": 50, "speed": 40, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18933,7 +18474,6 @@
     "heightDm": 22,
     "stats": {"hpMax": 90, "attack": 92, "defense": 75, "speed": 60, "size": 131, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -18969,7 +18509,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 70, "attack": 120, "defense": 65, "speed": 125, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19004,7 +18543,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 70, "attack": 70, "defense": 115, "speed": 60, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19039,7 +18577,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 110, "attack": 85, "defense": 95, "speed": 50, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19075,7 +18612,6 @@
     "heightDm": 24,
     "stats": {"hpMax": 115, "attack": 140, "defense": 130, "speed": 40, "size": 133, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19110,7 +18646,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 100, "attack": 100, "defense": 125, "speed": 50, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19146,7 +18681,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 75, "attack": 123, "defense": 67, "speed": 95, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19182,7 +18716,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 75, "attack": 95, "defense": 67, "speed": 83, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19218,7 +18751,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 85, "attack": 50, "defense": 95, "speed": 80, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19253,7 +18785,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 86, "attack": 76, "defense": 86, "speed": 95, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19288,7 +18819,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 65, "attack": 110, "defense": 130, "speed": 95, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19346,7 +18876,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 65, "attack": 60, "defense": 110, "speed": 65, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19404,7 +18933,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 75, "attack": 95, "defense": 125, "speed": 95, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19439,7 +18967,6 @@
     "heightDm": 25,
     "stats": {"hpMax": 110, "attack": 130, "defense": 80, "speed": 80, "size": 134, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19475,7 +19002,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 85, "attack": 80, "defense": 70, "speed": 90, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19516,7 +19042,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 68, "attack": 125, "defense": 65, "speed": 80, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19551,7 +19076,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 60, "attack": 55, "defense": 145, "speed": 40, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19587,7 +19111,6 @@
     "heightDm": 22,
     "stats": {"hpMax": 45, "attack": 100, "defense": 135, "speed": 45, "size": 131, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19645,7 +19168,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 70, "attack": 80, "defense": 70, "speed": 110, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19680,7 +19202,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 50, "attack": 50, "defense": 77, "speed": 91, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19716,7 +19237,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 75, "attack": 75, "defense": 130, "speed": 95, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19752,7 +19272,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 80, "attack": 105, "defense": 105, "speed": 80, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19810,7 +19329,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 75, "attack": 125, "defense": 70, "speed": 115, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19846,7 +19364,6 @@
     "heightDm": 54,
     "stats": {"hpMax": 100, "attack": 120, "defense": 120, "speed": 90, "size": 152, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19882,7 +19399,6 @@
     "heightDm": 42,
     "stats": {"hpMax": 90, "attack": 120, "defense": 100, "speed": 100, "size": 146, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19918,7 +19434,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 91, "attack": 90, "defense": 106, "speed": 77, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19954,7 +19469,6 @@
     "heightDm": 37,
     "stats": {"hpMax": 110, "attack": 160, "defense": 110, "speed": 100, "size": 143, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -19990,7 +19504,6 @@
     "heightDm": 45,
     "stats": {"hpMax": 150, "attack": 100, "defense": 120, "speed": 90, "size": 147, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20025,7 +19538,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 120, "attack": 70, "defense": 110, "speed": 85, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20082,7 +19594,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 80, "attack": 80, "defense": 80, "speed": 80, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20139,7 +19650,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 100, "attack": 100, "defense": 100, "speed": 100, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20197,7 +19707,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 70, "attack": 90, "defense": 90, "speed": 125, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20255,7 +19764,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 100, "attack": 100, "defense": 100, "speed": 100, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20313,7 +19821,6 @@
     "heightDm": 32,
     "stats": {"hpMax": 120, "attack": 120, "defense": 120, "speed": 120, "size": 139, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20369,7 +19876,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 100, "attack": 100, "defense": 100, "speed": 100, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20405,7 +19911,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 45, "attack": 45, "defense": 55, "speed": 63, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20463,7 +19968,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 60, "attack": 60, "defense": 75, "speed": 83, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20498,7 +20002,6 @@
     "heightDm": 33,
     "stats": {"hpMax": 75, "attack": 75, "defense": 95, "speed": 113, "size": 140, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20533,7 +20036,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 65, "attack": 63, "defense": 45, "speed": 45, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20589,7 +20091,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 90, "attack": 93, "defense": 55, "speed": 55, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20624,7 +20125,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 110, "attack": 123, "defense": 65, "speed": 65, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20658,7 +20158,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 55, "attack": 55, "defense": 45, "speed": 45, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20715,7 +20214,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 75, "attack": 75, "defense": 60, "speed": 60, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20749,7 +20247,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 95, "attack": 100, "defense": 85, "speed": 70, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20783,7 +20280,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 45, "attack": 55, "defense": 39, "speed": 42, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20818,7 +20314,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 60, "attack": 85, "defense": 69, "speed": 77, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20853,7 +20348,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 45, "attack": 60, "defense": 45, "speed": 55, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20910,7 +20404,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 65, "attack": 80, "defense": 65, "speed": 60, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20945,7 +20438,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 85, "attack": 110, "defense": 90, "speed": 80, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -20979,7 +20471,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 41, "attack": 50, "defense": 37, "speed": 66, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21014,7 +20505,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 64, "attack": 88, "defense": 50, "speed": 106, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21049,7 +20539,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 53, "defense": 48, "speed": 64, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21084,7 +20573,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 75, "attack": 98, "defense": 63, "speed": 101, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21119,7 +20607,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 76, "attack": 25, "defense": 45, "speed": 24, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21153,7 +20640,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 116, "attack": 55, "defense": 85, "speed": 29, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21187,7 +20673,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 75, "defense": 85, "speed": 15, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21222,7 +20707,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 70, "attack": 105, "defense": 105, "speed": 20, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21259,7 +20743,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 85, "attack": 135, "defense": 130, "speed": 25, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21295,7 +20778,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 65, "attack": 45, "defense": 43, "speed": 72, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21330,7 +20812,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 67, "attack": 57, "defense": 55, "speed": 114, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21365,7 +20846,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 60, "attack": 85, "defense": 40, "speed": 68, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21402,7 +20882,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 110, "attack": 135, "defense": 60, "speed": 88, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21438,7 +20917,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 103, "attack": 60, "defense": 86, "speed": 50, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21477,7 +20955,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 75, "attack": 80, "defense": 55, "speed": 35, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21512,7 +20989,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 85, "attack": 105, "defense": 85, "speed": 40, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21551,7 +21027,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 105, "attack": 140, "defense": 95, "speed": 45, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Idle",
       "Rotate",
@@ -21586,7 +21061,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 50, "attack": 50, "defense": 40, "speed": 64, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21621,7 +21095,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 75, "attack": 65, "defense": 55, "speed": 69, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21656,7 +21129,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 105, "attack": 95, "defense": 75, "speed": 74, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21690,7 +21162,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 75, "attack": 125, "defense": 75, "speed": 85, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21726,7 +21197,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 45, "attack": 53, "defense": 70, "speed": 42, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21762,7 +21232,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 55, "attack": 63, "defense": 90, "speed": 42, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21797,7 +21266,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 75, "attack": 103, "defense": 80, "speed": 92, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21831,7 +21299,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 30, "attack": 45, "defense": 59, "speed": 57, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21888,7 +21355,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 40, "attack": 55, "defense": 99, "speed": 47, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Idle",
       "Rotate",
@@ -21924,7 +21390,6 @@
     "heightDm": 25,
     "stats": {"hpMax": 60, "attack": 100, "defense": 89, "speed": 112, "size": 134, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21958,7 +21423,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 27, "defense": 60, "speed": 66, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -21993,7 +21457,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 67, "defense": 85, "speed": 116, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22028,7 +21491,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 45, "attack": 35, "defense": 50, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22085,7 +21547,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 70, "attack": 60, "defense": 75, "speed": 90, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22141,7 +21602,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 70, "attack": 92, "defense": 65, "speed": 98, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22175,7 +21635,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 50, "attack": 72, "defense": 35, "speed": 65, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Idle",
@@ -22210,7 +21669,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 82, "defense": 45, "speed": 74, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22245,7 +21703,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 95, "attack": 117, "defense": 80, "speed": 92, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22280,7 +21737,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 70, "attack": 90, "defense": 45, "speed": 50, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22315,7 +21771,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 105, "attack": 140, "defense": 55, "speed": 95, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22351,7 +21806,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 75, "attack": 86, "defense": 67, "speed": 60, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22386,7 +21840,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 75, "defense": 70, "speed": 48, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22442,7 +21895,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 65, "attack": 90, "defense": 115, "speed": 58, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22477,7 +21929,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 72, "attack": 58, "defense": 80, "speed": 97, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22511,7 +21962,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 38, "attack": 30, "defense": 85, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22545,7 +21995,6 @@
     "heightDm": 17,
     "stats": {"hpMax": 58, "attack": 50, "defense": 145, "speed": 30, "size": 126, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22580,7 +22029,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 55, "attack": 112, "defense": 45, "speed": 70, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22619,7 +22067,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 75, "attack": 140, "defense": 65, "speed": 110, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22654,7 +22101,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 50, "attack": 50, "defense": 62, "speed": 65, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22711,7 +22157,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 80, "attack": 95, "defense": 82, "speed": 75, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22746,7 +22191,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 40, "attack": 65, "defense": 40, "speed": 65, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22803,7 +22247,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 60, "attack": 105, "defense": 60, "speed": 105, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22837,7 +22280,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 50, "defense": 40, "speed": 75, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22895,7 +22337,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 75, "attack": 95, "defense": 60, "speed": 115, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22936,7 +22377,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 45, "attack": 30, "defense": 50, "speed": 45, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -22971,7 +22411,6 @@
     "heightDm": 7,
     "stats": {"hpMax": 60, "attack": 45, "defense": 70, "speed": 55, "size": 109, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23007,7 +22446,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 70, "attack": 55, "defense": 95, "speed": 65, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23043,7 +22481,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 45, "attack": 30, "defense": 40, "speed": 20, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23100,7 +22537,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 65, "attack": 40, "defense": 50, "speed": 30, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23137,7 +22573,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 110, "attack": 65, "defense": 75, "speed": 30, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23172,7 +22607,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 62, "attack": 44, "defense": 50, "speed": 55, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23207,7 +22641,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 75, "attack": 87, "defense": 63, "speed": 98, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23242,7 +22675,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 36, "attack": 50, "defense": 50, "speed": 44, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23299,7 +22731,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 51, "attack": 65, "defense": 65, "speed": 59, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23335,7 +22766,6 @@
     "heightDm": 13,
     "stats": {"hpMax": 71, "attack": 95, "defense": 85, "speed": 79, "size": 121, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23370,7 +22800,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 60, "attack": 60, "defense": 50, "speed": 75, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23427,7 +22856,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 80, "attack": 100, "defense": 70, "speed": 95, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23462,7 +22890,6 @@
     "heightDm": 4,
     "stats": {"hpMax": 55, "attack": 75, "defense": 60, "speed": 103, "size": 100, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23519,7 +22946,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 50, "attack": 75, "defense": 45, "speed": 60, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23553,7 +22979,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 70, "attack": 135, "defense": 105, "speed": 20, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23588,7 +23013,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 165, "attack": 75, "defense": 80, "speed": 65, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23623,7 +23047,6 @@
     "heightDm": 1,
     "stats": {"hpMax": 50, "attack": 47, "defense": 50, "speed": 65, "size": 80, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23658,7 +23081,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 70, "attack": 77, "defense": 60, "speed": 108, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23693,7 +23115,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 44, "attack": 50, "defense": 91, "speed": 10, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23742,7 +23163,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 74, "attack": 94, "defense": 131, "speed": 20, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23776,7 +23196,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 40, "attack": 55, "defense": 70, "speed": 30, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23811,7 +23230,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 60, "attack": 80, "defense": 95, "speed": 50, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23846,7 +23264,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 60, "attack": 100, "defense": 115, "speed": 90, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23881,7 +23298,6 @@
     "heightDm": 2,
     "stats": {"hpMax": 35, "attack": 55, "defense": 40, "speed": 60, "size": 90, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Idle",
@@ -23916,7 +23332,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 65, "attack": 85, "defense": 70, "speed": 40, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23952,7 +23367,6 @@
     "heightDm": 21,
     "stats": {"hpMax": 85, "attack": 115, "defense": 80, "speed": 50, "size": 130, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -23988,7 +23402,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 55, "attack": 55, "defense": 55, "speed": 30, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24044,7 +23457,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 75, "attack": 75, "defense": 75, "speed": 40, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24079,7 +23491,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 50, "attack": 30, "defense": 55, "speed": 20, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24136,7 +23547,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 60, "attack": 40, "defense": 60, "speed": 55, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24172,7 +23582,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 60, "attack": 55, "defense": 90, "speed": 80, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24208,7 +23617,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 46, "attack": 87, "defense": 60, "speed": 57, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24265,7 +23673,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 66, "attack": 117, "defense": 70, "speed": 67, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24300,7 +23707,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 76, "attack": 147, "defense": 90, "speed": 97, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24335,7 +23741,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 55, "attack": 70, "defense": 40, "speed": 40, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24369,7 +23774,6 @@
     "heightDm": 26,
     "stats": {"hpMax": 95, "attack": 130, "defense": 80, "speed": 50, "size": 135, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24404,7 +23808,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 80, "attack": 50, "defense": 50, "speed": 105, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24439,7 +23842,6 @@
     "heightDm": 9,
     "stats": {"hpMax": 45, "attack": 85, "defense": 50, "speed": 65, "size": 114, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24494,7 +23896,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 65, "attack": 125, "defense": 60, "speed": 105, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24529,7 +23930,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 77, "attack": 120, "defense": 90, "speed": 48, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24566,7 +23966,6 @@
     "heightDm": 10,
     "stats": {"hpMax": 59, "attack": 74, "defense": 50, "speed": 35, "size": 116, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24622,7 +24021,6 @@
     "heightDm": 28,
     "stats": {"hpMax": 89, "attack": 124, "defense": 80, "speed": 55, "size": 137, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24657,7 +24055,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 45, "attack": 85, "defense": 70, "speed": 60, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Idle",
@@ -24715,7 +24112,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 65, "attack": 125, "defense": 100, "speed": 70, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24772,7 +24168,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 70, "attack": 83, "defense": 50, "speed": 60, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "dodge-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24829,7 +24224,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 100, "attack": 123, "defense": 75, "speed": 80, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24864,7 +24258,6 @@
     "heightDm": 5,
     "stats": {"hpMax": 70, "attack": 55, "defense": 75, "speed": 60, "size": 104, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24899,7 +24292,6 @@
     "heightDm": 12,
     "stats": {"hpMax": 110, "attack": 65, "defense": 105, "speed": 80, "size": 119, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24934,7 +24326,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 85, "attack": 97, "defense": 66, "speed": 65, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -24969,7 +24360,6 @@
     "heightDm": 3,
     "stats": {"hpMax": 58, "attack": 109, "defense": 112, "speed": 109, "size": 96, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25004,7 +24394,6 @@
     "heightDm": 8,
     "stats": {"hpMax": 52, "attack": 65, "defense": 50, "speed": 38, "size": 112, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25060,7 +24449,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 72, "attack": 85, "defense": 70, "speed": 58, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25095,7 +24483,6 @@
     "heightDm": 18,
     "stats": {"hpMax": 92, "attack": 105, "defense": 90, "speed": 98, "size": 127, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25128,7 +24515,6 @@
     "heightDm": 11,
     "stats": {"hpMax": 55, "attack": 85, "defense": 55, "speed": 60, "size": 118, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25163,7 +24549,6 @@
     "heightDm": 16,
     "stats": {"hpMax": 85, "attack": 60, "defense": 65, "speed": 100, "size": 125, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "loot-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25199,7 +24584,6 @@
     "heightDm": 21,
     "stats": {"hpMax": 91, "attack": 90, "defense": 129, "speed": 108, "size": 130, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "defense-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25233,7 +24617,6 @@
     "heightDm": 19,
     "stats": {"hpMax": 91, "attack": 129, "defense": 90, "speed": 108, "size": 128, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25272,7 +24655,6 @@
     "heightDm": 20,
     "stats": {"hpMax": 91, "attack": 90, "defense": 72, "speed": 108, "size": 129, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25307,7 +24689,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 79, "attack": 115, "defense": 70, "speed": 111, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25340,7 +24721,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 79, "attack": 115, "defense": 70, "speed": 111, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25373,7 +24753,6 @@
     "heightDm": 32,
     "stats": {"hpMax": 100, "attack": 120, "defense": 100, "speed": 90, "size": 139, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25430,7 +24809,6 @@
     "heightDm": 29,
     "stats": {"hpMax": 100, "attack": 150, "defense": 120, "speed": 90, "size": 137, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25463,7 +24841,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 89, "attack": 125, "defense": 90, "speed": 101, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25496,7 +24873,6 @@
     "heightDm": 30,
     "stats": {"hpMax": 125, "attack": 130, "defense": 90, "speed": 95, "size": 138, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "essence-plus",
     "animations": [
       "Walk",
       "Idle",
@@ -25533,7 +24909,6 @@
     "heightDm": 14,
     "stats": {"hpMax": 91, "attack": 72, "defense": 90, "speed": 108, "size": 122, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "speed-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25568,7 +24943,6 @@
     "heightDm": 6,
     "stats": {"hpMax": 100, "attack": 77, "defense": 77, "speed": 90, "size": 107, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "hpMax-plus",
     "animations": [
       "Walk",
       "Attack",
@@ -25626,7 +25000,6 @@
     "heightDm": 15,
     "stats": {"hpMax": 71, "attack": 120, "defense": 95, "speed": 99, "size": 124, "attackSpeed": 48},
     "maxLevel": 100,
-    "mejora": "attack-plus",
     "animations": [
       "Walk",
       "Attack",

@@ -1,7 +1,7 @@
 // Los medios, permisos y encuentros se resuelven desde el mismo catálogo editable.
 export async function loadBiomes(pokemon) {
-  const response = await fetch(new URL('./biomas.json', import.meta.url));
-  if (!response.ok) throw new Error('No se pudo leer biomas.json');
+  const response = await fetch(new URL('./biomes.json', import.meta.url));
+  if (!response.ok) throw new Error('No se pudo leer biomes.json');
   const rows = await response.json();
   console.info('[Biomas] Catálogo cargado', rows.length);
   const byName = new Map([...pokemon.values()].map(row => [row.name, row.dex]));

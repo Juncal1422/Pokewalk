@@ -1,3 +1,4 @@
+import { drawEffects } from './abilities.js';
 import { attackMotion } from './attack-motion.js';
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
@@ -174,7 +175,8 @@ export function draw() {
     ctx.restore();
   }
   ctx.save();
-  ctx.scale(2, 2);
-  drawHud(ctx, { width: canvas.width / 2, height: canvas.height / 2 }, player);
+  drawEffects(ctx, ZOOM, cameraX, cameraY);
+  ctx.scale(.4, .4);
+  drawHud(ctx, { width: canvas.width / .4, height: canvas.height / .4 }, player);
   ctx.restore();
 }

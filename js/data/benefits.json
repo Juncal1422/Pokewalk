@@ -1,0 +1,159 @@
+[
+  {
+    "id": "earth_ring",
+    "name": "Anillo de tierra",
+    "description": "Ataque +10 % en formas Tierra o Planta.",
+    "image": "assets/benefits/earth_ring.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Bulbasaur", "Vileplume", "Victreebel", "Exeggutor", "Bellossom", "Sunkern", "Quagsire", "Donphan", "Swampert", "Roselia", "Whiscash", "Torterra", "Roserade", "Cherubi", "Gabite", "Abomasnow", "Servine", "Seismitoad", "Petilil"],
+    "types": ["ground", "grass"]
+  },
+  {
+    "id": "air_ring",
+    "name": "Anillo de aire",
+    "description": "Ataque +10 % en formas Volador o Veneno.",
+    "image": "assets/benefits/air_ring.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Ivysaur", "Weedle", "Venomoth", "Haunter", "Natu", "Gligar", "Qwilfish", "Beautifly", "Masquerain", "Altaria", "Salamence", "Staravia", "Mothim", "Vespiquen", "Chatot", "Yanmega", "Swoobat", "Rufflet", "Braviary", "Mandibuzz"],
+    "types": ["flying", "poison"]
+  },
+  {
+    "id": "fire_ring",
+    "name": "Anillo de fuego",
+    "description": "Ataque +10 % en formas Fuego o Eléctrico.",
+    "image": "assets/benefits/fire_ring.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Charizard", "Voltorb", "Chinchou", "Mareep", "Magcargo", "Elekid", "Numel", "Camerupt", "Magnezone", "Emolga", "Litwick", "Lampent", "Chandelure", "Larvesta", "Volcarona"],
+    "types": ["fire", "electric"]
+  },
+  {
+    "id": "water_ring",
+    "name": "Anillo de agua",
+    "description": "Ataque +10 % en formas Agua o Hielo.",
+    "image": "assets/benefits/water_ring.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Blastoise", "Golduck", "Poliwhirl", "Seel", "Horsea", "Goldeen", "Staryu", "Vaporeon", "Croconaw", "Azumarill", "Remoraid", "Mudkip", "Wailord", "Feebas", "Huntail", "Luvdisc", "Buizel", "Finneon", "Dewott", "Basculin", "Beartic"],
+    "types": ["water", "ice"]
+  },
+  {
+    "id": "big_fang",
+    "name": "Colmillo grande",
+    "description": "Ataque y rango +10 %. Los ataques muestran un colmillo en su dirección.",
+    "image": "assets/benefits/big_fang.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Pidgey", "Dodrio", "Porygon", "Togetic", "Porygon2", "Taillow", "Sableye", "Carvanha", "Sharpedo", "Cacturne", "Crawdaunt", "Staraptor", "Bibarel", "Honchkrow", "Drapion", "Sandile", "Deerling", "Sawsbuck", "Pawniard", "Deino", "Zweilous"]
+  },
+  {
+    "id": "cog",
+    "name": "Engranaje",
+    "description": "E · Consume 5 esencias aleatorias para volver al inicio del piso. Un uso por misión.",
+    "image": "assets/benefits/cog.png",
+    "active": true,
+    "amount": 5,
+    "pokemon": ["Raichu", "Electrode", "Pichu", "Ampharos", "Forretress", "Scizor", "Mawile", "Aron", "Lairon", "Metang", "Empoleon", "Shieldon", "Bronzor", "Probopass", "Excadrill", "Escavalier", "Ferroseed", "Ferrothorn", "Klinklang"]
+  },
+  {
+    "id": "deep_scale",
+    "name": "Escama profunda",
+    "description": "Defensa +10 %.",
+    "image": "assets/benefits/deep_scale.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Psyduck", "Poliwag", "Tentacool", "Shellder", "Seadra", "Seaking", "Magikarp", "Totodile", "Feraligatr", "Politoed", "Octillery", "Wailmer", "Corphish", "Milotic", "Gorebyss", "Piplup", "Floatzel", "Lumineon", "Tympole", "Haxorus"]
+  },
+  {
+    "id": "green_scale",
+    "name": "Escama verde",
+    "description": "+10 puntos porcentuales de probabilidad de encontrar equipo.",
+    "image": "assets/benefits/green_scale.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Caterpie", "Beedrill", "Pinsir", "Dratini", "Dragonair", "Shuckle", "Kingdra", "Silcoon", "Surskit", "Volbeat", "Anorith", "Bagon", "Shelgon", "Burmy", "Garchomp", "Sewaddle", "Swadloon", "Karrablast", "Fraxure", "Druddigon"]
+  },
+  {
+    "id": "golden_mask",
+    "name": "Máscara de oro",
+    "description": "Una elección de mejora adicional al completar cada misión.",
+    "image": "assets/benefits/golden_mask.png",
+    "active": false,
+    "amount": 1,
+    "pokemon": ["Abra", "Kadabra", "Slowpoke", "Gengar", "Starmie", "Slowking", "Misdreavus", "Smoochum", "Kirlia", "Medicham", "Solrock", "Shuppet", "Duskull", "Drifloon", "Dusknoir", "Froslass", "Musharna", "Yamask", "Cofagrigus", "Gothitelle", "Duosion", "Elgyem"]
+  },
+  {
+    "id": "golden_spike",
+    "name": "Espigadorada",
+    "description": "Suma al ataque el 10 % del rango.",
+    "image": "assets/benefits/golden_spike.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Nidoqueen", "Diglett", "Cubone", "Rhydon", "Omastar", "Kabutops", "Swinub", "Pupitar", "Nincada", "Flygon", "Baltoy", "Relicanth", "Rampardos", "Bonsly", "Hippopotas", "Gigalith", "Drilbur", "Golurk"]
+  },
+  {
+    "id": "green_spike",
+    "name": "Espina",
+    "description": "Al recibir un golpe, inflige al atacante el 5 % de tu defensa.",
+    "image": "assets/benefits/green_spike.png",
+    "active": false,
+    "amount": 0.05,
+    "pokemon": ["Venusaur", "Paras", "Tentacruel", "Spinarak", "Hoppip", "Sunflora", "Sceptile", "Dustox", "Lotad", "Cacnea", "Cradily", "Budew", "Wormadam", "Cherrim", "Carnivine", "Tangrowth", "Serperior", "Cottonee", "Lilligant"]
+  },
+  {
+    "id": "iron_tag",
+    "name": "Chapa de hierro",
+    "description": "5 % de probabilidad de bloquear la mitad del daño recibido.",
+    "image": "assets/benefits/iron_tag.png",
+    "active": false,
+    "amount": 0.05,
+    "pokemon": ["Magnemite", "Onix", "Rhyhorn", "Omanyte", "Kabuto", "Corsola", "Larvitar", "Nosepass", "Aggron", "Lunatone", "Armaldo", "Cranidos", "Bronzong", "Roggenrola", "Boldore", "Archen", "Archeops", "Klink", "Bisharp"]
+  },
+  {
+    "id": "lovefool",
+    "name": "Corazón",
+    "description": "Recibe un 10 % menos de daño de Pokémon con una esencia en común.",
+    "image": "assets/benefits/lovefool.png",
+    "active": false,
+    "amount": 0.1,
+    "pokemon": ["Pidgeotto", "Alakazam", "Slowbro", "Drowzee", "Xatu", "Unown", "Wobbuffet", "Ralts", "Meditite", "Spoink", "Claydol", "Chimecho", "Wynaut", "Chingling", "Porygon_Z", "Munna", "Sigilyph", "Gothita", "Gothorita", "Solosis", "Reuniclus", "Beheeyem"]
+  },
+  {
+    "id": "mamoswine_fang",
+    "name": "Colmillo de Mamoswine",
+    "description": "E · Gira dos vueltas y golpea a los enemigos a tu alrededor. Recarga en 30 s.",
+    "image": "assets/benefits/mamoswine_fang.png",
+    "active": true,
+    "amount": 30,
+    "pokemon": ["Nidoking", "Dugtrio", "Dewgong", "Jynx", "Lapras", "Wooper", "Phanpy", "Marshtomp", "Vibrava", "Barboach", "Spheal", "Sealeo", "Gastrodon", "Gible", "Hippowdon", "Mamoswine", "Palpitoad", "Vanillite", "Vanillish", "Cubchoo"]
+  },
+  {
+    "id": "mint_leaf",
+    "name": "Hoja de menta",
+    "description": "Las pociones curan un 50 % más.",
+    "image": "assets/benefits/mint_leaf.png",
+    "active": false,
+    "amount": 0.5,
+    "pokemon": ["Butterfree", "Parasect", "Exeggcute", "Ariados", "Skiploom", "Treecko", "Wurmple", "Cascoon", "Lombre", "Illumise", "Grotle", "Kricketot", "Kricketune", "Skorupi", "Snover", "Leafeon", "Simisage", "Whimsicott", "Durant"]
+  },
+  {
+    "id": "silvercoat",
+    "name": "Capaplateada",
+    "description": "+5 puntos porcentuales de evasión.",
+    "image": "assets/benefits/silvercoat.png",
+    "active": false,
+    "amount": 0.05,
+    "pokemon": ["Spearow", "Scyther", "Gyarados", "Dragonite", "Jumpluff", "Delibird", "Mantine", "Wingull", "Ninjask", "Tropius", "Starly", "Bastiodon", "Combee", "Drifblim", "Mantyke", "Woobat", "Ducklett", "Klang", "Vullaby"]
+  },
+  {
+    "id": "fire_brooch",
+    "name": "Broche de fuego",
+    "description": "E · Carga 0,2 s y lanza una llamarada hasta 4 veces tu rango. Inflige tu Ataque o el 150 % en forma Fuego. Recarga en 30 s.",
+    "image": "assets/benefits/fire_brooch.png",
+    "active": true,
+    "amount": 30,
+    "pokemon": ["Poliwrath", "Hitmonlee", "Hitmonchan", "Heracross", "Tyrogue", "Hitmontop", "Breloom", "Makuhita", "Hariyama", "Lucario", "Croagunk", "Toxicroak", "Gallade", "Mienshao"]
+  }
+]
