@@ -1,0 +1,62 @@
+[
+  {
+    "effect": "goldHorn",
+    "requires": [
+      "golden_spike",
+      "long_horn"
+    ],
+    "description": "Aplica el filtro dorado a Cuerno largo."
+  },
+  {
+    "effect": "goldSpike",
+    "requires": [
+      "golden_spike",
+      "spike"
+    ],
+    "description": "Aplica el filtro dorado a Espiga."
+  },
+  {
+    "effect": "goldSpin",
+    "requires": [
+      "golden_spike",
+      "mamoswine_fang"
+    ],
+    "description": "Aplica el filtro dorado a Colmillo de Mamoswine."
+  },
+  {
+    "effect": "doubleStrike",
+    "requires": [
+      "long_horn",
+      "spike"
+    ],
+    "description": "Lanza Espiga y después Cuerno largo con dos impactos independientes."
+  },
+  {
+    "effect": "sitrusBerries",
+    "requires": [
+      "green_scale",
+      "mint_leaf"
+    ],
+    "description": "Toda baya generada es Zidra."
+  },
+  {
+    "effect": "blockSpines",
+    "requires": [
+      "green_spike"
+    ],
+    "description": "Dispara espinas también al bloquear.",
+    "anyOf": [
+      "deep_scale",
+      "iron_tag"
+    ]
+  },
+  {
+    "effect": "damageSpines",
+    "requires": [
+      "green_spike",
+      "deep_scale",
+      "iron_tag"
+    ],
+    "description": "Dispara espinas una vez por golpe recibido."
+  }
+]

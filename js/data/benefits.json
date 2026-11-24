@@ -193,7 +193,7 @@
   },
   {
     "id": "deep_scale",
-    "name": "Escama profunda",
+    "name": "Escama Abisal",
     "description": "Defensa +10 %. Bloqueo crítico +10 puntos.",
     "image": "assets/benefits/deep_scale.png",
     "active": false,
@@ -276,10 +276,10 @@
     }
   },
   {
-    "id": "golden_mask",
-    "name": "Máscara de oro",
+    "id": "facechanger",
+    "name": "Cambiacaras",
     "description": "Una elección de mejora adicional al completar cada misión.",
-    "image": "assets/benefits/golden_mask.png",
+    "image": "assets/benefits/facechanger.png",
     "active": false,
     "amount": 1,
     "pokemon": [
@@ -310,7 +310,7 @@
   {
     "id": "golden_spike",
     "name": "Espigadorada",
-    "description": "Ataque y rango +10 %. Tiñe de oro los efectos de ataque.",
+    "description": "Ataque y rango +10 %. Tiñe de oro Cuerno largo, Espiga y Colmillo de Mamoswine.",
     "image": "assets/benefits/golden_spike.png",
     "active": false,
     "amount": 0.1,
@@ -342,7 +342,7 @@
   {
     "id": "green_spike",
     "name": "Espinas",
-    "description": "Al recibir un crítico, libera ocho espinas de alcance 10 que infligen el 10 % de tu defensa.",
+    "description": "Al recibir un crítico, libera ocho espinas de alcance 32 que infligen el 10 % de tu defensa.",
     "image": "assets/benefits/green_spike.png",
     "active": false,
     "amount": 0.1,
@@ -594,7 +594,7 @@
   {
     "id": "gunpowder_rock",
     "name": "Roca de pólvora",
-    "description": "E · Carga 0,5 s y explota en un radio de 50, dañándote también. Recarga: 60 s.",
+    "description": "E · Carga 0,35 s y explota en un radio de 72, dañándote también. Recarga: 60 s.",
     "amount": 60,
     "active": true,
     "slot": "e",

@@ -1,6 +1,6 @@
 import { gameTime } from './clock.js';
 import { updateBossAbility, releaseSpines } from './abilities.js';
-import { amount, playerStats } from './benefits.js';
+import { amount, playerStats, synergyActive } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
@@ -16,7 +16,7 @@ import {
   TILE,
 } from './constants.js';
 import { statsFor, emptyBonuses, movementRate, attackRate, levelFor, enemyProgress, attackReach, damageFor } from './stats.js';
-import { groundFree } from './terrain.js';
+import { groundFree, hasSight } from './terrain.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
 import { loadPokemonData } from '../data/pokemon-data.js';
@@ -76,7 +76,7 @@ export function bodyRadius(entity) {
 function terrainFree(entity, x, y) {
   const radius = bodyRadius(entity);
   const species = game.pokemon.get(entity.dex);
-  const canCrossTerrain = !game.bossArena && game.currentBiome.canCross.some(skill => species[skill]);
+  const canCrossTerrain = !game.bossArena && ['water','void','lava'].includes(game.currentBiome.terrain) && game.currentBiome.canCross.some(skill => species[skill]);
   return groundFree(x, y, radius, canCrossTerrain);
 }
 
@@ -95,12 +95,15 @@ export function triggerAttack(attacker) {
   if (attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
   attacker.fangStrike = attacker.isPlayer && (game.held.has('long_horn') || game.held.has('spike'));
+  attacker.doubleStrike = attacker.isPlayer && synergyActive('doubleStrike');
+  attacker.strikesDone = 0;
   setState(attacker, 'Attack');
 }
 
 // Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
 function resolveImpact(attacker) {
-  attacker.impactPending = false;
+  attacker.strikesDone++;
+  attacker.impactPending = attacker.doubleStrike && attacker.strikesDone < 2;
   const [deltaX, deltaY] = DIR_VEC[attacker.dir];
   const directionLength = Math.hypot(deltaX, deltaY), directionX = deltaX / directionLength, directionY = deltaY / directionLength;
   const reach = attackReach(attacker.stats);
@@ -118,6 +121,7 @@ function resolveImpact(attacker) {
 
   for (const target of game.entities) {
     if (target === attacker || target.hp === 0 || (!attacker.isPlayer && !target.isPlayer && game.mission.target === target.dex)) continue;
+    if (!hasSight(attacker,target)) continue;
     if (!inStrike(target.x, target.y, strikeRadius + bodyRadius(target))) continue;
     const simulationTime = gameTime();
     if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) continue;
@@ -130,7 +134,7 @@ function resolveImpact(attacker) {
     const critical = Math.random() < 0.10;
     inflictDamage(attacker,target,damageFor(attacker, target, critical),critical);
     if (target.boss && target.hp && (target.bossResponse || target.abilityCast || target.state==='Attack')) continue;
-    if (attacker.boss && target.isPlayer) continue;
+    if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
     for (let step = 0; step < 10; step++) {
       if (!canMove(target, target.x + directionX, target.y + directionY)) break;
@@ -144,11 +148,13 @@ function resolveImpact(attacker) {
 export function inflictDamage(attacker,target,incomingDamage,critical=false,ability=false) {
   if (!target.hp) return;
   const simulationTime = gameTime();
+  let blocked = false;
   if (target.isPlayer) {
     if (attacker !== target && simulationTime - target.lastHit < PLAYER_GRACE_MS) return;
     const species = game.pokemon.get(attacker.dex), targetSpecies = game.pokemon.get(target.dex);
     if (attacker !== target && species.essences.some(type => targetSpecies.essences.includes(type))) incomingDamage *= 1 - amount('lovefool');
-    if (attacker !== target && Math.random() < amount('iron_tag') + amount('deep_scale')) incomingDamage *= .5;
+    blocked = attacker !== target && Math.random() < amount('iron_tag') + amount('deep_scale');
+    if (blocked) incomingDamage *= .5;
   }
   let damage = Math.min(target.hp, Math.max(1, Math.round(incomingDamage)));
   if (ability && attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
@@ -157,7 +163,8 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   target.hp = Math.max(0, target.hp - damage);
   target.lastHit = simulationTime;
   target.sidestep = null;
-  if (critical && target.isPlayer && game.held.has('green_spike')) releaseSpines(target);
+  if (target.isPlayer && game.held.has('green_spike') &&
+      (critical || synergyActive('damageSpines') || (blocked && synergyActive('blockSpines')))) releaseSpines(target);
   // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
   // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
   if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return;
@@ -269,8 +276,9 @@ export function updateEntity(entity) {
   const frameTime = animation.durs[entity.frame] || 8;
   const duration = isHurt ? Math.ceil((frameTime + 2) / 0.55) : frameTime;
   entity.timer += isHurt ? (entity.boss ? 2 : 1) : ANIM_SPEED * tempo;
-  if (entity.state === 'Attack' && entity.impactPending && attackMotion(entity, animation).impact) {
-    resolveImpact(entity);
+  if (entity.state === 'Attack' && entity.impactPending) {
+    const { impactsDue } = attackMotion(entity,animation);
+    while (entity.impactPending && entity.strikesDone < impactsDue) resolveImpact(entity);
   }
   if (entity.timer >= duration) {
     entity.timer -= duration;

@@ -35,12 +35,12 @@ Si se usa el conector GitHub, lee primero la referencia de `develop`. Construye 
 2. **Piso.** La generación trabaja con suelo y medio sólido, añade autotiles y variantes, y coloca los combatientes en centros de sala. Las habilidades `fly`, `swim` y `lavawalk` de la especie se cruzan con las permitidas por el bioma. El mapa lógico tiene 44 × 34 casillas de 24 píxeles. La cámara sigue al jugador. El dibujo del techo interior puede variar en el autotile 46.
 3. **Controles y simulación.** WASD o flechas mueven, clic principal o espacio atacan y Q/E usan activas. Perder el foco cancela el movimiento. El reloj avanza a pasos de 1/60 s, a velocidad global ×1,1, y se pausa durante las transiciones. El bucle actualiza habilidades y entidades, recoge objetos, comprueba salidas y dibuja.
 4. **Combate.** Un ataque normal prepara un impacto que se consume al alcanzar el instante de contacto. Rango y tamaño determinan la distancia. El nivel, ataque y defensa determinan el daño. Evasión base del 5 %, crítico del 10 % y gracia del jugador tras recibir daño. El límite de medio máximo de PV del jugador corresponde a habilidades de líder. Hurt, reacción del líder y fundido de derrota tienen tiempos propios.
-5. **IA.** La visión alcanza diez veces el rango de ataque. La persecución favorece diagonales si hay visión directa. La búsqueda en anchura usa las mismas restricciones de terreno que el movimiento. Un MISS puede activar una esquiva lateral progresiva. Los terrestres con menos del 15 % de PV pueden hacer una retirada breve. Los líderes anuncian sus activas durante un segundo.
-6. **Experiencia.** La recompensa es el nivel del rival multiplicado por la suma de sus PV, ataque, defensa y velocidad **base** dividida entre 200, redondeada con mínimo uno. Los líderes dan el doble. El siguiente umbral es `ceil(16 × 1,065^(nivel − 5))`. Se conserva el excedente; el nivel de partida llega a 100 y la forma respeta el máximo de su ficha. Las estadísticas salvajes progresan con la misión. Subir de nivel recalcula los PV máximos sin rellenar la vida actual.
-7. **Recogidas.** Las esencias caen en el lugar de la derrota. Los objetos de equipo tienen una tirada base del 30 %, con un máximo de dos por bloque de cinco pisos de la misión. Las bayas tienen una tirada separada del 50 % por piso; si sale baya, el 25 % son Zidra. Aranja y Zidra curan el 10 % y el 40 % respectivamente, sujetos al máximo de PV y a Hoja de menta. Los consumibles salen de la lista de equipo. El Carameloraro puede aparecer una vez por misión. Las grajeas conservan los medios puntos de esencia entre recogidas.
+5. **IA.** La detección inicial requiere línea de visión y alcanza diez veces el rango de ataque. Un muro bloquea la visión y el vuelo. Si la presa desaparece tras un muro, el enemigo solo investiga la última posición observada. La persecución favorece diagonales si hay visión directa. La búsqueda en anchura usa las mismas restricciones de terreno que el movimiento. Un MISS puede activar una esquiva lateral progresiva. Los terrestres con menos del 15 % de PV pueden hacer una retirada breve. Los líderes anuncian sus activas durante un segundo.
+6. **Experiencia.** La recompensa es el nivel del rival multiplicado por la suma de sus PV, ataque, defensa y velocidad **base** dividida entre 500, redondeada con mínimo uno. Los líderes dan el doble. El siguiente umbral es `ceil(26 × 1,105^(nivel − 5))`. Se conserva el excedente; el nivel de partida llega a 100 y la forma respeta el máximo de su ficha. Las estadísticas salvajes progresan con la misión. Subir de nivel recalcula los PV máximos sin rellenar la vida actual.
+7. **Recogidas.** Las esencias caen en el lugar de la derrota. Los objetos de equipo tienen una tirada base del 22,5 %, con un máximo de dos por bloque de cinco pisos de la misión. Las bayas tienen una tirada separada del 50 % por piso; si sale baya, el 25 % son Zidra. Aranja y Zidra curan el 10 % y el 40 % respectivamente, sujetos al máximo de PV y a Hoja de menta. Los consumibles salen de la lista de equipo. El Carameloraro puede aparecer una vez por misión. Las grajeas duplican las unidades recogidas de su tipo.
 8. **Objetivo y salida.** Recuperar objeto exige alcanzar el paquete del último piso. Limpiar exige derrotar a los enemigos de cada piso. Cazar permite subir si ya no queda la presa en el piso y abre el teletransportador al alcanzar la cuota. Cada cuarta misión enfrenta a un líder en una sola sala. Escaleras y teletransportador tienen efectos distintos sobre la partida.
-9. **Transformación.** Al salir de una misión se proyectan hasta tres opciones. Se priorizan evoluciones pagables, se consideran esencias acumuladas y especies derrotadas, y el líder queda fuera del conjunto de formas obtenibles por esa baja. Una evolución consume el saldo requerido de un solo tipo. Se aplican la forma, los beneficios y el pago al cargar la misión siguiente. Continuar con la misma línea o repetir un beneficio suma uno a los atributos. Conservar la forma sin elegir tarjeta no da ese aumento. Máscara de oro permite una elección adicional.
-10. **Beneficios y equipo.** Los pasivos se acumulan. Una activa nueva sustituye la de su propia tecla. Q y E conservan recargas independientes y el icono muestra su progreso radial. Los objetos permanentes se muestran abajo y los beneficios a la izquierda. Los colores del panel de atributos comparan el resultado de los beneficios con el mismo nivel, forma y bonos permanentes.
+9. **Transformación.** Al salir de una misión se proyectan hasta tres opciones. Se priorizan evoluciones pagables, se consideran esencias acumuladas y especies derrotadas, y el líder queda fuera del conjunto de formas obtenibles por esa baja. Una evolución consume el saldo requerido de un solo tipo. La cantidad efectiva es el coste de la ficha multiplicado por 1,30 y redondeado hacia arriba. Se aplican la forma, los beneficios y el pago al cargar la misión siguiente. Continuar con la misma línea o repetir un beneficio suma uno a los atributos. Conservar la forma sin elegir tarjeta no da ese aumento. Cambiacaras permite una elección adicional.
+10. **Beneficios y equipo.** Los pasivos se acumulan hasta 27 beneficios (3 columnas de 9). Con la colección llena, una nueva alta sin sustitución da el bono de atributos. El equipo admite 75 objetos (3 filas de 25, desde abajo). Una activa nueva sustituye la de su propia tecla. Q y E conservan recargas independientes y el icono muestra su progreso radial. Los objetos permanentes se muestran abajo y los beneficios a la izquierda. Los colores del panel de atributos comparan el resultado de los beneficios con el mismo nivel, forma y bonos permanentes.
 
 ## Archivos y ámbitos de estado
 
@@ -51,12 +51,15 @@ Si se usa el conector GitHub, lee primero la referencia de `develop`. Construye 
 | `js/data/pokemon.json` | Fichas de especie, estadísticas base, límite de nivel, tipo, esencias, evolución, medios transitables y lista de animaciones. |
 | `js/data/biomes.json` | Atlas, medio, permisos, nivel 1–10, variantes, modificadores de generación y listas de salvajes/líderes para los niveles 1–16, 17–36, 37–60 y 61–100. Los límites de pisos y cantidad de encuentros están en `missions.js`. |
 | `js/data/items.json`, `benefits.json` | Catálogos de objetos y beneficios, texto visible, PNG y parámetros. Cada donante tiene un único beneficio. Las mecánicas específicas se resuelven en `items.js`, `benefits.js`, `abilities.js` y `entities.js`. |
+| `js/data/synergies.json` | Cada efecto exige todos los beneficios de `requires` y, cuando existe `anyOf`, al menos uno de ese segundo grupo. El combate y la generación de objetos consultan este catálogo. |
 | `js/data/json-view.html` | Visor local de catálogos y archivos JSON, accesible desde el mismo servidor HTTP. |
 | `assets/`, `tiled/tilesets/` | Gráficos propios de IU, objetos, beneficios, efectos, atlas y máscaras. Los sprites y retratos de especies proceden de PMDCollab/SpriteCollab. |
 
 ## Avance y comprobaciones para continuar
 
 La revisión del 24 de noviembre de 2026 parte de `85bffb3`, que incorporó experiencia, objetos, activas Q/E y Magma Cavern. La base incluye 627 fichas, 14 biomas, 32 objetos y 20 beneficios. Esta revisión documenta los módulos y separa los avisos de EXP y curación del dibujo de la entidad. Ambos guardan una posición del mundo al nacer y duran 950 ms de simulación. Una baya muestra los HP efectivamente recuperados. La animación gráfica de curación sigue al Pokémon.
+
+Revisión de equilibrio posterior a `bf968d0`. Los atributos del jugador parten de una reducción del 20 % sobre el valor de nivel 5 de la forma, antes de los bonos y respetando los mínimos. Desde la misión 5 aumenta el crecimiento de nivel enemigo y hay un aumento acumulativo de ataque, defensa y PV. Las combinaciones del catálogo cubren los tres efectos dorados, Espiga seguida de Cuerno con tiradas independientes, sustitución de bayas y descargas de ocho espinas al bloquear o recibir daño. Las espinas recorren 32 unidades en 680 ms. Flare recorre su alcance en 750 ms. Roca de pólvora carga 350 ms para el jugador y explota durante 1 s con radio 72. El líder mantiene su aviso de 1 s. El amuleto tiñe el sprite mientras dura su bonificación.
 
 Para comprobar cambios en este flujo, recoge una baya a pocos PV, a un PV del máximo y con la vida llena. Derrota enemigos, ataca y camina mientras se ve el aviso azul. Dos avisos simultáneos deben conservar líneas separadas y desaparecer al cambiar de piso. Comprueba también una transición de misión, una transformación y una activa de cada tecla. Para revisar la sintaxis desde la raíz, usa `find js -name '*.js' -exec node --check {} \;` con Node moderno.
 
@@ -88,6 +91,7 @@ Las rutas son relativas a este documento. Se incluyen funciones exportadas, auxi
 
 ### [js/core/benefits.js](benefits.js)
 
+- `synergyActive` — Evalúa los requisitos del efecto en la colección de beneficios.
 - `amount` — Devuelve la magnitud del beneficio si pertenece a la colección consultada.
 - `playerStats` — Aplica los modificadores pasivos y temporales sobre la forma, el nivel y los bonos permanentes.
 - `projectReward` — Calcula en copias el coste, los atributos y las activas que resultarían de elegir una tarjeta.
@@ -147,6 +151,7 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 
 ### [js/core/evolution.js](evolution.js)
 
+- `evolutionCost` — Calcula el coste entero compartido por pago, elegibilidad y barras.
 - `evolutionPayment` — Selecciona una esencia con saldo suficiente y devuelve el coste de esa evolución.
 
 ### [js/core/experience.js](experience.js)
@@ -213,7 +218,6 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 - `changeBiome` — Activa el atlas solicitado y descarta respuestas de peticiones anteriores.
 - `preparePortal` — Espera a los recursos de las salidas, el paquete y la indicación de fallo.
 - `draw` — Proyecta el piso, ordena combatientes por profundidad y compone efectos, avisos y HUD.
-- `drawWeapon` — Dibuja un arma en el punto de la trayectoria del ataque usando la opacidad del impacto.
 
 ### [js/core/rewards.js](rewards.js)
 
@@ -243,6 +247,7 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 - `readWallShapes` — Agrupa los píxeles sólidos de cada máscara en rectángulos para las pruebas de colisión.
 - `solid` — Lee un píxel de la máscara prolongando su interior hasta el borde de la celda.
 - `loadTerrain` — Decodifica la máscara de referencia y conserva las formas de colisión comunes a los biomas.
+- `hasSight` — Comprueba la línea de visión con las máscaras de los muros.
 - `groundFree` — Comprueba el borde del mapa y la distancia entre el cuerpo circular y las zonas sólidas.
 
 ### [js/core/world-notices.js](world-notices.js)

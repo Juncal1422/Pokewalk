@@ -59,6 +59,17 @@ export async function loadTerrain() {
   console.debug('[Terreno] Máscaras de colisión preparadas', wallShapes.length);
 }
 
+// Los medios abiertos dejan ver al otro lado. En muros probamos el segmento
+// sobre la misma máscara que se usa para mover cuerpos, también en la arena.
+export function hasSight(observer,target) {
+  if (!game.bossArena && game.currentBiome.terrain !== 'wall') return true;
+  const dx=target.x-observer.x, dy=target.y-observer.y;
+  const steps=Math.ceil(Math.hypot(dx,dy));
+  for (let step=1; step<=steps; step++)
+    if (!groundFree(observer.x+dx*step/steps,observer.y+dy*step/steps,.01)) return false;
+  return true;
+}
+
 // Distancia entre un cuerpo circular y las partes sólidas del autotile.
 // Las variantes decorativas comparten el índice base de la casilla.
 export function groundFree(x, y, radius, crosses = false) {

@@ -23,7 +23,7 @@ export const emptyBonuses = () => ({
 export const levelFor = (species, progressionLevel) =>
   Math.min(species.maxLevel, progressionLevel);
 // Calcula la progresión de los salvajes a partir de la dificultad de la misión.
-export const enemyProgress = (progressionLevel) => 5 + Math.round((progressionLevel - 5) * 1.6);
+export const enemyProgress = (progressionLevel) => 5 + Math.round((progressionLevel - 5) * 1.6 + Math.max(0,progressionLevel-8)*1.7);
 // Combina alcance y tamaño para obtener la distancia real de ataque.
 export const attackReach = (stats) => (stats.range * stats.size) / 100;
 // Convierte velocidad en un multiplicador de movimiento y animación.
@@ -65,6 +65,10 @@ export function statsFor(
     const statLevel =
       isBoss && statKey === 'hpMax' ? levelFor(species, progressionLevel) : level;
     let value = naturalStat(species, statKey, statLevel);
+    // El ajuste inicial pertenece al jugador; los bonos adquiridos se suman íntegros.
+    if (!isWild) value -= Math.round(naturalStat(species,statKey,5)*.2);
+    if (isWild && ['attack','defense','hpMax'].includes(statKey))
+      value = Math.round(value*(1 + Math.max(0,progressionLevel-8)*.035));
     if (isBoss) {
       // progress = misión + 4. Los límites suben al empezar cada bloque de cuatro misiones.
       const tier = Math.max(0, Math.floor((progressionLevel - 5) / 4));
