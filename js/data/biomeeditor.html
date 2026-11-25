@@ -16,8 +16,8 @@ const bands=[...field('band').options].map(option=>option.value);
 function commit(){
   if(!catalog.length)throw Error('Abre biomes.json.');
   const row=structuredClone(catalog[index]),extra=JSON.parse(field('extra').value);
-  for(const key of ['variants','canCross','layoutModifier'])row[key]=extra[key];
-  if(!Array.isArray(row.canCross)||!row.variants||!row.layoutModifier)throw Error('Comprueba los campos adicionales.');
+  for(const key of ['columns','mediumFrequency','canCross','layoutModifier'])row[key]=extra[key];
+  if(!Array.isArray(row.canCross)||!Array.isArray(row.columns)||!(row.mediumFrequency>=0 && row.mediumFrequency<=1)||!row.layoutModifier)throw Error('Comprueba los campos adicionales.');
   for(const key of ['name','terrain','tileset'])row[key]=field(key).value.trim();
   row.level=Number(field('level').value);
   if(!row.name||!row.tileset||!Number.isInteger(row.level)||row.level<1||row.level>10)throw Error('Comprueba el nombre, nivel y tileset.');
@@ -34,7 +34,7 @@ function render(){
   const row=catalog[index];field('biome').replaceChildren(...catalog.map((b,i)=>new Option(b.name,i)));field('biome').value=index;field('band').value=band;
   for(const key of ['name','level','terrain','tileset'])field(key).value=row[key];
   for(const key of ['wild','leaders'])field(key).value=row[key][band].join('\n');
-  field('extra').value=JSON.stringify({variants:row.variants,canCross:row.canCross,layoutModifier:row.layoutModifier},null,2);
+  field('extra').value=JSON.stringify({columns:row.columns,mediumFrequency:row.mediumFrequency,canCross:row.canCross,layoutModifier:row.layoutModifier},null,2);
 }
 // Un archivo inválido no sustituye al catálogo que se está editando.
 function openCatalog(rows){

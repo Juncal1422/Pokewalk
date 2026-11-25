@@ -306,6 +306,16 @@ export function generateDungeon({ pasillos = 5, habitaciones = 5, cruces = 5, op
   const sortedRooms = open ? carveArena(grid) :
     carveRooms(grid, clampLevel(pasillos), clampLevel(habitaciones), clampLevel(cruces));
   console.debug('[Mazmorra] Distribución generada', { pasillos, habitaciones, cruces, abierta: open });
+  // Las manchas sólo sustituyen terreno sólido interior; las salas y pasos siguen conectados.
+  if (!open && game.currentBiome.mediumFrequency > 0) {
+    const seeds = Array.from({length:Math.ceil(MAP_H/4)}, () =>
+      Array.from({length:Math.ceil(MAP_W/4)}, () => Math.random()<game.currentBiome.mediumFrequency));
+    for(let y=1;y<MAP_H-1;y++)for(let x=1;x<MAP_W-1;x++){
+      const patchX=Math.floor((x+Math.round(Math.sin(y)))/4);
+      const patchY=Math.floor((y+Math.round(Math.cos(x)))/4);
+      if(grid[y][x]===1 && seeds[patchY]?.[patchX])grid[y][x]=2;
+    }
+  }
   game.grid = grid;
   game.rooms = sortedRooms;
 
@@ -313,13 +323,5 @@ export function generateDungeon({ pasillos = 5, habitaciones = 5, cruces = 5, op
     row.map((_, x) => autotile(grid, x, y)),
   );
 
-  game.variantGrid = grid.map((row, y) =>
-    row.map((terrain, x) => {
-      // Solo se sortean casillas dibujadas en las filas extra de este atlas.
-      const variants = game.currentBiome.variants;
-      const slots = Object.keys(terrain === 0 ? variants.floors : (game.autotileGrid[y][x].index === 46 ? variants.walls[255] ?? {} : {}));
-      if (!slots.length || Math.random() >= (terrain === 0 ? 0.12 : 0.25)) return 0;
-      return Number(slots[randomInt(0, slots.length - 1)]);
-    }),
-  );
+  game.variantGrid = grid.map(row => row.map(() => Math.random()<.12 ? randomInt(1,4) : 0));
 }

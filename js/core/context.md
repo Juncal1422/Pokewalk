@@ -237,7 +237,7 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 
 ### [js/core/renderer.js](renderer.js)
 
-- `loadTileset` — Decodifica y valida el atlas de siete por nueve celdas y comparte la carga por URL.
+- `loadTileset` — Compila la hoja rotulada en tileset-atlas.js y lee sus bancos de paleta.
 - `changeBiome` — Activa el atlas solicitado y descarta respuestas de peticiones anteriores.
 - `preparePortal` — Espera a los recursos de las salidas, el paquete y la indicación de fallo.
 - `draw` — Proyecta el piso, ordena combatientes por profundidad y compone efectos, avisos y HUD.
@@ -361,3 +361,11 @@ Los pisos se cargan desde loadLevel sin depender de un indicador de carga en el 
 Edita [css/pokewalk.css](../../css/pokewalk.css) y recarga para aplicar el tema. El primer bloque reúne la paleta, las opacidades, el escalado, los fondos del gremio y los atlas de catálogo. En la asignación de textbox, `--textbox-frame` selecciona la imagen del panel y `--frame-width` ajusta su ancho. Usa `none` y un ancho de cero para retirar el marco y su espacio. Los paneles de canvas eligen su variante con `--hud-*-textbox`. El resumen de aventura usa el marco azul.
 
 Los fondos pixelados se escalan con `image-rendering`. Mejoras conserva visible el último fotograma de la mazmorra mediante un diálogo y un backdrop transparentes. Dorado aplica `--player-golden-filter` al sprite del jugador mientras conserva el beneficio. Los filtros temporales tienen prioridad y el tinte vuelve cuando terminan.
+
+### Atlas rotulados, animaciones y diagnóstico
+
+Los PNG originales de los biomas están en tiled/tilesets. Para añadir uno con la misma plantilla, copia una entrada de biomes.json, conserva el nombre de archivo en tileset y escribe el nombre visible en español. columns enumera las cabeceras de izquierda a derecha, empezando por legend. Usa wall, floor, water, lava o void para el dibujo principal, el sufijo Alt para alternativas y unused para omitir una columna. El motor lee las 47 máscaras de la leyenda y prepara los fotogramas de las paletas laterales bajo demanda. paletteStepMs controla el intervalo de cambio (133 ms por defecto).
+
+mediumFrequency controla la proporción esperada de manchas de terreno secundario dentro de los obstáculos. Cero genera sólo muros. El suelo, el muro y el medio secundario tienen valores lógicos 0, 1 y 2. La conexión visual exige igualdad de material. Los muros bloquean la visión y el paso incluso para especies con vuelo. Las cuatro franjas de wild y leaders se editan por nombre de especie.
+
+La consola registra decisiones con [IA], transiciones de sprite con [Animación] y secuencias visuales con [Animación de efecto]. El daño ordinario permite terminar las hojas alternativas y los lanzamientos especiales. Los proyectiles que han impactado terminan sus fotogramas en el punto de contacto.

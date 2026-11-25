@@ -16,7 +16,7 @@ const effectSheets = {
   featherfall:{columns:23}, webshield:{columns:11}, rock_aura:{columns:14,base:30},
   grow:{columns:8}, rock_throw:{columns:18}, revive:{columns:39},
   battery:{name:'battery_burst',columns:9,base:44}, heal:{columns:13},
-  boost:{columns:15,base:39}, fangaround:{columns:12,base:29},
+  boost:{columns:15}, fangaround:{columns:12,base:29},
   mine:{columns:9,base:48}, flare:{columns:12}, purple:{name:'purple_smite',columns:38,base:228}
 };
 
@@ -37,6 +37,8 @@ export async function loadEffects() {
 // Registra en el piso un efecto con origen, orientación, duración y hora de inicio.
 export function effect(kind,x,y,durationMs,directionIndex=0) {
   const sprite = { kind,x,y,ms: kind==='rock_aura'?1000:durationMs*2,dir: directionIndex,start:gameTime() };
+  console.debug('[Animación de efecto]', {kind,x,y,directionIndex,durationMs:sprite.ms,
+    frames:effectSheets[kind].columns,framesPerSecond:1000*effectSheets[kind].columns/sprite.ms,start:sprite.start});
   game.effects.push(sprite);
   playSound(({fangaround:'spin',purple:'machinery'})[kind]??kind);
   return sprite;
@@ -66,7 +68,7 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     if(visualEffect.kind==='rock_throw' && visualEffect.owner.isPlayer && synergyActive('goldRock'))drawingContext.filter=goldFilter;
     if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
-    const base = sheet.base ?? sheet.height;
+    const base = sheet.base ?? sheet.height / 2;
     const row = sheet.rows === 8 ? visualEffect.dir : 0;
     drawingContext.drawImage(sheet.image,frame*sheet.width,row*sheet.height,sheet.width,sheet.height,
       x-width/2,y-height*base/sheet.height,width,height);
@@ -83,7 +85,7 @@ export function drawFang(drawingContext,directionIndex,x,y,scale,opacity,kind='f
   drawingContext.globalAlpha *= opacity;
   drawingContext.filter = filter;
   drawingContext.drawImage(effectSheets[kind].image,directionCell%2*16,Math.floor(directionCell/2)*16,16,16,
-    x-12*scale,y-24*scale,24*scale,24*scale);
+    x-8*scale,y-20*scale,16*scale,16*scale);
   drawingContext.restore();
 }
 
@@ -125,7 +127,7 @@ export function useActive(slot) {
   const player=game.player, simulationTime=gameTime();
   if(player.paralyzedUntil>simulationTime || player.rockUntil>simulationTime)return;
   if(slot==='r' && game.runRelics?.has('depleted_battery')){
-    if(!player.hp||game.changingLevel||game.cast||['Attack','Hurt'].includes(player.state))return;
+    if(!player.hp||game.changingLevel||game.cast||!['Idle','Walk'].includes(player.state))return;
     if(game.batteryEnergy<4)return showToast('Batería · '+game.batteryEnergy+'/4 esencias eléctricas');
     game.batteryEnergy-=4;
     const radius=attackReach(player.stats)*3;
@@ -135,7 +137,7 @@ export function useActive(slot) {
     return;
   }
   const benefitId=[...game.held].find(key=>game.benefits.get(key).slot === slot);
-  if (!benefitId || !player.hp || game.changingLevel || game.cast || ['Attack','Hurt'].includes(player.state)) return;
+  if (!benefitId || !player.hp || game.changingLevel || game.cast || !['Idle','Walk'].includes(player.state)) return;
   const benefit=game.benefits.get(benefitId);
   if ((game.cooldowns[benefitId]??0)>simulationTime) return showToast('Recarga: '+Math.ceil((game.cooldowns[benefitId]-simulationTime)/1000)+' s');
   if(!payEssences(player,benefitId))return showToast('PV completos o esencias insuficientes');
@@ -277,6 +279,12 @@ function releaseSpecial(owner,id){
 }
 const specials=new Set(['rock_core','regenerative','silken']);
 
+// El efecto se resuelve a su hora; la pose especial puede necesitar más fotogramas.
+function finishCastAnimation(owner) {
+  if (owner.animationCompleted) setState(owner,'Idle');
+  else owner.finishingSpecial = true;
+}
+
 // Cada salvaje anuncia su activa durante 500 ms y comprueba la presa,
 // la distancia y la visibilidad antes de empezar. La recarga es la mitad de la del jugador.
 export function updateWildAbility(wild) {
@@ -291,6 +299,7 @@ export function updateWildAbility(wild) {
     wild.dir = (Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
     if(!payEssences(wild,benefitId))return false;
     playSound('charge');
+    console.debug('[IA] Preparar habilidad',{dex:wild.dex,benefitId,x:wild.x,y:wild.y,distance,range});
     wild.abilityCast = {start:simulationTime,dir:wild.dir,hit:new Set()};
     wild.path = [];
     setState(wild,'Charge');
@@ -325,7 +334,7 @@ export function updateWildAbility(wild) {
   if (!(wild.abilityReadyAt > simulationTime)) wild.abilityReadyAt=simulationTime+game.benefits.get(benefitId).amount*500;
   wild.abilityCast=null;
   wild.dir=activeCast.dir;
-  if (wild.hp && !(wild.rockUntil>simulationTime) && wild.state!=='Hurt') setState(wild,'Idle');
+  if (wild.hp && !(wild.rockUntil>simulationTime) && wild.state!=='Hurt') finishCastAnimation(wild);
   return true;
 }
 
@@ -355,7 +364,7 @@ export function tickAbilities() {
       else if (activeCast.id==='hooh_brooch') launchFlare(player,activeCast.dir);
       player.dir=activeCast.dir;
       game.cast=null;
-      if (player.hp && !(player.rockUntil>simulationTime) && player.state!=='Hurt') setState(player,'Idle');
+      if (player.hp && !(player.rockUntil>simulationTime) && player.state!=='Hurt') finishCastAnimation(player);
     }
   }
   // Una colisión puede crear espinas. Se acumulan aparte hasta el paso siguiente.
@@ -363,7 +372,9 @@ export function tickAbilities() {
   game.effects = [];
   const survivingEffects = previousEffects.filter(visualEffect=>{
     const lifetimeFraction=Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
-    if(visualEffect.cancelled || (visualEffect.owner??visualEffect.follow)?.interruptedAt>=visualEffect.start)return false;
+    // Tras un impacto o interrupción, termina la secuencia visual sin volver a aplicar daño.
+    if (visualEffect.finishedImpact || visualEffect.cancelled ||
+        (visualEffect.owner??visualEffect.follow)?.interruptedAt>=visualEffect.start) return lifetimeFraction<1;
     if(visualEffect.kind==='rock_aura'){
       for(const target of game.entities){
         if(!target.hp||target.ally||target.isPlayer===visualEffect.owner.isPlayer||visualEffect.hit.has(target))continue;
@@ -387,18 +398,19 @@ export function tickAbilities() {
           closestTarget=enemy;nearestDistance=along;
         }
       }
-      if(!hasSight({x:visualEffect.originX,y:visualEffect.originY},closestTarget??visualEffect))return false;
+      if(!hasSight({x:visualEffect.originX,y:visualEffect.originY},closestTarget??visualEffect)){visualEffect.finishedImpact=true;return lifetimeFraction<1;}
       if (closestTarget) {
         if(visualEffect.weapon && Math.random()<.05+(closestTarget.evasionUntil>simulationTime?.2:0)+
           ((closestTarget.isPlayer?game.held:closestTarget.benefits)?.has('swift')?.05:0)){
-          closestTarget.missUntil=simulationTime+750;playSound('miss');return false;
+          closestTarget.missUntil=simulationTime+750;playSound('miss');visualEffect.finishedImpact=true;return lifetimeFraction<1;
         }
         const power=visualEffect.weapon?damageFor(visualEffect.owner,closestTarget,false):visualEffect.damage;
         if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon) && visualEffect.weapon){
           knockback(visualEffect.owner,closestTarget,visualEffect.kind==='rock_throw'?20:10);
           if(visualEffect.kind==='rock_throw')playSound('rockImpact');
         }
-        return false;
+        visualEffect.finishedImpact=true;
+        return lifetimeFraction<1;
       }
       visualEffect.travel=travel;
     }

@@ -9,43 +9,14 @@ import { drawHud } from './hud.js';
 import { PLAYER_GRACE_MS, FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
-const tilesets = new Map();
+import { loadTileset, drawTerrainTile } from './tileset-atlas.js';
 let tilesetRequestNumber = 0;
-
-// Decodifica y valida el atlas de siete por nueve celdas y comparte la carga por URL.
-function loadTileset(url) {
-  if (!tilesets.has(url)) {
-    const image = new Image();
-    image.src = url;
-    tilesets.set(
-      url,
-      image
-        .decode()
-        .then(() => {
-          const size = image.naturalWidth / 7;
-          if (
-            !Number.isInteger(size) ||
-            size <= 0 ||
-            image.naturalHeight !== size * 9
-          ) {
-            throw new Error(`Atlas 7 × 9 inválido: ${url}`);
-          }
-          return { image, size };
-        })
-        .catch((error) => {
-          tilesets.delete(url);
-          throw error;
-        }),
-    );
-  }
-  return tilesets.get(url);
-}
 
 // Activa el atlas solicitado y descarta respuestas de peticiones anteriores.
 export async function changeBiome(biome) {
   const request = ++tilesetRequestNumber;
   try {
-    const sheet = await loadTileset(biome.tileset);
+    const sheet = await loadTileset(biome);
     if (tilesetRequestNumber !== request) return;
     game.tileSheet = sheet;
     game.currentBiome = biome;
@@ -95,27 +66,13 @@ export function draw() {
     MAP_H - 1,
     Math.ceil((cameraY + canvas.height) / RTILE),
   );
+  const palettePhase = Math.floor(gameTime() / (game.currentBiome.paletteStepMs ?? 133));
   for (let y = rowStart; y <= rowEnd; y++) {
     for (let x = colStart; x <= colEnd; x++) {
-      const { mask, index } = game.autotileGrid[y][x];
-      const variant = game.variantGrid[y][x];
-      const { floors, walls } = game.currentBiome.variants;
-      const floor = game.grid[y][x] === 0;
-      const special = variant !== 0 && !floor ? walls?.[mask]?.[variant] : undefined;
-      const atlasColumn = floor ? (floors?.[variant] ?? 0) : (special ?? index % 7);
-      const row = floor ? 7 : special === undefined ? Math.floor(index / 7) : 8;
-      const { image, size } = tileSheet;
-      drawingContext.drawImage(
-        image,
-        atlasColumn * size,
-        row * size,
-        size,
-        size,
-        x * RTILE - cameraX,
-        y * RTILE - cameraY,
-        RTILE,
-        RTILE,
-      );
+      const terrain = game.grid[y][x];
+      const material = terrain === 0 ? 'floor' : terrain === 1 ? 'wall' : game.currentBiome.terrain;
+      drawTerrainTile(drawingContext,tileSheet,game.autotileGrid[y][x].mask,material,
+        game.variantGrid[y][x],palettePhase,x*RTILE-cameraX,y*RTILE-cameraY,RTILE);
       if (game.portal?.x === x && game.portal.y === y) {
         const icon = { stairs: stairsImage, objective: objectiveImage, portal: portalImage }[game.portal.kind];
         drawingContext.drawImage(icon, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);

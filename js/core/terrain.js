@@ -64,11 +64,10 @@ export async function loadTerrain() {
 // Los medios abiertos dejan ver al otro lado. En muros probamos el segmento
 // sobre la misma máscara que se usa para mover cuerpos, también en la arena.
 export function hasSight(observer,target) {
-  if (!game.bossArena && game.currentBiome.terrain !== 'wall') return true;
   const dx=target.x-observer.x, dy=target.y-observer.y;
   const steps=Math.ceil(Math.hypot(dx,dy));
   for (let step=1; step<=steps; step++)
-    if (!groundFree(observer.x+dx*step/steps,observer.y+dy*step/steps,.01)) return false;
+    if (!groundFree(observer.x+dx*step/steps,observer.y+dy*step/steps,.01,true)) return false;
   return true;
 }
 
@@ -77,10 +76,9 @@ export function hasSight(observer,target) {
 export function groundFree(x, y, radius, crosses = false) {
   const right = game.grid[0].length - 1, bottom = game.grid.length - 1;
   if (x - radius < TILE || y - radius < TILE || x + radius > right * TILE || y + radius > bottom * TILE) return false;
-  if (crosses) return true;
   for (let tileRow = Math.floor((y - radius) / TILE); tileRow <= Math.floor((y + radius) / TILE); tileRow++) {
     for (let tileColumn = Math.floor((x - radius) / TILE); tileColumn <= Math.floor((x + radius) / TILE); tileColumn++) {
-      if (game.grid[tileRow][tileColumn] === 0) continue;
+      if (game.grid[tileRow][tileColumn] === 0 || (crosses && game.grid[tileRow][tileColumn] === 2)) continue;
       const localX = x - tileColumn * TILE, localY = y - tileRow * TILE;
       for (const solidRectangle of wallShapes[game.autotileGrid[tileRow][tileColumn].index]) {
         const deltaX = Math.max(solidRectangle.left - localX, 0, localX - solidRectangle.right);

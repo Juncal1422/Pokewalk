@@ -79,6 +79,7 @@ export function trySidestep(enemy, attacker, canMove, simulationTime) {
       distance = testDistance;
     }
     if (distance < TILE / 2) continue;
+    console.debug('[IA] Esquivar',{dex:enemy.dex,x:enemy.x,y:enemy.y,distance});
     enemy.sidestep = { sx: sidestepDirectionX, sy: sidestepDirectionY, remaining: distance };
     enemy.path = [];
     enemy.aimSince = null;
@@ -127,6 +128,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   // Una sola retirada breve por enemigo terrestre. Tras ella vuelve a combatir.
   const canRetreat = !enemy.boss && !species.fly && !species.swim && !species.lavawalk;
   if (pursuing && canRetreat && !enemy.retreated && enemy.hp < enemy.stats.hpMax * 0.15 && distance <= 2 * reach) {
+    console.debug('[IA] Retirarse',{dex:enemy.dex,hp:enemy.hp,distance});
     enemy.retreated = true;
     enemy.retreatTicks = 30;
     enemy.path = [];
@@ -137,6 +139,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   const simulationTime = gameTime();
   if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
+    console.debug('[IA] Finalizar retirada',{dex:enemy.dex,distance});
     enemy.retreatTicks = 0;
     enemy.path = [];
     setState(enemy, 'Idle');
@@ -149,6 +152,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     enemy.tracking = true;
     setState(enemy, 'Idle');
     // Exige exposición continua antes del primer golpe y deja respirar entre ataques.
+    if(enemy.aimSince==null)console.debug('[IA] Apuntar',{dex:enemy.dex,x:enemy.x,y:enemy.y,distance});
     enemy.aimSince ??= simulationTime;
     const afterDodge = simulationTime < enemy.counterUntil;
     const ready = simulationTime - enemy.aimSince >= (afterDodge ? 180 : 600) &&
@@ -156,6 +160,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     if (enemy.bossResponse || ready) {
       enemy.bossResponse = false;
       enemy.hitsWithoutAction = 0;
+      console.debug('[IA] Atacar',{dex:enemy.dex,distance,reach});
       attack(enemy);
       enemy.counterUntil = 0;
       enemy.aimSince = null;
@@ -171,6 +176,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     const goalTileY = pursuing ? cell(enemy.lastSeen.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
     // Tras un bloqueo buscamos otro camino a pie teniendo en cuenta los cuerpos.
     const passable = enemy.avoidBodies ? canMove : terrainFree;
+    console.debug('[IA] Buscar ruta',{dex:enemy.dex,goalTileX,goalTileY,fleeing,pursuing,returnToLand,seesPlayer});
     enemy.path = route(enemy, goalTileX, goalTileY, passable, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
     enemy.avoidBodies = false;
     enemy.playerOnLand = playerOnLand;
@@ -180,6 +186,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const nextWaypoint = enemy.path[0];
   if (!nextWaypoint) {
+    console.debug('[IA] Esperar sin ruta',{dex:enemy.dex,x:enemy.x,y:enemy.y});
     setState(enemy, 'Idle');
     return;
   }
@@ -193,6 +200,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   if (Math.hypot(nextWaypoint[0] - enemy.x, nextWaypoint[1] - enemy.y) < 1) enemy.path.shift();
   enemy.stuck = Math.hypot(enemy.x - oldX, enemy.y - oldY) < 0.05 ? (enemy.stuck || 0) + 1 : 0;
   if (enemy.stuck >= 20) {
+    console.debug('[IA] Recalcular por bloqueo',{dex:enemy.dex,x:enemy.x,y:enemy.y});
     enemy.avoidBodies = true;
     enemy.path = [];
     enemy.stuck = 0;
@@ -210,6 +218,7 @@ export function fleeRescue(ally,move,setState,canMove) {
     const score=clearance(x,y);
     if(score>best && canMove(ally,x,y)){best=score;heading=[dx,dy]}
   }
+  console.debug('[IA] Rescate',{dex:ally.dex,x:ally.x,y:ally.y,heading});
   setState(ally,heading?'Walk':'Idle');
   if(heading)move(ally,...heading);
 }

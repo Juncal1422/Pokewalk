@@ -95,7 +95,7 @@ export function drawHud(drawingContext, canvas, player) {
     drawingContext.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
     drawingContext.fillStyle = theme.hudText;
     drawingContext.fillText(formatValue(count), x + 40, y + 20);
-    if(pointerX>=x && pointerX<x+80 && pointerY>=y && pointerY<y+40) hoveredType=typeLabels[id];
+    if(pointerX>=x && pointerX<x+38.4 && pointerY>=y && pointerY<y+38.4) hoveredType=typeLabels[id];
     index++;
   }
   drawingContext.save();

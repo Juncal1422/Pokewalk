@@ -36,7 +36,7 @@ export function showToast(message) {
 export function createEntity(spriteData, room, isPlayer) {
   const species = game.pokemon.get(spriteData.dex);
   const stats = statsFor(species, game.progress);
-  return {
+  const entity = {
     isPlayer,
     dex: spriteData.dex,
     dexStr: spriteData.dexStr,
@@ -44,7 +44,7 @@ export function createEntity(spriteData, room, isPlayer) {
     x: room.cx * TILE + TILE / 2,
     y: room.cy * TILE + TILE / 2,
     dir: 0,
-    state: 'Idle',
+    state: null,
     frame: 0,
     timer: 0,
     stats,
@@ -56,11 +56,20 @@ export function createEntity(spriteData, room, isPlayer) {
     speed: isPlayer ? PLAYER_SPEED : AI_SPEED,
     aiTimer: 45,
   };
+  setState(entity,'Idle');
+  return entity;
 }
 
 // Reinicia el fotograma y el temporizador únicamente al cambiar de acción.
 export function setState(entity, state) {
   if (entity.state !== state) {
+    const sheet = state === 'Attack' ? entity.attackAnimation : entity.anims[state] ?? entity.anims.Idle;
+    const speed = state === 'Attack' ? attackRate(entity.stats.attackSpeed)*(entity.isPlayer?1:.48) :
+      state === 'Walk' ? movementRate(entity.stats.speed) : 1;
+    console.debug('[Animación]', {dex:entity.dex, state, sheet:Object.keys(entity.anims).find(key=>entity.anims[key]===sheet),
+      x:entity.x,y:entity.y,direction:entity.dir,speed,frames:sheet?.frames,durations:sheet?.durs,time:gameTime()});
+    entity.finishingSpecial = false;
+    entity.animationCompleted = false;
     entity.state = state;
     entity.frame = 0;
     entity.timer = 0;
@@ -92,7 +101,7 @@ export function canMove(entity, x, y) {
 
 // Prepara un solo impacto pendiente y selecciona la animación para el arma equipada.
 export function triggerAttack(attacker) {
-  if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
+  if (!['Idle','Walk'].includes(attacker.state)) return;
   if (attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
@@ -198,12 +207,16 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
       (critical || synergyActive('damageSpines',defendingBenefits) || (blocked && synergyActive('blockSpines',defendingBenefits)))) releaseSpines(target);
   // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
   // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
+  const protectedAnimation = ['Spin','Charge'].includes(target.state) || target.isPlayer && game.cast ||
+    target.state === 'Attack' && target.attackAnimation !== target.anims.Attack;
+  if (protectedAnimation && target.hp) return damage;
   if ((target.abilityCast || target.rockUntil>simulationTime) && target.hp)return damage;
   if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return damage;
   if (target.boss && target.hp) {
     target.hitsWithoutAction = (target.hitsWithoutAction || 0) + 1;
     target.bossResponse = target.hitsWithoutAction >= 2;
   }
+  if (target.hp && target.state === 'Hurt') return damage;
   target.frame = target.timer = 0;
   target.impactPending = false;
   setState(target, 'Hurt');
@@ -299,22 +312,23 @@ function moveEntity(entity, deltaX, deltaY) {
 // Procesa controles o IA y avanza la animación hasta el impacto y el final de la acción.
 export function updateEntity(entity) {
   if(entity.hp && entity.rockUntil>gameTime()){setState(entity,'Charge');entity.frame=(Math.floor(gameTime()/90)%(entity.anims.Charge??entity.anims.Idle).frames);return;}
+  if(entity.state==='Charge' && !entity.finishingSpecial && !entity.abilityCast && !(entity.isPlayer && game.cast) && !(entity.rockUntil>gameTime())) entity.finishingSpecial=true;
   if(entity.hp && entity.paralyzedUntil>gameTime() && !entity.abilityCast)return;
   if (entity.isPlayer) {
-    if (entity.hp > 0 && entity.state === 'Hurt' && !(entity.reviveUntil>gameTime()) && gameTime() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
+    if (entity.hp > 0 && entity.state === 'Hurt' && entity.animationCompleted && !(entity.reviveUntil>gameTime()) && gameTime() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
     let deltaX = 0,
       deltaY = 0;
     if (game.keys.w || game.keys.arrowup) deltaY--;
     if (game.keys.s || game.keys.arrowdown) deltaY++;
     if (game.keys.a || game.keys.arrowleft) deltaX--;
     if (game.keys.d || game.keys.arrowright) deltaX++;
-    if (!game.cast && !['Attack', 'Hurt'].includes(entity.state)) {
+    if (!game.cast && ['Idle','Walk'].includes(entity.state)) {
       if (deltaX || deltaY) {
         setState(entity, 'Walk');
         moveEntity(entity, deltaX, deltaY);
       } else setState(entity, 'Idle');
     }
-  } else if (!['Attack', 'Hurt'].includes(entity.state)) {
+  } else if (!['Attack', 'Hurt'].includes(entity.state) && (!entity.finishingSpecial || entity.abilityCast)) {
     entity.prey=!entity.provoked && game.rescueAlly?.hp && !entity.ally ? game.rescueAlly : game.player;
     if (entity.ally) fleeRescue(entity,moveEntity,setState,canMove);
     else if ((entity.prey!==game.player && !entity.abilityCast) || !updateWildAbility(entity))
@@ -337,6 +351,11 @@ export function updateEntity(entity) {
     entity.frame++;
     if (entity.frame >= animation.frames) {
       entity.frame = 0;
+      entity.animationCompleted = true;
+      if (entity.finishingSpecial) {
+        entity.finishingSpecial = false;
+        setState(entity,'Idle');
+      }
       if (entity.hp > 0 && !(entity.reviveUntil>gameTime()) && (entity.state === 'Attack' || entity.state === 'Hurt'))
         setState(entity, 'Idle');
     }

@@ -88,7 +88,7 @@
   --textbox-green: url("../assets/ui/textbox-g.png");
   --textbox-pink: url("../assets/ui/textbox-p.png");
   --textbox-slice: 16;
-  --textbox-width: 6px;
+  --textbox-width: 8px;
 
   /* Marcos del HUD dibujado en canvas. Usar blue, blue-thin, green, pink o none. */
   --hud-health-textbox: blue;
@@ -154,11 +154,11 @@
 #guild-screen .guild-confirmation-message { --textbox-frame: var(--textbox-pink); }
 #guild-screen .catalog-tooltip { --textbox-frame: var(--textbox-blue); }
 #emblem-reward-notice { --textbox-frame: var(--textbox-blue); }
-#dungeon-notice { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
-#nearby-loot-panel { --textbox-frame: var(--textbox-blue); --frame-width: 12px; }
-#equipment-tooltip { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
-#floor-pokemon-panel li { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
-#mission-upgrade-dialog button { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
+#dungeon-notice { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
+#nearby-loot-panel { --textbox-frame: var(--textbox-blue); --frame-width: 17px; }
+#equipment-tooltip { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
+#floor-pokemon-panel li { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
+#mission-upgrade-dialog button { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
 
 :where(
   #guild-screen :is(button, label, .guild-record-list p, .species-profile, .adventure-summary,
@@ -382,7 +382,7 @@
 #floor-pokemon-panel nav button { background: transparent; border: 0; }
 @media (max-width: 680px) {
   #floor-pokemon-panel ul { grid-template-rows: repeat(5, auto); }
-  #floor-pokemon-panel li { gap: 0; --frame-width: 3px; }
+  #floor-pokemon-panel li { gap: 0; --frame-width: 4px; }
 }
 @media (max-width: 579px) {
   #floor-pokemon-panel { top: 110px; }
@@ -491,5 +491,5 @@
 #mission-upgrade-dialog .keep-current-form { width: auto; margin: 8px auto 0; flex-direction: row; gap: 8px; }
 #mission-upgrade-dialog .keep-current-form .pokemon-portrait { width: 44px; height: 44px; }
 @media (max-width: 440px) {
-  #mission-upgrade-dialog button { padding: 1px; --frame-width: 5px; font-size: 15px; }
+  #mission-upgrade-dialog button { padding: 1px; --frame-width: 7px; font-size: 15px; }
 }
