@@ -17,6 +17,7 @@ const sounds = {
   mine: 'Earthquake Hit',
   spin: 'Fury Swipes',
   machinery: 'Warp Orb',
+  featherfall:'Fog', rock_aura:'Huge Stomp (high)',regenerative:'Healing Wish Hit',watergun:'Water Gun',rockImpact:'Rollout',
   charge: 'Charge',
 };
 

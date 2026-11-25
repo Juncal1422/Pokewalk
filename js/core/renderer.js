@@ -153,6 +153,8 @@ export function draw() {
     if (entity.isPlayer && game.amuletUntil > gameTime()) drawingContext.filter = 'sepia(.35) hue-rotate(235deg) saturate(1.45)';
     if(entity.evasionUntil>gameTime())drawingContext.filter='saturate(.5)';
     if (elapsed < 110) drawingContext.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
+    const flash=gameTime()-entity.championFlash;
+    if(flash>=0 && flash<405)drawingContext.filter=['sepia(1) saturate(9) hue-rotate(305deg)','sepia(1) saturate(7) hue-rotate(335deg)','sepia(1) saturate(8)'][Math.floor(flash/45)%3];
     drawingContext.drawImage(
       animation.img,
       entity.frame * animation.fw,
@@ -180,9 +182,9 @@ export function draw() {
       drawingContext.fillStyle = fraction < 0.25 ? '#ef5350' : fraction <= 0.5 ? '#ffd54f' : '#66cf77';
       drawingContext.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
     }
-    const hitNumber = entity.hitNumber;
-    if (hitNumber && gameTime() - hitNumber.time < 750) {
-      const risePixels = (gameTime() - hitNumber.time) / 45;
+    const hits=(entity.hitNumbers??[]).filter(hit=>gameTime()-hit.time<750);
+    for(const [line,hitNumber] of hits.entries()){
+      const risePixels = (gameTime() - hitNumber.time) / 45 + line*16;
       drawingContext.font = 'bold 17px Wondermail';
       drawingContext.textAlign = 'center';
       drawingContext.lineWidth = 3;

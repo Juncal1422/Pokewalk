@@ -106,6 +106,20 @@ const EMBEDDED_APP = `
       #benefits .active-benefit { position:relative; display:inline-flex; }
       #benefits .active-benefit::before { content:attr(data-key); position:absolute; z-index:1; color:white; background:#182333; padding:0 3px; font:bold 12px Wondermail; }
       #benefits .active-benefit::after { content:""; position:absolute; inset:0; border-radius:50%; pointer-events:none; background:conic-gradient(rgb(5 10 20 / 70%) var(--remaining,0deg),transparent 0); }
+      #poke-walk-app {--blue:url("${assetUrl('../assets/ui/textbox-b.png',import.meta.url)}");--green:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url)}");--pink:url("${assetUrl('../assets/ui/textbox-p.png',import.meta.url)}");}
+      #guild,#rewards,#emblem-award,#poke-walk-app nav,#poke-walk-app button,#guild .guild-list,#guild .species-card,#guild label,#guild .catalog-grid,#guild .contracts,#guild .catalog-tip {
+        border:6px solid transparent;border-image:var(--blue) 16 stretch;background-clip:padding-box;box-sizing:border-box;
+      }
+      #guild button,#guild .offers button,#guild .letterbox {border:6px solid transparent;border-image:var(--green) 16 stretch;background-clip:padding-box;}
+      #guild .offers .red {border-image-source:var(--pink);}
+      #guild .catalog-board {width:min(93vw,71dvh);aspect-ratio:1;box-sizing:border-box;display:grid;grid-template:repeat(8,minmax(0,1fr))/repeat(8,minmax(0,1fr));border:clamp(6px,2vmin,16px) solid transparent;border-image:var(--catalog-art) 48 stretch;image-rendering:pixelated;}
+      #guild .catalog-board>* {min-width:0;min-height:0;padding:0;background:var(--catalog-art) center/300% 300% no-repeat padding-box;display:grid;place-items:center;}
+      #guild .catalog-board button {border:2px solid transparent;border-image:var(--blue) 16 stretch;}
+      #guild .catalog-board img {width:74%;height:74%;object-fit:contain;}
+      #guild .catalog-board [aria-pressed=true] {border-image-source:var(--pink);}
+      #guild .catalog-tip,#poke-walk-app #item-tip {background:rgb(6 12 20 / 20%) padding-box;text-shadow:0 1px 2px black;color:white;pointer-events:none;}
+      #guild .catalog-tip {position:absolute;bottom:1%;right:1%;max-width:min(520px,90vw);padding:5px;z-index:3;}
+      #guild .catalog-tip[hidden]{display:none;}
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>

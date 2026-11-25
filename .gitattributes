@@ -17,3 +17,8 @@ sounds/*.wav export-ignore
 "sounds/Thunder.wav" -export-ignore
 "sounds/Warp Orb.wav" -export-ignore
 "sounds/Wrong.wav" -export-ignore
+"sounds/Fog.wav" -export-ignore
+"sounds/Huge Stomp (high).wav" -export-ignore
+"sounds/Healing Wish Hit.wav" -export-ignore
+"sounds/Water Gun.wav" -export-ignore
+"sounds/Rollout.wav" -export-ignore

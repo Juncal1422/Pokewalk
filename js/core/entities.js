@@ -1,6 +1,6 @@
 import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
-import { updateWildAbility, releaseSpines, effect } from './abilities.js';
+import { updateWildAbility, releaseSpines, effect, launchWeapon, featherStun } from './abilities.js';
 import { amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, fleeRescue, trySidestep } from './enemy-ai.js';
@@ -93,10 +93,10 @@ export function canMove(entity, x, y) {
 // Prepara un solo impacto pendiente y selecciona la animación para el arma equipada.
 export function triggerAttack(attacker) {
   if (attacker.state === 'Attack' || attacker.state === 'Hurt') return;
-  if (attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
+  if (attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
-  attacker.fangStrike = (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
-  attacker.doubleStrike = attacker.isPlayer && synergyActive('doubleStrike');
+  attacker.fangStrike = !['acuatic','rock_thrower','ancient'].some(id=>combatBenefits(attacker)?.has(id)) && (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
+  attacker.doubleStrike = attacker.fangStrike && attacker.isPlayer && synergyActive('doubleStrike');
   attacker.strikesDone = 0;
   setState(attacker, 'Attack');
 }
@@ -120,6 +120,11 @@ function resolveImpact(attacker) {
   if (attacker.isPlayer) collectItems(attacker, (drop) =>
     Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, strikeRadius));
 
+  const weapons=combatBenefits(attacker);
+  if(weapons?.has('acuatic')||weapons?.has('rock_thrower')){
+    launchWeapon(attacker,weapons.has('rock_thrower')?'rock_throw':'watergun');return;
+  }
+  if(weapons?.has('ancient'))effect('iron_hit',attacker.x+directionX*reach,attacker.y+directionY*reach,230,attacker.dir);
   for (const target of game.entities) {
     if (!target.hp || target===attacker || (attacker.isPlayer ? target.ally : target!==(attacker.prey??game.player))) continue;
     if (!hasSight(attacker,target)) continue;
@@ -134,11 +139,11 @@ function resolveImpact(attacker) {
       continue;
     }
     const critical = Math.random() < 0.10;
-    inflictDamage(attacker,target,damageFor(attacker, target, critical),critical);
-    if (target.boss && target.hp && (target.bossResponse || target.abilityCast || target.state==='Attack')) continue;
+    if(!inflictDamage(attacker,target,damageFor(attacker, target, critical),critical))continue;
+    if (target.hp && (target.abilityCast || (target.boss && (target.bossResponse || target.state==='Attack')))) continue;
     if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
-    for (let step = 0; step < 10; step++) {
+    for (let step = 0; step < (weapons?.has('ancient')?16:10); step++) {
       if (!canMove(target, target.x + directionX, target.y + directionY)) break;
       target.x += directionX;
       target.y += directionY;
@@ -163,14 +168,23 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   let damage = Math.min(target.hp, Math.max(1, Math.round(incomingDamage)));
   if (ability && attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
   if (!damage) return;
-  target.hitNumber = { damage, critical, time: simulationTime };
-  target.hp = Math.max(0, target.hp - damage);
+  const previousHP=target.hp;
+  target.hp = Math.max(0, previousHP - damage);
+  target.hitNumbers=(target.hitNumbers??[]).filter(hit=>simulationTime-hit.time<750);
+  target.hitNumbers.push({damage:previousHP-target.hp,critical,time:simulationTime});
+  if(defendingBenefits.has('champion')){
+    if(target.isPlayer){game.mission.championAttack=(game.mission.championAttack??0)+10;
+      target.stats=playerStats(game.pokemon.get(target.dex),game.progress,target.bonuses);}
+    else target.stats.attack+=10;
+    target.championFlash=simulationTime;
+  }
+  if(defendingBenefits.has('feathered'))featherStun(target);
   if(target.isPlayer && !target.hp && game.inventory.delete('revive')){
     game.reviveSpent=true;
     target.hp=Math.max(1,Math.ceil(target.stats.hpMax*.2));
-    target.reviveUntil=simulationTime+650;
+    const revival=effect('revive',target.x,target.y,650);revival.follow=target;
+    target.reviveUntil=simulationTime+revival.ms;
     target.invulnerableUntil=target.reviveUntil+1000;
-    effect('revive',target.x,target.y,650).follow=target;
   }
   playSound('hit');
   if(attacker.isPlayer&&!target.isPlayer&&!target.provoked){target.provoked=true;target.prey=attacker;target.aimSince=null;}
@@ -180,8 +194,8 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
       (critical || synergyActive('damageSpines',defendingBenefits) || (blocked && synergyActive('blockSpines',defendingBenefits)))) releaseSpines(target);
   // Tras el segundo impacto el líder termina Hurt y ejecuta una respuesta.
   // Los impactos adicionales siguen descontando PV, incluso durante la réplica.
-  if (target.abilityCast && target.hp)return;
-  if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return;
+  if ((target.abilityCast || target.rockUntil>simulationTime) && target.hp)return damage;
+  if (target.boss && target.hp && (target.bossResponse || target.state === 'Attack' || target.abilityCast)) return damage;
   if (target.boss && target.hp) {
     target.hitsWithoutAction = (target.hitsWithoutAction || 0) + 1;
     target.bossResponse = target.hitsWithoutAction >= 2;
@@ -195,6 +209,7 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
       onDefeat(target, attacker);
     }
   }
+  return damage;
 }
 
 // Precargamos todos los sprites antes de sustituir el piso actual.
@@ -280,6 +295,7 @@ function moveEntity(entity, deltaX, deltaY) {
 
 // Procesa controles o IA y avanza la animación hasta el impacto y el final de la acción.
 export function updateEntity(entity) {
+  if(entity.hp && entity.rockUntil>gameTime()){setState(entity,'Charge');entity.frame=(Math.floor(gameTime()/90)%(entity.anims.Charge??entity.anims.Idle).frames);return;}
   if(entity.hp && entity.paralyzedUntil>gameTime() && !entity.abilityCast)return;
   if (entity.isPlayer) {
     if (entity.hp > 0 && entity.state === 'Hurt' && !(entity.reviveUntil>gameTime()) && gameTime() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');

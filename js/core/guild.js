@@ -55,13 +55,26 @@ async function introduction() {
 // Pagina también las listas largas en pantallas pequeñas sin desbordar el diálogo.
 function listPage(title,entries,page,back) {
   const dialog=screen(title), tiled=Object.hasOwn(sectionArt,title);
-  if(tiled)dialog.querySelector('h1').prepend(icon('ui/'+sectionArt[title]+'.png'));
-  const pageSize=tiled?(innerHeight<460?4:12):(innerHeight<460?2:4);
+
+  const pageSize=tiled?64:(innerHeight<460?2:4);
   const pages=Math.max(1,Math.ceil(entries.length/pageSize));
   page=Math.min(page,pages-1);
-  const body=element('section');body.className=tiled?'catalog-grid':'guild-list';
+  const body=element('section');body.className=tiled?'catalog-board':'guild-list';
   for(const build of entries.slice(page*pageSize,(page+1)*pageSize))body.append(build());
-  if(!entries.length)body.append(element('p','Todavía no hay registros.'));
+  if(tiled){
+    body.style.setProperty('--catalog-art','url("'+asset('ui/'+sectionArt[title]+'.png')+'")');
+    const tip=element('aside');tip.className='catalog-tip';tip.hidden=true;tip.setAttribute('role','tooltip');
+    for(const cell of body.children){
+      const label=cell.textContent.trim(),detail=cell.title;
+      cell.removeAttribute('title');cell.setAttribute('aria-label',label);
+      for(const node of [...cell.childNodes])if(node.nodeType===3)node.remove();
+      const show=()=>{tip.textContent=[label,detail].filter(Boolean).join(' · ');tip.hidden=false;};
+      cell.onpointerenter=cell.onfocus=show;cell.onpointerleave=cell.onblur=()=>{tip.hidden=true;};
+    }
+    while(body.children.length<64)body.append(element('span'));
+    dialog.append(tip);
+  }
+  if(!tiled && !entries.length)body.append(element('p','Todavía no hay registros.'));
   dialog.append(body);
   const nav=element('nav');
   if(pages>1){
@@ -87,7 +100,7 @@ function historyDetail(run,back) {
   listPage('Aventura · Nv. '+run.level,rows.map(text=>()=>element('p',text)),0,back);
 }
 
-const sectionArt={'Pokédex':'pokedex',Objetos:'objetos',Beneficios:'beneficios',Reliquias:'reliquias'};
+const sectionArt={'Tienda de Aventureros':'shop','Pokédex':'pokedex',Objetos:'objetos',Beneficios:'beneficios',Reliquias:'reliquias'};
 
 // Muestra la ficha base y el don asociado con la misma fuente que usa el combate.
 function speciesPage(row,back){
@@ -112,25 +125,26 @@ function collectionMenu(back) {
   const dialog=screen('Colección'),again=()=>collectionMenu(back),data=game.collection;
   const lists={
     Historial:data.history.slice().reverse().map(run=>()=>button(new Date(run.date).toLocaleDateString('es')+' · '+run.status+' · '+run.missions.length+' misiones',()=>historyDetail(run,again))),
-    Pokédex:data.forms.map(id=>()=>{const row=game.pokemon.get(id);
+    Pokédex:[...game.pokemon.keys()].map(id=>()=>{const row=game.pokemon.get(id);
       if(!row)return element('p',String(id));
       const card=button(row.name,()=>speciesPage(row,()=>open('Pokédex')));
       card.prepend(portrait(row));return card;
     }),
-    Objetos:data.items.map(id=>()=>catalogCard(id,game.items[id])),
-    Beneficios:data.benefits.map(id=>()=>catalogCard(id,game.benefits.get(id),()=>{
+    Objetos:Object.keys(game.items).map(id=>()=>catalogCard(id,game.items[id])),
+    Beneficios:[...game.benefits.keys()].map(id=>()=>catalogCard(id,game.benefits.get(id),()=>{
       const benefit=game.benefits.get(id);
       const donors=[...game.pokemon.values()].filter(row=>benefit?.pokemon.includes(row.name));
       listPage(benefit?.name??id,donors.map(row=>()=>{const entry=element('p',row.name);entry.prepend(portrait(row));return entry}),0,()=>open('Beneficios'));
     })),
-    Reliquias:data.relics.map(id=>()=>{const enabled=data.enabled.includes(id);const control=button((enabled?'Activa · ':'Inactiva · ')+(relics[id]?.name??id),()=>{
-      data.enabled=enabled?data.enabled.filter(key=>key!==id):[...data.enabled,id];saveCollection();open('Reliquias')});control.prepend(icon('relics/'+id+'.png'));return control})
+    Reliquias:Object.keys(relics).map(id=>()=>{const enabled=data.enabled.includes(id);const control=button((enabled?'Activa · ':'Inactiva · ')+(relics[id]?.name??id),()=>{
+      if(!data.relics.includes(id))data.relics.push(id);
+      data.enabled=enabled?data.enabled.filter(key=>key!==id):[...data.enabled,id];saveCollection();open('Reliquias')});control.title=relics[id].description;control.setAttribute('aria-pressed',enabled);control.prepend(icon(relics[id].image??'relics/'+id+'.png'));return control})
   };
   // Reconstruye la página para reflejar inmediatamente la activación de reliquias.
   function open(name){listPage(name,lists[name],0,again)}
   const grid=element('section');grid.className='catalog-grid';
   for(const name of Object.keys(lists)){
-    const entry=button(name,()=>open(name));if(sectionArt[name])entry.prepend(icon('ui/'+sectionArt[name]+'.png'));grid.append(entry);
+    const entry=button(name,()=>open(name));grid.append(entry);
   }
   dialog.append(grid);
   dialog.append(button('Volver',back));
@@ -138,17 +152,16 @@ function collectionMenu(back) {
 
 // Compra y saldo se escriben juntos. Las reliquias nuevas quedan activadas.
 function shop(back) {
-  const dialog=screen('Tienda de Aventureros');dialog.querySelector('h1').prepend(icon('ui/shop.png'));dialog.append(element('p',game.collection.emblems+' emblemas'));
-  const grid=element('section');grid.className='offers';
-  for(const [id,relic] of Object.entries(relics)){
-    const owned=game.collection.relics.includes(id),card=button('',()=>{
-      if(game.collection.emblems<relic.price||game.collection.relics.includes(id))return;
-      game.collection.emblems-=relic.price;game.collection.relics.push(id);game.collection.enabled.push(id);saveCollection();shop(back)
+  const entries=Object.entries(relics).map(([id,relic])=>()=>{
+    const card=button(relic.name,()=>{
+      if(!game.collection.relics.includes(id))game.collection.relics.push(id);
+      if(!game.collection.enabled.includes(id))game.collection.enabled.push(id);
+      saveCollection();shop(back);
     });
-    card.append(icon('relics/'+id+'.png'),element('strong',relic.name),element('span',relic.description),element('b',owned?'Comprada':relic.price+' emblemas'));
-    card.disabled=owned||game.collection.emblems<relic.price;grid.append(card);
-  }
-  dialog.append(grid,button('Volver',back));
+    card.title=relic.description+' · '+(game.collection.enabled.includes(id)?'Activa':'Activar para probar');
+    card.append(icon(relic.image??'relics/'+id+'.png'));return card;
+  });
+  listPage('Tienda de Aventureros',entries,0,back);
 }
 
 // Una acción destructiva o una importación requiere una segunda elección dentro del juego.

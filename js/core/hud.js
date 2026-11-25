@@ -47,16 +47,18 @@ export function drawHud(drawingContext, canvas, player) {
   game.pickups = game.pickups.filter(pickupIndicator => simulationTime - pickupIndicator.time < (pickupIndicator.duration??1500));
   const baseWidth = Math.min(144, canvas.width * 0.22);
   const length = baseWidth * Math.min(2, player.stats.hpMax / game.initialHP);
-  const fraction = player.hp / player.stats.hpMax;
+  const fraction = Math.max(0,Math.min(1, player.hp / player.stats.hpMax));
   // Los anchos del hueco siguen las seis filas interiores del nuevo marco.
   const scale = 2, endCapWidth = Math.min(16 * scale, length / 3);
   const left = 8, top = 2, healthBarImage = icons.hpbar;
+  const innerInset=endCapWidth/2;
+  const fillEdge=left+innerInset+(length-2*innerInset)*fraction;
   [14,12,9,8,9,12].forEach((edge,rowIndex) => {
     const inset = edge*endCapWidth/16, x=left+inset, y=top+(8+rowIndex)*scale, width=length-2*inset;
     drawingContext.fillStyle = '#15202b';
     drawingContext.fillRect(x,y,width,scale);
     drawingContext.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
-    drawingContext.fillRect(x,y,Math.max(0,Math.min(width,width*fraction)),scale);
+    drawingContext.fillRect(x,y,Math.max(0,Math.min(width,fillEdge-x)),scale);
   });
   const widths = [endCapWidth, length - 2 * endCapWidth, endCapWidth];
   let cursor = left;

@@ -21,7 +21,6 @@
       "Abomasnow",
       "Servine",
       "Seismitoad",
-      "Petilil",
       "Gliscor",
       "Rhyperior"
     ],
@@ -55,7 +54,8 @@
       "Swoobat",
       "Rufflet",
       "Braviary",
-      "Mandibuzz"
+      "Mandibuzz",
+      "Wurmple"
     ],
     "stats": {
       "speed": 0.1,
@@ -107,7 +107,6 @@
       "Golduck",
       "Poliwhirl",
       "Seel",
-      "Horsea",
       "Goldeen",
       "Staryu",
       "Vaporeon",
@@ -245,7 +244,6 @@
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Caterpie",
       "Beedrill",
       "Pinsir",
       "Dratini",
@@ -253,7 +251,6 @@
       "Shuckle",
       "Kingdra",
       "Silcoon",
-      "Surskit",
       "Volbeat",
       "Anorith",
       "Bagon",
@@ -317,7 +314,6 @@
       "Pupitar",
       "Nincada",
       "Flygon",
-      "Baltoy",
       "Relicanth",
       "Rampardos",
       "Bonsly",
@@ -340,17 +336,13 @@
     "amount": 0.1,
     "pokemon": [
       "Venusaur",
-      "Paras",
       "Tentacruel",
-      "Spinarak",
       "Hoppip",
       "Sunflora",
       "Sceptile",
       "Dustox",
-      "Lotad",
       "Cacnea",
       "Cradily",
-      "Budew",
       "Wormadam",
       "Cherrim",
       "Carnivine",
@@ -403,13 +395,10 @@
       "Unown",
       "Wobbuffet",
       "Ralts",
-      "Meditite",
       "Claydol",
       "Chimecho",
       "Wynaut",
-      "Chingling",
       "Porygon_Z",
-      "Munna",
       "Sigilyph",
       "Gothita",
       "Gothorita",
@@ -442,7 +431,6 @@
       "Hippowdon",
       "Mamoswine",
       "Palpitoad",
-      "Vanillite",
       "Vanillish",
       "Cubchoo",
       "Articuno",
@@ -465,7 +453,6 @@
       "Ariados",
       "Skiploom",
       "Treecko",
-      "Wurmple",
       "Cascoon",
       "Lombre",
       "Illumise",
@@ -576,7 +563,8 @@
       "Hypno",
       "Mesprit",
       "Mew",
-      "Mewtwo"
+      "Mewtwo",
+      "Caterpie"
     ],
     "image": "assets/benefits/seer.png"
   },
@@ -597,7 +585,8 @@
       "Mienshao",
       "Aerodactyl",
       "Golem",
-      "Regirock"
+      "Regirock",
+      "Budew"
     ],
     "image": "assets/benefits/gunpowder_core.png"
   },
@@ -625,7 +614,8 @@
     "pokemon": [
       "Nidoking",
       "Nidoqueen",
-      "Slowking"
+      "Slowking",
+      "Surskit"
     ],
     "stats": {},
     "slot": "q"
@@ -652,7 +642,8 @@
     "amount": 0,
     "pokemon": [
       "Buizel",
-      "Floatzel"
+      "Floatzel",
+      "Paras"
     ],
     "stats": {
       "defense": -0.15,
@@ -669,9 +660,118 @@
     "amount": 300,
     "pokemon": [
       "Haunter",
-      "Gengar"
+      "Gengar",
+      "Petilil"
     ],
     "stats": {},
     "slot": "q"
+  },
+  {
+    "id": "champion",
+    "name": "Campeón",
+    "description": "Cada golpe recibido otorga +10 ataque hasta terminar la misión.",
+    "image": "assets/benefits/champion.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Spinarak"
+    ],
+    "stats": {}
+  },
+  {
+    "id": "feathered",
+    "name": "Emplumado",
+    "description": "Al recibir daño aturde e interrumpe a los enemigos en un radio de dos veces tu rango.",
+    "image": "assets/benefits/feathered.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Chingling"
+    ],
+    "stats": {}
+  },
+  {
+    "id": "silken",
+    "name": "Sedal",
+    "description": "Q · Consume 10 esencias Bicho para ganar 3 defensa. Recarga: 20 s.",
+    "image": "assets/benefits/silken.png",
+    "active": true,
+    "amount": 20,
+    "pokemon": [
+      "Munna"
+    ],
+    "stats": {},
+    "slot": "q"
+  },
+  {
+    "id": "ancient",
+    "name": "Ancestral",
+    "description": "Golpe de hierro con un 10 % menos de rango y un 60 % más de empuje.",
+    "image": "assets/benefits/ancient.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Meditite"
+    ],
+    "stats": {
+      "range": -0.1
+    }
+  },
+  {
+    "id": "rock_core",
+    "name": "Núcleo de roca",
+    "description": "E · Carga 0,5 s y libera un aura durante 1 s. Daño y radio triples. Recarga: 120 s.",
+    "image": "assets/benefits/rock_core.png",
+    "active": true,
+    "amount": 120,
+    "pokemon": [
+      "Lotad"
+    ],
+    "stats": {},
+    "slot": "e"
+  },
+  {
+    "id": "regenerative",
+    "name": "Regenerativo",
+    "description": "Q · Consume 20 esencias aleatorias y recupera un 30 % de los PV máximos. Recarga: 20 s.",
+    "image": "assets/benefits/regenerative.png",
+    "active": true,
+    "amount": 20,
+    "pokemon": [
+      "Baltoy"
+    ],
+    "stats": {},
+    "slot": "q"
+  },
+  {
+    "id": "acuatic",
+    "name": "Acuático",
+    "description": "Dispara agua. Ataque −10 % y rango +20 %.",
+    "image": "assets/benefits/acuatic.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Horsea"
+    ],
+    "stats": {
+      "attack": -0.1,
+      "range": 0.2
+    }
+  },
+  {
+    "id": "rock_thrower",
+    "name": "Tirarrocas",
+    "description": "Dispara una roca con alcance y empuje dobles. Velocidad y velocidad de ataque −60 %.",
+    "image": "assets/benefits/rock_thrower.png",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Vanillite"
+    ],
+    "stats": {
+      "range": 1,
+      "speed": -0.6,
+      "attackSpeed": -0.6
+    }
   }
 ]

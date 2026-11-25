@@ -87,5 +87,14 @@
       "seed"
     ],
     "description": "Cada esencia de agua recogida añade 1 al tamaño y al ataque."
+  },
+  {
+    "effect": "goldRock",
+    "name": "Roca dorada",
+    "requires": [
+      "golden",
+      "rock_thrower"
+    ],
+    "description": "Tiñe de oro el proyectil de Tirarrocas."
   }
 ]

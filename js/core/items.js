@@ -3,7 +3,7 @@ import { showWorldNotice } from './world-notices.js';
 import {discover,checkpoint} from './collection.js';
 import {playSound} from './audio.js';
 import { levelUp } from './experience.js';
-import { pickupEffect } from './abilities.js';
+import { effect, pickupEffect } from './abilities.js';
 import { gameTime } from './clock.js';
 import { canMove } from './entities.js';
 import { essenceIcon } from './hud.js';
@@ -42,7 +42,7 @@ export function spawnFloorItems() {
     const item=game.items[itemId];
     return !(itemId==='revive' && game.reviveSpent) && (item.consumable || game.inventory.size < 75) && !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < .225 + amount('scaled')) {
+  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < (.225 + amount('scaled'))*(game.runRelics?.has('debugger')?1.5:1)) {
     const itemId=available[Math.floor(Math.random() * available.length)];
     place(itemId);
     if (game.items[itemId].oncePerMission) mission.candyPlaced=true;
@@ -60,13 +60,14 @@ export function collectItems(player, strike = null) {
     if (drop.essence) {
       const type=drop.essence;
       const candy = 'candy_'+(type==='fighting'?'fight':type);
-      let quantity=drop.amount*(game.inventory.has(candy)?2:1);
+      let quantity=drop.amount*(game.runRelics?.has('debugger')?4:1)*(game.inventory.has(candy)?2:1);
       if(type==='water' && synergyActive('waterGrowth')){
         player.bonuses.size+=quantity;
         player.bonuses.attack+=quantity;
         player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
       }
       if(type==='water' && game.held.has('blooming')){
+        effect('grow',drop.x,drop.y,350);
         const healed=Math.min(quantity,player.stats.hpMax-player.hp);
         player.hp+=healed; quantity-=healed;
         if(healed)showWorldNotice(player,healed,'HP');

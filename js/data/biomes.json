@@ -37,63 +37,48 @@
         "Abra",
         "Litwick",
         "Chingling",
-        "Munna",
-        "Gothita",
-        "Yamask",
-        "Baltoy",
-        "Bronzor",
-        "Shuppet",
-        "Natu",
-        "Unown"
+        "Munna"
       ],
       "17-36": [
         "Duosion",
         "Munna",
-        "Cubone",
-        "Porygon",
-        "Kadabra",
-        "Elgyem",
-        "Baltoy",
-        "Gothorita",
-        "Natu",
-        "Unown",
-        "Lunatone",
-        "Solrock"
+        "Cubone"
       ],
       "37-60": [
         "Beheeyem",
-        "Sigilyph",
-        "Cofagrigus",
-        "Musharna",
-        "Alakazam",
-        "Xatu",
-        "Solrock",
-        "Bronzong",
-        "Claydol",
-        "Wobbuffet",
-        "Porygon2",
-        "Reuniclus"
+        "Sigilyph"
       ],
       "61-100": [
         "Golurk",
         "Beheeyem",
-        "Sigilyph",
-        "Alakazam",
-        "Xatu",
-        "Cofagrigus",
-        "Musharna",
-        "Unown",
-        "Porygon_Z",
-        "Rampardos",
-        "Archeops",
-        "Gothitelle"
+        "Sigilyph"
       ]
     },
     "leaders": {
-      "1-16": ["Unown", "Claydol", "Beheeyem", "Chimecho"],
-      "17-36": ["Espeon", "Metagross", "Alakazam", "Rotom"],
-      "37-60": ["Regirock", "Regice", "Registeel", "Azelf"],
-      "61-100": ["Regigigas", "Arceus", "Golurk", "Beheeyem"]
+      "1-16": [
+        "Unown",
+        "Claydol",
+        "Beheeyem",
+        "Chimecho"
+      ],
+      "17-36": [
+        "Espeon",
+        "Metagross",
+        "Alakazam",
+        "Rotom"
+      ],
+      "37-60": [
+        "Regirock",
+        "Regice",
+        "Registeel",
+        "Azelf"
+      ],
+      "61-100": [
+        "Regigigas",
+        "Arceus",
+        "Golurk",
+        "Beheeyem"
+      ]
     }
   },
   {
@@ -130,60 +115,47 @@
         "Burmy",
         "Hoppip",
         "Budew",
-        "Cherubi",
-        "Petilil",
-        "Combee",
-        "Bulbasaur",
-        "Cottonee"
+        "Cherubi"
       ],
       "17-36": [
         "Deerling",
-        "Roselia",
-        "Skiploom",
-        "Cherrim",
-        "Lilligant",
-        "Sunflora",
-        "Wormadam",
-        "Ivysaur",
-        "Swadloon",
-        "Beedrill",
-        "Combee",
-        "Butterfree"
+        "Roselia"
       ],
       "37-60": [
         "Bellossom",
-        "Butterfree",
-        "Tropius",
-        "Beautifly",
-        "Mothim",
-        "Cherrim",
-        "Vespiquen",
-        "Lilligant",
-        "Beedrill",
-        "Roserade",
-        "Whimsicott",
-        "Venusaur"
+        "Roserade"
       ],
       "61-100": [
         "Bellossom",
         "Breloom",
-        "Roserade",
-        "Yanmega",
-        "Jumpluff",
-        "Sawsbuck",
-        "Victreebel",
-        "Venusaur",
-        "Vespiquen",
-        "Scizor",
-        "Sceptile",
-        "Tangrowth"
+        "Roserade"
       ]
     },
     "leaders": {
-      "1-16": ["Butterfree", "Beautifly", "Beedrill", "Mothim"],
-      "17-36": ["Sceptile", "Sawsbuck", "Torterra", "Serperior"],
-      "37-60": ["Shaymin", "Celebi", "Bellossom", "Butterfree"],
-      "61-100": ["Virizion", "Genesect", "Celebi", "Shaymin"]
+      "1-16": [
+        "Butterfree",
+        "Beautifly",
+        "Beedrill",
+        "Mothim"
+      ],
+      "17-36": [
+        "Sceptile",
+        "Sawsbuck",
+        "Torterra",
+        "Serperior"
+      ],
+      "37-60": [
+        "Shaymin",
+        "Celebi",
+        "Bellossom",
+        "Butterfree"
+      ],
+      "61-100": [
+        "Virizion",
+        "Genesect",
+        "Celebi",
+        "Shaymin"
+      ]
     }
   },
   {
@@ -214,63 +186,45 @@
         "Kricketot",
         "Wurmple",
         "Burmy",
-        "Caterpie",
-        "Weedle",
-        "Hoppip",
-        "Budew",
-        "Sewaddle",
-        "Petilil",
-        "Spinarak",
-        "Combee"
+        "Caterpie"
       ],
       "17-36": [
         "Sunflora",
-        "Kricketune",
-        "Cascoon",
-        "Silcoon",
-        "Butterfree",
-        "Beedrill",
-        "Ariados",
-        "Breloom",
-        "Swadloon",
-        "Ninjask",
-        "Tangrowth",
-        "Scyther"
+        "Kricketune"
       ],
       "37-60": [
-        "Tropius",
-        "Ariados",
-        "Masquerain",
-        "Servine",
-        "Serperior",
-        "Beautifly",
-        "Dustox",
-        "Mothim",
-        "Venomoth",
-        "Grotle",
-        "Torterra",
-        "Cherrim"
+        "Tropius"
       ],
       "61-100": [
         "Vileplume",
-        "Whimsicott",
-        "Exeggutor",
-        "Heracross",
-        "Bellossom",
-        "Simisage",
-        "Pinsir",
-        "Breloom",
-        "Yanmega",
-        "Forretress",
-        "Sawsbuck",
-        "Durant"
+        "Whimsicott"
       ]
     },
     "leaders": {
-      "1-16": ["Victreebel", "Leavanny", "Roserade", "Lilligant"],
-      "17-36": ["Simisage", "Galvantula", "Escavalier", "Sunflora"],
-      "37-60": ["Venusaur", "Sceptile", "Meganium", "Serperior"],
-      "61-100": ["Scizor", "Heracross", "Pinsir", "Genesect"]
+      "1-16": [
+        "Victreebel",
+        "Leavanny",
+        "Roserade",
+        "Lilligant"
+      ],
+      "17-36": [
+        "Simisage",
+        "Galvantula",
+        "Escavalier",
+        "Sunflora"
+      ],
+      "37-60": [
+        "Venusaur",
+        "Sceptile",
+        "Meganium",
+        "Serperior"
+      ],
+      "61-100": [
+        "Scizor",
+        "Heracross",
+        "Pinsir",
+        "Genesect"
+      ]
     }
   },
   {
@@ -278,7 +232,10 @@
     "name": "Purity Lake",
     "tileset": "tiled/tilesets/PurityLake-blob.png",
     "terrain": "water",
-    "canCross": ["swim", "fly"],
+    "canCross": [
+      "swim",
+      "fly"
+    ],
     "variants": {
       "floors": {
         "1": 1,
@@ -303,62 +260,50 @@
         "Magikarp",
         "Surskit",
         "Carvanha",
-        "Paras",
-        "Croagunk",
-        "Barboach",
-        "Tympole",
-        "Psyduck",
-        "Nincada",
-        "Poliwag"
+        "Paras"
       ],
       "17-36": [
         "Feebas",
         "Quagsire",
         "Masquerain",
         "Paras",
-        "Croagunk",
-        "Whiscash",
-        "Palpitoad",
-        "Golduck",
-        "Poliwhirl",
-        "Carvanha",
-        "Buizel",
-        "Kabuto"
+        "Carvanha"
       ],
       "37-60": [
         "Volbeat",
-        "Palpitoad",
-        "Parasect",
         "Carvanha",
-        "Masquerain",
-        "Marshtomp",
-        "Swampert",
-        "Blastoise",
-        "Golduck",
-        "Mothim",
-        "Venomoth",
-        "Poliwrath"
+        "Masquerain"
       ],
       "61-100": [
         "Toxicroak",
-        "Pinsir",
-        "Yanmega",
-        "Politoed",
-        "Armaldo",
-        "Sawsbuck",
-        "Victreebel",
-        "Ninjask",
-        "Kabutops",
-        "Floatzel",
-        "Drapion",
-        "Blastoise"
+        "Pinsir"
       ]
     },
     "leaders": {
-      "1-16": ["Poliwrath", "Bibarel", "Floatzel", "Whiscash"],
-      "17-36": ["Politoed", "Armaldo", "Yanmega", "Leafeon"],
-      "37-60": ["Celebi", "Seismitoad", "Blastoise", "Swampert"],
-      "61-100": ["Virizion", "Keldeo", "Suicune", "Celebi"]
+      "1-16": [
+        "Poliwrath",
+        "Bibarel",
+        "Floatzel",
+        "Whiscash"
+      ],
+      "17-36": [
+        "Politoed",
+        "Armaldo",
+        "Yanmega",
+        "Leafeon"
+      ],
+      "37-60": [
+        "Celebi",
+        "Seismitoad",
+        "Blastoise",
+        "Swampert"
+      ],
+      "61-100": [
+        "Virizion",
+        "Keldeo",
+        "Suicune",
+        "Celebi"
+      ]
     }
   },
   {
@@ -396,63 +341,45 @@
         "Wooper",
         "Magnemite",
         "Diglett",
-        "Meditite",
-        "Makuhita",
-        "Swinub",
-        "Baltoy",
-        "Bronzor",
-        "Numel",
-        "Ferroseed",
-        "Klink"
+        "Meditite"
       ],
       "17-36": [
         "Corsola",
-        "Phanpy",
-        "Aron",
-        "Hippopotas",
-        "Drilbur",
-        "Kabuto",
-        "Pawniard",
-        "Shuckle",
-        "Anorith",
-        "Mawile",
-        "Vibrava",
-        "Lunatone"
+        "Phanpy"
       ],
       "37-60": [
-        "Boldore",
-        "Gastrodon",
-        "Dugtrio",
-        "Solrock",
-        "Bronzong",
-        "Gabite",
-        "Cradily",
-        "Hitmonlee",
-        "Hitmonchan",
-        "Omastar",
-        "Hitmontop",
-        "Claydol"
+        "Boldore"
       ],
       "61-100": [
         "Durant",
-        "Mienshao",
-        "Kabutops",
-        "Bisharp",
-        "Scizor",
-        "Gallade",
-        "Hariyama",
-        "Nidoqueen",
-        "Nidoking",
-        "Donphan",
-        "Rampardos",
-        "Seismitoad"
+        "Mienshao"
       ]
     },
     "leaders": {
-      "1-16": ["Corsola", "Magcargo", "Shuckle", "Mawile"],
-      "17-36": ["Empoleon", "Ferrothorn", "Whiscash", "Primeape"],
-      "37-60": ["Mienshao", "Infernape", "Kabutops", "Swampert"],
-      "61-100": ["Durant", "Steelix", "Gliscor", "Archeops"]
+      "1-16": [
+        "Corsola",
+        "Magcargo",
+        "Shuckle",
+        "Mawile"
+      ],
+      "17-36": [
+        "Empoleon",
+        "Ferrothorn",
+        "Whiscash",
+        "Primeape"
+      ],
+      "37-60": [
+        "Mienshao",
+        "Infernape",
+        "Kabutops",
+        "Swampert"
+      ],
+      "61-100": [
+        "Durant",
+        "Steelix",
+        "Gliscor",
+        "Archeops"
+      ]
     }
   },
   {
@@ -460,7 +387,10 @@
     "name": "Steel Lake",
     "tileset": "tiled/tilesets/SteelLake-blob.png",
     "terrain": "water",
-    "canCross": ["swim", "fly"],
+    "canCross": [
+      "swim",
+      "fly"
+    ],
     "variants": {
       "floors": {
         "3": 3,
@@ -481,63 +411,45 @@
         "Pichu",
         "Feebas",
         "Wooper",
-        "Magikarp",
-        "Mantyke",
-        "Surskit",
-        "Mareep",
-        "Magnemite",
-        "Tentacool",
-        "Wingull",
-        "Spheal"
+        "Magikarp"
       ],
       "17-36": [
         "Poliwag",
-        "Voltorb",
-        "Carvanha",
-        "Shieldon",
-        "Finneon",
-        "Totodile",
-        "Corphish",
-        "Luvdisc",
-        "Slowpoke",
-        "Shellder",
-        "Goldeen",
-        "Elekid"
+        "Voltorb"
       ],
       "37-60": [
-        "Slowking",
-        "Croconaw",
-        "Poliwhirl",
-        "Metang",
-        "Klang",
-        "Basculin",
-        "Qwilfish",
-        "Bibarel",
-        "Gorebyss",
-        "Seadra",
-        "Quagsire",
-        "Octillery"
+        "Slowking"
       ],
       "61-100": [
         "Sharpedo",
-        "Electrode",
-        "Lairon",
-        "Escavalier",
-        "Starmie",
-        "Ampharos",
-        "Relicanth",
-        "Lucario",
-        "Politoed",
-        "Forretress",
-        "Raichu",
-        "Magnezone"
+        "Electrode"
       ]
     },
     "leaders": {
-      "1-16": ["Luvdisc", "Plusle", "Minun", "Corsola"],
-      "17-36": ["Slowbro", "Dewgong", "Omastar", "Politoed"],
-      "37-60": ["Escavalier", "Eelektross", "Starmie", "Blastoise"],
-      "61-100": ["Relicanth", "Gyarados", "Alomomola", "Durant"]
+      "1-16": [
+        "Luvdisc",
+        "Plusle",
+        "Minun",
+        "Corsola"
+      ],
+      "17-36": [
+        "Slowbro",
+        "Dewgong",
+        "Omastar",
+        "Politoed"
+      ],
+      "37-60": [
+        "Escavalier",
+        "Eelektross",
+        "Starmie",
+        "Blastoise"
+      ],
+      "61-100": [
+        "Relicanth",
+        "Gyarados",
+        "Alomomola",
+        "Durant"
+      ]
     }
   },
   {
@@ -546,7 +458,10 @@
     "tileset": "tiled/tilesets/BuriedRelicWater-blob.png",
     "level": 7,
     "terrain": "water",
-    "canCross": ["fly", "swim"],
+    "canCross": [
+      "fly",
+      "swim"
+    ],
     "variants": {
       "floors": {
         "1": 1,
@@ -573,63 +488,45 @@
         "Mantyke",
         "Tentacool",
         "Baltoy",
-        "Horsea",
-        "Barboach",
-        "Larvitar",
-        "Seel",
-        "Staryu",
-        "Chinchou",
-        "Carvanha",
-        "Sandile"
+        "Horsea"
       ],
       "17-36": [
         "Corphish",
-        "Slowpoke",
-        "Bonsly",
-        "Lombre",
-        "Aron",
-        "Shuckle",
-        "Vibrava",
-        "Rhyhorn",
-        "Wailmer",
-        "Sealeo",
-        "Pupitar",
-        "Camerupt"
+        "Slowpoke"
       ],
       "37-60": [
-        "Croconaw",
-        "Gligar",
-        "Gorebyss",
-        "Octillery",
-        "Dugtrio",
-        "Lumineon",
-        "Slowbro",
-        "Bastiodon",
-        "Milotic",
-        "Whiscash",
-        "Golduck",
-        "Lairon"
+        "Croconaw"
       ],
       "61-100": [
         "Starmie",
-        "Armaldo",
-        "Empoleon",
-        "Wailord",
-        "Nidoking",
-        "Rampardos",
-        "Hippowdon",
-        "Archeops",
-        "Swampert",
-        "Feraligatr",
-        "Mamoswine",
-        "Garchomp"
+        "Armaldo"
       ]
     },
     "leaders": {
-      "1-16": ["Luvdisc", "Pelipper", "Qwilfish", "Probopass"],
-      "17-36": ["Lanturn", "Tentacruel", "Vaporeon", "Ludicolo"],
-      "37-60": ["Golurk", "Wailord", "Gyarados", "Poliwrath"],
-      "61-100": ["Excadrill", "Golem", "Rhyperior", "Kyogre"]
+      "1-16": [
+        "Luvdisc",
+        "Pelipper",
+        "Qwilfish",
+        "Probopass"
+      ],
+      "17-36": [
+        "Lanturn",
+        "Tentacruel",
+        "Vaporeon",
+        "Ludicolo"
+      ],
+      "37-60": [
+        "Golurk",
+        "Wailord",
+        "Gyarados",
+        "Poliwrath"
+      ],
+      "61-100": [
+        "Excadrill",
+        "Golem",
+        "Rhyperior",
+        "Kyogre"
+      ]
     }
   },
   {
@@ -638,7 +535,10 @@
     "tileset": "tiled/tilesets/TemporalLake-blob.png",
     "level": 8,
     "terrain": "water",
-    "canCross": ["fly", "swim"],
+    "canCross": [
+      "fly",
+      "swim"
+    ],
     "variants": {
       "floors": {
         "1": 1,
@@ -661,63 +561,45 @@
         "Abra",
         "Wooper",
         "Chingling",
-        "Tentacool",
-        "Spheal",
-        "Kirlia",
-        "Piplup",
-        "Remoraid",
-        "Psyduck",
-        "Deino",
-        "Mudkip"
+        "Tentacool"
       ],
       "17-36": [
         "Ducklett",
-        "Unown",
-        "Poliwag",
-        "Duosion",
-        "Woobat",
-        "Goldeen",
-        "Lombre",
-        "Gothorita",
-        "Jynx",
-        "Wailmer",
-        "Mantine",
-        "Chimecho"
+        "Unown"
       ],
       "37-60": [
-        "Dewott",
-        "Medicham",
-        "Croconaw",
-        "Zweilous",
-        "Qwilfish",
-        "Seadra",
-        "Druddigon",
-        "Seaking",
-        "Gabite",
-        "Dewgong",
-        "Shelgon",
-        "Azumarill"
+        "Dewott"
       ],
       "61-100": [
         "Altaria",
-        "Lapras",
-        "Fraxure",
-        "Golduck",
-        "Starmie",
-        "Empoleon",
-        "Wailord",
-        "Gyarados",
-        "Kingdra",
-        "Flygon",
-        "Dragonite",
-        "Garchomp"
+        "Lapras"
       ]
     },
     "leaders": {
-      "1-16": ["Unown", "Girafarig", "Medicham", "Bibarel"],
-      "17-36": ["Alakazam", "Lanturn", "Tentacruel", "Vaporeon"],
-      "37-60": ["Sharpedo", "Empoleon", "Gyarados", "Swampert"],
-      "61-100": ["Metagross", "Mesprit", "Celebi", "Reshiram"]
+      "1-16": [
+        "Unown",
+        "Girafarig",
+        "Medicham",
+        "Bibarel"
+      ],
+      "17-36": [
+        "Alakazam",
+        "Lanturn",
+        "Tentacruel",
+        "Vaporeon"
+      ],
+      "37-60": [
+        "Sharpedo",
+        "Empoleon",
+        "Gyarados",
+        "Swampert"
+      ],
+      "61-100": [
+        "Metagross",
+        "Mesprit",
+        "Celebi",
+        "Reshiram"
+      ]
     }
   },
   {
@@ -750,63 +632,45 @@
         "Abra",
         "Smoochum",
         "Gothita",
-        "Spoink",
-        "Wynaut",
-        "Bronzor",
-        "Drowzee",
-        "Klink",
-        "Natu",
-        "Deino",
-        "Unown"
+        "Spoink"
       ],
       "17-36": [
         "Exeggcute",
-        "Duosion",
-        "Bagon",
-        "Aron",
-        "Pawniard",
-        "Mawile",
-        "Vibrava",
-        "Lunatone",
-        "Beheeyem",
-        "Sigilyph",
-        "Medicham",
-        "Slowking"
+        "Duosion"
       ],
       "37-60": [
-        "Metang",
-        "Klang",
-        "Swoobat",
-        "Probopass",
-        "Alakazam",
-        "Solrock",
-        "Gabite",
-        "Claydol",
-        "Bastiodon",
-        "Altaria",
-        "Ferrothorn",
-        "Gothitelle"
+        "Metang"
       ],
       "61-100": [
         "Fraxure",
-        "Lairon",
-        "Starmie",
-        "Magnezone",
-        "Durant",
-        "Scizor",
-        "Kingdra",
-        "Excadrill",
-        "Klinklang",
-        "Aggron",
-        "Haxorus",
-        "Garchomp"
+        "Lairon"
       ]
     },
     "leaders": {
-      "1-16": ["Unown", "Girafarig", "Medicham", "Hypno"],
-      "17-36": ["Solrock", "Gardevoir", "Skarmory", "Starmie"],
-      "37-60": ["Bisharp", "Excadrill", "Aggron", "Garchomp"],
-      "61-100": ["Mesprit", "Mew", "Palkia", "Mewtwo"]
+      "1-16": [
+        "Unown",
+        "Girafarig",
+        "Medicham",
+        "Hypno"
+      ],
+      "17-36": [
+        "Solrock",
+        "Gardevoir",
+        "Skarmory",
+        "Starmie"
+      ],
+      "37-60": [
+        "Bisharp",
+        "Excadrill",
+        "Aggron",
+        "Garchomp"
+      ],
+      "61-100": [
+        "Mesprit",
+        "Mew",
+        "Palkia",
+        "Mewtwo"
+      ]
     }
   },
   {
@@ -815,7 +679,9 @@
     "tileset": "tiled/tilesets/TemporalTowerRuined-blob.png",
     "level": 10,
     "terrain": "void",
-    "canCross": ["fly"],
+    "canCross": [
+      "fly"
+    ],
     "variants": {
       "floors": {
         "1": 1,
@@ -843,63 +709,45 @@
         "Duskull",
         "Shuppet",
         "Dratini",
-        "Deino",
-        "Omanyte",
-        "Gible",
-        "Shieldon",
-        "Roggenrola",
-        "Bonsly",
-        "Nosepass",
-        "Corsola"
+        "Deino"
       ],
       "17-36": [
         "Sableye",
-        "Lampent",
-        "Kabuto",
-        "Misdreavus",
-        "Anorith",
-        "Haunter",
-        "Lunatone",
-        "Rhyhorn",
-        "Cranidos",
-        "Magcargo",
-        "Onix",
-        "Dragonair"
+        "Lampent"
       ],
       "37-60": [
-        "Cofagrigus",
-        "Zweilous",
-        "Probopass",
-        "Boldore",
-        "Solrock",
-        "Cradily",
-        "Omastar",
-        "Bastiodon",
-        "Altaria",
-        "Chandelure",
-        "Gengar",
-        "Froslass"
+        "Cofagrigus"
       ],
       "61-100": [
         "Relicanth",
-        "Armaldo",
-        "Drifblim",
-        "Dusknoir",
-        "Kingdra",
-        "Rhydon",
-        "Flygon",
-        "Gigalith",
-        "Dragonite",
-        "Aggron",
-        "Haxorus",
-        "Garchomp"
+        "Armaldo"
       ]
     },
     "leaders": {
-      "1-16": ["Shedinja", "Shuckle", "Spiritomb", "Mismagius"],
-      "17-36": ["Cradily", "Bastiodon", "Chandelure", "Aerodactyl"],
-      "37-60": ["Kabutops", "Kingdra", "Golem", "Dragonite"],
-      "61-100": ["Haxorus", "Latias", "Reshiram", "Rayquaza"]
+      "1-16": [
+        "Shedinja",
+        "Shuckle",
+        "Spiritomb",
+        "Mismagius"
+      ],
+      "17-36": [
+        "Cradily",
+        "Bastiodon",
+        "Chandelure",
+        "Aerodactyl"
+      ],
+      "37-60": [
+        "Kabutops",
+        "Kingdra",
+        "Golem",
+        "Dragonite"
+      ],
+      "61-100": [
+        "Haxorus",
+        "Latias",
+        "Reshiram",
+        "Rayquaza"
+      ]
     }
   },
   {
@@ -935,63 +783,45 @@
         "Wurmple",
         "Hoppip",
         "Petilil",
-        "Spinarak",
-        "Pidgey",
-        "Starly",
-        "Treecko",
-        "Cottonee",
-        "Spearow",
-        "Nincada",
-        "Taillow"
+        "Spinarak"
       ],
       "17-36": [
         "Cacnea",
-        "Snover",
-        "Exeggcute",
-        "Karrablast",
-        "Skorupi",
-        "Larvesta",
-        "Vullaby",
-        "Anorith",
-        "Illumise",
-        "Chatot",
-        "Pidgeotto",
-        "Carnivine"
+        "Snover"
       ],
       "37-60": [
-        "Emolga",
-        "Staravia",
-        "Mantine",
-        "Masquerain",
-        "Servine",
-        "Venomoth",
-        "Vespiquen",
-        "Cacturne",
-        "Volcarona",
-        "Abomasnow",
-        "Roserade",
-        "Whimsicott"
+        "Emolga"
       ],
       "61-100": [
         "Exeggutor",
-        "Escavalier",
-        "Breloom",
-        "Forretress",
-        "Honchkrow",
-        "Victreebel",
-        "Mandibuzz",
-        "Charizard",
-        "Braviary",
-        "Archeops",
-        "Leafeon",
-        "Salamence"
+        "Escavalier"
       ]
     },
     "leaders": {
-      "1-16": ["Shedinja", "Illumise", "Butterfree", "Ariados"],
-      "17-36": ["Mothim", "Cacturne", "Galvantula", "Vileplume"],
-      "37-60": ["Bellossom", "Jumpluff", "Dodrio", "Scizor"],
-      "61-100": ["Braviary", "Scolipede", "Salamence", "Genesect"]
+      "1-16": [
+        "Shedinja",
+        "Illumise",
+        "Butterfree",
+        "Ariados"
+      ],
+      "17-36": [
+        "Mothim",
+        "Cacturne",
+        "Galvantula",
+        "Vileplume"
+      ],
+      "37-60": [
+        "Bellossom",
+        "Jumpluff",
+        "Dodrio",
+        "Scizor"
+      ],
+      "61-100": [
+        "Braviary",
+        "Scolipede",
+        "Salamence",
+        "Genesect"
+      ]
     }
   },
   {
@@ -1027,63 +857,45 @@
         "Mantyke",
         "Tentacool",
         "Baltoy",
-        "Horsea",
-        "Barboach",
-        "Larvitar",
-        "Seel",
-        "Staryu",
-        "Chinchou",
-        "Carvanha",
-        "Sandile"
+        "Horsea"
       ],
       "17-36": [
         "Corphish",
-        "Slowpoke",
-        "Bonsly",
-        "Lombre",
-        "Aron",
-        "Shuckle",
-        "Vibrava",
-        "Rhyhorn",
-        "Wailmer",
-        "Sealeo",
-        "Pupitar",
-        "Camerupt"
+        "Slowpoke"
       ],
       "37-60": [
-        "Croconaw",
-        "Gligar",
-        "Gorebyss",
-        "Octillery",
-        "Dugtrio",
-        "Lumineon",
-        "Slowbro",
-        "Bastiodon",
-        "Milotic",
-        "Whiscash",
-        "Golduck",
-        "Lairon"
+        "Croconaw"
       ],
       "61-100": [
         "Starmie",
-        "Armaldo",
-        "Empoleon",
-        "Wailord",
-        "Nidoking",
-        "Rampardos",
-        "Hippowdon",
-        "Archeops",
-        "Swampert",
-        "Feraligatr",
-        "Mamoswine",
-        "Garchomp"
+        "Armaldo"
       ]
     },
     "leaders": {
-      "1-16": ["Luvdisc", "Pelipper", "Qwilfish", "Probopass"],
-      "17-36": ["Lanturn", "Tentacruel", "Vaporeon", "Ludicolo"],
-      "37-60": ["Golurk", "Wailord", "Gyarados", "Poliwrath"],
-      "61-100": ["Excadrill", "Golem", "Rhyperior", "Kyogre"]
+      "1-16": [
+        "Luvdisc",
+        "Pelipper",
+        "Qwilfish",
+        "Probopass"
+      ],
+      "17-36": [
+        "Lanturn",
+        "Tentacruel",
+        "Vaporeon",
+        "Ludicolo"
+      ],
+      "37-60": [
+        "Golurk",
+        "Wailord",
+        "Gyarados",
+        "Poliwrath"
+      ],
+      "61-100": [
+        "Excadrill",
+        "Golem",
+        "Rhyperior",
+        "Kyogre"
+      ]
     }
   },
   {
@@ -1092,7 +904,10 @@
     "tileset": "tiled/tilesets/WaterfallLake.png",
     "level": 5,
     "terrain": "water",
-    "canCross": ["fly", "swim"],
+    "canCross": [
+      "fly",
+      "swim"
+    ],
     "variants": {
       "floors": {
         "1": 1,
@@ -1121,63 +936,45 @@
         "Hoppip",
         "Surskit",
         "Vanillite",
-        "Spheal",
-        "Piplup",
-        "Horsea",
-        "Barboach",
-        "Cubchoo",
-        "Mudkip",
-        "Staryu",
-        "Poliwag"
+        "Spheal"
       ],
       "17-36": [
         "Delibird",
-        "Corphish",
-        "Shellder",
-        "Drifloon",
-        "Togetic",
-        "Rufflet",
-        "Vanillish",
-        "Archen",
-        "Emolga",
-        "Staravia",
-        "Tropius",
-        "Sigilyph"
+        "Corphish"
       ],
       "37-60": [
-        "Marshtomp",
-        "Mothim",
-        "Basculin",
-        "Qwilfish",
-        "Quagsire",
-        "Seaking",
-        "Slowbro",
-        "Tentacruel",
-        "Huntail",
-        "Vaporeon",
-        "Crawdaunt",
-        "Sharpedo"
+        "Marshtomp"
       ],
       "61-100": [
         "Scyther",
-        "Starmie",
-        "Politoed",
-        "Dodrio",
-        "Beartic",
-        "Mandibuzz",
-        "Charizard",
-        "Gyarados",
-        "Poliwrath",
-        "Archeops",
-        "Staraptor",
-        "Salamence"
+        "Starmie"
       ]
     },
     "leaders": {
-      "1-16": ["Delibird", "Cryogonal", "Sigilyph", "Vespiquen"],
-      "17-36": ["Gastrodon", "Omastar", "Fearow", "Crawdaunt"],
-      "37-60": ["Relicanth", "Dodrio", "Floatzel", "Blastoise"],
-      "61-100": ["Kingdra", "Staraptor", "Articuno", "Kyogre"]
+      "1-16": [
+        "Delibird",
+        "Cryogonal",
+        "Sigilyph",
+        "Vespiquen"
+      ],
+      "17-36": [
+        "Gastrodon",
+        "Omastar",
+        "Fearow",
+        "Crawdaunt"
+      ],
+      "37-60": [
+        "Relicanth",
+        "Dodrio",
+        "Floatzel",
+        "Blastoise"
+      ],
+      "61-100": [
+        "Kingdra",
+        "Staraptor",
+        "Articuno",
+        "Kyogre"
+      ]
     }
   },
   {
@@ -1185,10 +982,29 @@
     "name": "Magma Cavern",
     "tileset": "tiled/tilesets/MagmaCavern-blob.png",
     "terrain": "lava",
-    "canCross": ["fly", "lavawalk"],
+    "canCross": [
+      "fly",
+      "lavawalk"
+    ],
     "variants": {
-      "floors": { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6 },
-      "walls": { "255": { "1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5 } }
+      "floors": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6
+      },
+      "walls": {
+        "255": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 3,
+          "5": 4,
+          "6": 5
+        }
+      }
     },
     "layoutModifier": {
       "pasillos": 1,
@@ -1202,63 +1018,45 @@
         "Wooper",
         "Diglett",
         "Swinub",
-        "Baltoy",
-        "Numel",
-        "Barboach",
-        "Larvitar",
-        "Nincada",
-        "Omanyte",
-        "Gible",
-        "Lampent"
+        "Baltoy"
       ],
       "17-36": [
         "Aron",
-        "Hippopotas",
-        "Drilbur",
-        "Kabuto",
-        "Larvesta",
-        "Magcargo",
-        "Palpitoad",
-        "Shuckle",
-        "Anorith",
-        "Pupitar",
-        "Marshtomp",
-        "Camerupt"
+        "Hippopotas"
       ],
       "37-60": [
-        "Dugtrio",
-        "Gabite",
-        "Cradily",
-        "Onix",
-        "Omastar",
-        "Claydol",
-        "Bastiodon",
-        "Volcarona",
-        "Whiscash",
-        "Gligar",
-        "Lairon",
-        "Charizard"
+        "Dugtrio"
       ],
       "61-100": [
         "Torterra",
-        "Relicanth",
-        "Gigalith",
-        "Donphan",
-        "Rampardos",
-        "Hippowdon",
-        "Archeops",
+        "Relicanth"
+      ]
+    },
+    "leaders": {
+      "1-16": [
+        "Corsola",
+        "Magcargo",
+        "Shuckle",
+        "Camerupt"
+      ],
+      "17-36": [
+        "Omastar",
+        "Claydol",
+        "Bastiodon",
+        "Volcarona"
+      ],
+      "37-60": [
+        "Seismitoad",
+        "Kabutops",
+        "Swampert",
+        "Flygon"
+      ],
+      "61-100": [
         "Excadrill",
-        "Rhydon",
         "Mamoswine",
         "Aggron",
         "Garchomp"
       ]
-    },
-    "leaders": {
-      "1-16": ["Corsola", "Magcargo", "Shuckle", "Camerupt"],
-      "17-36": ["Omastar", "Claydol", "Bastiodon", "Volcarona"],
-      "37-60": ["Seismitoad", "Kabutops", "Swampert", "Flygon"],
-      "61-100": ["Excadrill", "Mamoswine", "Aggron", "Garchomp"]
     }
   }
 ]

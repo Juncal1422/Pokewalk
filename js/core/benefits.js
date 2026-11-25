@@ -21,7 +21,7 @@ export function combatBenefits(entity) {
 // Los porcentajes se calculan de nuevo sobre la forma actual, nunca sobre
 // el resultado de una transformación anterior.
 export function playerStats(species, playerLevel, bonuses, heldBenefits = game.held) {
-  const stats = statsFor(species, playerLevel, bonuses);
+  const stats = statsFor(species, playerLevel, {...bonuses,attack:(bonuses?.attack??0)+(heldBenefits.has('champion')?(game.mission?.championAttack??0):0)});
   if(game.runRelics?.has('black_sash')){
     // Una transformación fija un nuevo valor base al nivel de entrada de esa forma.
     const entryLevel=game.player?.dex===species.dex ? (game.defenseEntryLevel??5) : playerLevel;
@@ -48,6 +48,7 @@ export function playerStats(species, playerLevel, bonuses, heldBenefits = game.h
     stats.attack+=Math.floor(Math.max(0,stats.defense-cap)/2);
     stats.defense=Math.min(stats.defense,cap);
   }
+  if(game.runRelics?.has('debugger'))for(const key of Object.keys(stats))stats[key]*=4;
   return stats;
 }
 
