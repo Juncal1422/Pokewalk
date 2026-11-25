@@ -328,3 +328,5 @@ Cada bioma distribuye un máximo de diez especies salvajes distintas entre las c
 - `featherStun` interrumpe acciones y reinicia las recargas de los oponentes cercanos. El aturdimiento de Emplumado dura un segundo.
 - `payEssences` valida y descuenta el coste completo de Sedal y Regenerativo.
 - `releaseSpecial` resuelve defensa, curación y aura tras la carga.
+
+Corrección de la carga de efectos: los fotogramas de `featherfall` usan los índices publicados 000–016 y 018, 020, 022, 024, 026, 028. No renumerar esos archivos al ampliar la animación. La precarga señala el nombre de ruta si no se puede decodificar un recurso.

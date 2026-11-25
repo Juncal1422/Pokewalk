@@ -16,7 +16,8 @@ export async function loadEffects() {
   const groups = [
     ['fang',['fang/fang.png']],
     ['watergun',['watergun/watergun.png']], ['iron_hit',['iron_hit/iron_hit.png']],
-    ...[['featherfall',23],['webshield',11],['rock_aura',14],['grow',8],['rock_throw',18]].map(([id,count])=>
+    sequence('featherfall',23,index=>'featherfall/'+String([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28][index-1]).padStart(3,'0')+'.png'),
+    ...[['webshield',11],['rock_aura',14],['grow',8],['rock_throw',18]].map(([id,count])=>
       sequence(id,count,index=>id+'/'+String(index-1).padStart(3,'0')+'.png')),
     sequence('revive',39,index=>'revive/'+String(index-1).padStart(3,'0')+'.png'),
     sequence('battery',9,index=>'battery_burst/'+String(index-1).padStart(3,'0')+'.png'),
@@ -31,7 +32,8 @@ export async function loadEffects() {
     effectFrames.set(id, await Promise.all(paths.map(async path => {
       const spriteImage = new Image();
       spriteImage.src = assetUrl('../../assets/effects/'+path,import.meta.url).href;
-      await spriteImage.decode();
+      try { await spriteImage.decode(); }
+      catch (error) { throw new Error('No se pudo decodificar el fotograma '+path+' ('+spriteImage.src+'): '+error.message); }
       return spriteImage;
     })));
   }));
