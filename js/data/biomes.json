@@ -1185,13 +1185,10 @@
     "name": "Magma Cavern",
     "tileset": "tiled/tilesets/MagmaCavern-blob.png",
     "terrain": "lava",
-    "canCross": [
-      "fly",
-      "lavawalk"
-    ],
+    "canCross": ["fly", "lavawalk"],
     "variants": {
-      "floors": {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6},
-      "walls": {"255": {"1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5}}
+      "floors": { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6 },
+      "walls": { "255": { "1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5 } }
     },
     "layoutModifier": {
       "pasillos": 1,
@@ -1258,30 +1255,10 @@
       ]
     },
     "leaders": {
-      "1-16": [
-        "Corsola",
-        "Magcargo",
-        "Shuckle",
-        "Camerupt"
-      ],
-      "17-36": [
-        "Omastar",
-        "Claydol",
-        "Bastiodon",
-        "Volcarona"
-      ],
-      "37-60": [
-        "Seismitoad",
-        "Kabutops",
-        "Swampert",
-        "Flygon"
-      ],
-      "61-100": [
-        "Excadrill",
-        "Mamoswine",
-        "Aggron",
-        "Garchomp"
-      ]
+      "1-16": ["Corsola", "Magcargo", "Shuckle", "Camerupt"],
+      "17-36": ["Omastar", "Claydol", "Bastiodon", "Volcarona"],
+      "37-60": ["Seismitoad", "Kabutops", "Swampert", "Flygon"],
+      "61-100": ["Excadrill", "Mamoswine", "Aggron", "Garchomp"]
     }
   }
 ]
