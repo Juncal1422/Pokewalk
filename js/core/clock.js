@@ -8,6 +8,7 @@ export const gameTime = () => simulationMs;
 export function resetClock() { previousTimestamp = undefined; pendingMs = simulationMs = 0; }
 // Convierte el intervalo real entre fotogramas en pasos fijos de simulación acelerada.
 export function advanceClock(timestamp, paused, update) {
+  // Limitar la deuda a 100 ms evita ejecutar segundos de combate al recuperar una pestaña.
   const frameDeltaMs = previousTimestamp === undefined ? fixedStepMs : Math.min(100, Math.max(0, timestamp - previousTimestamp));
   previousTimestamp = timestamp;
   if (paused) { pendingMs = 0; return; }

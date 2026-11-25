@@ -15,6 +15,7 @@ export function levelUp() {
   player.level = levelFor(species, game.progress);
   const previous=player.stats;
   player.stats = playerStats(species, game.progress, player.bonuses);
+  // Compara atributos efectivos: un nivel puede aumentar algunos y dejar otros en su tope.
   for (const [key,value] of Object.entries(player.stats)) {
     const delta=value-previous[key];
     if(delta>0)game.pickups.push({key,delta,time:gameTime(),duration:4000});

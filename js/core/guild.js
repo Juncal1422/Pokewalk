@@ -1,3 +1,4 @@
+import { positionTooltip } from './message-frame.js';
 import { assetUrl } from './asset-url.js';
 import {game} from './state.js';
 import {element,portrait,gem} from './pokemon-panel.js';
@@ -68,7 +69,8 @@ function listPage(title,entries,page,back) {
       const label=cell.textContent.trim(),detail=cell.title;
       cell.removeAttribute('title');cell.setAttribute('aria-label',label);
       for(const node of [...cell.childNodes])if(node.nodeType===3)node.remove();
-      const show=()=>{tip.textContent=[label,detail].filter(Boolean).join(' · ');tip.hidden=false;};
+      const show=event=>{tip.textContent=[label,detail].filter(Boolean).join(' · ');tip.hidden=false;positionTooltip(tip,event,cell);};
+      cell.onpointermove=event=>positionTooltip(tip,event,cell);
       cell.onpointerenter=cell.onfocus=show;cell.onpointerleave=cell.onblur=()=>{tip.hidden=true;};
     }
     while(body.children.length<64)body.append(element('span'));

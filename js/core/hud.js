@@ -15,7 +15,7 @@ export const textBox = (drawingContext,x,y,width,height) => drawFrame(drawingCon
 const compact = new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 });
 // Abrevia cantidades grandes para que quepan en los contadores.
 const formatValue = value => value >= 1000 ? compact.format(value) : String(value);
-const essenceNames = 'normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon dark steel'.split(' ');
+export const essenceNames = 'normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon dark steel'.split(' ');
 // Precarga las esencias y los marcos utilizados por la interfaz del canvas.
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.

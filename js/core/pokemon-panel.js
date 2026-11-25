@@ -7,8 +7,8 @@ export function portrait(species) {
   iconImage.className = 'portrait';
   // Si falla el origen principal, intenta una sola vez el recurso de respaldo.
   iconImage.onerror = () => {
-    // Si falla el origen principal, intenta una sola vez el recurso de respaldo.
-  iconImage.onerror = null;
+    // Desarma el manejador antes de cambiar la URL para evitar reintentos en bucle.
+    iconImage.onerror = null;
     iconImage.src = 'https://cdn.jsdelivr.net/gh/PMDCollab/SpriteCollab@master/' + path;
   };
   iconImage.src = 'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/' + path;

@@ -12,9 +12,11 @@ async function readData(filename) {
 export async function loadEncountersCatalog() {
   const [speciesDefinitions, items] = await Promise.all([readData('pokemon.json'), readData('items.json')]);
   const pokemon = new Map();
+  // El rango ausente hereda el alcance estándar; los demás atributos deben ser positivos.
+  const statKeys = Object.keys(labels);
   for (const speciesDefinition of speciesDefinitions) {
     if (pokemon.has(speciesDefinition.dex) ||
-        !Number.isInteger(speciesDefinition.maxLevel) || speciesDefinition.maxLevel < 1 || !Object.keys(labels).every(statKey => (statKey === 'range' && speciesDefinition.stats[statKey] === undefined) || (Number.isInteger(speciesDefinition.stats[statKey]) && speciesDefinition.stats[statKey] > 0))) {
+        !Number.isInteger(speciesDefinition.maxLevel) || speciesDefinition.maxLevel < 1 || !statKeys.every(statKey => (statKey === 'range' && speciesDefinition.stats[statKey] === undefined) || (Number.isInteger(speciesDefinition.stats[statKey]) && speciesDefinition.stats[statKey] > 0))) {
       throw new Error('Ficha Pokémon inválida: ' + speciesDefinition.dex);
     }
     pokemon.set(speciesDefinition.dex, speciesDefinition);

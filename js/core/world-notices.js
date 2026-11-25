@@ -13,6 +13,7 @@ export function showWorldNotice(source, quantity, unit) {
     startedAt - notice.startedAt < lifetimeMs && Math.hypot(source.x-notice.worldX, source.y-notice.worldY)<12
   ).map(notice => notice.line));
   let line = 0;
+  // Reutiliza la primera línea libre aunque siga visible un aviso más alto.
   while (occupiedLines.has(line)) line++;
   game.worldNotices.push({
     worldX: source.x, worldY: source.y,

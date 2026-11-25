@@ -26,6 +26,7 @@ export async function loadItemImages(items) {
 // incluso si el jugador abandona la planta sin recoger el objeto.
 export function spawnFloorItems() {
   const mission = game.mission, fiveFloorBlock = Math.floor((game.floor - 1) / 5);
+  // El cupo de objetos se comparte entre cinco pisos consecutivos de la misma misión.
   if (mission.itemBlock !== fiveFloorBlock) { mission.itemBlock = fiveFloorBlock; mission.itemsPlaced = 0; }
   const occupied = new Set(game.entities.map(combatant => Math.floor(combatant.x / TILE) + ',' + Math.floor(combatant.y / TILE)));
   const sites = [];

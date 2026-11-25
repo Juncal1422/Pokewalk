@@ -11,6 +11,7 @@ const center = index => (index + 0.5) * TILE;
 // Consulta si una casilla del mapa está marcada como suelo.
 const land = (x, y) => game.grid[y]?.[x] === 0;
 const neighbors = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+const cardinalNeighbors = neighbors.slice(0,4);
 // Consulta la máscara de colisión en un punto para distinguir suelo y medio especial.
 const standingOnLand = (x, y) => groundFree(x, y, 0.01);
 
@@ -21,11 +22,12 @@ function route(enemy, goalX, goalY, terrainFree, nearestLand, playerOnLand, esca
   const start = cell(enemy.y) * width + cell(enemy.x);
   // La visión sigue el dibujo sólido del atlas, incluso para especies que
   // pueden cruzarlo. Sin visión directa buscamos un rodeo por ejes.
-  const directions = hasSight(enemy,enemy.prey??game.player) ? neighbors : neighbors.slice(0,4);
+  const directions = hasSight(enemy,enemy.prey??game.player) ? neighbors : cardinalNeighbors;
   const queue = [start];
   const previous = new Map([[start, -1]]);
   let bestTile = start;
   let distance = Infinity;
+  // La cola crece al descubrir casillas; avanzar un índice evita desplazar toda la cola.
   for (let stepIndex = 0; stepIndex < queue.length; stepIndex++) {
     const tileIndex = queue[stepIndex], x = tileIndex % width, y = Math.floor(tileIndex / width);
     if (!playerOnLand || land(x, y)) {

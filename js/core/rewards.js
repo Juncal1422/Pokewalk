@@ -46,9 +46,9 @@ function rewardCard(option, state) {
     icon.src = assetUrl('../../'+benefit.image,import.meta.url).href;
     icon.alt = ''; icon.className = 'essence';
     card.append(icon,element('strong',benefit.name),element('span',benefit.description));
-    if (benefit.active) {
-      const replacedBenefit = [...state.held].map(id=>game.benefits.get(id)).find(item=>item.slot === benefit.slot);
-      if (replacedBenefit) card.append(element('small','Reemplaza '+replacedBenefit.name));
+    if (projected.lostBenefits.length) {
+      const names = projected.lostBenefits.map(id => game.benefits.get(id).name);
+      card.append(element('strong', 'Perderás: ' + names.join(', ')));
     }
   }
   const baseline = playerStats(state.row,game.progress,state.bonuses,state.held);
@@ -103,7 +103,7 @@ export function chooseReward(options, state, extra=false) {
     // Ajusta las tres tarjetas completas, incluso con varias evoluciones ramificadas.
     function fit() {
       dialog.style.zoom = '1';
-      dialog.style.zoom = Math.min(1,(window.innerWidth-12)/dialog.offsetWidth,
+      dialog.style.zoom = Math.min(1.2,(window.innerWidth-12)/dialog.offsetWidth,
         (window.innerHeight-12)/dialog.offsetHeight);
     }
     fit();

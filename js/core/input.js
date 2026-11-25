@@ -15,6 +15,7 @@ export function attachInput() {
   function cancelInput() {
     game.keys = Object.create(null);
     const player = game.player;
+    // Soltar movimiento detiene la marcha sin interrumpir un impacto o un ataque en curso.
     if (player?.state === 'Walk') setState(player, 'Idle');
   }
   // Inicia el ataque del jugador si el piso está activo y el jugador sigue vivo.

@@ -303,7 +303,9 @@ export function updateWildAbility(wild) {
     setState(wild,'Charge');
     return true;
   }
-  if (simulationTime-activeCast.start < 500) return true;
+  // La onda de roca concede un segundo de reacción; el resto mantiene su aviso habitual.
+  const chargeDuration = benefitId === 'rock_core' ? 1000 : 500;
+  if (simulationTime-activeCast.start < chargeDuration) return true;
   if (!activeCast.released) {
     activeCast.released=true;
     if (benefitId==='mamoswine_fang') {

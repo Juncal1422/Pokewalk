@@ -39,6 +39,7 @@ export function resetGameState() {
   game.rooms = [];
   game.entities = [];
   game.player = null;
+  // Descarta las referencias a sprites de la aventura anterior al volver a montar el juego.
   game.spriteCache.clear();
   game.keys = Object.create(null);
   game.animationFrame = 0;

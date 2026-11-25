@@ -25,6 +25,7 @@ const diagonalRules = new Array(
 
 // Elimina diagonales desconectadas de los vecinos que las sostienen.
 function normalize(mask) {
+  // Una diagonal del atlas sólo se conecta cuando están presentes sus dos vecinos ortogonales.
   for (const [diagonal, sides] of diagonalRules) {
     if ((mask & sides) !== sides) mask &= ~diagonal;
   }

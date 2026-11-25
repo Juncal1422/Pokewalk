@@ -24,6 +24,7 @@ const sounds = {
 // Cada voz lee el volumen actual; se reutiliza la URL del banco local de efectos.
 export function playSound(event) {
   const volume = game.collection?.volume;
+  // Evita crear un reproductor cuando el efecto es inaudible o el entorno no admite audio.
   if (!volume || !sounds[event] || typeof Audio === 'undefined') return;
   const voice = new Audio(
     assetUrl('../../sounds/' + sounds[event] + '.wav', import.meta.url),

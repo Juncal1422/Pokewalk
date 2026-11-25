@@ -13,3 +13,17 @@ export function drawFrame(drawingContext, image, x, y, width, height, opacity = 
     }
   }
 }
+
+// Sitúa una ficha flotante junto al cursor (o al control enfocado). Invierte el lado al tocar un borde.
+export function positionTooltip(tip, event, anchor) {
+  const keyboardFocus = event.type === 'focus';
+  const anchorBox = keyboardFocus && anchor.getBoundingClientRect();
+  const x = keyboardFocus ? anchorBox.right : event.clientX;
+  const y = keyboardFocus ? anchorBox.bottom : event.clientY;
+  const {width, height} = tip.getBoundingClientRect();
+  const zoom = tip.currentCSSZoom || width / tip.offsetWidth || 1;
+  const left = x + width + 14 <= innerWidth ? x + 12 : x - width - 12;
+  const top = y + height + 14 <= innerHeight ? y + 12 : y - height - 12;
+  tip.style.left = Math.max(2,left) / zoom + 'px';
+  tip.style.top = Math.max(2,top) / zoom + 'px';
+}

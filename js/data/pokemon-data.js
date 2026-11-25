@@ -14,6 +14,7 @@ function frameCenters(animation) {
   return Array.from({length:Math.floor(spriteImage.height/frameHeight)}, (_,directionRow) =>
     Array.from({length:frames}, (_,frameColumn) => {
       let opaquePixelCount=0, sumPixelX=0, sumPixelY=0;
+      // El desplazamiento combina la fila de dirección y la columna del fotograma antes de leer el alfa.
       for (let y=0;y<frameHeight;y++) for (let x=0;x<frameWidth;x++) {
         if (rgbaPixels[4*((directionRow*frameHeight+y)*spriteImage.width+frameColumn*frameWidth+x)+3] < 128) continue;
         sumPixelX+=x+.5; sumPixelY+=y+.5; opaquePixelCount++;

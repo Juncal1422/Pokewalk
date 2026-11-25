@@ -330,3 +330,10 @@ Cada bioma distribuye un máximo de diez especies salvajes distintas entre las c
 - `releaseSpecial` resuelve defensa, curación y aura tras la carga.
 
 Corrección de la carga de efectos: los fotogramas de `featherfall` usan los índices publicados 000–016 y 018, 020, 022, 024, 026, 028. No renumerar esos archivos al ampliar la animación. La precarga señala el nombre de ruta si no se puede decodificar un recurso.
+
+### Compatibilidad del ataque básico e interfaz
+
+- `weaponConflict` en benefits.js mantiene compatibles Punzante y Cuerno de Rhyhorn. Acuático, Ancestral y Tirarrocas sustituyen el ataque completo. `projectReward` calcula en una copia los beneficios desplazados, también por la ranura activa. La tarjeta muestra sus nombres y la selección aplica esa misma proyección. Un bono de atributos conserva el equipo.
+- Debugger activo inicia cada aventura con 100 esencias de cada uno de los 17 tipos. Mantiene el tamaño normal, duplica los atributos y multiplica la velocidad por tres en total. Las recogidas de esencias siguen multiplicándose por cuatro.
+- El aviso del Núcleo de roca salvaje dura 1000 ms de simulación. El jugador y las demás activas salvajes conservan sus tiempos.
+- El HUD se amplía un 20 %. El detalle del piso utiliza el 90 % de su escala anterior y pagina hasta seis fichas. Las descripciones cercanas tienen escala 1,4. `positionTooltip` (message-frame.js) ancla la ficha al puntero o al control enfocado y escoge el lado disponible. Las tarjetas de oferta conservan su propio marco y las cuadrículas de colección muestran la casilla central sin bordes.

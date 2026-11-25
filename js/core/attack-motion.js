@@ -18,6 +18,7 @@ export function attackMotion(entity, animation) {
   impactTime = Math.max(animationDuration * .25, Math.min(animationDuration * .75, impactTime));
   // Cada arma recorre el alcance completo durante su mitad de la animación.
   const secondWeapon = entity.doubleStrike && elapsed >= animationDuration/2;
+  // En un golpe doble, cada mitad usa la curva completa de ida y vuelta de un arma.
   const localTime = entity.doubleStrike ? 2*elapsed-(secondWeapon?animationDuration:0) : elapsed;
   const impact = localTime >= impactTime;
   const impactsDue = Number(!!secondWeapon) + Number(impact);

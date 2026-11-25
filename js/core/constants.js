@@ -16,6 +16,7 @@ export const ATTACK_RANGE = 25;
 export const PLAYER_GRACE_MS = 1000;
 export const PLAYER_STAGGER_MS = 140;
 
+// Los índices siguen las filas del sprite: empiezan mirando abajo y avanzan hacia la derecha.
 export const DIR_MAP = {
   '0,1': 0,
   '1,1': 1,

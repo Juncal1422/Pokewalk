@@ -1,3 +1,4 @@
+import { positionTooltip } from './message-frame.js';
 import { assetUrl } from './asset-url.js';
 import {synergyText} from './benefits.js';
 import { gameTime } from './clock.js';
@@ -6,7 +7,13 @@ import { game } from './state.js';
 // Los iconos conservan sus nodos durante el combate para no perder el hover.
 export function attachInventory(root) {
   const tooltip = root.querySelector('#item-tip');
-  let signature;
+  let previousItems, previousBenefits;
+  // Compara los IDs con la instantánea del último dibujo sin serializar dos listas en cada frame.
+  function unchanged(entries, previous) {
+    if (!previous || entries.size !== previous.size) return false;
+    for (const id of entries) if (!previous.has(id)) return false;
+    return true;
+  }
   const activeIcons = new Map();
   // Convierte el tiempo restante de cada activa en el ángulo sombreado de su icono.
   function updateCooldown() {
@@ -17,10 +24,10 @@ export function attachInventory(root) {
   }
   // Actualiza el sombreado en cada fotograma y reconstruye los nodos solo cuando cambie la colección.
   return () => {
-    const inventorySignature = JSON.stringify([[...game.inventory], [...game.held]]);
-    if (signature === inventorySignature) return updateCooldown();
+    if (unchanged(game.inventory, previousItems) && unchanged(game.held, previousBenefits)) return updateCooldown();
     activeIcons.clear();
-    signature = inventorySignature;
+    previousItems = new Set(game.inventory);
+    previousBenefits = new Set(game.held);
     tooltip.hidden = true;
     for (const [selector, entries] of [
       ['#inventory', [...game.inventory].map(id => game.items[id])],
@@ -37,11 +44,13 @@ export function attachInventory(root) {
           iconImage.style.gridRow = String(3 - Math.floor(index/25));
         }
         // El tooltip describe el icono bajo el cursor y no captura el clic de ataque.
-        iconImage.onpointerenter = () => {
+        iconImage.onpointerenter = event => {
           const id=entry.id??[...game.inventory][index];
           tooltip.textContent = [entry.name,entry.description,synergyText(id)].filter(Boolean).join(' · ');
           tooltip.hidden = false;
+          positionTooltip(tooltip,event,iconImage);
         };
+        iconImage.onpointermove = event => positionTooltip(tooltip,event,iconImage);
         // Oculta la descripción en cuanto el cursor abandona el icono.
         iconImage.onpointerleave = () => { tooltip.hidden = true; };
         if (entry.active) {

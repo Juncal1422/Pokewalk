@@ -32,6 +32,7 @@ export function chooseBiome(biomes, missionNumber) {
   const weights = biomes.map((candidateBiome) =>
     Math.exp(-Math.abs(candidateBiome.level - preferred) / 1.5),
   );
+  // Restar pesos de una tirada única elige el bioma según su proximidad a la dificultad objetivo.
   let roll = Math.random() * weights.reduce((sum, weight) => sum + weight, 0);
   return biomes.find((_, i) => (roll -= weights[i]) < 0) ?? biomes.at(-1);
 }

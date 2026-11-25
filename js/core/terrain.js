@@ -29,6 +29,7 @@ export function readWallShapes(pixels, width, height) {
         if (!solid(x, y)) { x++; continue; }
         const start = x;
         while (x < size && solid(x, y)) x++;
+        // Codifica los dos extremos; sólo tramos con idéntica anchura y origen se fusionan verticalmente.
         const key = start * (size + 1) + x;
         let solidRectangle = previous.get(key);
         if (!solidRectangle) {

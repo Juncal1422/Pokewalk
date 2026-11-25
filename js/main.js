@@ -13,7 +13,7 @@ import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
 import { projectReward } from './core/benefits.js';
 import { loadEffects, tickAbilities, pickupEffect } from './core/abilities.js';
-import { loadHud } from './core/hud.js';
+import { loadHud, essenceNames } from './core/hud.js';
 import { loadBiomes } from './data/biomes.js';
 import { DEFAULT_DEX, FADE_MS, TILE } from './core/constants.js';
 import { updateEntity, loadLevel, showToast } from './core/entities.js';
@@ -120,6 +120,15 @@ const EMBEDDED_APP = `
       #guild .catalog-tip,#poke-walk-app #item-tip {background:rgb(6 12 20 / 20%) padding-box;text-shadow:0 1px 2px black;color:white;pointer-events:none;}
       #guild .catalog-tip {position:absolute;bottom:1%;right:1%;max-width:min(520px,90vw);padding:5px;z-index:3;}
       #guild .catalog-tip[hidden]{display:none;}
+      #inventory,#benefits,#toast,#loading,#emblem-award {zoom:1.2;}
+      #roster {zoom:1.08;}
+      #nearby {zoom:1.4;max-width:min(41vw,380px);max-height:28.5vh;}
+      #guild {zoom:1.2;}
+      #guild .contracts {width:min(100%,1200px);}
+      #guild .catalog-board {width:min(100%,59dvh);}
+      #guild:has(.contracts),#guild .contracts,#rewards,#guild .catalog-board,#guild .catalog-board button,#guild .catalog-grid {border:0;border-image:none;}
+      #guild .catalog-board [aria-pressed=true] {outline:2px solid #eca6ca;outline-offset:-2px;}
+      #guild .catalog-tip,#poke-walk-app #item-tip {position:fixed;inset:auto;width:max-content;max-width:min(440px,78vw);font-size:22px;line-height:1.18;overflow-wrap:anywhere;z-index:20;}
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
@@ -266,7 +275,7 @@ function updateRoster() {
     const stats = 'HP ' + enemy.hp + '/' + enemy.stats.hpMax + ' · ATQ ' + enemy.stats.attack + ' · DEF ' + enemy.stats.defense;
     if (rosterCard.children[2].textContent !== stats) rosterCard.children[2].textContent = stats;
   }
-  pagePanel(rosterList.parentNode,rosterList,Math.max(1,Math.floor((innerHeight*.5/1.2-32)/75)));
+  pagePanel(rosterList.parentNode,rosterList,Math.min(6,Math.max(1,Math.floor((innerHeight*.5/1.08-32)/75))));
 }
 
 // Agrupa duplicados y actualiza el panel solo al entrar o salir de su radio.
@@ -295,7 +304,7 @@ function updateNearby() {
     descriptionParagraph.textContent = item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
     return descriptionParagraph;
   }));
-  pagePanel(panel,descriptions,Math.max(1,Math.floor((innerHeight*.4-40)/80)));
+  pagePanel(panel,descriptions,Math.max(1,Math.floor((innerHeight*.4/1.4-40)/80)));
 }
 
 // Ejecuta pasos fijos, procesa recogidas y objetivos y solicita el siguiente repintado.
@@ -407,6 +416,8 @@ export async function startGame({
     await visitGuild();
     const firstMission=await selectMission(missionOffers(1,5));
     game.runRelics=new Set(game.collection.enabled);
+    // Asignar el saldo inicial también hace idempotente un reintento de carga desde el gremio.
+    game.essences = game.runRelics.has('debugger') ? Object.fromEntries(essenceNames.map(type => [type, 100])) : {};
     try {
       await changeBiome(firstMission.biome);
       await loadLevel(DEFAULT_DEX,firstMission,1);

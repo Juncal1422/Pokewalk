@@ -86,9 +86,19 @@ export function playerStats(
   }
   if (game.runRelics?.has('debugger')) {
     for (const key of Object.keys(stats)) stats[key] *= 2;
+    // Conserva el tamaño de la forma y aplica el extra de movilidad sobre la velocidad duplicada.
     stats.size *= 0.5;
+    stats.speed = Math.round(stats.speed * 1.5);
   }
   return stats;
+}
+
+// Cuerno y Punzante comparten el ataque direccional. Los otros tres lo sustituyen entero.
+const directionalWeapons = new Set(['spiky', 'rhyhorn_horn']);
+const exclusiveWeapons = new Set(['acuatic', 'ancient', 'rock_thrower']);
+function weaponConflict(owned, incoming) {
+  if (exclusiveWeapons.has(incoming)) return directionalWeapons.has(owned) || exclusiveWeapons.has(owned);
+  return directionalWeapons.has(incoming) && exclusiveWeapons.has(owned);
 }
 
 // Calcula en copias el coste, los atributos y las activas que resultarían de elegir una tarjeta.
@@ -97,21 +107,17 @@ export function projectReward(state, option) {
     bonuses = { ...state.bonuses },
     balances = { ...state.balances };
   const benefit = game.donors.get(option.row.name);
-  const replacesActive =
-    benefit?.active &&
-    [...heldBenefits].some((id) => game.benefits.get(id).slot === benefit.slot);
-  const allStats =
-    option.bonus ||
-    heldBenefits.has(benefit?.id) ||
-    (heldBenefits.size >= 27 && !replacesActive);
+  // Una sustitución libera una plaza incluso cuando el inventario ya contiene 27 beneficios.
+  const conflicts = [...heldBenefits].filter(id => benefit && (
+    weaponConflict(id, benefit.id) || (benefit.active && game.benefits.get(id).slot === benefit.slot)
+  ));
+  const allStats = option.bonus || heldBenefits.has(benefit?.id) || (heldBenefits.size >= 27 && !conflicts.length);
+  const lostBenefits = allStats ? [] : conflicts;
   if (allStats) {
     for (const statKey of Object.keys(bonuses)) bonuses[statKey]++;
   } else {
     if (!benefit) throw new Error('Falta el beneficio de ' + option.row.name);
-    if (benefit.active)
-      for (const benefitId of heldBenefits)
-        if (game.benefits.get(benefitId).slot === benefit.slot)
-          heldBenefits.delete(benefitId);
+    for (const id of lostBenefits) heldBenefits.delete(id);
     heldBenefits.add(benefit.id);
   }
   if (option.payment) balances[option.payment.type] -= option.payment.amount;
@@ -123,6 +129,7 @@ export function projectReward(state, option) {
     essence: option.essence,
     benefit,
     allStats,
+    lostBenefits,
   };
 }
 

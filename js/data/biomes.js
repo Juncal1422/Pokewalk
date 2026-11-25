@@ -5,6 +5,7 @@ export async function loadBiomes(pokemon) {
   if (!response.ok) throw new Error('No se pudo leer biomes.json');
   const biomeDefinitions = await response.json();
   console.info('[Biomas] Catálogo cargado', biomeDefinitions.length);
+  // El índice inverso evita recorrer la Pokédex por cada nombre de cada franja.
   const byName = new Map([...pokemon.values()].map(species => [species.name, species.dex]));
   // El JSON se edita por nombre. El motor y los sprites comparten el número de Pokédex.
   function roster(encounterBands, biome) {

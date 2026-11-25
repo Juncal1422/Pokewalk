@@ -36,6 +36,7 @@ export const attackRate = (score) =>
 
 // Calcula un atributo de la especie antes de equipo, beneficios o ajustes del líder.
 function naturalStat(species, statKey, level) {
+  // Las fichas antiguas sin rango explícito comparten el alcance estándar del combate.
   if (statKey === 'range') return species.stats.range ?? ATTACK_RANGE;
   if (statKey === 'size') return species.stats.size;
   if (statKey === 'hpMax') {

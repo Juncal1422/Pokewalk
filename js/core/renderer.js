@@ -201,6 +201,10 @@ export function draw() {
   // Los avisos se superponen a todos los combatientes y efectos, incluso cuando cambia la profundidad del jugador.
   drawWorldNotices(drawingContext, ZOOM, cameraX, cameraY);
 
-  drawHud(drawingContext, canvas, player);
+  // Escala sólo el HUD; las coordenadas lógicas conservan el anclaje a las cuatro esquinas.
+  drawingContext.save();
+  drawingContext.scale(1.2, 1.2);
+  drawHud(drawingContext, {width:canvas.width/1.2, height:canvas.height/1.2}, player);
+  drawingContext.restore();
   drawingContext.restore();
 }

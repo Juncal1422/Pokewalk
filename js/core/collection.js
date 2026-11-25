@@ -6,7 +6,7 @@ export const relics = {
     name: 'Debugger',
     price: 0,
     image: 'items/weird_token.png',
-    description: 'Atributos y esencias ×2. Probabilidad de objetos ×1,5.',
+    description: 'Empieza con 100 esencias de cada tipo. Velocidad ×3, tamaño normal, demás atributos ×2 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
   },
   black_sash: {
     name: 'Cinta Negra',
