@@ -24,12 +24,12 @@
   --background-red-offer-rgb: 65 5 18;
   --background-confirmation-rgb: 43 3 16;
   --background-summary-rgb: 17 26 36;
-  --background-summary-opacity: .8;
-  --background-panel-opacity: .3;
-  --background-confirmation-opacity: .2;
-  --background-tooltip-opacity: .5;
-  --background-notice-opacity: .88;
-  --background-upgrade-card-opacity: .3;
+  --background-summary-opacity: .9;
+  --background-panel-opacity: .8;
+  --background-confirmation-opacity: .9;
+  --background-tooltip-opacity: .9;
+  --background-notice-opacity: .9;
+  --background-upgrade-card-opacity: .7;
   --background-floor-card-opacity: 1;
   --disabled-opacity: .65;
   --upgrade-stat-divider: rgb(255 255 255 / 14%);
@@ -40,7 +40,7 @@
   --tooltip-text-shadow: #000;
   --active-key-background: #182333;
   --cooldown-rgb: 5 10 20;
-  --cooldown-opacity: .7;
+  --cooldown-opacity: .8;
   --pixel-art-rendering: pixelated;
 
   /* Fondos del gremio y atlas de los catálogos. Cada pareja se sortea al abrir su pantalla. */
@@ -97,8 +97,8 @@
   --hud-mission-textbox: blue;
   --hud-battery-textbox: blue;
   --hud-essence-tooltip-textbox: blue;
-  --hud-textbox-opacity: .82;
-  --hud-stats-textbox-opacity: .65;
+  --hud-textbox-opacity: .9;
+  --hud-stats-textbox-opacity: .75;
   --hud-textbox-background-rgb: 12 20 34;
   --hud-text-color: #fff;
   --hud-battery-color: #c8edff;
@@ -115,7 +115,7 @@
   --dungeon-void: #0b0d12;
   --player-shadow: rgb(30 64 175 / 42%);
   --other-pokemon-shadow: rgb(0 0 0 / 42%);
-  --player-grace-opacity: .28;
+  --player-grace-opacity: .2;
   --player-golden-filter: sepia(1) saturate(3) brightness(1.15);
   --player-amulet-filter: sepia(.35) hue-rotate(235deg) saturate(1.45);
   --pokemon-evasion-filter: saturate(.5);
