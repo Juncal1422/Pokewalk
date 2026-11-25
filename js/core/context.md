@@ -334,7 +334,7 @@ La hoja de featherfall contiene sus 23 cuadros consecutivos en el orden de los o
 ### Compatibilidad del ataque básico e interfaz
 
 - `weaponConflict` en benefits.js mantiene compatibles Punzante y Cuerno de Rhyhorn. Acuático, Ancestral y Tirarrocas sustituyen el ataque completo. `projectReward` calcula en una copia los beneficios desplazados, también por la ranura activa. La tarjeta muestra sus nombres y la selección aplica esa misma proyección. Un bono de atributos conserva el equipo.
-- Debugger activo inicia cada aventura con 100 esencias de cada uno de los 17 tipos. Mantiene el tamaño normal, duplica los atributos y multiplica la velocidad por tres en total. Las recogidas de esencias siguen multiplicándose por cuatro.
+- Debugger activo inicia cada aventura con 100 esencias de cada uno de los 17 tipos. Mantiene el tamaño normal, cuadruplica ataque y defensa, triplica velocidad y duplica los demás atributos salvo tamaño. Las recogidas de esencias siguen multiplicándose por cuatro.
 - El aviso del Núcleo de roca salvaje dura 1000 ms de simulación. El jugador y las demás activas salvajes conservan sus tiempos.
 - El HUD se amplía un 20 %. El detalle del piso utiliza el 90 % de su escala anterior y pagina hasta nueve fichas. Las descripciones cercanas tienen escala 1,4. `positionTooltip` (message-frame.js) ancla la ficha al puntero o al control enfocado y escoge el lado disponible. Las tarjetas de oferta conservan su propio marco y las cuadrículas de colección muestran la casilla central sin bordes.
 
@@ -343,3 +343,8 @@ La hoja de featherfall contiene sus 23 cuadros consecutivos en el orden de los o
 Cada efecto tiene su PNG en assets/effects/nombre/nombre.png. Las secuencias lineales avanzan de izquierda a derecha. loadEffects carga sólo las hojas que usa el combate. drawEffects alinea el anclaje vertical del fotograma al origen del efecto antes de escalarlo. Mine usa 48 px, boost 39 y rock_aura 30. Las armas direccionales conservan la distribución de sus celdas.
 Los beneficios que cambian el ataque declaran spriteanimations con los nombres de PMDCollab en orden de prioridad y Charge al final. triggerAttack fija la hoja para toda la acción y para la detección de impacto.
 El detalle de crónica reúne stats, misiones, formas y equipo en una vista. Las flechas del piso paginan de nueve en nueve. El HUD identifica las esencias bajo el cursor. El gremio sortea uno de dos fondos por apertura de menú y usa bgdefault para las demás pantallas, con introducción en negro. Cursor acompaña la navegación, Exclamation la selección de misión y Use TM la mejora.
+
+### Carga de menús y final de aventura
+
+preloadMenuArt (guild.js) decodifica los trece fondos y los cinco atlas de catálogo durante el arranque. El tablero muestra las ocho partes exteriores del atlas alrededor de sus 64 celdas. Las confirmaciones del gremio usan textbox-p. La crónica reserva los retratos para la lista de formas.
+Los pisos se cargan desde loadLevel sin depender de un indicador de carga en el DOM. settleMission liquida una sola vez el premio final y registra Exitosa al completar la misión 100. El siguiente fotograma devuelve al gremio. Si falla un rescate en la misión 100, la siguiente oferta conserva el número 100 y abre un nuevo registro de misión. Una derrota cierra la aventura como Fallida y una recarga como Interrumpida.

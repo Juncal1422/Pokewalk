@@ -87,6 +87,8 @@ export function playerStats(
   if (game.runRelics?.has('debugger')) {
     for (const key of Object.keys(stats)) stats[key] *= 2;
     // Conserva el tamaño de la forma y aplica el extra de movilidad sobre la velocidad duplicada.
+    stats.attack *= 2;
+    stats.defense *= 2;
     stats.size *= 0.5;
     stats.speed = Math.round(stats.speed * 1.5);
   }

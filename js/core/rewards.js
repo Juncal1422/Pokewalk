@@ -37,7 +37,7 @@ function rewardCard(option, state) {
   const stats = playerStats(species,progress,projected.bonuses,projected.held);
   const card = element('button');
   card.type = 'button';
-  card.style.backgroundColor = tones[essence];
+  card.style.backgroundColor = tones[essence] + '4d';
   const heading = element('strong', species.name);
   heading.prepend(gem(essence));
   card.append(portrait(species), heading, element('small', 'Nv. ' + levelFor(species, progress)));

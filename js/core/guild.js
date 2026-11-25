@@ -15,6 +15,21 @@ const story=[
 ];
 const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
+const backgrounds = {Pommedew:'bg',Beneficios:'bgbenefits',Objetos:'bgitems','Tablón de misiones':'bgmissions','Pokédex':'bgpokedex',Reliquias:'bgrelics'};
+const menuImages = new Map();
+
+// Retiene las imágenes decodificadas entre menús y aventuras. Cada recurso usa la misma URL que el CSS.
+export async function preloadMenuArt() {
+  const names = ['bgdefault',...Object.values(sectionArt),...Object.values(backgrounds).flatMap(prefix=>[prefix+'1',prefix+'2'])];
+  await Promise.all(names.map(async name=>{
+    if(menuImages.has(name))return;
+    const image=new Image();
+    image.src=asset('ui/'+name+'.png');
+    await image.decode();
+    menuImages.set(name,image);
+  }));
+}
+
 // Crea un control nativo que también funciona con teclado.
 function button(label,action,sound='select') {
   const control=element('button',label);
@@ -27,7 +42,6 @@ function screen(title) {
   const dialog=document.querySelector('#guild');
   dialog.replaceChildren();
   dialog.className='';
-  const backgrounds = {Pommedew:'bg',Beneficios:'bgbenefits',Objetos:'bgitems','Tablón de misiones':'bgmissions','Pokédex':'bgpokedex',Reliquias:'bgrelics'};
   const prefix = backgrounds[title];
   const background = prefix ? prefix+(Math.random()<.5?'1':'2') : 'bgdefault';
   dialog.style.backgroundImage = title ? 'url("'+asset('ui/'+background+'.png')+'")' : 'none';
@@ -121,12 +135,11 @@ function historyDetail(run,back) {
     record.append(section);
   }
   const missions=element('ol');
-  for(const mission of run.missions){
+  for(const [index,mission] of run.missions.entries()){
     const row=element('li',mission.name+(mission.red?' · Roja':'')+' · '+mission.biome+' · Piso '+mission.floor+'/'+mission.floors+' · '+mission.status+' · '+mission.reward+' emblemas');
+    row.value=mission.number ?? index+1;
     if(mission.kills!=null)row.append(' · '+mission.kills+' bajas');
     if(mission.quota)row.append(' · Objetivo '+mission.quota);
-    const form=game.pokemon.get(mission.form);
-    if(form){const image=portrait(form);image.alt=image.title=form.name;row.append(image);}
     missions.append(row);
   }
   record.append(missions);dialog.append(record,button('Volver',back));
@@ -209,7 +222,8 @@ function shop(back) {
 // Una acción destructiva o una importación requiere una segunda elección dentro del juego.
 function confirmChange(message,accept,cancel) {
   const dialog=screen('Ajustes');
-  dialog.append(element('p',message),button('Cancelar',cancel),button('Confirmar',accept));
+  const prompt=element('p',message);prompt.className='confirmation';
+  dialog.append(prompt,button('Cancelar',cancel),button('Confirmar',accept));
 }
 
 // Exportar e importar operan sobre el mismo formato versionado. Borrar exige confirmación.

@@ -6,7 +6,7 @@ export const relics = {
     name: 'Debugger',
     price: 0,
     image: 'items/weird_token.png',
-    description: 'Empieza con 100 esencias de cada tipo. Velocidad ×3, tamaño normal, demás atributos ×2 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
+    description: 'Empieza con 100 esencias de cada tipo. Ataque y defensa ×4, velocidad ×3, tamaño normal, demás atributos ×2 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
   },
   black_sash: {
     name: 'Cinta Negra',
@@ -109,6 +109,14 @@ export function parseCollection(text) {
     record.benefits = [
       ...new Set(record.benefits.map((id) => aliases[id] ?? id)),
     ];
+  // Traduce etiquetas históricas tanto al cargar desde el navegador como al importar.
+  for (const run of data.history) {
+    if (run.status === 'Rescatada') run.status = 'Fallida';
+    for (const mission of run.missions) {
+      if (mission.status === 'Completada') mission.status = 'Exitosa';
+      if (['Derrota','Rescate fallido'].includes(mission.status)) mission.status = 'Fallida';
+    }
+  }
   if (!data.relics.includes('debugger')) data.relics.push('debugger');
   return data;
 }
@@ -182,8 +190,9 @@ export function checkpoint() {
 export function recordFloor() {
   const mission = game.mission;
   const missions = game.chronicle.missions;
-  if (missions.length < mission.number)
+  if (game.floor === 1)
     missions.push({
+      number: mission.number,
       type: mission.type,
       name: mission.name,
       biomeId: mission.biome.id,
@@ -202,7 +211,11 @@ export function recordFloor() {
 export function settleMission() {
   const entry = game.chronicle.missions.at(-1);
   if (entry.status !== 'En curso') return 0;
-  entry.status = game.mission.failed ? 'Rescate fallido' : 'Completada';
+  entry.status = game.mission.failed ? 'Fallida' : 'Exitosa';
+  if (game.mission.number === 100 && !game.mission.failed) {
+    game.chronicle.status = 'Exitosa';
+    game.chronicle.ended = new Date().toISOString();
+  }
   entry.reward = game.mission.failed ? 0 : game.mission.reward;
   game.collection.emblems += entry.reward;
   checkpoint();

@@ -274,7 +274,6 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
     game.entities.push(enemy);
   });
   spawnFloorItems();
-  game.loadingEl.style.display = 'none';
   console.info('[Piso]', floor, mission.name, enemyDexNumbers);
 }
 

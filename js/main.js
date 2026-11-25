@@ -1,5 +1,5 @@
 import { assetUrl } from './core/asset-url.js';
-import { visitGuild, selectMission, guildMessage } from './core/guild.js';
+import { visitGuild, selectMission, guildMessage, preloadMenuArt } from './core/guild.js';
 import {
   loadCollection,
   beginChronicle,
@@ -92,13 +92,11 @@ const EMBEDDED_APP = `
       #rewards .keep-form { width:auto; margin:8px auto 0; flex-direction:row; gap:8px; }
       #rewards .keep-form .portrait { width:44px; height:44px; }
       @media(max-width:440px) { #rewards button { padding:1px; border-width:5px; font-size:15px; } }
-      #poke-walk-app #loading { position:absolute; inset:0; background:rgba(17,19,26,.9); display:flex; align-items:center; justify-content:center; font-size:1.25rem; z-index:10; }
       #poke-walk-app #toast { position:absolute; top:10px; left:50%; transform:translateX(-50%); background:rgba(220,38,38,.92); color:#fff; padding:5px 12px; border-radius:6px; font-size:1.05rem; font-weight:600; display:none; z-index:12; }
       #poke-walk-app .box { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-b.png', import.meta.url).href}") 16 stretch; background:rgb(12 20 34 / 82%) padding-box; color:white; }
       #poke-walk-app #toast { background:rgb(12 20 34 / 88%) padding-box; }
-      #poke-walk-app #loading { inset:50% auto auto 50%; transform:translate(-50%,-50%); padding:7px; width:max-content; max-width:85vw; }
       @media(max-width:579px) { #roster { top:110px; } }
-      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast,#loading { zoom:1; }
+      #inventory,#benefits,#item-tip,#nearby,#rewards,#toast { zoom:1; }
       #roster { zoom:1.2; }
       #inventory,#benefits { position:absolute; display:grid; pointer-events:none; gap:1px; }
       #inventory { left:min(223px,38vw); right:min(30vw,380px); bottom:8px;
@@ -119,7 +117,7 @@ const EMBEDDED_APP = `
       }
       #guild button,#guild .offers button,#guild .letterbox {border:6px solid transparent;border-image:var(--green) 16 stretch;background-clip:padding-box;}
       #guild .offers .red {border-image-source:var(--pink);}
-      #guild .catalog-board {width:min(93vw,71dvh);aspect-ratio:1;box-sizing:border-box;display:grid;grid-template:repeat(8,minmax(0,1fr))/repeat(8,minmax(0,1fr));border:clamp(6px,2vmin,16px) solid transparent;border-image:var(--catalog-art) 48 stretch;image-rendering:pixelated;}
+      #guild .catalog-board {width:min(93vw,71dvh);aspect-ratio:1;box-sizing:border-box;display:grid;grid-template:repeat(8,minmax(0,1fr))/repeat(8,minmax(0,1fr));border:min(7.8vw,5.9dvh) solid transparent;border-image:var(--catalog-art) 48 stretch;image-rendering:pixelated;}
       #guild .catalog-board>* {min-width:0;min-height:0;padding:0;background:var(--catalog-art) center/300% 300% no-repeat padding-box;display:grid;place-items:center;}
       #guild .catalog-board button {border:2px solid transparent;border-image:var(--blue) 16 stretch;}
       #guild .catalog-board img {width:74%;height:74%;object-fit:contain;}
@@ -127,13 +125,13 @@ const EMBEDDED_APP = `
       #guild .catalog-tip,#poke-walk-app #item-tip {background:rgb(6 12 20 / 20%) padding-box;text-shadow:0 1px 2px black;color:white;pointer-events:none;}
       #guild .catalog-tip {position:absolute;bottom:1%;right:1%;max-width:min(520px,90vw);padding:5px;z-index:3;}
       #guild .catalog-tip[hidden]{display:none;}
-      #inventory,#benefits,#toast,#loading,#emblem-award {zoom:1.2;}
+      #inventory,#benefits,#toast,#emblem-award {zoom:1.2;}
       #roster {zoom:1.08;}
       #nearby {zoom:1.4;max-width:min(41vw,380px);max-height:28.5vh;}
       #guild {zoom:1.2;}
       #guild .contracts {width:min(100%,1200px);}
       #guild .catalog-board {width:min(100%,59dvh);}
-      #guild:has(.contracts),#guild .contracts,#rewards,#guild .catalog-board,#guild .catalog-board button,#guild .catalog-grid {border:0;border-image:none;}
+      #guild:has(.contracts),#guild .contracts,#rewards,#guild .catalog-board button,#guild .catalog-grid {border:0;border-image:none;}
       #guild .catalog-board [aria-pressed=true] {outline:2px solid #eca6ca;outline-offset:-2px;}
       #guild .catalog-tip,#poke-walk-app #item-tip {position:fixed;inset:auto;width:max-content;max-width:min(440px,78vw);font-size:22px;line-height:1.18;overflow-wrap:anywhere;z-index:20;}
       #guild {background-size:cover;background-position:center;border:0;}
@@ -151,6 +149,11 @@ const EMBEDDED_APP = `
       #roster .roster-benefit {grid-column:3;grid-row:1/3;align-self:center;width:clamp(14px,2.8vmin,26px);}
       @media(max-width:680px){#roster ul{grid-template-rows:repeat(5,auto);}#roster li{gap:0;border-width:3px;}}
       #rewards::backdrop {background:#101923 url("${assetUrl('../assets/ui/bgdefault.png', import.meta.url)}") center/cover;}
+      #guild button,#guild label,#guild .species-card,#guild .guild-list p,#guild .letterbox,#rewards button,#emblem-award {background-color:rgb(7 12 18 / 30%);background-clip:padding-box;}
+      #guild .offers .red {background-color:rgb(65 5 18 / 30%);}
+      #guild .guild-list p,#guild .confirmation {border:6px solid transparent;border-image:var(--blue) 16 stretch;padding:6px;}
+      #guild .confirmation {border-image-source:var(--pink);background:rgb(43 3 16 / 20%) padding-box;}
+      #guild nav span {color:#000;}
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
@@ -198,7 +201,6 @@ async function nextLevel() {
   try {
     const mission = game.mission;
     if (game.portal.kind === 'stairs') {
-      game.loadingEl.style.display = 'flex';
       await loadLevel(game.player.dex, mission, game.floor + 1);
       recordFloor();
       playSound('stairs');
@@ -222,6 +224,8 @@ async function nextLevel() {
         setTimeout(() => notice.showPopover(), 0);
         setTimeout(() => notice.hidePopover(), 3000);
       }
+      // settleMission ya ha guardado el pago y el resultado final en la misma crónica.
+      if (game.chronicle.status === 'Exitosa') return;
       const selectedForms = [],
         selectedBenefits = [];
       for (
@@ -246,9 +250,8 @@ async function nextLevel() {
           if (!state.allStats) selectedBenefits.push(state.benefit.id);
         }
       }
-      game.loadingEl.style.display = 'flex';
       const nextMission = await selectMission(
-        missionOffers(mission.number + 1, levelFor(state.row, game.progress)),
+        missionOffers(Math.min(100, mission.number + 1), levelFor(state.row, game.progress)),
       );
       await changeBiome(nextMission.biome);
       const previousHeld = game.held;
@@ -272,7 +275,6 @@ async function nextLevel() {
     showToast(error.message);
     if (document.hasFocus()) game.canvas.focus();
   } finally {
-    game.loadingEl.style.display = 'none';
     game.changingLevel = false;
   }
 }
@@ -443,6 +445,11 @@ function updateNearby() {
 
 // Ejecuta pasos fijos, procesa recogidas y objetivos y solicita el siguiente repintado.
 function frame(timestamp) {
+  // Reinicia desde el límite entre fotogramas, cuando la transición del portal ya ha terminado.
+  if (game.chronicle?.status === 'Exitosa') {
+    void startGame({root:game.canvas.closest('#poke-walk-app').parentElement});
+    return;
+  }
   advanceClock(timestamp, game.changingLevel, () => {
     if (game.changingLevel) return;
     tickAbilities();
@@ -460,10 +467,10 @@ function frame(timestamp) {
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
-      game.chronicle.status = 'Rescatada';
+      game.chronicle.status = 'Fallida';
       game.chronicle.ended = new Date().toISOString();
       if (game.chronicle.missions.at(-1).status === 'En curso')
-        game.chronicle.missions.at(-1).status = 'Derrota';
+        game.chronicle.missions.at(-1).status = 'Fallida';
       checkpoint();
       playSound('defeat');
       void startGame({
@@ -525,7 +532,6 @@ export async function startGame({
   document.head.append(icon);
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
-  game.loadingEl = document.getElementById('loading');
   game.toastEl = document.getElementById('toast');
   // Adapta el búfer del canvas al tamaño real de la ventana y vuelve a dibujar.
   const resize = () => {
@@ -540,6 +546,7 @@ export async function startGame({
       response.json(),
     ),
     fetch(benefitsUrl).then((response) => response.json()),
+    preloadMenuArt(),
     preparePortal(),
     loadHud(),
     loadTerrain(),
