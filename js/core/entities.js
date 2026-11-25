@@ -98,6 +98,9 @@ export function triggerAttack(attacker) {
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
   attacker.fangStrike = !['acuatic','rock_thrower','ancient'].some(id=>combatBenefits(attacker)?.has(id)) && (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
   attacker.doubleStrike = attacker.fangStrike && attacker.isPlayer && synergyActive('doubleStrike');
+  // Fija una sola hoja para que los fotogramas de impacto y el render usen el mismo reloj.
+  const weapon = [...(combatBenefits(attacker) ?? [])].map(id => game.benefits.get(id)).find(benefit => benefit?.spriteanimations);
+  attacker.attackAnimation = weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
   attacker.strikesDone = 0;
   setState(attacker, 'Attack');
 }
@@ -319,7 +322,7 @@ export function updateEntity(entity) {
       updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);
   }
 
-  const animation = entity.state === 'Attack' && entity.fangStrike ? entity.anims.Charge : entity.anims[entity.state] || entity.anims.Idle;
+  const animation = entity.state === 'Attack' ? entity.attackAnimation ?? entity.anims.Attack : entity.anims[entity.state] || entity.anims.Idle;
   const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) :
     entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) * (entity.isPlayer ? 1 : 0.48) : 1;
   const isHurt = entity.state === 'Hurt';

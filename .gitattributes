@@ -22,3 +22,6 @@ sounds/*.wav export-ignore
 "sounds/Healing Wish Hit.wav" -export-ignore
 "sounds/Water Gun.wav" -export-ignore
 "sounds/Rollout.wav" -export-ignore
+"sounds/Cursor.wav" -export-ignore
+"sounds/Exclamation.wav" -export-ignore
+"sounds/Use TM.wav" -export-ignore

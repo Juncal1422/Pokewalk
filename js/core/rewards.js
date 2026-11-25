@@ -1,3 +1,4 @@
+import { playSound } from './audio.js';
 import { assetUrl } from './asset-url.js';
 import { evolutionCost } from './evolution.js';
 import { game } from './state.js';
@@ -84,6 +85,7 @@ export function chooseReward(options, state, extra=false) {
       // El valor resuelto identifica la opción cuya proyección hizo esta tarjeta.
       card.onclick = () => {
         dialog.close();
+        playSound('upgrade');
         resolve(option);
       };
       cards.append(card);
@@ -94,7 +96,7 @@ export function chooseReward(options, state, extra=false) {
       keepFormButton.type = 'button';
       keepFormButton.className = 'keep-form';
       // Conservar la forma cierra el diálogo sin comprar una mejora.
-      keepFormButton.onclick = () => { dialog.close(); resolve(null); };
+      keepFormButton.onclick = () => { playSound('select'); dialog.close(); resolve(null); };
       cards.after(keepFormButton);
     }
     // La tecla Escape no debe saltarse la decisión de fin de misión.

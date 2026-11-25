@@ -18,7 +18,7 @@ export const relics = {
     name: 'Batería agotada',
     price: 18,
     description:
-      'E · Cada 10 esencias eléctricas almacena una descarga de ataque ×4 y alcance ×3.',
+      'R · Cada 4 esencias eléctricas almacena una descarga de ataque ×4 y alcance ×3.',
   },
 };
 

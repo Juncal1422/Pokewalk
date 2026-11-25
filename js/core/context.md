@@ -50,7 +50,7 @@ El pago base es el nivel de bioma ×0,7 redondeado hacia arriba, más 0 por recu
 
 La clave local `pokewalk.pommedew.collection.v1` conserva metadatos, identificadores y datos históricos. No serializar catálogos, combatientes, inventarios jugables ni mapas. En historial se guardan las formas, el equipo descubierto, los beneficios, el nivel, los atributos y las misiones con su bioma, piso, estado y pago. El reinicio no reanuda una crónica interrumpida. Los ID desconocidos siguen siendo consultables tras importar. Exportar e importar usan el mismo JSON; se valida antes de reemplazar.
 
-La tienda inicial vende Cinta Negra por 12 emblemas y Batería agotada por 18. Las compras quedan activadas y se pueden alternar en Colección → Reliquias. Los interruptores se fijan al aceptar el primer encargo. Cinta Negra limita defensa a la base de entrada de cada forma y convierte la mitad entera del excedente en ataque. La batería ocupa E mientras esté equipada; cada 10 esencias eléctricas compran una descarga en la aventura. Las afinidades de Fuego y Eléctrico se multiplican por cada tipo defensor; la inmunidad evita el impacto. Punzante y los ataques normales conservan daño neutro.
+La tienda inicial vende Cinta Negra por 12 emblemas y Batería agotada por 18. Las compras quedan activadas y se pueden alternar en Colección → Reliquias. Los interruptores se fijan al aceptar el primer encargo. Cinta Negra limita defensa a la base de entrada de cada forma y convierte la mitad entera del excedente en ataque. La batería se activa con R. Cada 4 esencias eléctricas compran una descarga en la aventura. Las afinidades de Fuego y Eléctrico se multiplican por cada tipo defensor; la inmunidad evita el impacto. Punzante y los ataques normales conservan daño neutro.
 
 ## Archivos y ámbitos de estado
 
@@ -329,11 +329,17 @@ Cada bioma distribuye un máximo de diez especies salvajes distintas entre las c
 - `payEssences` valida y descuenta el coste completo de Sedal y Regenerativo.
 - `releaseSpecial` resuelve defensa, curación y aura tras la carga.
 
-Corrección de la carga de efectos: los fotogramas de `featherfall` usan los índices publicados 000–016 y 018, 020, 022, 024, 026, 028. No renumerar esos archivos al ampliar la animación. La precarga señala el nombre de ruta si no se puede decodificar un recurso.
+La hoja de featherfall contiene sus 23 cuadros consecutivos en el orden de los originales. La precarga señala el nombre de ruta si no se puede decodificar un recurso.
 
 ### Compatibilidad del ataque básico e interfaz
 
 - `weaponConflict` en benefits.js mantiene compatibles Punzante y Cuerno de Rhyhorn. Acuático, Ancestral y Tirarrocas sustituyen el ataque completo. `projectReward` calcula en una copia los beneficios desplazados, también por la ranura activa. La tarjeta muestra sus nombres y la selección aplica esa misma proyección. Un bono de atributos conserva el equipo.
 - Debugger activo inicia cada aventura con 100 esencias de cada uno de los 17 tipos. Mantiene el tamaño normal, duplica los atributos y multiplica la velocidad por tres en total. Las recogidas de esencias siguen multiplicándose por cuatro.
 - El aviso del Núcleo de roca salvaje dura 1000 ms de simulación. El jugador y las demás activas salvajes conservan sus tiempos.
-- El HUD se amplía un 20 %. El detalle del piso utiliza el 90 % de su escala anterior y pagina hasta seis fichas. Las descripciones cercanas tienen escala 1,4. `positionTooltip` (message-frame.js) ancla la ficha al puntero o al control enfocado y escoge el lado disponible. Las tarjetas de oferta conservan su propio marco y las cuadrículas de colección muestran la casilla central sin bordes.
+- El HUD se amplía un 20 %. El detalle del piso utiliza el 90 % de su escala anterior y pagina hasta nueve fichas. Las descripciones cercanas tienen escala 1,4. `positionTooltip` (message-frame.js) ancla la ficha al puntero o al control enfocado y escoge el lado disponible. Las tarjetas de oferta conservan su propio marco y las cuadrículas de colección muestran la casilla central sin bordes.
+
+### Hojas de efectos, crónicas y gremio
+
+Cada efecto tiene su PNG en assets/effects/nombre/nombre.png. Las secuencias lineales avanzan de izquierda a derecha. loadEffects carga sólo las hojas que usa el combate. drawEffects alinea el anclaje vertical del fotograma al origen del efecto antes de escalarlo. Mine usa 48 px, boost 39 y rock_aura 30. Las armas direccionales conservan la distribución de sus celdas.
+Los beneficios que cambian el ataque declaran spriteanimations con los nombres de PMDCollab en orden de prioridad y Charge al final. triggerAttack fija la hoja para toda la acción y para la detección de impacto.
+El detalle de crónica reúne stats, misiones, formas y equipo en una vista. Las flechas del piso paginan de nueve en nueve. El HUD identifica las esencias bajo el cursor. El gremio sortea uno de dos fondos por apertura de menú y usa bgdefault para las demás pantallas, con introducción en negro. Cursor acompaña la navegación, Exclamation la selección de misión y Use TM la mejora.

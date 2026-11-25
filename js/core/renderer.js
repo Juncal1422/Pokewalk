@@ -136,7 +136,7 @@ export function draw() {
     drawingContext.fill();
 
     const usesWeaponEffect = entity.state === 'Attack' && entity.fangStrike;
-    const animation = usesWeaponEffect ? entity.anims.Charge : entity.anims[entity.state] || entity.anims.Idle;
+    const animation = entity.state === 'Attack' ? entity.attackAnimation ?? entity.anims.Attack : entity.anims[entity.state] || entity.anims.Idle;
     const offset = entity.state === 'Attack' ? attackMotion(entity, animation) : { x: 0, y: 0 };
     const scale = ZOOM * entity.stats.size / 100;
     const spriteWidth = animation.fw * scale, spriteHeight = animation.fh * scale;
@@ -145,8 +145,9 @@ export function draw() {
       Math.floor(animation.img.height / animation.fh) - 1,
     );
     const correction = entity.state === 'Attack' && !usesWeaponEffect ? animation.offsets?.[row]?.[entity.frame] : null;
-    const shiftX = (usesWeaponEffect ? 0 : offset.x*ZOOM) + (correction?.x ?? 0)*scale;
-    const shiftY = (usesWeaponEffect ? 0 : offset.y*ZOOM) + (correction?.y ?? 0)*scale;
+    const stationary = usesWeaponEffect || (entity.state === 'Attack' && entity.attackAnimation === entity.anims.Shoot);
+    const shiftX = (stationary ? 0 : offset.x*ZOOM) + (correction?.x ?? 0)*scale;
+    const shiftY = (stationary ? 0 : offset.y*ZOOM) + (correction?.y ?? 0)*scale;
     const elapsed = gameTime() - entity.lastHit;
     drawingContext.save();
     if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2) drawingContext.globalAlpha *= 0.28;

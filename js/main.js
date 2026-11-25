@@ -129,6 +129,21 @@ const EMBEDDED_APP = `
       #guild:has(.contracts),#guild .contracts,#rewards,#guild .catalog-board,#guild .catalog-board button,#guild .catalog-grid {border:0;border-image:none;}
       #guild .catalog-board [aria-pressed=true] {outline:2px solid #eca6ca;outline-offset:-2px;}
       #guild .catalog-tip,#poke-walk-app #item-tip {position:fixed;inset:auto;width:max-content;max-width:min(440px,78vw);font-size:22px;line-height:1.18;overflow-wrap:anywhere;z-index:20;}
+      #guild {background-size:cover;background-position:center;border:0;}
+      #guild .guild-list,#poke-walk-app nav,#roster nav button {border:0;border-image:none;background:transparent;}
+      #guild .run-record {flex:none;width:min(760px,78vw);color:white;background:#111a24cc;padding:8px;box-sizing:border-box;}
+      #guild .run-record img {width:28px;height:28px;object-fit:contain;vertical-align:middle;}
+      #guild .run-record ol {columns:2;margin:5px 0;padding-left:2em;}
+      #guild .run-record li {break-inside:avoid;}
+      #guild .catalog-tip,#poke-walk-app #item-tip,#poke-walk-app #nearby {background-color:rgb(0 0 0 / 50%);}
+      #roster {max-height:none;max-width:min(52vw,740px);}
+      #roster ul {grid-auto-flow:column;grid-template-rows:repeat(3,auto);}
+      #roster li {grid-template-columns:auto minmax(0,1fr) auto;font-size:clamp(10px,1.7vmin,15px);}
+      #roster .portrait {grid-column:1;grid-row:1/3;width:clamp(20px,4vmin,44px);}
+      #roster li strong,#roster li span {grid-column:2;}
+      #roster .roster-benefit {grid-column:3;grid-row:1/3;align-self:center;width:clamp(14px,2.8vmin,26px);}
+      @media(max-width:680px){#roster ul{grid-template-rows:repeat(5,auto);}#roster li{gap:0;border-width:3px;}}
+      #rewards::backdrop {background:#101923 url("${assetUrl('../assets/ui/bgdefault.png',import.meta.url)}") center/cover;}
     </style>
     <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
@@ -270,12 +285,20 @@ function updateRoster() {
       rosterCard.setAttribute('aria-label', species.name + ' · ' + species.essences.join(', '));
       rosterCard.title = species.essences.join(' / ');
       rosterCard.append(portrait(species), element('strong', species.name + (enemy.ally?' · Aliado':enemy.boss ? ' · Líder' : '')), element('span'));
+      const benefit = game.donors.get(species.name);
+      if (benefit) {
+        const image = new Image();
+        image.src = assetUrl('../'+benefit.image,import.meta.url).href;
+        image.alt = image.title = benefit.name;
+        image.className = 'roster-benefit';
+        rosterCard.append(image);
+      }
       rosterList.append(rosterCard);
     }
     const stats = 'HP ' + enemy.hp + '/' + enemy.stats.hpMax + ' · ATQ ' + enemy.stats.attack + ' · DEF ' + enemy.stats.defense;
     if (rosterCard.children[2].textContent !== stats) rosterCard.children[2].textContent = stats;
   }
-  pagePanel(rosterList.parentNode,rosterList,Math.min(6,Math.max(1,Math.floor((innerHeight*.5/1.08-32)/75))));
+  pagePanel(rosterList.parentNode,rosterList,9);
 }
 
 // Agrupa duplicados y actualiza el panel solo al entrar o salir de su radio.

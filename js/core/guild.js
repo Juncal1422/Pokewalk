@@ -16,9 +16,9 @@ const story=[
 const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
 // Crea un control nativo que también funciona con teclado.
-function button(label,action) {
+function button(label,action,sound='select') {
   const control=element('button',label);
-  control.onclick=()=>{playSound('select');action()};
+  control.onclick=()=>{playSound(sound);action()};
   return control;
 }
 
@@ -27,6 +27,10 @@ function screen(title) {
   const dialog=document.querySelector('#guild');
   dialog.replaceChildren();
   dialog.className='';
+  const backgrounds = {Pommedew:'bg',Beneficios:'bgbenefits',Objetos:'bgitems','Tablón de misiones':'bgmissions','Pokédex':'bgpokedex',Reliquias:'bgrelics'};
+  const prefix = backgrounds[title];
+  const background = prefix ? prefix+(Math.random()<.5?'1':'2') : 'bgdefault';
+  dialog.style.backgroundImage = title ? 'url("'+asset('ui/'+background+'.png')+'")' : 'none';
   if(title)dialog.append(element('h1',title));
   dialog.oncancel=event=>event.preventDefault();
   if(!dialog.open)dialog.showModal();
@@ -47,7 +51,7 @@ async function introduction() {
     let position=0;
     const write=()=>{const [span,char]=letters[position++];span.append(char)};
     const timer=setInterval(()=>{if(position<letters.length)write();else clearInterval(timer)},23);
-    box.onclick=()=>{clearInterval(timer);if(position<letters.length){while(position<letters.length)write()}else resolve()};
+    box.onclick=()=>{playSound('select');clearInterval(timer);if(position<letters.length){while(position<letters.length)write()}else resolve()};
     dialog.append(box);box.focus();
   });
   game.collection.intro=true;saveCollection();
@@ -93,13 +97,49 @@ function listPage(title,entries,page,back) {
 // Los recursos de interfaz se resuelven junto al módulo tanto en local como en el CDN.
 function icon(path) {const image=new Image();image.src=asset(path);image.alt='';return image}
 
-// El detalle del historial usa páginas también para misiones, especies y equipo.
+// La crónica reúne todas las misiones en una vista. Los iconos conservan nombres
+// accesibles y una entrada antigua sigue siendo legible aunque falte su recurso.
 function historyDetail(run,back) {
-  const rows=[...Object.entries(run.stats).map(([key,v])=>(labels[key]??key)+' '+v),
-    ...run.missions.map((m,i)=>(i+1)+'. '+m.name+(m.red?' · Roja':'')+' · '+m.biome+' · Piso '+m.floor+'/'+m.floors+' · '+m.status+' · '+m.reward+' emblemas'),
-    ...run.forms.map(id=>'Forma · '+(game.pokemon.get(id)?.name??id)),...run.items.map(id=>game.items[id]?.name??id),
-    ...run.benefits.map(id=>game.benefits.get(id)?.name??id)];
-  listPage('Aventura · Nv. '+run.level,rows.map(text=>()=>element('p',text)),0,back);
+  const dialog=screen('Aventura · Nv. '+run.level);
+  const record=element('article');record.className='run-record';
+  record.append(element('p',new Date(run.date).toLocaleDateString('es')+' · '+run.status));
+  const stats=Object.entries(run.stats).map(([key,v])=>(labels[key]??key)+' '+v);
+  if(run.hp!=null)stats.unshift('PV restantes '+run.hp);
+  record.append(element('p',stats.join(' · ')));
+  for(const [title,ids,lookup,isForm] of [
+    ['Formas',run.forms,id=>game.pokemon.get(id),true],
+    ['Objetos',run.items,id=>game.items[id],false],
+    ['Beneficios',run.benefits,id=>game.benefits.get(id),false]
+  ]){
+    const section=element('section');section.append(element('strong',title+' '));
+    for(const id of ids){
+      const entry=lookup(id);
+      if(!entry){section.append(element('span',String(id)));continue;}
+      const image=isForm?portrait(entry):icon(entry.image.replace('assets/',''));
+      image.alt=image.title=entry.name;section.append(image);
+    }
+    record.append(section);
+  }
+  const missions=element('ol');
+  for(const mission of run.missions){
+    const row=element('li',mission.name+(mission.red?' · Roja':'')+' · '+mission.biome+' · Piso '+mission.floor+'/'+mission.floors+' · '+mission.status+' · '+mission.reward+' emblemas');
+    if(mission.kills!=null)row.append(' · '+mission.kills+' bajas');
+    if(mission.quota)row.append(' · Objetivo '+mission.quota);
+    const form=game.pokemon.get(mission.form);
+    if(form){const image=portrait(form);image.alt=image.title=form.name;row.append(image);}
+    missions.append(row);
+  }
+  record.append(missions);dialog.append(record,button('Volver',back));
+  // Ajusta incluso una crónica larga en el espacio que dejan título y botón.
+  function fit(){
+    if(!record.isConnected)return;
+    record.style.zoom=1;
+    const available=dialog.clientHeight-dialog.querySelector('h1').offsetHeight-dialog.querySelector('button').offsetHeight-90;
+    record.style.zoom=Math.max(.01,Math.min(1,available/Math.max(1,record.scrollHeight)));
+  }
+  fit();const observer=new ResizeObserver(fit);observer.observe(dialog);
+  const cleanup=new MutationObserver(()=>{if(!record.isConnected){observer.disconnect();cleanup.disconnect();}});
+  cleanup.observe(dialog,{childList:true});
 }
 
 const sectionArt={'Tienda de Aventureros':'shop','Pokédex':'pokedex',Objetos:'objetos',Beneficios:'beneficios',Reliquias:'reliquias'};
@@ -126,7 +166,7 @@ function catalogCard(id,record,action){
 function collectionMenu(back) {
   const dialog=screen('Colección'),again=()=>collectionMenu(back),data=game.collection;
   const lists={
-    Historial:data.history.slice().reverse().map(run=>()=>button(new Date(run.date).toLocaleDateString('es')+' · '+run.status+' · '+run.missions.length+' misiones',()=>historyDetail(run,again))),
+    Historial:data.history.slice().reverse().map(run=>()=>button(new Date(run.date).toLocaleDateString('es')+' · '+run.status+' · '+run.missions.length+' misiones',()=>historyDetail(run,()=>open('Historial')))),
     Pokédex:[...game.pokemon.keys()].map(id=>()=>{const row=game.pokemon.get(id);
       if(!row)return element('p',String(id));
       const card=button(row.name,()=>speciesPage(row,()=>open('Pokédex')));
@@ -204,7 +244,7 @@ export function selectMission(offers) {
   return new Promise(resolve=>{
     const dialog=screen('Tablón de misiones'),grid=element('section');grid.className='offers contracts';grid.style.setProperty('--cards',offers.length);
     for(const mission of offers){
-      const card=button('',()=>{dialog.close();resolve(mission)});if(mission.red){card.className='red';card.append(element('small','Papel rojo · +15 niveles'))}
+      const card=button('',()=>{dialog.close();resolve(mission)},'mission');if(mission.red){card.className='red';card.append(element('small','Papel rojo · +15 niveles'))}
       card.append(element('strong',mission.name),element('span',mission.biome.name+' · '+mission.floors+' pisos'));
       const portraits=element('div');
       if(mission.type!=='leader')for(const id of mission.pool)portraits.append(portrait(game.pokemon.get(id)));

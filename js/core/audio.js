@@ -1,7 +1,7 @@
 import { assetUrl } from './asset-url.js';
 import { game } from './state.js';
 const sounds = {
-  select: 'Highlight',
+  select: 'Cursor', mission: 'Exclamation', upgrade: 'Use TM',
   accept: 'Correct',
   hit: 'Mach Punch',
   miss: 'Wrong',

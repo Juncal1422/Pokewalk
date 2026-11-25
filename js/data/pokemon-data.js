@@ -101,10 +101,17 @@ export async function loadPokemonData(pokedexNumber) {
       fetchAnimation(baseUrl, animations, ['Charge']),
     ]);
     if (!walk) return null;
+    // Las prioridades proceden del catálogo. Sólo pedimos hojas presentes en el XML;
+    // Charge ya está cargada y sirve de última opción para cualquier arma.
+    const candidates = new Set([...game.benefits.values()].flatMap(benefit => benefit.spriteanimations ?? []));
+    candidates.delete('Charge');
+    const alternateAnimations = await Promise.all([...candidates].map(async name =>
+      [name, await fetchAnimation(baseUrl, animations, [name])]));
     const spriteData = {
       dex: pokedexNumber,
       dexStr: paddedDexNumber,
       anims: {
+        ...Object.fromEntries(alternateAnimations.filter(([,animation]) => animation)),
         Walk: walk,
         Spin: walk, Charge: charge || idle || walk,
         Idle: idle || walk,

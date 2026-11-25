@@ -8,34 +8,29 @@ import { playerStats, synergyActive } from './benefits.js';
 import { attackReach, damageFor } from './stats.js';
 import { bodyRadius, canMove, inflictDamage, setState, showToast } from './entities.js';
 
-const effectFrames = new Map();
-// Construye la lista ordenada de imágenes que forman un efecto.
-const sequence = (id, count, path) => [id, Array.from({length:count}, (_,frameIndex) => path(frameIndex+1))];
-// Decodifica todos los fotogramas antes de habilitar las habilidades.
+// Cada hoja lineal contiene cuadros de izquierda a derecha. El anclaje se mide
+// desde arriba en píxeles del cuadro original, antes del zoom o de cambiar el diámetro.
+const effectSheets = {
+  fang:{columns:2,rows:4}, spine:{columns:2,rows:4},
+  iron_hit:{columns:9,rows:8}, watergun:{columns:2,rows:8},
+  featherfall:{columns:23}, webshield:{columns:11}, rock_aura:{columns:14,base:30},
+  grow:{columns:8}, rock_throw:{columns:18}, revive:{columns:39},
+  battery:{name:'battery_burst',columns:9,base:44}, heal:{columns:13},
+  boost:{columns:15,base:39}, fangaround:{columns:12,base:29},
+  mine:{columns:9,base:48}, flare:{columns:12}, purple:{name:'purple_smite',columns:38,base:228}
+};
+
+// Una descarga por efecto; las filas direccionales se seleccionan en el momento del dibujo.
 export async function loadEffects() {
-  const groups = [
-    ['fang',['fang/fang.png']],
-    ['watergun',['watergun/watergun.png']], ['iron_hit',['iron_hit/iron_hit.png']],
-    sequence('featherfall',23,index=>'featherfall/'+String([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28][index-1]).padStart(3,'0')+'.png'),
-    ...[['webshield',11],['rock_aura',14],['grow',8],['rock_throw',18]].map(([id,count])=>
-      sequence(id,count,index=>id+'/'+String(index-1).padStart(3,'0')+'.png')),
-    sequence('revive',39,index=>'revive/'+String(index-1).padStart(3,'0')+'.png'),
-    sequence('battery',9,index=>'battery_burst/'+String(index-1).padStart(3,'0')+'.png'),
-    ['spine',['spine/spine.png']],
-    ...[['heal',13],['boost',15],['fangaround',12]].map(([name,count]) =>
-      sequence(name,count,frameIndex=>name+'/'+String(frameIndex-1).padStart(3,'0')+'.png')),
-    sequence('mine',9,frameIndex=>'mine/mine_'+frameIndex+'.png'),
-    sequence('flare',12,frameIndex=>'flare/flare_'+frameIndex+'.png'),
-    sequence('purple',38,frameIndex=>'purple_smite/purple_smite ('+frameIndex+').png'),
-  ];
-  await Promise.all(groups.map(async ([id,paths]) => {
-    effectFrames.set(id, await Promise.all(paths.map(async path => {
-      const spriteImage = new Image();
-      spriteImage.src = assetUrl('../../assets/effects/'+path,import.meta.url).href;
-      try { await spriteImage.decode(); }
-      catch (error) { throw new Error('No se pudo decodificar el fotograma '+path+' ('+spriteImage.src+'): '+error.message); }
-      return spriteImage;
-    })));
+  await Promise.all(Object.entries(effectSheets).map(async ([kind,sheet]) => {
+    const name = sheet.name ?? kind;
+    const image = new Image();
+    image.src = assetUrl('../../assets/effects/'+name+'/'+name+'.png',import.meta.url).href;
+    try { await image.decode(); }
+    catch (cause) { throw new Error('No se pudo cargar el efecto '+image.src,{cause}); }
+    sheet.image=image;
+    sheet.width=image.width/sheet.columns;
+    sheet.height=image.height/(sheet.rows ?? 1);
   }));
 }
 
@@ -56,27 +51,25 @@ export function pickupEffect(player,kind) {
 export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
   const simulationTime = gameTime();
   for (const visualEffect of game.effects) {
-    const frames = effectFrames.get(visualEffect.kind), animationProgress = Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms);
-    const spriteImage = frames[Math.max(0,Math.min(frames.length-1,Math.floor(animationProgress*frames.length)))];
-    const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX, y = (visualEffect.follow?.y ?? visualEffect.y)*renderZoom-cameraY;
+    const sheet = effectSheets[visualEffect.kind];
+    const progress = Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
+    const frame = Math.min(sheet.columns-1,Math.floor(progress*sheet.columns));
+    const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX;
+    const y = (visualEffect.follow?.y ?? visualEffect.y)*renderZoom-cameraY;
     const scale = renderZoom*(visualEffect.follow?.stats.size ?? 100)/100*(visualEffect.kind==='mine'?2.4:1);
-    // Las filas son las ocho direcciones y las columnas los cuadros de cada golpe.
-    if(['iron_hit','watergun'].includes(visualEffect.kind)){
-      const columns=visualEffect.kind==='watergun'?2:9, w=spriteImage.width/columns,h=spriteImage.height/8;
-      const frame=Math.min(columns-1,Math.floor(animationProgress*columns));
-      drawingContext.drawImage(spriteImage,w*frame,h*visualEffect.dir,w,h,x-w*scale/2,y-h*scale/2,w*scale,h*scale);
-      continue;
-    }
     if (visualEffect.kind === 'spine') {
-      drawFang(drawingContext,visualEffect.dir,x,y,scale,1-animationProgress,'spine','sepia(1) saturate(6) hue-rotate(65deg)');
+      drawFang(drawingContext,visualEffect.dir,x,y,scale,1-progress,'spine','sepia(1) saturate(6) hue-rotate(65deg)');
       continue;
     }
-    const width = visualEffect.diameter ? visualEffect.diameter*renderZoom : spriteImage.width*scale, height = visualEffect.diameter ? width : spriteImage.height*scale;
+    const width = visualEffect.diameter ? visualEffect.diameter*renderZoom : sheet.width*scale, height = visualEffect.diameter ? width : sheet.height*scale;
     drawingContext.save();
     if(visualEffect.kind==='rock_throw' && visualEffect.owner.isPlayer && synergyActive('goldRock'))drawingContext.filter=goldFilter;
     if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
-    drawingContext.drawImage(spriteImage,x-width/2,y-height*(visualEffect.kind==='purple'?.95:visualEffect.kind==='fangaround'?.72:.5),width,height);
+    const base = sheet.base ?? sheet.height;
+    const row = sheet.rows === 8 ? visualEffect.dir : 0;
+    drawingContext.drawImage(sheet.image,frame*sheet.width,row*sheet.height,sheet.width,sheet.height,
+      x-width/2,y-height*base/sheet.height,width,height);
     drawingContext.restore();
   }
 }
@@ -89,8 +82,8 @@ export function drawFang(drawingContext,directionIndex,x,y,scale,opacity,kind='f
   drawingContext.save();
   drawingContext.globalAlpha *= opacity;
   drawingContext.filter = filter;
-  drawingContext.drawImage(effectFrames.get(kind)[0],directionCell%2*16,Math.floor(directionCell/2)*16,16,16,
-    x-12*scale,y-12*scale,24*scale,24*scale);
+  drawingContext.drawImage(effectSheets[kind].image,directionCell%2*16,Math.floor(directionCell/2)*16,16,16,
+    x-12*scale,y-24*scale,24*scale,24*scale);
   drawingContext.restore();
 }
 
@@ -131,10 +124,10 @@ const utilities=new Set(['machinery','spoink_pearl','transparent','royalty']);
 export function useActive(slot) {
   const player=game.player, simulationTime=gameTime();
   if(player.paralyzedUntil>simulationTime || player.rockUntil>simulationTime)return;
-  if(slot==='e' && game.runRelics?.has('depleted_battery')){
+  if(slot==='r' && game.runRelics?.has('depleted_battery')){
     if(!player.hp||game.changingLevel||game.cast||['Attack','Hurt'].includes(player.state))return;
-    if(game.batteryEnergy<10)return showToast('Batería · '+game.batteryEnergy+'/10 esencias eléctricas');
-    game.batteryEnergy-=10;
+    if(game.batteryEnergy<4)return showToast('Batería · '+game.batteryEnergy+'/4 esencias eléctricas');
+    game.batteryEnergy-=4;
     const radius=attackReach(player.stats)*3;
     effect('battery',player.x,player.y,650).diameter=radius*2;
     for(const enemy of game.entities) if(!enemy.isPlayer&&!enemy.ally&&enemy.hp&&Math.hypot(enemy.x-player.x,enemy.y-player.y)<=radius+bodyRadius(enemy))

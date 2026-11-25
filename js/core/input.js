@@ -30,13 +30,20 @@ export function attachInput() {
     if (event.target !== gameCanvas && !isPanel(event.target)) return;
     if (game.changingLevel) return;
     const key = event.key.toLowerCase();
-    if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'q', 'e', ' '].includes(key)) return;
+    if (!['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'q', 'e', 'r', ' '].includes(key)) return;
     event.preventDefault();
     if (event.repeat || game.changingLevel) return;
-    if (key === 'e' || key === 'q') useActive(key);
+    if (['q','e','r'].includes(key)) useActive(key);
     else if (key === ' ') attack();
     else game.keys[key] = true;
   });
+  // El puntero usa coordenadas del búfer; el HUD las convierte a su escala al dibujar.
+  listen(gameCanvas, 'pointermove', event => {
+    const rect=gameCanvas.getBoundingClientRect();
+    game.hudPointer={x:(event.clientX-rect.left)*gameCanvas.width/rect.width,
+      y:(event.clientY-rect.top)*gameCanvas.height/rect.height};
+  });
+  listen(gameCanvas,'pointerleave',()=>{game.hudPointer=null;});
   listen(window, 'keyup', event => {
     const key = event.key.toLowerCase();
     delete game.keys[key];

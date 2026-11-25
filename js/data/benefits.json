@@ -159,7 +159,10 @@
     ],
     "stats": {
       "attack": 0.1
-    }
+    },
+    "spriteanimations": [
+      "Charge"
+    ]
   },
   {
     "id": "machinery",
@@ -537,7 +540,10 @@
     "image": "assets/benefits/spiky.png",
     "stats": {
       "range": 0.1
-    }
+    },
+    "spriteanimations": [
+      "Charge"
+    ]
   },
   {
     "id": "seer",
@@ -715,7 +721,12 @@
     ],
     "stats": {
       "range": -0.1
-    }
+    },
+    "spriteanimations": [
+      "Strike",
+      "Swing",
+      "Charge"
+    ]
   },
   {
     "id": "rock_core",
@@ -756,7 +767,11 @@
     "stats": {
       "attack": -0.1,
       "range": 0.2
-    }
+    },
+    "spriteanimations": [
+      "Shoot",
+      "Charge"
+    ]
   },
   {
     "id": "rock_thrower",
@@ -772,6 +787,10 @@
       "range": 1,
       "speed": -0.6,
       "attackSpeed": -0.6
-    }
+    },
+    "spriteanimations": [
+      "Shoot",
+      "Charge"
+    ]
   }
 ]

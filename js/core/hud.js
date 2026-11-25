@@ -16,6 +16,9 @@ const compact = new Intl.NumberFormat('es', { notation: 'compact', maximumFracti
 // Abrevia cantidades grandes para que quepan en los contadores.
 const formatValue = value => value >= 1000 ? compact.format(value) : String(value);
 export const essenceNames = 'normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon dark steel'.split(' ');
+const typeLabels = {normal:'Normal',fire:'Fuego',water:'Agua',electric:'Eléctrico',grass:'Planta',ice:'Hielo',
+  fighting:'Lucha',poison:'Veneno',ground:'Tierra',flying:'Volador',psychic:'Psíquico',bug:'Bicho',
+  rock:'Roca',ghost:'Fantasma',dragon:'Dragón',dark:'Siniestro',steel:'Acero'};
 // Precarga las esencias y los marcos utilizados por la interfaz del canvas.
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
@@ -73,7 +76,10 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.fillStyle = '#fff';
   drawingContext.fillText(health, cursor + 9, 21);
   indicators(drawingContext, 'hp', cursor + 9, 43, simulationTime);
-  let index = 0;
+  let index = 0, hoveredType;
+  const pointer = game.hudPointer;
+  const hudScale = drawingContext.getTransform().a;
+  const pointerX = pointer?.x/hudScale, pointerY = pointer?.y/hudScale;
   const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 146)));
   const essenceTop = canvas.width < 580 ? 109 : 48;
   const entries = Object.entries(game.essences);
@@ -83,6 +89,7 @@ export function drawHud(drawingContext, canvas, player) {
     drawingContext.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
     drawingContext.fillStyle = '#fff';
     drawingContext.fillText(formatValue(count), x + 40, y + 20);
+    if(pointerX>=x && pointerX<x+80 && pointerY>=y && pointerY<y+40) hoveredType=typeLabels[id];
     index++;
   }
   drawingContext.save();
@@ -91,7 +98,7 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.translate(0,-canvas.height);
   drawingContext.font = 'bold 13px Wondermail';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
-  drawFrame(drawingContext, icons['textbox-b-thin'], 4, y - 25, 185, canvas.height - y + 25, .25);
+  drawFrame(drawingContext, icons['textbox-b-thin'], 4, y - 25, 198, canvas.height - y + 25, .65);
   drawingContext.fillStyle = '#fff';
   drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
@@ -123,11 +130,23 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.fillText(counter, canvas.width - 15, panelTop + 8);
   drawingContext.fillText(goal, canvas.width - 15, panelTop + 31);
   if(game.runRelics?.has('depleted_battery')){
-    const battery='E · Batería '+Math.floor(game.batteryEnergy/10)+' · '+game.batteryEnergy%10+'/10';
+    const battery='R · Batería '+Math.floor(game.batteryEnergy/4)+' · '+game.batteryEnergy%4+'/4';
     const batteryWidth=drawingContext.measureText(battery).width;
     textBox(drawingContext,canvas.width-batteryWidth-27,panelTop+60,batteryWidth+22,30);
     drawingContext.fillStyle='#c8edff';
     drawingContext.fillText(battery,canvas.width-15,panelTop+65);
   }
   drawingContext.restore();
+  if (hoveredType) {
+    drawingContext.save();
+    drawingContext.font='bold 16px Wondermail';
+    drawingContext.textAlign='left';
+    drawingContext.textBaseline='middle';
+    const label='Esencia · '+hoveredType, width=drawingContext.measureText(label).width+16;
+    const x=Math.max(0,Math.min(pointerX+8,canvas.width-width)), y=Math.min(pointerY+14,canvas.height-28);
+    textBox(drawingContext,x,y,width,28);
+    drawingContext.fillStyle='white';
+    drawingContext.fillText(label,x+8,y+14);
+    drawingContext.restore();
+  }
 }
