@@ -1,7 +1,14 @@
 import { assetUrl } from './core/asset-url.js';
-import {visitGuild,selectMission,guildMessage} from './core/guild.js';
-import {loadCollection,beginChronicle,recordFloor,settleMission,checkpoint,discover} from './core/collection.js';
-import {playSound} from './core/audio.js';
+import { visitGuild, selectMission, guildMessage } from './core/guild.js';
+import {
+  loadCollection,
+  beginChronicle,
+  recordFloor,
+  settleMission,
+  checkpoint,
+  discover,
+} from './core/collection.js';
+import { playSound } from './core/audio.js';
 import { gameTime, resetClock, advanceClock } from './core/clock.js';
 import { levelFor } from './core/stats.js';
 import { loadTerrain } from './core/terrain.js';
@@ -24,18 +31,18 @@ import { game, resetGameState } from './core/state.js';
 const EMBEDDED_APP = `
   <div id="poke-walk-app">
     <style>
-      @font-face { font-family:Wondermail; src:url("${assetUrl('../assets/ui/wondermail.ttf',import.meta.url).href}") format('truetype'); }
+      @font-face { font-family:Wondermail; src:url("${assetUrl('../assets/ui/wondermail.ttf', import.meta.url).href}") format('truetype'); }
       html *,html *::before,html *::after { font-family:Wondermail !important; scrollbar-width:none; }
       *::-webkit-scrollbar { display:none; }
       #guild { position:fixed; inset:0; max-width:none; max-height:none; width:100%; height:100%; margin:0; box-sizing:border-box;
         border:0; padding:clamp(6px,3vmin,30px); background:#111b26; color:#f2ecd7; overflow:hidden; }
       #guild[open] { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:min(1.4dvh,12px); }
       #guild h1,#guild p { margin:0; }
-      #guild h1 { color:#ead197;font-size:clamp(20px,5vmin,42px); }
+      #guild h1 { color:#0d4132;font-size:clamp(20px,5vmin,42px); }
       #guild button,#guild label,#guild .guild-list p { box-sizing:border-box; padding:clamp(3px,1vmin,12px); color:#fff; background:#24364a; border:2px solid #74938b; font-size:clamp(16px,3.5vmin,29px); }
       #guild button { cursor:pointer; } #guild button:disabled { opacity:.65; }
       #guild .offers { width:min(850px,97%);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2vmin; }
-      #guild .offers button { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; display:grid;justify-items:center;align-content:center;gap:1vmin; }
+      #guild .offers button { border:8px solid transparent; border-image:url("${assetUrl('../assets/ui/textbox-g.png', import.meta.url).href}") 16 stretch; display:grid;justify-items:center;align-content:center;gap:1vmin; }
       #guild .offers .red { background-color:#531e26; }
       #guild img { width:clamp(20px,5vmin,44px);vertical-align:middle;image-rendering:pixelated; }
       #guild .offers .portrait {width:clamp(15px,4.5vmin,38px);}
@@ -46,10 +53,10 @@ const EMBEDDED_APP = `
       #guild .contracts {width:min(98vw,1200px);grid-template-columns:repeat(var(--cards),minmax(0,1fr));}
       @media(max-aspect-ratio:1/1){#guild .contracts {grid-template-columns:repeat(2,minmax(0,1fr));}}
       #guild .offers button,#guild .letterbox,#guild .offers .red {background-clip:padding-box;}
-      #guild .offers .red {border-image-source:url("${assetUrl('../assets/ui/textbox-p.png',import.meta.url).href}");}
+      #guild .offers .red {border-image-source:url("${assetUrl('../assets/ui/textbox-p.png', import.meta.url).href}");}
       #guild nav {display:flex;align-items:center;gap:10px;}
       #guild.story {background:black;} #guild .letterbox { text-align:left;width:min(760px,96%);min-height:5em;background:#15211d padding-box;
-       border:12px solid transparent;border-image:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url).href}") 16 stretch; }
+       border:12px solid transparent;border-image:url("${assetUrl('../assets/ui/textbox-g.png', import.meta.url).href}") 16 stretch; }
       #guild strong {color:#f0cf7e;}
       #emblem-award {position:fixed;inset:65px 8px auto auto;margin:0;color:white;background:#192b39;border:2px solid #91a886;pointer-events:none;font-size:22px;}
       #emblem-award img {width:24px;vertical-align:middle;image-rendering:pixelated;}
@@ -106,7 +113,7 @@ const EMBEDDED_APP = `
       #benefits .active-benefit { position:relative; display:inline-flex; }
       #benefits .active-benefit::before { content:attr(data-key); position:absolute; z-index:1; color:white; background:#182333; padding:0 3px; font:bold 12px Wondermail; }
       #benefits .active-benefit::after { content:""; position:absolute; inset:0; border-radius:50%; pointer-events:none; background:conic-gradient(rgb(5 10 20 / 70%) var(--remaining,0deg),transparent 0); }
-      #poke-walk-app {--blue:url("${assetUrl('../assets/ui/textbox-b.png',import.meta.url)}");--green:url("${assetUrl('../assets/ui/textbox-g.png',import.meta.url)}");--pink:url("${assetUrl('../assets/ui/textbox-p.png',import.meta.url)}");}
+      #poke-walk-app {--blue:url("${assetUrl('../assets/ui/textbox-b.png', import.meta.url)}");--green:url("${assetUrl('../assets/ui/textbox-g.png', import.meta.url)}");--pink:url("${assetUrl('../assets/ui/textbox-p.png', import.meta.url)}");}
       #guild,#rewards,#emblem-award,#poke-walk-app nav,#poke-walk-app button,#guild .guild-list,#guild .species-card,#guild label,#guild .catalog-grid,#guild .contracts,#guild .catalog-tip {
         border:6px solid transparent;border-image:var(--blue) 16 stretch;background-clip:padding-box;box-sizing:border-box;
       }
@@ -143,9 +150,9 @@ const EMBEDDED_APP = `
       #roster li strong,#roster li span {grid-column:2;}
       #roster .roster-benefit {grid-column:3;grid-row:1/3;align-self:center;width:clamp(14px,2.8vmin,26px);}
       @media(max-width:680px){#roster ul{grid-template-rows:repeat(5,auto);}#roster li{gap:0;border-width:3px;}}
-      #rewards::backdrop {background:#101923 url("${assetUrl('../assets/ui/bgdefault.png',import.meta.url)}") center/cover;}
+      #rewards::backdrop {background:#101923 url("${assetUrl('../assets/ui/bgdefault.png', import.meta.url)}") center/cover;}
     </style>
-    <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div><div id="loading" class="box">Cargando Pokémon y mazmorra...</div></div>
+    <div id="canvas-container"><canvas id="game" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="toast" class="box" role="status"></div></div>
     <aside id="nearby" class="box" hidden aria-live="polite"></aside>
     <aside id="roster" aria-label="Pokémon del piso"><ul></ul></aside>
     <aside id="benefits" aria-label="Beneficios de especie"></aside>
@@ -168,8 +175,10 @@ function placePortal(playerTileX, playerTileY, kind) {
     row.forEach((terrain, x) => {
       if (
         terrain === 0 &&
-
-        !game.drops.some(drop => Math.floor(drop.x / TILE) === x && Math.floor(drop.y / TILE) === y) &&
+        !game.drops.some(
+          (drop) =>
+            Math.floor(drop.x / TILE) === x && Math.floor(drop.y / TILE) === y,
+        ) &&
         (x !== playerTileX || y !== playerTileY)
       ) {
         floors.push({ x, y, kind, entered: false });
@@ -191,46 +200,69 @@ async function nextLevel() {
     if (game.portal.kind === 'stairs') {
       game.loadingEl.style.display = 'flex';
       await loadLevel(game.player.dex, mission, game.floor + 1);
-      recordFloor();playSound('stairs');
+      recordFloor();
+      playSound('stairs');
     } else {
       // Simulamos ambas elecciones para cobrar esencias y cambiar de activo
       // solo cuando la siguiente misión se ha cargado con éxito.
-      let state = { held:game.held, bonuses:game.player.bonuses, balances:game.essences,
-        row:game.pokemon.get(game.player.dex), essence:game.formEssence };
-      const earned=settleMission();
-      if(earned){
+      let state = {
+        held: game.held,
+        bonuses: game.player.bonuses,
+        balances: game.essences,
+        row: game.pokemon.get(game.player.dex),
+        essence: game.formEssence,
+      };
+      const earned = settleMission();
+      if (earned) {
         playSound('reward');
-        const notice=document.querySelector('#emblem-award'),image=new Image();
-        image.src=assetUrl('../assets/ui/emblem.png',import.meta.url);
-        notice.replaceChildren(image,' +'+earned);
-        setTimeout(()=>notice.showPopover(),0);
-        setTimeout(()=>notice.hidePopover(),3000);
+        const notice = document.querySelector('#emblem-award'),
+          image = new Image();
+        image.src = assetUrl('../assets/ui/emblem.png', import.meta.url);
+        notice.replaceChildren(image, ' +' + earned);
+        setTimeout(() => notice.showPopover(), 0);
+        setTimeout(() => notice.hidePopover(), 3000);
       }
-      const selectedForms=[],selectedBenefits=[];
-      for (let choiceIndex=0; !mission.failed && choiceIndex < (state.held.has('facechanger')?2:1); choiceIndex++) {
-        const options = rewardOptions(state.row,state.balances,state.essence);
+      const selectedForms = [],
+        selectedBenefits = [];
+      for (
+        let choiceIndex = 0;
+        !mission.failed &&
+        choiceIndex < (state.held.has('facechanger') ? 2 : 1);
+        choiceIndex++
+      ) {
+        const options = rewardOptions(state.row, state.balances, state.essence);
         if (choiceIndex && !options.length) {
-          state = projectReward(state,{row:state.row,essence:state.essence,bonus:true});
+          state = projectReward(state, {
+            row: state.row,
+            essence: state.essence,
+            bonus: true,
+          });
           break;
         }
-        const option = await chooseReward(options,state,choiceIndex>0);
+        const option = await chooseReward(options, state, choiceIndex > 0);
         if (option) {
-          state = projectReward(state,option);
+          state = projectReward(state, option);
           selectedForms.push(state.row.dex);
-          if(!state.allStats)selectedBenefits.push(state.benefit.id);
+          if (!state.allStats) selectedBenefits.push(state.benefit.id);
         }
       }
       game.loadingEl.style.display = 'flex';
-      const nextMission=await selectMission(missionOffers(mission.number+1,levelFor(state.row,game.progress)));
+      const nextMission = await selectMission(
+        missionOffers(mission.number + 1, levelFor(state.row, game.progress)),
+      );
       await changeBiome(nextMission.biome);
       const previousHeld = game.held;
       game.held = state.held;
-      try { await loadLevel(state.row.dex,nextMission,1,state.bonuses); }
-      catch (error) { game.held = previousHeld; throw error; }
-      game.essences=state.balances;
-      game.formEssence=state.essence;
-      for(const dex of selectedForms)discover('forms',dex);
-      for(const benefit of selectedBenefits)discover('benefits',benefit);
+      try {
+        await loadLevel(state.row.dex, nextMission, 1, state.bonuses);
+      } catch (error) {
+        game.held = previousHeld;
+        throw error;
+      }
+      game.essences = state.balances;
+      game.formEssence = state.essence;
+      for (const dex of selectedForms) discover('forms', dex);
+      for (const benefit of selectedBenefits) discover('benefits', benefit);
       recordFloor();
     }
     if (document.hasFocus()) game.canvas.focus();
@@ -246,32 +278,59 @@ async function nextLevel() {
 }
 
 // Las flechas cambian la ventana de tarjetas sin desplazar el documento.
-function pagePanel(panel,list,pageSize) {
-  const entries=Array.from(list.children),pages=Math.ceil(entries.length/pageSize);
-  const page=Math.max(0,Math.min(Number(panel.dataset.page)||0,pages-1));
-  panel.dataset.page=String(page);
-  entries.forEach((entry,index)=>{entry.hidden=Math.floor(index/pageSize)!==page});
-  let nav=panel.querySelector('nav');
-  if(!nav && pages>1){
-    nav=element('nav');
-    for(const [delta,arrow] of [[-1,'w'],[1,'e']]){
-      const control=element('button');control.type='button';control.setAttribute('aria-label',delta<0?'Anterior':'Siguiente');
-      const img=new Image();img.alt='';img.src=assetUrl('../assets/ui/arrow_'+arrow+'.png',import.meta.url);
-      control.append(img);control.onclick=()=>{panel.dataset.page=String(Number(panel.dataset.page)+delta);pagePanel(panel,list,Number(panel.dataset.size))};
+function pagePanel(panel, list, pageSize) {
+  const entries = Array.from(list.children),
+    pages = Math.ceil(entries.length / pageSize);
+  const page = Math.max(
+    0,
+    Math.min(Number(panel.dataset.page) || 0, pages - 1),
+  );
+  panel.dataset.page = String(page);
+  entries.forEach((entry, index) => {
+    entry.hidden = Math.floor(index / pageSize) !== page;
+  });
+  let nav = panel.querySelector('nav');
+  if (!nav && pages > 1) {
+    nav = element('nav');
+    for (const [delta, arrow] of [
+      [-1, 'w'],
+      [1, 'e'],
+    ]) {
+      const control = element('button');
+      control.type = 'button';
+      control.setAttribute('aria-label', delta < 0 ? 'Anterior' : 'Siguiente');
+      const img = new Image();
+      img.alt = '';
+      img.src = assetUrl(
+        '../assets/ui/arrow_' + arrow + '.png',
+        import.meta.url,
+      );
+      control.append(img);
+      control.onclick = () => {
+        panel.dataset.page = String(Number(panel.dataset.page) + delta);
+        pagePanel(panel, list, Number(panel.dataset.size));
+      };
       nav.append(control);
     }
     panel.append(nav);
   }
-  panel.dataset.size=String(pageSize);
-  if(nav){nav.hidden=pages<=1;nav.firstChild.disabled=page===0;nav.lastChild.disabled=page>=pages-1;}
+  panel.dataset.size = String(pageSize);
+  if (nav) {
+    nav.hidden = pages <= 1;
+    nav.firstChild.disabled = page === 0;
+    nav.lastChild.disabled = page >= pages - 1;
+  }
 }
 
 // El panel comparte los valores de combate y solo cambia el DOM cuando varían.
 function updateRoster() {
   const rosterList = document.querySelector('#roster ul');
-  const livingEnemies = game.entities.filter(combatant => !combatant.isPlayer && combatant.hp > 0);
+  const livingEnemies = game.entities.filter(
+    (combatant) => !combatant.isPlayer && combatant.hp > 0,
+  );
   // Conservamos el nodo y el retrato durante los cambios de PV.
-  for (const rosterCard of Array.from(rosterList.children)) if (!livingEnemies.includes(rosterCard.combatant)) rosterCard.remove();
+  for (const rosterCard of Array.from(rosterList.children))
+    if (!livingEnemies.includes(rosterCard.combatant)) rosterCard.remove();
   for (const enemy of livingEnemies) {
     const species = game.pokemon.get(enemy.dex);
     let rosterCard = enemy.rosterCard;
@@ -281,24 +340,50 @@ function updateRoster() {
       enemy.rosterCard = rosterCard;
       const [first, second] = species.essences;
       rosterCard.style.backgroundColor = tones[first];
-      if (second) rosterCard.style.backgroundImage = 'linear-gradient(135deg,' + tones[first] + ' 50%,' + tones[second] + ' 50%)';
-      rosterCard.setAttribute('aria-label', species.name + ' · ' + species.essences.join(', '));
+      if (second)
+        rosterCard.style.backgroundImage =
+          'linear-gradient(135deg,' +
+          tones[first] +
+          ' 50%,' +
+          tones[second] +
+          ' 50%)';
+      rosterCard.setAttribute(
+        'aria-label',
+        species.name + ' · ' + species.essences.join(', '),
+      );
       rosterCard.title = species.essences.join(' / ');
-      rosterCard.append(portrait(species), element('strong', species.name + (enemy.ally?' · Aliado':enemy.boss ? ' · Líder' : '')), element('span'));
+      rosterCard.append(
+        portrait(species),
+        element(
+          'strong',
+          species.name +
+            (enemy.ally ? ' · Aliado' : enemy.boss ? ' · Líder' : ''),
+        ),
+        element('span'),
+      );
       const benefit = game.donors.get(species.name);
       if (benefit) {
         const image = new Image();
-        image.src = assetUrl('../'+benefit.image,import.meta.url).href;
+        image.src = assetUrl('../' + benefit.image, import.meta.url).href;
         image.alt = image.title = benefit.name;
         image.className = 'roster-benefit';
         rosterCard.append(image);
       }
       rosterList.append(rosterCard);
     }
-    const stats = 'HP ' + enemy.hp + '/' + enemy.stats.hpMax + ' · ATQ ' + enemy.stats.attack + ' · DEF ' + enemy.stats.defense;
-    if (rosterCard.children[2].textContent !== stats) rosterCard.children[2].textContent = stats;
+    const stats =
+      'HP ' +
+      enemy.hp +
+      '/' +
+      enemy.stats.hpMax +
+      ' · ATQ ' +
+      enemy.stats.attack +
+      ' · DEF ' +
+      enemy.stats.defense;
+    if (rosterCard.children[2].textContent !== stats)
+      rosterCard.children[2].textContent = stats;
   }
-  pagePanel(rosterList.parentNode,rosterList,9);
+  pagePanel(rosterList.parentNode, rosterList, 9);
 }
 
 // Agrupa duplicados y actualiza el panel solo al entrar o salir de su radio.
@@ -306,28 +391,54 @@ function updateNearby() {
   const panel = document.getElementById('nearby');
   const counts = new Map();
   for (const drop of game.drops) {
-    if (Math.hypot(drop.x - game.player.x, drop.y - game.player.y) <= 3 * TILE)
-      {
-        const key = drop.id ?? 'essence-' + drop.essence;
-        counts.set(key, (counts.get(key) || 0) + (drop.amount ?? 1));
-      }
+    if (
+      Math.hypot(drop.x - game.player.x, drop.y - game.player.y) <=
+      3 * TILE
+    ) {
+      const key = drop.id ?? 'essence-' + drop.essence;
+      counts.set(key, (counts.get(key) || 0) + (drop.amount ?? 1));
+    }
   }
   const objectivePortal = game.portal;
-  if (objectivePortal?.kind === 'objective' && Math.hypot((objectivePortal.x + .5) * TILE - game.player.x, (objectivePortal.y + .5) * TILE - game.player.y) <= 3 * TILE)
+  if (
+    objectivePortal?.kind === 'objective' &&
+    Math.hypot(
+      (objectivePortal.x + 0.5) * TILE - game.player.x,
+      (objectivePortal.y + 0.5) * TILE - game.player.y,
+    ) <=
+      3 * TILE
+  )
     counts.set('parcel', 1);
-  const signature = JSON.stringify([innerHeight,innerWidth,...counts]);
+  const signature = JSON.stringify([innerHeight, innerWidth, ...counts]);
   if (panel.dataset.signature === signature) return;
   panel.dataset.signature = signature;
   panel.hidden = !counts.size;
-  const descriptions=element('section');
+  const descriptions = element('section');
   panel.replaceChildren(descriptions);
-  descriptions.replaceChildren(...Array.from(counts, ([id, count]) => {
-    const descriptionParagraph = document.createElement('p');
-    const item = game.items[id] ?? (id.startsWith('essence-') ? { name: 'Esencia ' + id.slice(8), description: 'Recógela para acumularla.' } : { name: 'Objeto de misión', description: 'Recógelo para desbloquear el teletransportador.' });
-    descriptionParagraph.textContent = item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
-    return descriptionParagraph;
-  }));
-  pagePanel(panel,descriptions,Math.max(1,Math.floor((innerHeight*.4/1.4-40)/80)));
+  descriptions.replaceChildren(
+    ...Array.from(counts, ([id, count]) => {
+      const descriptionParagraph = document.createElement('p');
+      const item =
+        game.items[id] ??
+        (id.startsWith('essence-')
+          ? {
+              name: 'Esencia ' + id.slice(8),
+              description: 'Recógela para acumularla.',
+            }
+          : {
+              name: 'Objeto de misión',
+              description: 'Recógelo para desbloquear el teletransportador.',
+            });
+      descriptionParagraph.textContent =
+        item.name + (count > 1 ? ' ×' + count : '') + ' · ' + item.description;
+      return descriptionParagraph;
+    }),
+  );
+  pagePanel(
+    panel,
+    descriptions,
+    Math.max(1, Math.floor(((innerHeight * 0.4) / 1.4 - 40) / 80)),
+  );
 }
 
 // Ejecuta pasos fijos, procesa recogidas y objetivos y solicita el siguiente repintado.
@@ -349,25 +460,36 @@ function frame(timestamp) {
     const player = game.player;
     if (player.hp === 0 && !game.entities.includes(player)) {
       draw();
-      game.chronicle.status='Rescatada';game.chronicle.ended=new Date().toISOString();
-      if(game.chronicle.missions.at(-1).status==='En curso')game.chronicle.missions.at(-1).status='Derrota';
-      checkpoint();playSound('defeat');
-      void startGame({root:game.canvas.closest('#poke-walk-app').parentElement});
+      game.chronicle.status = 'Rescatada';
+      game.chronicle.ended = new Date().toISOString();
+      if (game.chronicle.missions.at(-1).status === 'En curso')
+        game.chronicle.missions.at(-1).status = 'Derrota';
+      checkpoint();
+      playSound('defeat');
+      void startGame({
+        root: game.canvas.closest('#poke-walk-app').parentElement,
+      });
       return;
     }
     // Esperamos a que termine el último fundido antes de habilitar la salida.
     if (player.hp > 0) {
       const x = Math.floor(player.x / TILE),
         y = Math.floor(player.y / TILE);
-      const kind = exitKind(game.mission, game.floor, game.entities.length === 1);
+      const kind = exitKind(
+        game.mission,
+        game.floor,
+        game.entities.length === 1,
+      );
       if (kind && game.portal?.kind !== kind) placePortal(x, y, kind);
       const portal = game.portal;
       if (portal) {
         const inside = portal.x === x && portal.y === y;
         if (inside && !portal.entered) {
           if (portal.kind === 'objective') {
-            pickupEffect(player,'boost');
-            discover('items','parcel');checkpoint();playSound('item');
+            pickupEffect(player, 'boost');
+            discover('items', 'parcel');
+            checkpoint();
+            playSound('item');
             game.mission.recovered = true;
             game.portal = null;
             showToast('Objeto recuperado. Busca el teletransportador.');
@@ -390,10 +512,16 @@ export async function startGame({
   resetClock();
   mountApp(root);
   await document.fonts.load('16px Wondermail');
-  loadCollection();game.chronicle=null;
-  const icon = document.querySelector('link[rel~="icon"]') ?? document.createElement('link');
+  loadCollection();
+  game.chronicle = null;
+  const icon =
+    document.querySelector('link[rel~="icon"]') ??
+    document.createElement('link');
   icon.rel = 'icon';
-  icon.href = assetUrl('../assets/benefits/machinery.png',import.meta.url).href;
+  icon.href = assetUrl(
+    '../assets/benefits/machinery.png',
+    import.meta.url,
+  ).href;
   document.head.append(icon);
   game.canvas = document.getElementById('game');
   game.ctx = game.canvas.getContext('2d');
@@ -406,15 +534,26 @@ export async function startGame({
     draw();
   };
   resize();
-  const benefitsUrl = assetUrl('./data/benefits.json',import.meta.url);
-  const [synergies, benefits] = await Promise.all([fetch(assetUrl('./data/synergies.json',import.meta.url)).then(response=>response.json()),fetch(benefitsUrl).then(response=>response.json()),preparePortal(),loadHud(),loadTerrain(),loadEffects()]);
-  game.synergies = new Map(synergies.map(rule=>[rule.effect,rule]));
-  game.benefits = new Map(benefits.map(benefit=>[benefit.id,benefit]));
+  const benefitsUrl = assetUrl('./data/benefits.json', import.meta.url);
+  const [synergies, benefits] = await Promise.all([
+    fetch(assetUrl('./data/synergies.json', import.meta.url)).then((response) =>
+      response.json(),
+    ),
+    fetch(benefitsUrl).then((response) => response.json()),
+    preparePortal(),
+    loadHud(),
+    loadTerrain(),
+    loadEffects(),
+  ]);
+  game.synergies = new Map(synergies.map((rule) => [rule.effect, rule]));
+  game.benefits = new Map(benefits.map((benefit) => [benefit.id, benefit]));
   game.donors = new Map();
-  for (const benefit of benefits) for (const name of benefit.pokemon) {
-    if (game.donors.has(name)) throw new Error('Beneficio duplicado para '+name);
-    game.donors.set(name,benefit);
-  }
+  for (const benefit of benefits)
+    for (const name of benefit.pokemon) {
+      if (game.donors.has(name))
+        throw new Error('Beneficio duplicado para ' + name);
+      game.donors.set(name, benefit);
+    }
   const { pokemon, items } = await loadEncountersCatalog();
   const biomes = await loadBiomes(pokemon);
   game.biomes = biomes;
@@ -427,29 +566,33 @@ export async function startGame({
   game.amuletUntil = 0;
   game.adventure = 0;
   game.inventory = new Set();
-  game.reviveSpent=false;
+  game.reviveSpent = false;
   game.essences = {};
   game.pickups = [];
   game.held = new Set();
   game.cooldowns = {};
   game.formEssence = null;
-  game.batteryEnergy=0;
+  game.batteryEnergy = 0;
   // Si falla un recurso remoto se puede volver al tablón sin abrir una crónica vacía.
-  while(!game.player){
+  while (!game.player) {
     await visitGuild();
-    const firstMission=await selectMission(missionOffers(1,5));
-    game.runRelics=new Set(game.collection.enabled);
+    const firstMission = await selectMission(missionOffers(1, 5));
+    game.runRelics = new Set(game.collection.enabled);
     // Asignar el saldo inicial también hace idempotente un reintento de carga desde el gremio.
-    game.essences = game.runRelics.has('debugger') ? Object.fromEntries(essenceNames.map(type => [type, 100])) : {};
+    game.essences = game.runRelics.has('debugger')
+      ? Object.fromEntries(essenceNames.map((type) => [type, 100]))
+      : {};
     try {
       await changeBiome(firstMission.biome);
-      await loadLevel(DEFAULT_DEX,firstMission,1);
-    } catch(error) {
-      game.player=null;
+      await loadLevel(DEFAULT_DEX, firstMission, 1);
+    } catch (error) {
+      game.player = null;
       await guildMessage(error.message);
     }
   }
-  beginChronicle();game.adventure=game.collection.history.length;recordFloor();
+  beginChronicle();
+  game.adventure = game.collection.history.length;
+  recordFloor();
   game.canvas.focus();
   const input = attachInput();
   game.updateInventory = attachInventory(root, input.signal);
