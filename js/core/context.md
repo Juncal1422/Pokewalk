@@ -56,7 +56,8 @@ La tienda inicial vende Cinta Negra por 12 emblemas y Batería agotada por 18. L
 
 | Ruta | Responsabilidad |
 | --- | --- |
-| `js/main.js` | Montaje de DOM y CSS, arranque, transiciones, paneles del piso y bucle principal. |
+| `js/main.js` | Montaje del DOM, arranque, transiciones, paneles del piso y bucle principal. |
+| `css/pokewalk.css`, `js/core/interface-theme.js` | Tema de todas las pantallas. Define paleta, opacidades, fondos, escalas y variantes de textbox. El módulo carga la hoja desde la misma revisión que el juego y prepara el tema del canvas al arrancar. |
 | `js/core/state.js`, `clock.js` | Estado compartido y tiempo de simulación. La partida conserva experiencia, objetos, bonos y esencias. La misión conserva cuota, bajas y apariciones. Cada piso reemplaza entidades, efectos, objetos caídos, salida y avisos de mundo. |
 | `js/data/pokemon.json` | Fichas de especie, estadísticas base, límite de nivel, tipo, esencias, evolución, medios transitables y lista de animaciones. |
 | `js/data/biomes.json` | Atlas, medio, permisos, nivel 1–10, variantes, modificadores de generación y listas de salvajes/líderes para los niveles 1–16, 17–36, 37–60 y 61–100. Los límites de pisos y cantidad de encuentros están en `missions.js`. |
@@ -185,6 +186,11 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 - `loadHud` — Precarga las esencias y los marcos utilizados por la interfaz del canvas.
 - `indicators` — Dibuja los cambios temporales de un atributo junto a su valor.
 - `drawHud` — Compone la vida, experiencia, esencias, atributos y objetivo en coordenadas de interfaz.
+
+### [js/core/interface-theme.js](interface-theme.js)
+
+- `loadInterfaceStylesheet` — Carga la hoja una sola vez y resuelve las URLs de fuentes, fondos y marcos contra su ruta de origen.
+- `readCanvasTheme` — Lee las propiedades CSS de los paneles del HUD y los efectos del mundo antes del primer dibujo.
 
 ### [js/core/input.js](input.js)
 
@@ -348,3 +354,10 @@ El detalle de crónica reúne stats, misiones, formas y equipo en una vista. Las
 
 preloadMenuArt (guild.js) decodifica los trece fondos y los cinco atlas de catálogo durante el arranque. El tablero muestra las ocho partes exteriores del atlas alrededor de sus 64 celdas. Las confirmaciones del gremio usan textbox-p. La crónica reserva los retratos para la lista de formas.
 Los pisos se cargan desde loadLevel sin depender de un indicador de carga en el DOM. settleMission liquida una sola vez el premio final y registra Exitosa al completar la misión 100. El siguiente fotograma devuelve al gremio. Si falla un rescate en la misión 100, la siguiente oferta conserva el número 100 y abre un nuevo registro de misión. Una derrota cierra la aventura como Fallida y una recarga como Interrumpida.
+
+
+### Tema de la interfaz y beneficio Dorado
+
+Edita [css/pokewalk.css](../../css/pokewalk.css) y recarga para aplicar el tema. El primer bloque reúne la paleta, las opacidades, el escalado, los fondos del gremio y los atlas de catálogo. En la asignación de textbox, `--textbox-frame` selecciona la imagen del panel y `--frame-width` ajusta su ancho. Usa `none` y un ancho de cero para retirar el marco y su espacio. Los paneles de canvas eligen su variante con `--hud-*-textbox`. El resumen de aventura usa el marco azul.
+
+Los fondos pixelados se escalan con `image-rendering`. Mejoras conserva visible el último fotograma de la mazmorra mediante un diálogo y un backdrop transparentes. Dorado aplica `--player-golden-filter` al sprite del jugador mientras conserva el beneficio. Los filtros temporales tienen prioridad y el tinte vuelve cuando terminan.

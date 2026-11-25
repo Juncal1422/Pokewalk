@@ -2,7 +2,6 @@ import { gameTime } from './clock.js';
 import { game } from './state.js';
 
 const lifetimeMs = 950;
-const noticeColors = { EXP: '#8edfff', HP: '#79ed8e' };
 
 // Guarda una copia de la posición del suceso. Los avisos cercanos que nacen
 // juntos ocupan líneas distintas y conservan su línea hasta desaparecer.
@@ -17,7 +16,7 @@ export function showWorldNotice(source, quantity, unit) {
   while (occupiedLines.has(line)) line++;
   game.worldNotices.push({
     worldX: source.x, worldY: source.y,
-    heightOffset: 12 * source.stats.size / 100, startedAt, line, text: '+' + quantity + ' ' + unit, color: noticeColors[unit],
+    heightOffset: 12 * source.stats.size / 100, startedAt, line, text: '+' + quantity + ' ' + unit, unit,
   });
 }
 
@@ -30,11 +29,11 @@ export function drawWorldNotices(context, renderZoom, cameraX, cameraY) {
   context.textAlign = 'center';
   context.font = 'bold 12px Wondermail';
   context.lineWidth = 2;
-  context.strokeStyle = '#123';
+  context.strokeStyle = game.canvasTheme.worldNoticeOutline;
   for (const notice of game.worldNotices) {
     const screenX = notice.worldX * renderZoom - cameraX;
     const screenY = (notice.worldY - notice.heightOffset) * renderZoom - cameraY - 12 - (simulationTime-notice.startedAt)/48 - notice.line*14;
-    context.fillStyle = notice.color;
+    context.fillStyle = game.canvasTheme.worldNoticeColors[notice.unit];
     context.strokeText(notice.text, screenX, screenY);
     context.fillText(notice.text, screenX, screenY);
   }

@@ -15,18 +15,27 @@ const story=[
 ];
 const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
-const backgrounds = {Pommedew:'bg',Beneficios:'bgbenefits',Objetos:'bgitems','Tablón de misiones':'bgmissions','Pokédex':'bgpokedex',Reliquias:'bgrelics'};
+const backgrounds = {Pommedew:'home',Beneficios:'benefits',Objetos:'items','Tablón de misiones':'missions','Pokédex':'pokedex',Reliquias:'relics'};
+const sectionArt = {'Tienda de Aventureros':'shop','Pokédex':'pokedex',Objetos:'items',Beneficios:'benefits',Reliquias:'relics'};
 const menuImages = new Map();
 
-// Retiene las imágenes decodificadas entre menús y aventuras. Cada recurso usa la misma URL que el CSS.
-export async function preloadMenuArt() {
-  const names = ['bgdefault',...Object.values(sectionArt),...Object.values(backgrounds).flatMap(prefix=>[prefix+'1',prefix+'2'])];
-  await Promise.all(names.map(async name=>{
-    if(menuImages.has(name))return;
-    const image=new Image();
-    image.src=asset('ui/'+name+'.png');
+// Retiene las imágenes decodificadas usando las mismas rutas que el CSS.
+export async function preloadMenuArt(app) {
+  const theme = getComputedStyle(app);
+  const properties = [
+    '--guild-default-background',
+    ...Object.values(sectionArt).map(section => '--catalog-' + section + '-art'),
+    ...Object.values(backgrounds).flatMap(section => [
+      '--guild-' + section + '-background-1', '--guild-' + section + '-background-2',
+    ]),
+  ];
+  await Promise.all(properties.map(async property => {
+    const url = theme.getPropertyValue(property).trim().match(/^url\(["']?([^"']+?)["']?\)$/)?.[1];
+    if (!url || menuImages.has(url)) return;
+    const image = new Image();
+    image.src = url;
     await image.decode();
-    menuImages.set(name,image);
+    menuImages.set(url, image);
   }));
 }
 
@@ -39,12 +48,12 @@ function button(label,action,sound='select') {
 
 // Usa un solo diálogo modal para impedir que los controles del mundo reciban eventos del gremio.
 function screen(title) {
-  const dialog=document.querySelector('#guild');
+  const dialog=document.querySelector('#guild-screen');
   dialog.replaceChildren();
   dialog.className='';
-  const prefix = backgrounds[title];
-  const background = prefix ? prefix+(Math.random()<.5?'1':'2') : 'bgdefault';
-  dialog.style.backgroundImage = title ? 'url("'+asset('ui/'+background+'.png')+'")' : 'none';
+  const section = backgrounds[title];
+  const background = section ? '--guild-' + section + '-background-' + (Math.random() < .5 ? '1' : '2') : '--guild-default-background';
+  dialog.style.setProperty('--guild-background-image', title ? 'var(' + background + ')' : 'none');
   if(title)dialog.append(element('h1',title));
   dialog.oncancel=event=>event.preventDefault();
   if(!dialog.open)dialog.showModal();
@@ -55,8 +64,8 @@ function screen(title) {
 async function introduction() {
   for(const message of story) await new Promise(resolve=>{
     const dialog=screen('');
-    dialog.className='story';
-    const box=element('button');box.className='letterbox';box.setAttribute('aria-label',message.replaceAll('*',''));
+    dialog.className='guild-introduction';
+    const box=element('button');box.className='guild-introduction-message';box.setAttribute('aria-label',message.replaceAll('*',''));
     const letters=[];
     message.split('*').forEach((segment,index)=>{
       const span=element(index%2?'strong':'span');box.append(span);
@@ -78,11 +87,11 @@ function listPage(title,entries,page,back) {
   const pageSize=tiled?64:(innerHeight<460?2:4);
   const pages=Math.max(1,Math.ceil(entries.length/pageSize));
   page=Math.min(page,pages-1);
-  const body=element('section');body.className=tiled?'catalog-board':'guild-list';
+  const body=element('section');body.className=tiled?'catalog-item-board':'guild-record-list';
   for(const build of entries.slice(page*pageSize,(page+1)*pageSize))body.append(build());
   if(tiled){
-    body.style.setProperty('--catalog-art','url("'+asset('ui/'+sectionArt[title]+'.png')+'")');
-    const tip=element('aside');tip.className='catalog-tip';tip.hidden=true;tip.setAttribute('role','tooltip');
+    body.style.setProperty('--catalog-art','var(--catalog-' + sectionArt[title] + '-art)');
+    const tip=element('aside');tip.className='catalog-tooltip';tip.hidden=true;tip.setAttribute('role','tooltip');
     for(const cell of body.children){
       const label=cell.textContent.trim(),detail=cell.title;
       cell.removeAttribute('title');cell.setAttribute('aria-label',label);
@@ -115,7 +124,7 @@ function icon(path) {const image=new Image();image.src=asset(path);image.alt='';
 // accesibles y una entrada antigua sigue siendo legible aunque falte su recurso.
 function historyDetail(run,back) {
   const dialog=screen('Aventura · Nv. '+run.level);
-  const record=element('article');record.className='run-record';
+  const record=element('article');record.className='adventure-summary';
   record.append(element('p',new Date(run.date).toLocaleDateString('es')+' · '+run.status));
   const stats=Object.entries(run.stats).map(([key,v])=>(labels[key]??key)+' '+v);
   if(run.hp!=null)stats.unshift('PV restantes '+run.hp);
@@ -155,11 +164,9 @@ function historyDetail(run,back) {
   cleanup.observe(dialog,{childList:true});
 }
 
-const sectionArt={'Tienda de Aventureros':'shop','Pokédex':'pokedex',Objetos:'objetos',Beneficios:'beneficios',Reliquias:'reliquias'};
-
 // Muestra la ficha base y el don asociado con la misma fuente que usa el combate.
 function speciesPage(row,back){
-  const dialog=screen(row.name), card=element('section');card.className='species-card';
+  const dialog=screen(row.name), card=element('section');card.className='species-profile';
   card.append(portrait(row),...row.essences.map(gem));
   for(const [key,value] of Object.entries(row.stats))card.append(element('p',(labels[key]??key)+' · '+value));
   const benefit=game.donors.get(row.name);
@@ -197,7 +204,7 @@ function collectionMenu(back) {
   };
   // Reconstruye la página para reflejar inmediatamente la activación de reliquias.
   function open(name){listPage(name,lists[name],0,again)}
-  const grid=element('section');grid.className='catalog-grid';
+  const grid=element('section');grid.className='collection-menu-grid';
   for(const name of Object.keys(lists)){
     const entry=button(name,()=>open(name));grid.append(entry);
   }
@@ -222,7 +229,7 @@ function shop(back) {
 // Una acción destructiva o una importación requiere una segunda elección dentro del juego.
 function confirmChange(message,accept,cancel) {
   const dialog=screen('Ajustes');
-  const prompt=element('p',message);prompt.className='confirmation';
+  const prompt=element('p',message);prompt.className='guild-confirmation-message';
   dialog.append(prompt,button('Cancelar',cancel),button('Confirmar',accept));
 }
 
@@ -253,12 +260,13 @@ export async function visitGuild() {
   });
 }
 
-// Conserva las dos ofertas generadas hasta que se selecciona una de ellas.
+// Conserva las ofertas generadas hasta que se selecciona una de ellas.
 export function selectMission(offers) {
   return new Promise(resolve=>{
-    const dialog=screen('Tablón de misiones'),grid=element('section');grid.className='offers contracts';grid.style.setProperty('--cards',offers.length);
+    const dialog=screen('Tablón de misiones'),grid=element('section');grid.className='mission-offer-grid';grid.style.setProperty('--mission-offer-count',offers.length);
     for(const mission of offers){
-      const card=button('',()=>{dialog.close();resolve(mission)},'mission');if(mission.red){card.className='red';card.append(element('small','Papel rojo · +15 niveles'))}
+      const card=button('',()=>{dialog.close();resolve(mission)},'mission');card.className='mission-offer-card';
+      if(mission.red){card.classList.add('red-mission-offer');card.append(element('small','Papel rojo · +15 niveles'))}
       card.append(element('strong',mission.name),element('span',mission.biome.name+' · '+mission.floors+' pisos'));
       const portraits=element('div');
       if(mission.type!=='leader')for(const id of mission.pool)portraits.append(portrait(game.pokemon.get(id)));

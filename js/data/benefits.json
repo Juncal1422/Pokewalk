@@ -303,7 +303,7 @@
   {
     "id": "golden",
     "name": "Dorado",
-    "description": "Ataque y rango +10 %. Tiñe de oro Cuerno de Rhyhorn, Punzante y Colmillo de Mamoswine.",
+    "description": "Ataque y rango +10 %. Tiñe de oro al jugador y a Cuerno de Rhyhorn, Punzante y Colmillo de Mamoswine.",
     "image": "assets/benefits/golden.png",
     "active": false,
     "amount": 0.1,

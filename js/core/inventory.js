@@ -6,7 +6,7 @@ import { game } from './state.js';
 
 // Los iconos conservan sus nodos durante el combate para no perder el hover.
 export function attachInventory(root) {
-  const tooltip = root.querySelector('#item-tip');
+  const tooltip = root.querySelector('#equipment-tooltip');
   let previousItems, previousBenefits;
   // Compara los IDs con la instantánea del último dibujo sin serializar dos listas en cada frame.
   function unchanged(entries, previous) {
@@ -19,7 +19,7 @@ export function attachInventory(root) {
   function updateCooldown() {
     for (const [id,icon] of activeIcons) {
       const fraction = Math.max(0,Math.min(1,((game.cooldowns[id] ?? 0)-gameTime())/(game.cooldownDurations[id] || 1)));
-      icon.style.setProperty('--remaining',fraction*360+'deg');
+      icon.style.setProperty('--cooldown-angle',fraction*360+'deg');
     }
   }
   // Actualiza el sombreado en cada fotograma y reconstruye los nodos solo cuando cambie la colección.
@@ -30,8 +30,8 @@ export function attachInventory(root) {
     previousBenefits = new Set(game.held);
     tooltip.hidden = true;
     for (const [selector, entries] of [
-      ['#inventory', [...game.inventory].map(id => game.items[id])],
-      ['#benefits', [...game.held].map(id => game.benefits.get(id))],
+      ['#equipment-panel', [...game.inventory].map(id => game.items[id])],
+      ['#species-benefit-panel', [...game.held].map(id => game.benefits.get(id))],
     ]) {
       const panel = root.querySelector(selector);
       panel.replaceChildren();
@@ -39,7 +39,7 @@ export function attachInventory(root) {
         const iconImage = new Image();
         iconImage.src = assetUrl('../../' + entry.image, import.meta.url).href;
         iconImage.alt = entry.name;
-        if (selector === '#inventory') {
+        if (selector === '#equipment-panel') {
           iconImage.style.gridColumn = String(1 + index%25);
           iconImage.style.gridRow = String(3 - Math.floor(index/25));
         }
@@ -57,7 +57,7 @@ export function attachInventory(root) {
           const activeIcon = document.createElement('span');
           activeIcons.set(entry.id,activeIcon);
           activeIcon.dataset.key=entry.slot.toUpperCase();
-          activeIcon.className = 'active-benefit';
+          activeIcon.className = 'active-benefit-icon';
           activeIcon.append(iconImage);
           panel.append(activeIcon);
           updateCooldown();

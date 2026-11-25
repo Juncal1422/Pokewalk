@@ -24,7 +24,7 @@ export function attachInput() {
   }
 
   // Reconoce los paneles que permiten transmitir el clic como ataque.
-  const isPanel = target => !!target?.closest?.('#benefits, #inventory, #nearby, #roster');
+  const isPanel = target => !!target?.closest?.('#species-benefit-panel, #equipment-panel, #nearby-loot-panel, #floor-pokemon-panel');
   // Las acciones puntuales ignoran la repetición de tecla. El movimiento conserva su estado hasta keyup.
   listen(document, 'keydown', event => {
     if (event.target !== gameCanvas && !isPanel(event.target)) return;

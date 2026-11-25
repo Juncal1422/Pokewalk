@@ -2,6 +2,7 @@
 export const game = {
   canvas: null,
   ctx: null,
+  canvasTheme: null,
   toastEl: null,
   portal: null,
   changingLevel: false,
@@ -26,6 +27,7 @@ export function resetGameState() {
   cancelAnimationFrame(game.animationFrame);
   game.canvas = null;
   game.ctx = null;
+  game.canvasTheme = null;
   game.toastEl = null;
   game.portal = null;
   game.changingLevel = false;

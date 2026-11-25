@@ -77,8 +77,9 @@ export function preparePortal() {
 export function draw() {
   const { player, tileSheet, ctx: drawingContext, canvas } = game;
   if (!player || !tileSheet) return;
+  const theme = game.canvasTheme;
   drawingContext.imageSmoothingEnabled = false;
-  drawingContext.fillStyle = '#0b0d12';
+  drawingContext.fillStyle = theme.dungeonVoid;
   drawingContext.fillRect(0, 0, canvas.width, canvas.height);
 
   // Fuera del mapa se ve el fondo para mantener siempre al jugador centrado.
@@ -129,8 +130,8 @@ export function draw() {
     const screenX = Math.floor(entity.x * ZOOM - cameraX),
       screenY = Math.floor(entity.y * ZOOM - cameraY);
     drawingContext.fillStyle = entity.isPlayer
-      ? 'rgba(30, 64, 175, 0.42)'
-      : 'rgba(0, 0, 0, 0.42)';
+      ? theme.playerShadow
+      : theme.otherPokemonShadow;
     drawingContext.beginPath();
     drawingContext.ellipse(screenX, screenY + 7, 15, 7, 0, 0, Math.PI * 2);
     drawingContext.fill();
@@ -148,14 +149,19 @@ export function draw() {
     const stationary = usesWeaponEffect || (entity.state === 'Attack' && entity.attackAnimation === entity.anims.Shoot);
     const shiftX = (stationary ? 0 : offset.x*ZOOM) + (correction?.x ?? 0)*scale;
     const shiftY = (stationary ? 0 : offset.y*ZOOM) + (correction?.y ?? 0)*scale;
-    const elapsed = gameTime() - entity.lastHit;
+    const now = gameTime();
+    const elapsed = now - entity.lastHit;
     drawingContext.save();
-    if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2) drawingContext.globalAlpha *= 0.28;
-    if (entity.isPlayer && game.amuletUntil > gameTime()) drawingContext.filter = 'sepia(.35) hue-rotate(235deg) saturate(1.45)';
-    if(entity.evasionUntil>gameTime())drawingContext.filter='saturate(.5)';
-    if (elapsed < 110) drawingContext.filter = 'sepia(1) saturate(12) hue-rotate(315deg)';
-    const flash=gameTime()-entity.championFlash;
-    if(flash>=0 && flash<405)drawingContext.filter=['sepia(1) saturate(9) hue-rotate(305deg)','sepia(1) saturate(7) hue-rotate(335deg)','sepia(1) saturate(8)'][Math.floor(flash/45)%3];
+    if (entity.isPlayer && elapsed < PLAYER_GRACE_MS && Math.floor(elapsed / 40) % 2)
+      drawingContext.globalAlpha *= theme.graceOpacity;
+
+    // Dorado es el tinte base del jugador. Las señales temporales tienen prioridad.
+    if (entity.isPlayer && game.held.has('golden')) drawingContext.filter = theme.goldenFilter;
+    if (entity.isPlayer && game.amuletUntil > now) drawingContext.filter = theme.amuletFilter;
+    if (entity.evasionUntil > now) drawingContext.filter = theme.evasionFilter;
+    if (elapsed < 110) drawingContext.filter = theme.hitFilter;
+    const flash = now - entity.championFlash;
+    if (flash >= 0 && flash < 405) drawingContext.filter = theme.leaderFlashFilters[Math.floor(flash / 45) % 3];
     drawingContext.drawImage(
       animation.img,
       entity.frame * animation.fw,
@@ -173,14 +179,14 @@ export function draw() {
       const horn = entity.doubleStrike ? offset.secondWeapon : (entity.isPlayer?game.held:entity.benefits).has('rhyhorn_horn');
       const gold = entity.isPlayer && synergyActive(horn?'goldHorn':'goldSpike');
       drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,
-        ZOOM,offset.opacity,horn?'fang':'spine',gold?'sepia(1) saturate(5)':'none');
+        ZOOM,offset.opacity,horn?'fang':'spine',gold?theme.goldenWeaponFilter:'none');
     }
     if (!entity.isPlayer && gameTime() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;
       const x = screenX - 19, y = Math.round(screenY - spriteHeight / 2 - 7);
-      drawingContext.fillStyle = '#131921';
+      drawingContext.fillStyle = theme.enemyHealthEmpty;
       drawingContext.fillRect(x, y, 38, 6);
-      drawingContext.fillStyle = fraction < 0.25 ? '#ef5350' : fraction <= 0.5 ? '#ffd54f' : '#66cf77';
+      drawingContext.fillStyle = fraction < 0.25 ? theme.healthLow : fraction <= 0.5 ? theme.healthMedium : theme.healthFull;
       drawingContext.fillRect(x + 1, y + 1, Math.round(36 * fraction), 4);
     }
     const hits=(entity.hitNumbers??[]).filter(hit=>gameTime()-hit.time<750);
@@ -189,8 +195,8 @@ export function draw() {
       drawingContext.font = 'bold 17px Wondermail';
       drawingContext.textAlign = 'center';
       drawingContext.lineWidth = 3;
-      drawingContext.strokeStyle = '#231720';
-      drawingContext.fillStyle = hitNumber.critical ? '#ff9c36' : '#fff';
+      drawingContext.strokeStyle = theme.damageOutline;
+      drawingContext.fillStyle = hitNumber.critical ? theme.criticalDamageText : theme.damageText;
       drawingContext.strokeText(hitNumber.damage, screenX, screenY - spriteHeight / 2 - risePixels);
       drawingContext.fillText(hitNumber.damage, screenX, screenY - spriteHeight / 2 - risePixels);
     }
@@ -204,8 +210,8 @@ export function draw() {
 
   // Escala sólo el HUD; las coordenadas lógicas conservan el anclaje a las cuatro esquinas.
   drawingContext.save();
-  drawingContext.scale(1.2, 1.2);
-  drawHud(drawingContext, {width:canvas.width/1.2, height:canvas.height/1.2}, player);
+  drawingContext.scale(theme.hudScale, theme.hudScale);
+  drawHud(drawingContext, {width:canvas.width/theme.hudScale, height:canvas.height/theme.hudScale}, player);
   drawingContext.restore();
   drawingContext.restore();
 }

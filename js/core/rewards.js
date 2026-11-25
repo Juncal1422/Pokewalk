@@ -4,12 +4,12 @@ import { evolutionCost } from './evolution.js';
 import { game } from './state.js';
 import { labels, levelFor } from './stats.js';
 import { projectReward, playerStats } from './benefits.js';
-import { element, gem, portrait, tones } from './pokemon-panel.js';
+import { element, gem, portrait } from './pokemon-panel.js';
 
 // Muestra el saldo disponible por cada esencia admitida en las evoluciones de la tarjeta.
 function evolutionBars(species,state) {
   const footer = element('div');
-  footer.className = 'evolutions';
+  footer.className = 'upgrade-evolution-costs';
   const current = state.row;
   const incoming = current.evolutions.filter(rule => rule.to === species.dex);
   for (const rule of [...incoming, ...species.evolutions]) {
@@ -37,7 +37,7 @@ function rewardCard(option, state) {
   const stats = playerStats(species,progress,projected.bonuses,projected.held);
   const card = element('button');
   card.type = 'button';
-  card.style.backgroundColor = tones[essence] + '4d';
+  card.style.setProperty('--primary-essence-rgb', 'var(--essence-' + essence + ')');
   const heading = element('strong', species.name);
   heading.prepend(gem(essence));
   card.append(portrait(species), heading, element('small', 'Nv. ' + levelFor(species, progress)));
@@ -45,7 +45,7 @@ function rewardCard(option, state) {
   else {
     const benefit = projected.benefit, icon = new Image();
     icon.src = assetUrl('../../'+benefit.image,import.meta.url).href;
-    icon.alt = ''; icon.className = 'essence';
+    icon.alt = ''; icon.className = 'essence-icon';
     card.append(icon,element('strong',benefit.name),element('span',benefit.description));
     if (projected.lostBenefits.length) {
       const names = projected.lostBenefits.map(id => game.benefits.get(id).name);
@@ -62,7 +62,7 @@ function rewardCard(option, state) {
     statRow.insertCell().textContent = stats[key];
     const delta = statRow.insertCell();
     delta.textContent = change ? (change > 0 ? '+' : '') + change : '—';
-    if (change) delta.style.color = (key === 'size' ? change < 0 : change > 0) ? '#9ce9ab' : '#ffaaa6';
+    if (change) delta.className = (key === 'size' ? change < 0 : change > 0) ? 'upgrade-stat-increase' : 'upgrade-stat-decrease';
   }
   card.append(table, evolutionBars(species,state));
   if (option.payment) {
@@ -75,9 +75,9 @@ function rewardCard(option, state) {
 
 // Abre las opciones de final de misión y devuelve la elección o la decisión de conservar la forma.
 export function chooseReward(options, state, extra=false) {
-  const dialog = document.getElementById('rewards');
+  const dialog = document.getElementById('mission-upgrade-dialog');
   dialog.querySelector('h1').textContent = extra ? 'Cambiacaras · Mejora adicional' : 'Mejoras';
-  const cards = dialog.querySelector('.cards');
+  const cards = dialog.querySelector('.upgrade-options');
   cards.replaceChildren();
   return new Promise(resolve => {
     for (const option of options) {
@@ -90,11 +90,11 @@ export function chooseReward(options, state, extra=false) {
       };
       cards.append(card);
     }
-    dialog.querySelector('.keep-form')?.remove();
+    dialog.querySelector('.keep-current-form')?.remove();
     if (!options.some(option => option.row.dex === state.row.dex)) {
       const keepFormButton = element('button', 'Continuar sin mejora');
       keepFormButton.type = 'button';
-      keepFormButton.className = 'keep-form';
+      keepFormButton.className = 'keep-current-form';
       // Conservar la forma cierra el diálogo sin comprar una mejora.
       keepFormButton.onclick = () => { playSound('select'); dialog.close(); resolve(null); };
       cards.after(keepFormButton);
@@ -103,9 +103,10 @@ export function chooseReward(options, state, extra=false) {
     dialog.oncancel = event => event.preventDefault();
     dialog.showModal();
     // Ajusta las tres tarjetas completas, incluso con varias evoluciones ramificadas.
+    const maxZoom = Number(getComputedStyle(dialog).getPropertyValue('--upgrade-max-zoom'));
     function fit() {
       dialog.style.zoom = '1';
-      dialog.style.zoom = Math.min(1.2,(window.innerWidth-12)/dialog.offsetWidth,
+      dialog.style.zoom = Math.min(maxZoom,(window.innerWidth-12)/dialog.offsetWidth,
         (window.innerHeight-12)/dialog.offsetHeight);
     }
     fit();

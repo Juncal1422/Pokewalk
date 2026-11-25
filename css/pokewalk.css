@@ -1,0 +1,495 @@
+@font-face {
+  font-family: Wondermail;
+  src: url("../assets/ui/wondermail.ttf") format("truetype");
+}
+
+/* Tema. Los valores RGB separados por espacios admiten una opacidad independiente. */
+#poke-walk-app {
+  --font-interface: Wondermail, sans-serif;
+  --text-primary: #fff;
+  --text-guild: #f2ecd7;
+  --text-guild-title: #0d4132;
+  --text-guild-accent: #f0cf7e;
+  --text-pagination: #000;
+  --text-stat-increase: #9ce9ab;
+  --text-stat-decrease: #ffaaa6;
+  --focus-outline: #d4efff;
+  --selected-outline: #eca6ca;
+  --background-app: #11131a;
+  --background-guild: #111b26;
+  --background-introduction: #000;
+  --background-panel-rgb: 7 12 18;
+  --background-notice-rgb: 12 20 34;
+  --background-tooltip-rgb: 0 0 0;
+  --background-red-offer-rgb: 65 5 18;
+  --background-confirmation-rgb: 43 3 16;
+  --background-summary-rgb: 17 26 36;
+  --background-summary-opacity: .8;
+  --background-panel-opacity: .3;
+  --background-confirmation-opacity: .2;
+  --background-tooltip-opacity: .5;
+  --background-notice-opacity: .88;
+  --background-upgrade-card-opacity: .3;
+  --background-floor-card-opacity: 1;
+  --disabled-opacity: .65;
+  --upgrade-stat-divider: rgb(255 255 255 / 14%);
+  --upgrade-progress: #a4ddab;
+  --floor-card-fallback-rgb: 20 28 39;
+  --pagination-border: #789486;
+  --pagination-background: #192b39;
+  --tooltip-text-shadow: #000;
+  --active-key-background: #182333;
+  --cooldown-rgb: 5 10 20;
+  --cooldown-opacity: .7;
+  --pixel-art-rendering: pixelated;
+
+  /* Fondos del gremio y atlas de los catálogos. Cada pareja se sortea al abrir su pantalla. */
+  --guild-default-background: url("../assets/ui/bgdefault.png");
+  --guild-home-background-1: url("../assets/ui/bg1.png");
+  --guild-home-background-2: url("../assets/ui/bg2.png");
+  --guild-benefits-background-1: url("../assets/ui/bgbenefits1.png");
+  --guild-benefits-background-2: url("../assets/ui/bgbenefits2.png");
+  --guild-items-background-1: url("../assets/ui/bgitems1.png");
+  --guild-items-background-2: url("../assets/ui/bgitems2.png");
+  --guild-missions-background-1: url("../assets/ui/bgmissions1.png");
+  --guild-missions-background-2: url("../assets/ui/bgmissions2.png");
+  --guild-pokedex-background-1: url("../assets/ui/bgpokedex1.png");
+  --guild-pokedex-background-2: url("../assets/ui/bgpokedex2.png");
+  --guild-relics-background-1: url("../assets/ui/bgrelics1.png");
+  --guild-relics-background-2: url("../assets/ui/bgrelics2.png");
+  --catalog-shop-art: url("../assets/ui/shop.png");
+  --catalog-pokedex-art: url("../assets/ui/pokedex.png");
+  --catalog-items-art: url("../assets/ui/objetos.png");
+  --catalog-benefits-art: url("../assets/ui/beneficios.png");
+  --catalog-relics-art: url("../assets/ui/reliquias.png");
+
+  /* Paleta compartida por las fichas de la mazmorra y las tarjetas de mejora. */
+  --essence-normal: 73 70 65;
+  --essence-fire: 98 40 33;
+  --essence-water: 32 61 97;
+  --essence-electric: 85 69 25;
+  --essence-grass: 36 75 48;
+  --essence-ice: 40 80 89;
+  --essence-fighting: 83 46 40;
+  --essence-poison: 72 41 81;
+  --essence-ground: 83 65 43;
+  --essence-flying: 53 69 94;
+  --essence-psychic: 88 46 77;
+  --essence-bug: 65 75 35;
+  --essence-rock: 75 66 50;
+  --essence-ghost: 57 46 80;
+  --essence-dragon: 48 46 98;
+  --essence-dark: 52 48 55;
+  --essence-steel: 54 69 75;
+
+  /* Marcos HTML. En el bloque de asignación se puede usar cualquiera de estas variantes o none. */
+  --textbox-blue: url("../assets/ui/textbox-b.png");
+  --textbox-blue-thin: url("../assets/ui/textbox-b-thin.png");
+  --textbox-green: url("../assets/ui/textbox-g.png");
+  --textbox-pink: url("../assets/ui/textbox-p.png");
+  --textbox-slice: 16;
+  --textbox-width: 6px;
+
+  /* Marcos del HUD dibujado en canvas. Usar blue, blue-thin, green, pink o none. */
+  --hud-health-textbox: blue;
+  --hud-essences-textbox: blue;
+  --hud-stats-textbox: blue-thin;
+  --hud-mission-textbox: blue;
+  --hud-battery-textbox: blue;
+  --hud-essence-tooltip-textbox: blue;
+  --hud-textbox-opacity: .82;
+  --hud-stats-textbox-opacity: .65;
+  --hud-textbox-background-rgb: 12 20 34;
+  --hud-text-color: #fff;
+  --hud-battery-color: #c8edff;
+  --hud-stat-increase: #79ed8e;
+  --hud-stat-decrease: #ff7474;
+  --hud-health-empty: #15202b;
+  --health-full: #66cf77;
+  --health-medium: #ffd54f;
+  --health-low: #ef5350;
+  --hud-scale: 1.2;
+  --hud-stats-scale: 1.15;
+
+  /* Dibujo de la mazmorra. Los filtros se aplican al sprite durante el estado correspondiente. */
+  --dungeon-void: #0b0d12;
+  --player-shadow: rgb(30 64 175 / 42%);
+  --other-pokemon-shadow: rgb(0 0 0 / 42%);
+  --player-grace-opacity: .28;
+  --player-golden-filter: sepia(1) saturate(3) brightness(1.15);
+  --player-amulet-filter: sepia(.35) hue-rotate(235deg) saturate(1.45);
+  --pokemon-evasion-filter: saturate(.5);
+  --pokemon-hit-filter: sepia(1) saturate(12) hue-rotate(315deg);
+  --leader-flash-first: sepia(1) saturate(9) hue-rotate(305deg);
+  --leader-flash-second: sepia(1) saturate(7) hue-rotate(335deg);
+  --leader-flash-third: sepia(1) saturate(8);
+  --golden-weapon-filter: sepia(1) saturate(5);
+  --enemy-health-empty: #131921;
+  --damage-outline: #231720;
+  --damage-text: #fff;
+  --critical-damage-text: #ff9c36;
+  --experience-notice-color: #8edfff;
+  --healing-notice-color: #79ed8e;
+  --world-notice-outline: #123;
+
+  /* Escalas de panel HTML. */
+  --guild-zoom: 1.2;
+  --floor-pokemon-zoom: 1.08;
+  --nearby-loot-zoom: 1.4;
+  --equipment-zoom: 1.2;
+  --notice-zoom: 1.2;
+  --upgrade-max-zoom: 1.2;
+}
+
+/* Asignación de textbox por elemento. Un ancho de 0 elimina también el espacio del marco. */
+#guild-screen button { --textbox-frame: var(--textbox-green); }
+#guild-screen label { --textbox-frame: var(--textbox-blue); }
+#guild-screen .guild-introduction-message { --textbox-frame: var(--textbox-green); }
+#guild-screen .mission-offer-card { --textbox-frame: var(--textbox-green); }
+#guild-screen .red-mission-offer { --textbox-frame: var(--textbox-pink); }
+#guild-screen .catalog-item-board button { --textbox-frame: none; --frame-width: 0px; }
+#guild-screen .guild-record-list p { --textbox-frame: var(--textbox-blue); }
+#guild-screen .species-profile { --textbox-frame: var(--textbox-blue); }
+#guild-screen .adventure-summary { --textbox-frame: var(--textbox-blue); }
+#guild-screen .guild-confirmation-message { --textbox-frame: var(--textbox-pink); }
+#guild-screen .catalog-tooltip { --textbox-frame: var(--textbox-blue); }
+#emblem-reward-notice { --textbox-frame: var(--textbox-blue); }
+#dungeon-notice { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
+#nearby-loot-panel { --textbox-frame: var(--textbox-blue); --frame-width: 12px; }
+#equipment-tooltip { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
+#floor-pokemon-panel li { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
+#mission-upgrade-dialog button { --textbox-frame: var(--textbox-blue); --frame-width: 8px; }
+
+:where(
+  #guild-screen :is(button, label, .guild-record-list p, .species-profile, .adventure-summary,
+    .guild-confirmation-message, .catalog-tooltip),
+  #emblem-reward-notice, #dungeon-notice, #nearby-loot-panel, #equipment-tooltip,
+  #floor-pokemon-panel li, #mission-upgrade-dialog button
+) {
+  box-sizing: border-box;
+  border: var(--frame-width, var(--textbox-width)) solid transparent;
+  border-image: var(--textbox-frame, none) var(--textbox-slice) stretch;
+  background-clip: padding-box;
+}
+
+/* Contenedor, elementos ocultos y gráficos pixelados, incluidos los fondos del gremio. */
+#poke-walk-app {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--background-app);
+  color: var(--text-primary);
+  font: 17px var(--font-interface);
+}
+#poke-walk-app *, #poke-walk-app *::before, #poke-walk-app *::after {
+  font-family: var(--font-interface);
+  scrollbar-width: none;
+}
+#poke-walk-app *::-webkit-scrollbar { display: none; }
+#poke-walk-app [hidden] { display: none; }
+#poke-walk-app :is(img, canvas, #guild-screen, .catalog-item-board) { image-rendering: var(--pixel-art-rendering); }
+.pokemon-portrait, .essence-icon { vertical-align: middle; }
+#poke-walk-app .essence-icon { width: 38.4px; height: 38.4px; }
+
+/* Gremio, tablón y bienvenida. JavaScript escoge el arte de fondo de cada pantalla. */
+#guild-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: clamp(6px, 3vmin, 30px);
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 0;
+  background: var(--background-guild) var(--guild-background-image, none) center / cover no-repeat;
+  color: var(--text-guild);
+  zoom: var(--guild-zoom);
+}
+#guild-screen[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: min(1.4dvh, 12px);
+}
+#guild-screen :is(h1, p) { margin: 0; }
+#guild-screen h1 { color: var(--text-guild-title); font-size: clamp(20px, 5vmin, 42px); }
+#guild-screen strong { color: var(--text-guild-accent); }
+#guild-screen :where(button, label, .guild-record-list p) {
+  padding: clamp(3px, 1vmin, 12px);
+  color: var(--text-primary);
+  font-size: clamp(16px, 3.5vmin, 29px);
+}
+#guild-screen :where(button, label, .guild-record-list p, .species-profile), #emblem-reward-notice {
+  background-color: rgb(var(--background-panel-rgb) / var(--background-panel-opacity));
+}
+#guild-screen button { cursor: pointer; }
+#guild-screen button:disabled { opacity: var(--disabled-opacity); }
+#guild-screen img { width: clamp(20px, 5vmin, 44px); vertical-align: middle; }
+#guild-screen nav { display: flex; align-items: center; gap: 10px; }
+#guild-screen nav span { color: var(--text-pagination); }
+.mission-offer-grid {
+  width: min(100%, 1200px);
+  display: grid;
+  grid-template-columns: repeat(var(--mission-offer-count), minmax(0, 1fr));
+  gap: 2vmin;
+}
+.mission-offer-grid .mission-offer-card {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1vmin;
+}
+#guild-screen .red-mission-offer {
+  background-color: rgb(var(--background-red-offer-rgb) / var(--background-panel-opacity));
+}
+#guild-screen .mission-offer-grid .pokemon-portrait { width: clamp(15px, 4.5vmin, 38px); }
+@media (max-aspect-ratio: 1/1) {
+  .mission-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+#guild-screen.guild-introduction { background-color: var(--background-introduction); }
+.guild-introduction-message { text-align: left; width: min(760px, 96%); min-height: 5em; }
+.guild-confirmation-message {
+  padding: 6px;
+  background-color: rgb(var(--background-confirmation-rgb) / var(--background-confirmation-opacity));
+}
+#emblem-reward-notice {
+  position: fixed;
+  inset: 65px 8px auto auto;
+  margin: 0;
+  color: var(--text-primary);
+  pointer-events: none;
+  font-size: 22px;
+  zoom: var(--notice-zoom);
+}
+#emblem-reward-notice img { width: 24px; vertical-align: middle; }
+
+/* Colección y crónicas. El tablero de catálogo usa su propio atlas de 144 × 144. */
+.guild-record-list { display: grid; gap: 4px; max-width: min(94vw, 800px); }
+#guild-screen .guild-record-list p { padding: 6px; }
+.collection-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(22vw, 120px), 1fr));
+  gap: 1vmin;
+  width: min(92vw, 800px);
+}
+#guild-screen .collection-menu-grid button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-width: 0;
+  font-size: clamp(12px, 2.6vmin, 23px);
+}
+#guild-screen .collection-menu-grid img { width: clamp(26px, 7vmin, 70px); }
+.catalog-item-board {
+  width: min(100%, 59dvh);
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  display: grid;
+  grid-template: repeat(8, minmax(0, 1fr)) / repeat(8, minmax(0, 1fr));
+  border: min(7.8vw, 5.9dvh) solid transparent;
+  border-image: var(--catalog-art) 48 stretch;
+}
+#guild-screen .catalog-item-board > * {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  background: var(--catalog-art) center / 300% 300% no-repeat padding-box;
+  display: grid;
+  place-items: center;
+}
+#guild-screen .catalog-item-board img { width: 74%; height: 74%; object-fit: contain; }
+.catalog-item-board [aria-pressed="true"] { outline: 2px solid var(--selected-outline); outline-offset: -2px; }
+.adventure-summary {
+  flex: none;
+  width: min(760px, 78vw);
+  padding: 8px;
+  background-color: rgb(var(--background-summary-rgb) / var(--background-summary-opacity));
+  color: var(--text-primary);
+}
+#guild-screen .adventure-summary img { width: 28px; height: 28px; object-fit: contain; }
+.adventure-summary ol { columns: 2; margin: 5px 0; padding-left: 2em; }
+.adventure-summary li { break-inside: avoid; }
+
+/* Mazmorra, avisos y paneles del piso. */
+#dungeon-viewport, #dungeon-canvas { width: 100%; height: 100%; display: block; }
+#dungeon-canvas { touch-action: none; outline: none; }
+#dungeon-notice {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  background-color: rgb(var(--background-notice-rgb) / var(--background-notice-opacity));
+  font-size: 1.05rem;
+  font-weight: 600;
+  z-index: 12;
+  zoom: var(--notice-zoom);
+}
+#nearby-loot-panel {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: max-content;
+  max-width: min(41vw, 380px);
+  max-height: 28.5vh;
+  overflow: hidden;
+  padding: 4px;
+  background-color: rgb(var(--background-tooltip-rgb) / var(--background-tooltip-opacity));
+  zoom: var(--nearby-loot-zoom);
+}
+#nearby-loot-panel p { margin: 3px 0; }
+#floor-pokemon-panel {
+  position: absolute;
+  top: 92px;
+  right: 8px;
+  max-width: min(52vw, 740px);
+  overflow: hidden;
+  font-size: 15px;
+  zoom: var(--floor-pokemon-zoom);
+}
+#floor-pokemon-panel ul {
+  margin: 4px 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  gap: 3px;
+}
+#floor-pokemon-panel li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1px 5px;
+  background-color: rgb(var(--primary-essence-rgb, var(--floor-card-fallback-rgb)) / var(--background-floor-card-opacity));
+  font-size: clamp(10px, 1.7vmin, 15px);
+  font-variant-numeric: tabular-nums;
+}
+#floor-pokemon-panel .dual-essence-card {
+  background-color: transparent;
+  background-image: linear-gradient(135deg,
+    rgb(var(--primary-essence-rgb) / var(--background-floor-card-opacity)) 50%,
+    rgb(var(--secondary-essence-rgb) / var(--background-floor-card-opacity)) 50%);
+}
+#floor-pokemon-panel .pokemon-portrait { grid-column: 1; grid-row: 1 / 3; width: clamp(20px, 4vmin, 44px); }
+#floor-pokemon-panel li :is(strong, span) { grid-column: 2; }
+.floor-pokemon-benefit-icon { grid-column: 3; grid-row: 1 / 3; align-self: center; width: clamp(14px, 2.8vmin, 26px); }
+:is(#floor-pokemon-panel, #nearby-loot-panel) nav img { width: 18px; height: 18px; }
+#nearby-loot-panel nav button { background: var(--pagination-background); border: 1px solid var(--pagination-border); }
+#floor-pokemon-panel nav button { background: transparent; border: 0; }
+@media (max-width: 680px) {
+  #floor-pokemon-panel ul { grid-template-rows: repeat(5, auto); }
+  #floor-pokemon-panel li { gap: 0; --frame-width: 3px; }
+}
+@media (max-width: 579px) {
+  #floor-pokemon-panel { top: 110px; }
+}
+
+/* Equipo, beneficios, recargas y descripciones bajo el puntero. */
+#equipment-panel, #species-benefit-panel {
+  position: absolute;
+  display: grid;
+  pointer-events: none;
+  gap: 1px;
+  zoom: var(--equipment-zoom);
+}
+#equipment-panel {
+  left: min(223px, 38vw);
+  right: min(30vw, 380px);
+  bottom: 8px;
+  grid-template-columns: repeat(25, minmax(0, 1fr));
+  align-items: end;
+}
+#species-benefit-panel {
+  --benefit-icon-size: min(50px, 4.6dvh);
+  left: 8px;
+  top: 29%;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(9, var(--benefit-icon-size));
+  grid-template-columns: repeat(3, var(--benefit-icon-size));
+}
+:is(#equipment-panel, #species-benefit-panel) img { object-fit: contain; pointer-events: auto; }
+#equipment-panel img { width: 100%; max-width: 50px; aspect-ratio: 1; }
+#species-benefit-panel img { width: var(--benefit-icon-size); height: var(--benefit-icon-size); }
+.active-benefit-icon { position: relative; display: inline-flex; }
+.active-benefit-icon::before {
+  content: attr(data-key);
+  position: absolute;
+  z-index: 1;
+  color: var(--text-primary);
+  background: var(--active-key-background);
+  padding: 0 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.active-benefit-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: conic-gradient(rgb(var(--cooldown-rgb) / var(--cooldown-opacity)) var(--cooldown-angle, 0deg), transparent 0);
+}
+.catalog-tooltip, #equipment-tooltip {
+  position: fixed;
+  inset: auto;
+  width: max-content;
+  max-width: min(440px, 78vw);
+  background-color: rgb(var(--background-tooltip-rgb) / var(--background-tooltip-opacity));
+  text-shadow: 0 1px 2px var(--tooltip-text-shadow);
+  color: var(--text-primary);
+  font-size: 22px;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  z-index: 20;
+}
+.catalog-tooltip { padding: 5px; }
+
+/* Mejoras. El diálogo y el backdrop son transparentes; cada tarjeta conserva su marco. */
+#mission-upgrade-dialog {
+  width: max-content;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+}
+#mission-upgrade-dialog::backdrop { background: transparent; }
+#mission-upgrade-title { margin: 0 0 5px; font-size: 22px; font-weight: 600; text-align: center; }
+.upgrade-options { display: flex; gap: 5px; align-items: stretch; }
+#mission-upgrade-dialog button {
+  flex: 1 1 0;
+  width: clamp(180px, 29vw, 300px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background-color: rgb(var(--primary-essence-rgb, var(--background-panel-rgb)) / var(--background-upgrade-card-opacity));
+  color: var(--text-primary);
+  font-size: 18px;
+  line-height: 1.32;
+  cursor: pointer;
+}
+#mission-upgrade-dialog button:is(:focus-visible, :hover) { outline: 2px solid var(--focus-outline); outline-offset: -4px; }
+#mission-upgrade-dialog .pokemon-portrait { width: 80px; height: 80px; }
+#mission-upgrade-dialog table { width: 100%; margin: 4px 0; border-collapse: collapse; font: inherit; font-variant-numeric: tabular-nums; }
+#mission-upgrade-dialog td { padding: 2px 1px; text-align: right; border-bottom: 1px solid var(--upgrade-stat-divider); }
+#mission-upgrade-dialog td:first-child { text-align: left; }
+.upgrade-stat-increase { color: var(--text-stat-increase); }
+.upgrade-stat-decrease { color: var(--text-stat-decrease); }
+.upgrade-evolution-costs { width: 100%; margin-top: auto; text-align: left; font-size: 13px; }
+.upgrade-evolution-costs div { display: flex; align-items: center; gap: 2px; }
+.upgrade-evolution-costs progress { flex: 1; min-width: 8px; height: 10px; accent-color: var(--upgrade-progress); }
+#mission-upgrade-dialog .keep-current-form { width: auto; margin: 8px auto 0; flex-direction: row; gap: 8px; }
+#mission-upgrade-dialog .keep-current-form .pokemon-portrait { width: 44px; height: 44px; }
+@media (max-width: 440px) {
+  #mission-upgrade-dialog button { padding: 1px; --frame-width: 5px; font-size: 15px; }
+}

@@ -1,9 +1,9 @@
 // Las esquinas conservan su forma; los cuatro bordes se estiran entre ellas.
-export function drawFrame(drawingContext, image, x, y, width, height, opacity = .82) {
+export function drawFrame(drawingContext, image, x, y, width, height, background) {
   const cornerSize = Math.min(6, width / 3, height / 3);
   const columnEdges = [x, x + cornerSize, x + width - cornerSize, x + width];
   const rowEdges = [y, y + cornerSize, y + height - cornerSize, y + height];
-  drawingContext.fillStyle = 'rgba(12,20,34,'+opacity+')';
+  drawingContext.fillStyle = background;
   drawingContext.fillRect(x + cornerSize, y + cornerSize, width - 2*cornerSize, height - 2*cornerSize);
   for (let row = 0; row < 3; row++) {
     for (let column = 0; column < 3; column++) {

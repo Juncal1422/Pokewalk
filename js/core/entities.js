@@ -25,10 +25,10 @@ import { loadPokemonData } from '../data/pokemon-data.js';
 // Muestra un aviso temporal y sustituye el temporizador del aviso anterior.
 export function showToast(message) {
   game.toastEl.textContent = message;
-  game.toastEl.style.display = 'block';
+  game.toastEl.hidden = false;
   clearTimeout(game.toastTimer);
   game.toastTimer = setTimeout(() => {
-    game.toastEl.style.display = 'none';
+    game.toastEl.hidden = true;
   }, 2800);
 }
 

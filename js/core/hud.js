@@ -11,7 +11,11 @@ const icons = {};
 // Obtiene la imagen precargada de un tipo de esencia.
 export const essenceIcon = id => icons['essence-' + id];
 // Dibuja el marco de mensajes con el recurso compartido de la interfaz.
-export const textBox = (drawingContext,x,y,width,height) => drawFrame(drawingContext,icons['textbox-b'],x,y,width,height);
+function textBox(drawingContext, frame, x, y, width, height) {
+  const image = icons[frameAssets[frame.variant]];
+  if (image) drawFrame(drawingContext, image, x, y, width, height, frame.background);
+}
+const frameAssets = { blue: 'textbox-b', 'blue-thin': 'textbox-b-thin', green: 'textbox-g', pink: 'textbox-p' };
 const compact = new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 });
 // Abrevia cantidades grandes para que quepan en los contadores.
 const formatValue = value => value >= 1000 ? compact.format(value) : String(value);
@@ -23,7 +27,7 @@ const typeLabels = {normal:'Normal',fire:'Fuego',water:'Agua',electric:'Eléctri
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
   console.debug('[HUD] Cargando interfaz y esencias');
-  await Promise.all([...essenceNames.map(id => 'essence-' + id), 'textbox-b', 'textbox-b-thin', 'hpbar'].map(async key => {
+  await Promise.all([...essenceNames.map(id => 'essence-' + id), ...Object.values(frameAssets), 'hpbar'].map(async key => {
     const image = new Image();
     image.src = assetUrl('../../assets/ui/' + key + '.png', import.meta.url).href;
     await image.decode();
@@ -33,11 +37,12 @@ export async function loadHud() {
 
 // Un indicador por recogida permite ver dos efectos consecutivos del mismo atributo.
 function indicators(drawingContext,key,x,y,simulationTime) {
+  const theme = game.canvasTheme;
   drawingContext.save();
   drawingContext.textBaseline = 'middle';
   for (const pickupIndicator of game.pickups.filter(entry => entry.key === key)) {
     drawingContext.globalAlpha = Math.min(1, ((pickupIndicator.duration??1500) - (simulationTime-pickupIndicator.time)) / 800);
-    drawingContext.fillStyle = (key === 'size' ? pickupIndicator.delta < 0 : pickupIndicator.delta > 0) ? '#79ed8e' : '#ff7474';
+    drawingContext.fillStyle = (key === 'size' ? pickupIndicator.delta < 0 : pickupIndicator.delta > 0) ? theme.statIncrease : theme.statDecrease;
     const text = (pickupIndicator.delta > 0 ? '+' : '') + formatValue(pickupIndicator.delta);
     drawingContext.fillText(text,x,y); x += drawingContext.measureText(text).width + 6;
   }
@@ -46,6 +51,7 @@ function indicators(drawingContext,key,x,y,simulationTime) {
 
 // Compone la vida, experiencia, esencias, atributos y objetivo en coordenadas de interfaz.
 export function drawHud(drawingContext, canvas, player) {
+  const theme = game.canvasTheme;
   const simulationTime = gameTime();
   game.pickups = game.pickups.filter(pickupIndicator => simulationTime - pickupIndicator.time < (pickupIndicator.duration??1500));
   const baseWidth = Math.min(144, canvas.width * 0.22);
@@ -58,9 +64,9 @@ export function drawHud(drawingContext, canvas, player) {
   const fillEdge=left+innerInset+(length-2*innerInset)*fraction;
   [14,12,9,8,9,12].forEach((edge,rowIndex) => {
     const inset = edge*endCapWidth/16, x=left+inset, y=top+(8+rowIndex)*scale, width=length-2*inset;
-    drawingContext.fillStyle = '#15202b';
+    drawingContext.fillStyle = theme.playerHealthEmpty;
     drawingContext.fillRect(x,y,width,scale);
-    drawingContext.fillStyle = fraction < .25 ? '#ef5350' : fraction < .5 ? '#ffd54f' : '#66cf77';
+    drawingContext.fillStyle = fraction < .25 ? theme.healthLow : fraction < .5 ? theme.healthMedium : theme.healthFull;
     drawingContext.fillRect(x,y,Math.max(0,Math.min(width,fillEdge-x)),scale);
   });
   const widths = [endCapWidth, length - 2 * endCapWidth, endCapWidth];
@@ -72,8 +78,8 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.font = 'bold 17px Wondermail';
   drawingContext.textBaseline = 'middle';
   const health = player.hp + '/' + player.stats.hpMax;
-  textBox(drawingContext, cursor, 5, drawingContext.measureText(health).width + 18, 32);
-  drawingContext.fillStyle = '#fff';
+  textBox(drawingContext, theme.frames.health, cursor, 5, drawingContext.measureText(health).width + 18, 32);
+  drawingContext.fillStyle = theme.hudText;
   drawingContext.fillText(health, cursor + 9, 21);
   indicators(drawingContext, 'hp', cursor + 9, 43, simulationTime);
   let index = 0, hoveredType;
@@ -83,29 +89,29 @@ export function drawHud(drawingContext, canvas, player) {
   const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 146)));
   const essenceTop = canvas.width < 580 ? 109 : 48;
   const entries = Object.entries(game.essences);
-  if (entries.length) textBox(drawingContext, 4, essenceTop, Math.min(columns, entries.length) * 80 + 9, Math.ceil(entries.length / columns) * 40 + 10);
+  if (entries.length) textBox(drawingContext, theme.frames.essences, 4, essenceTop, Math.min(columns, entries.length) * 80 + 9, Math.ceil(entries.length / columns) * 40 + 10);
   for (const [id, count] of entries) {
     const x = 8 + (index % columns) * 80, y = essenceTop + 4 + Math.floor(index / columns) * 40;
     drawingContext.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
-    drawingContext.fillStyle = '#fff';
+    drawingContext.fillStyle = theme.hudText;
     drawingContext.fillText(formatValue(count), x + 40, y + 20);
     if(pointerX>=x && pointerX<x+80 && pointerY>=y && pointerY<y+40) hoveredType=typeLabels[id];
     index++;
   }
   drawingContext.save();
   drawingContext.translate(0,canvas.height);
-  drawingContext.scale(1.15,1.15);
+  drawingContext.scale(theme.hudStatsScale, theme.hudStatsScale);
   drawingContext.translate(0,-canvas.height);
   drawingContext.font = 'bold 13px Wondermail';
   let y = canvas.height - 19 * Object.keys(labels).length - 6;
-  drawFrame(drawingContext, icons['textbox-b-thin'], 4, y - 25, 198, canvas.height - y + 25, .65);
-  drawingContext.fillStyle = '#fff';
+  textBox(drawingContext, theme.frames.stats, 4, y - 25, 198, canvas.height - y + 25);
+  drawingContext.fillStyle = theme.hudText;
   drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
   const baseStats = playerStats(game.pokemon.get(player.dex), game.progress, player.bonuses, new Set());
   for (const [key, label] of Object.entries(labels)) {
     const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
-    drawingContext.fillStyle = delta > 0 ? '#79ed8e' : delta < 0 ? '#ff7474' : '#fff';
+    drawingContext.fillStyle = delta > 0 ? theme.statIncrease : delta < 0 ? theme.statDecrease : theme.hudText;
     drawingContext.textAlign = 'left';
     drawingContext.fillText(label,12,y+9);
     drawingContext.textAlign = 'right';
@@ -125,15 +131,15 @@ export function drawHud(drawingContext, canvas, player) {
     mission.type === 'retrieve' && mission.recovered ? 'Objeto recuperado' : mission.name;
   const width = Math.ceil(Math.max(drawingContext.measureText(counter).width, drawingContext.measureText(goal).width));
   const panelTop = canvas.width < 580 ? 46 : 5;
-  textBox(drawingContext, canvas.width - width - 27, panelTop, width + 22, 59);
-  drawingContext.fillStyle = '#fff';
+  textBox(drawingContext, theme.frames.mission, canvas.width - width - 27, panelTop, width + 22, 59);
+  drawingContext.fillStyle = theme.hudText;
   drawingContext.fillText(counter, canvas.width - 15, panelTop + 8);
   drawingContext.fillText(goal, canvas.width - 15, panelTop + 31);
   if(game.runRelics?.has('depleted_battery')){
     const battery='R · Batería '+Math.floor(game.batteryEnergy/4)+' · '+game.batteryEnergy%4+'/4';
     const batteryWidth=drawingContext.measureText(battery).width;
-    textBox(drawingContext,canvas.width-batteryWidth-27,panelTop+60,batteryWidth+22,30);
-    drawingContext.fillStyle='#c8edff';
+    textBox(drawingContext, theme.frames.battery, canvas.width-batteryWidth-27,panelTop+60,batteryWidth+22,30);
+    drawingContext.fillStyle=theme.batteryText;
     drawingContext.fillText(battery,canvas.width-15,panelTop+65);
   }
   drawingContext.restore();
@@ -144,8 +150,8 @@ export function drawHud(drawingContext, canvas, player) {
     drawingContext.textBaseline='middle';
     const label='Esencia · '+hoveredType, width=drawingContext.measureText(label).width+16;
     const x=Math.max(0,Math.min(pointerX+8,canvas.width-width)), y=Math.min(pointerY+14,canvas.height-28);
-    textBox(drawingContext,x,y,width,28);
-    drawingContext.fillStyle='white';
+    textBox(drawingContext, theme.frames.essenceTooltip, x,y,width,28);
+    drawingContext.fillStyle=theme.hudText;
     drawingContext.fillText(label,x+8,y+14);
     drawingContext.restore();
   }
