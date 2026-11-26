@@ -273,7 +273,8 @@
       "Spearow",
       "Starly",
       "Vullaby",
-      "Wingull"
+      "Wingull",
+      "Zapdos"
     ],
     "stats": {
       "evasion": 5
@@ -1049,7 +1050,8 @@
       "Simisage",
       "Unown",
       "Weavile",
-      "Yanmega"
+      "Yanmega",
+      "Moltres"
     ],
     "stats": {},
     "excludes": [

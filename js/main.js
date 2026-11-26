@@ -16,7 +16,7 @@ import { attackReach, levelFor } from './core/stats.js';
 import { loadTerrain } from './core/terrain.js';
 import { attachInventory } from './core/inventory.js';
 import { missionOffers, exitKind, rewardOptions } from './core/missions.js';
-import { collectItems, loadItemImages } from './core/items.js';
+import { collectItems, loadItemImages, refreshEssenceAttack } from './core/items.js';
 import { element, portrait } from './core/pokemon-panel.js';
 import { loadEncountersCatalog } from './data/encounters.js';
 import { chooseReward } from './core/rewards.js';
@@ -35,6 +35,7 @@ const EMBEDDED_APP = `
     <div id="dungeon-viewport"><canvas id="dungeon-canvas" tabindex="0" aria-label="Mazmorra de PokeWalk" width="1750" height="800"></canvas><div id="dungeon-notice" role="status" hidden></div></div>
     <aside id="nearby-loot-panel" hidden aria-live="polite"></aside>
     <aside id="floor-pokemon-panel" aria-label="Pokémon del piso"><ul></ul></aside>
+    <button type="button" id="toggle-stats" aria-expanded="true">▾ Estadísticas</button>
     <aside id="species-benefit-panel" aria-label="Beneficios de especie"></aside>
     <section id="equipment-panel" aria-label="Objetos obtenidos"></section>
     <div id="equipment-tooltip" role="tooltip" hidden></div>
@@ -96,6 +97,10 @@ async function nextLevel() {
         essence: game.formEssence,
       };
       const earned = settleMission();
+      if (earned && mission.type === 'leader' && game.inventory.has('ambrosia')) {
+        game.player.hp=Math.min(game.player.stats.hpMax,game.player.hp+Math.ceil(game.player.stats.hpMax*game.items.ambrosia.leaderHeal));
+        pickupEffect(game.player,'heal');playSound('berry');checkpoint();
+      }
       if (earned) {
         playSound('reward');
         const notice = document.querySelector('#emblem-reward-notice'),
@@ -132,7 +137,7 @@ async function nextLevel() {
         }
       }
       const nextMission = await selectMission(
-        missionOffers(Math.min(100, mission.number + 1), levelFor(state.row, game.progress),state.held),
+        missionOffers(1 + game.chronicle.missions.filter(m => m.status === 'Exitosa').length, levelFor(state.row, game.progress),state.held),
       );
       await changeBiome(nextMission.biome);
       const previousHeld = game.held;
@@ -144,6 +149,7 @@ async function nextLevel() {
         throw error;
       }
       game.essences = state.balances;
+      refreshEssenceAttack();
       game.formEssence = state.essence;
       for (const dex of selectedForms) discover('forms', dex);
       for (const benefit of selectedBenefits) discover('benefits', benefit);
@@ -237,7 +243,7 @@ function updateRoster() {
         element(
           'strong',
           species.name +
-            (enemy.ally ? ' · Aliado' : enemy.boss ? ' · Líder' : ''),
+            (enemy.ally ? ' · Aliado' : enemy.boss ? ' · Líder' : '') + (enemy.shiny ? ' ★' : ''),
         ),
         element('span'),
       );
@@ -398,6 +404,18 @@ export async function startGame({
   mountApp(root);
   await loadInterfaceStylesheet();
   const app = root.querySelector('#poke-walk-app');
+  app.style.removeProperty('--textbox-blue');
+  game.frameColor = 'blue';
+  game.statsCollapsed = false;
+  const toggle=app.querySelector('#toggle-stats');
+  toggle.textContent='▾ Estadísticas';
+  toggle.setAttribute('aria-expanded','true');
+  toggle.onclick=()=>{
+    game.statsCollapsed=!game.statsCollapsed;
+    toggle.setAttribute('aria-expanded',String(!game.statsCollapsed));
+    toggle.textContent=(game.statsCollapsed?'▸':'▾')+' Estadísticas';
+    game.canvas.focus();
+  };
   game.canvasTheme = readCanvasTheme(app);
   await document.fonts.load('16px Wondermail');
   loadCollection();

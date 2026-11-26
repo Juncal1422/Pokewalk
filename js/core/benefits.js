@@ -32,13 +32,18 @@ export function playerStats(
   playerLevel,
   bonuses,
   heldBenefits = game.held,
+  balances = game.essences,
 ) {
-  const stats = statsFor(species, playerLevel, {
-    ...bonuses,
-    attack:
-      (bonuses?.attack ?? 0) +
-      (heldBenefits.has('champion') ? (game.mission?.championAttack ?? 0) : 0),
-  });
+  const stats = statsFor(species, playerLevel);
+  // Suma equipo y beneficios antes de limitar: Metalizador también descuenta defensa de las reliquias.
+  for (const [key,delta] of Object.entries(bonuses ?? {})) stats[key] += delta;
+  if (heldBenefits.has('champion')) stats.attack += game.mission?.championAttack ?? 0;
+  for (const id of game.inventory ?? []) {
+    const item = game.items?.[id];
+    if (item?.attackEssence) stats.attack += balances?.[item.attackEssence] ?? 0;
+    if (item?.typeDefense?.some(type => species.types.includes(type))) stats.defense += 5;
+    for (const [key, value] of Object.entries(item?.equippedStats ?? {})) stats[key] += value;
+  }
   const naturalSize = 100;
   applyBenefitStats(stats,heldBenefits,naturalSize,true);
   if (game.runRelics?.has('black_sash')) {
@@ -87,7 +92,8 @@ export function projectReward(state, option) {
   const allStats = option.bonus || heldBenefits.has(benefit?.id) || (heldBenefits.size >= 27 && !conflicts.length);
   const lostBenefits = allStats ? [] : conflicts;
   if (allStats) {
-    for (const statKey of Object.keys(bonuses)) bonuses[statKey]++;
+    for (const key of ['hpMax','attack','defense','speed','attackSpeed','range']) bonuses[key]++;
+    bonuses.size += 3;
   } else {
     if (!benefit) throw new Error('Falta el beneficio de ' + option.row.name);
     for (const id of lostBenefits) heldBenefits.delete(id);

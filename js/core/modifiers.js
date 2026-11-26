@@ -39,5 +39,5 @@ export function combatChance(entity,key) {
     if(entity.evasionUntil>gameTime())points+=20;
   }
   if(key==='block' && entity.shellUntil>gameTime())points+=actorRule(entity,'shellBlock');
-  return Math.max(0,Math.min(100,points));
+  return Math.max(0,Math.min(key==='evasion'?50:100,points));
 }

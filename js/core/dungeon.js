@@ -307,9 +307,9 @@ export function generateDungeon({ pasillos = 5, habitaciones = 5, cruces = 5, op
     carveRooms(grid, clampLevel(pasillos), clampLevel(habitaciones), clampLevel(cruces));
   console.debug('[Mazmorra] Distribución generada', { pasillos, habitaciones, cruces, abierta: open });
   // Las manchas sólo sustituyen terreno sólido interior; las salas y pasos siguen conectados.
-  if (!open && game.currentBiome.mediumFrequency > 0) {
+  if (!open && Math.random() < game.currentBiome.mediumFrequency) {
     const seeds = Array.from({length:Math.ceil(MAP_H/4)}, () =>
-      Array.from({length:Math.ceil(MAP_W/4)}, () => Math.random()<game.currentBiome.mediumFrequency));
+      Array.from({length:Math.ceil(MAP_W/4)}, () => Math.random() < (game.currentBiome.mediumDensity ?? .35)));
     for(let y=1;y<MAP_H-1;y++)for(let x=1;x<MAP_W-1;x++){
       const patchX=Math.floor((x+Math.round(Math.sin(y)))/4);
       const patchY=Math.floor((y+Math.round(Math.cos(x)))/4);

@@ -67,12 +67,12 @@ export function draw() {
     MAP_H - 1,
     Math.ceil((cameraY + canvas.height) / RTILE),
   );
-  const palettePhase = Math.floor(gameTime() / (game.currentBiome.paletteStepMs ?? 133));
-  const sparklePhase = Math.floor(gameTime() / (game.currentBiome.sparkleStepMs ?? game.currentBiome.paletteStepMs ?? 133));
+  const palettePhase = Math.floor(gameTime() * .8 / (game.currentBiome.paletteStepMs ?? 133));
+  const sparklePhase = Math.floor(gameTime() * .8 / (game.currentBiome.sparkleStepMs ?? game.currentBiome.paletteStepMs ?? 133));
   for (let y = rowStart; y <= rowEnd; y++) {
     for (let x = colStart; x <= colEnd; x++) {
       const terrain = game.grid[y][x];
-      const material = terrain === 0 ? 'floor' : terrain === 1 ? 'wall' : game.currentBiome.terrain;
+      const material = terrain === 0 ? 'floor' : terrain === 1 ? (game.currentBiome.wallMaterial ?? 'wall') : game.currentBiome.terrain;
       drawTerrainTile(drawingContext,tileSheet,game.autotileGrid[y][x].mask,material,
         game.variantGrid[y][x],palettePhase,x*RTILE-cameraX,y*RTILE-cameraY,RTILE,sparklePhase);
       if (game.portal?.x === x && game.portal.y === y) {
@@ -117,6 +117,9 @@ export function draw() {
     // Dorado es el tinte base del jugador. Las señales temporales tienen prioridad.
     if (entity.isPlayer && game.held.has('golden')) drawingContext.filter = theme.goldenFilter;
     if (actorRule(entity,'tropicalEssence')) drawingContext.filter=theme.tropicalFilter;
+    const filters = entity.isPlayer ? [...game.inventory].map(id=>game.items[id]?.spriteFilter).filter(Boolean) : [];
+    if (entity.shiny && !entity.shinySheet) filters.push('hue-rotate(100deg) saturate(1.45)');
+    if (filters.length) drawingContext.filter=[drawingContext.filter==='none'?'':drawingContext.filter,...filters].join(' ').trim();
     if (entity.state==='Attack' && actorRule(entity,'fireAttack')) drawingContext.filter=theme.fireFilter;
     if(entity.shellUntil>now)drawingContext.filter=theme.shellFilter;
     if (entity.isPlayer && game.amuletUntil > now) drawingContext.filter = theme.amuletFilter;
@@ -161,6 +164,11 @@ export function draw() {
       drawingContext.fillStyle = hitNumber.critical ? theme.criticalDamageText : theme.damageText;
       drawingContext.strokeText(hitNumber.damage, screenX, screenY - spriteHeight / 2 - risePixels);
       drawingContext.fillText(hitNumber.damage, screenX, screenY - spriteHeight / 2 - risePixels);
+    }
+    if (entity.immuneUntil > gameTime()) {
+      drawingContext.fillStyle = theme.hudText;
+      drawingContext.font = 'bold 14px Wondermail';
+      drawingContext.fillText('Inmune',screenX-20,screenY-spriteHeight/2-10);
     }
     if (entity.missUntil > gameTime()) drawingContext.drawImage(missImage, screenX - 15, screenY - spriteHeight / 2 - 22, 30, 16);
     drawingContext.restore();

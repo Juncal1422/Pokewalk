@@ -4,13 +4,13 @@
 @font-face{font-family:Wondermail;src:url(../../assets/ui/wondermail.ttf)}*{box-sizing:border-box}body{margin:0;background:#13212d;color:#fff;font:clamp(14px,2.2vmin,24px) Wondermail;overflow:hidden}main{height:100dvh;display:grid;align-content:start;gap:1vh;padding:2vmin}h1{margin:0}header,section{display:flex;gap:1vmin;flex-wrap:wrap;align-items:center}button,select,input,textarea,fieldset{font:inherit;color:inherit;background:#1f3443 padding-box;border:5px solid transparent;border-image:url(../../assets/ui/textbox-b.png) 16 stretch}button{cursor:pointer}fieldset{display:grid;gap:1vh;min-width:0}label{display:grid;gap:3px}textarea{width:100%;height:min(20vh,10em);resize:none}output{color:#ffd781}#fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 </style>
 <main><h1>Editor de biomas</h1><header><label>Abrir biomes.json<input id="file" type="file" accept=".json"></label><button id="download">Descargar biomes.json</button></header>
-<section><label>Bioma<select id="biome"></select></label><label>Franja<select id="band"><option>1-16</option><option>17-36</option><option>37-60</option><option>61-100</option></select></label></section>
+<section><label>Bioma<select id="biome"></select></label><label>Franja<select id="band"><option>1-8</option><option>9-16</option><option>17-25</option><option>26-36</option><option>37-50</option></select></label></section>
 <fieldset><section><label>Nombre<input id="name"></label><label>Nivel<input id="level" type="number" min="1" max="10"></label><label>Terreno<select id="terrain"><option>wall</option><option>water</option><option>lava</option><option>void</option></select></label></section><label>Tileset<input id="tileset"></label>
 <div id="fields"><label>Salvajes · uno por línea<textarea id="wild"></textarea></label><label>Líderes · uno por línea<textarea id="leaders"></textarea></label></div>
 <label>Variantes, habilidades y distribución (JSON)<textarea id="extra"></textarea></label></fieldset><output id="status" aria-live="polite"></output></main>
 <script type="module">
 const field=id=>document.getElementById(id);
-let catalog=[],index=0,band='1-16',species;
+let catalog=[],index=0,band='1-8',species;
 const bands=[...field('band').options].map(option=>option.value);
 // Registra el borrador antes de navegar o exportar y conserva los campos adicionales.
 function commit(){

@@ -2,8 +2,8 @@ import { ATTACK_RANGE } from './constants.js';
 
 export const chanceBases = {evasion:5,block:0,critical:10};
 // Las probabilidades se almacenan en puntos y se convierten sólo al tirar.
-export const limitStat = (key,value) => key in chanceBases ? Math.max(0,Math.min(100,value)) :
-  Math.max(5,['speed','attackSpeed'].includes(key)?Math.min(180,value):value);
+export const limitStat = (key,value) => key in chanceBases ? Math.max(0,Math.min(key==='evasion'?50:100,value)) :
+  Math.max(5,['speed','attackSpeed'].includes(key)?Math.min(key==='speed'?200:180,value):value);
 export const statText = (key,value) => String(value)+(key in chanceBases?'%':'');
 export const labels = {
   evasion:'Evasión',block:'Bloqueo crítico',critical:'Ataque crítico',
@@ -54,7 +54,7 @@ function naturalStat(species, statKey, level) {
   const value = Math.floor((2 * species.stats[statKey] * level) / 100) + 5;
   // El crecimiento natural deja un punto de margen para bonos y líderes.
   return statKey === 'speed' || statKey === 'attackSpeed'
-    ? Math.min(179, value)
+    ? Math.min(statKey==='speed'?200:180, value)
     : value;
 }
 
@@ -105,25 +105,14 @@ export function statsFor(
     }
     if (!isWild && statKey==='size' && species.dex===132) value=100;
     value += bonuses[statKey] || 0;
-    result[statKey] =
-      statKey === 'speed' || statKey === 'attackSpeed'
-        ? Math.max(5, Math.min(180, value))
-        : Math.max(5,value);
+    result[statKey] = limitStat(statKey,value);
   }
   return result;
 }
 
-// Calcula el daño de un golpe normal a partir de nivel, ataque, defensa y crítico.
+// La defensa absorbe una fracción del golpe: daño = ataque × 100 / (100 + defensa).
+// Con 375 de ataque y 80 de defensa son 208 PV antes de afinidad o bloqueo.
+// Un crítico multiplica el resultado por 1,5. El nivel ya influye a través de los atributos.
 export function damageFor(attacker, target, critical) {
-  const power = attacker.boss
-    ? 40 + Math.min(30, Math.max(0, attacker.level - 8))
-    : 40;
-  const baseDamage =
-    Math.floor(
-      (((2 * attacker.level) / 5 + 2) * power * attacker.stats.attack) /
-        target.stats.defense /
-        50,
-    ) + 2;
-  const damage = Math.floor(baseDamage * (critical ? 1.5 : 1));
-  return Math.max(1, damage);
+  return Math.max(1, Math.round(attacker.stats.attack * 100 / (100 + target.stats.defense) * (critical ? 1.5 : 1)));
 }

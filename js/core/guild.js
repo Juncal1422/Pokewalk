@@ -3,7 +3,7 @@ import { assetUrl } from './asset-url.js';
 import {game} from './state.js';
 import {element,portrait,gem} from './pokemon-panel.js';
 import {playSound} from './audio.js';
-import {relics,saveCollection,emptyCollection,parseCollection} from './collection.js';
+import {isUnlocked,relics,saveCollection,emptyCollection,parseCollection} from './collection.js';
 import {synergyText} from './benefits.js';
 import {labels,statText} from './stats.js';
 
@@ -16,7 +16,7 @@ const story=[
 const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
 const backgrounds = {Pommedew:'home',Beneficios:'benefits',Objetos:'items','Tablón de misiones':'missions','Pokédex':'pokedex',Reliquias:'relics'};
-const sectionArt = {'Tienda de Aventureros':'shop','Pokédex':'pokedex',Objetos:'items',Beneficios:'benefits',Reliquias:'relics'};
+const sectionArt = {'Tienda del Gremio':'shop','Tienda de Aventureros':'shop','Pokédex':'pokedex',Objetos:'items',Beneficios:'benefits',Reliquias:'relics'};
 const menuImages = new Map();
 
 // Retiene las imágenes decodificadas usando las mismas rutas que el CSS.
@@ -198,7 +198,7 @@ function collectionMenu(back) {
       const donors=[...game.pokemon.values()].filter(row=>benefit?.pokemon.includes(row.name));
       listPage(benefit?.name??id,donors.map(row=>()=>{const entry=element('p',row.name);entry.prepend(portrait(row));return entry}),0,()=>open('Beneficios'));
     })),
-    Reliquias:Object.keys(relics).map(id=>()=>{const enabled=data.enabled.includes(id);const control=button((enabled?'Activa · ':'Inactiva · ')+(relics[id]?.name??id),()=>{
+    Reliquias:Object.keys(relics).filter(id=>!relics[id].biome || isUnlocked('relics',id)).map(id=>()=>{const enabled=data.enabled.includes(id);const control=button((enabled?'Activa · ':'Inactiva · ')+(relics[id]?.name??id),()=>{
       if(!data.relics.includes(id))data.relics.push(id);
       data.enabled=enabled?data.enabled.filter(key=>key!==id):[...data.enabled,id];saveCollection();open('Reliquias')});control.title=relics[id].description;control.setAttribute('aria-pressed',enabled);control.prepend(icon(relics[id].image??'relics/'+id+'.png'));return control})
   };
@@ -213,17 +213,17 @@ function collectionMenu(back) {
 }
 
 // Compra y saldo se escriben juntos. Las reliquias nuevas quedan activadas.
-function shop(back) {
-  const entries=Object.entries(relics).map(([id,relic])=>()=>{
+function shop(back,guildEgg=false) {
+  const entries=Object.entries(relics).filter(([id,r])=>!!r.guildEgg===guildEgg && (!r.biome || isUnlocked('relics',id))).map(([id,relic])=>()=>{
     const card=button(relic.name,()=>{
       if(!game.collection.relics.includes(id))game.collection.relics.push(id);
       if(!game.collection.enabled.includes(id))game.collection.enabled.push(id);
-      saveCollection();shop(back);
+      saveCollection();shop(back,guildEgg);
     });
     card.title=relic.description+' · '+(game.collection.enabled.includes(id)?'Activa':'Activar para probar');
     card.append(icon(relic.image??'relics/'+id+'.png'));return card;
   });
-  listPage('Tienda de Aventureros',entries,0,back);
+  listPage(guildEgg?'Tienda del Gremio':'Tienda de Aventureros',entries,0,back);
 }
 
 // Una acción destructiva o una importación requiere una segunda elección dentro del juego.
@@ -254,7 +254,7 @@ export async function visitGuild() {
   if(!game.collection.intro)await introduction();
   await new Promise(resolve=>{
     // Importar o eliminar puede cambiar si ya se ha leído la bienvenida.
-    async function home(){if(!game.collection.intro)await introduction();const dialog=screen('Pommedew');dialog.append(button('Nueva Aventura',resolve),button('Tienda de Aventureros',()=>shop(home)),
+    async function home(){if(!game.collection.intro)await introduction();const dialog=screen('Pommedew');dialog.append(button('Nueva Aventura',resolve),button('Tienda de Aventureros',()=>shop(home)),button('Tienda del Gremio',()=>shop(home,true)),
       button('Colección',()=>collectionMenu(home)),button('Ajustes',()=>settings(home)))}
     home();
   });

@@ -13,7 +13,8 @@ const icons = {};
 export const essenceIcon = id => icons['essence-' + id];
 // Dibuja el marco de mensajes con el recurso compartido de la interfaz.
 function textBox(drawingContext, frame, x, y, width, height) {
-  const image = icons[frameAssets[frame.variant]];
+  const key=frame.variant==='blue' && game.frameColor && game.frameColor!=='blue' ? 'textbox-b-'+game.frameColor : frameAssets[frame.variant];
+  const image = icons[key];
   if (image) drawFrame(drawingContext, image, x, y, width, height, frame.background);
 }
 const frameAssets = { blue: 'textbox-b', 'blue-thin': 'textbox-b-thin', green: 'textbox-g', pink: 'textbox-p' };
@@ -28,7 +29,7 @@ const typeLabels = {normal:'Normal',fire:'Fuego',water:'Agua',electric:'Eléctri
 export async function loadHud() {
   // Los iconos se decodifican antes del primer fotograma.
   console.debug('[HUD] Cargando interfaz y esencias');
-  await Promise.all([...essenceNames.map(id => 'essence-' + id), ...Object.values(frameAssets), 'hpbar'].map(async key => {
+  await Promise.all([...essenceNames.map(id => 'essence-' + id), ...Object.values(frameAssets), ...['black','pink','green','red','white','yellow'].map(c=>'textbox-b-'+c), 'hpbar'].map(async key => {
     const image = new Image();
     image.src = assetUrl('../../assets/ui/' + key + '.png', import.meta.url).href;
     await image.decode();
@@ -88,10 +89,12 @@ export function drawHud(drawingContext, canvas, player) {
   const hudScale = drawingContext.getTransform().a;
   const pointerX = pointer?.x/hudScale, pointerY = pointer?.y/hudScale;
   const entries = Object.entries(game.essences).filter(([,count])=>count>0);
-  const cell=Math.min(37,(canvas.width-8)/Math.max(1,entries.length));
-  const icon=Math.min(15,cell*.65), essenceLeft=(canvas.width-cell*entries.length)/2, essenceTop=canvas.height-26;
-  if(entries.length)textBox(drawingContext,theme.frames.essences,essenceLeft-3,essenceTop-2,cell*entries.length+6,28);
-  drawingContext.font='bold 10px Wondermail';
+  const statsScale=Math.min(theme.hudStatsScale,canvas.width*.38/205);
+  const essenceLeft=205*statsScale;
+  const cell=Math.min(41,(canvas.width-essenceLeft-10)/Math.max(1,entries.length));
+  const icon=Math.min(24,cell), essenceTop=canvas.height-icon-21;
+  if(entries.length)textBox(drawingContext,theme.frames.essences,essenceLeft-4,essenceTop-5,cell*entries.length+10,icon+25);
+  drawingContext.font='bold 12px Wondermail';
   drawingContext.textAlign='center';
   for(const [id,count] of entries){
     const center=essenceLeft+(index++ + .5)*cell,x=center-icon/2;
@@ -103,26 +106,29 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.textAlign='left';
   drawingContext.save();
   drawingContext.translate(0,canvas.height);
-  drawingContext.scale(theme.hudStatsScale, theme.hudStatsScale);
+  drawingContext.scale(statsScale, statsScale);
   drawingContext.translate(0,-canvas.height);
   drawingContext.font = 'bold 13px Wondermail';
-  let y = canvas.height - 30 - 19 * Object.keys(labels).length - 6;
-  textBox(drawingContext, theme.frames.stats, 4, y - 25, 198, canvas.height - y - 5);
-  drawingContext.fillStyle = theme.hudText;
-  drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
-  // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
-  const baseStats = playerStats(game.pokemon.get(player.dex), game.progress, player.bonuses, new Set());
-  for (const [key, label] of Object.entries(labels)) {
-    const value = key in chanceBases ? combatChance(player,key) : player.stats[key];
-    const delta = (value - baseStats[key]) * (key === 'size' ? -1 : 1);
-    drawingContext.fillStyle = delta > 0 ? theme.statIncrease : delta < 0 ? theme.statDecrease : theme.hudText;
-    drawingContext.textAlign = 'left';
-    drawingContext.fillText(label,12,y+9);
-    drawingContext.textAlign = 'right';
-    drawingContext.fillText(statText(key,value),178,y+9);
-    drawingContext.textAlign = 'left';
-    indicators(drawingContext, key, 182, y + 9, simulationTime);
-    y += 19;
+  const statRows=Object.entries(labels).filter(([key])=>key!=='hpMax');
+  if (!game.statsCollapsed) {
+    let y = canvas.height - 30 - 19 * statRows.length - 6;
+    textBox(drawingContext, theme.frames.stats, 4, y - 25, 198, canvas.height - y - 5);
+    drawingContext.fillStyle = theme.hudText;
+    drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
+    // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
+    const baseStats = playerStats(game.pokemon.get(player.dex), game.progress, player.bonuses, new Set());
+    for (const [key, label] of statRows) {
+      const value = key in chanceBases ? combatChance(player,key) : player.stats[key];
+      const delta = (value - baseStats[key]) * (key === 'size' ? -1 : 1);
+      drawingContext.fillStyle = delta > 0 ? theme.statIncrease : delta < 0 ? theme.statDecrease : theme.hudText;
+      drawingContext.textAlign = 'left';
+      drawingContext.fillText(label,12,y+9);
+      drawingContext.textAlign = 'right';
+      drawingContext.fillText(statText(key,value),178,y+9);
+      drawingContext.textAlign = 'left';
+      indicators(drawingContext, key, 182, y + 9, simulationTime);
+      y += 19;
+    }
   }
   drawingContext.restore();
   drawingContext.save();

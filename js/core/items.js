@@ -1,3 +1,4 @@
+import {applyShinyAppearance} from '../data/pokemon-data.js';
 import {rule} from './modifiers.js';
 import { assetUrl } from './asset-url.js';
 import { showWorldNotice } from './world-notices.js';
@@ -35,6 +36,12 @@ export function dropNewItem(origin) {
   dropItem(id,site);
 }
 
+export function refreshEssenceAttack() {
+  const player=game.player;
+  if (player && [...game.inventory].some(id=>game.items?.[id]?.attackEssence))
+    player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
+}
+
 const images = new Map();
 // Precarga las imágenes por identificador para reutilizarlas en cada piso.
 export async function loadItemImages(items) {
@@ -49,9 +56,7 @@ export async function loadItemImages(items) {
 // Las bayas tienen una tirada independiente. El cupo cuenta apariciones,
 // incluso si el jugador abandona la planta sin recoger el objeto.
 export function spawnFloorItems() {
-  const mission = game.mission, fiveFloorBlock = Math.floor((game.floor - 1) / 5);
-  // El cupo de objetos se comparte entre cinco pisos consecutivos de la misma misión.
-  if (mission.itemBlock !== fiveFloorBlock) { mission.itemBlock = fiveFloorBlock; mission.itemsPlaced = 0; }
+  const mission = game.mission;
   const occupied = new Set(game.entities.map(combatant => Math.floor(combatant.x / TILE) + ',' + Math.floor(combatant.y / TILE)));
   const sites = [];
   game.grid.forEach((row, y) => row.forEach((tile, x) => {
@@ -64,13 +69,15 @@ export function spawnFloorItems() {
   }
   if (sites.length && Math.random()<.5+rule('berryChance')){
     const revive=!game.reviveSpent && !game.inventory.has('revive') && Math.random()<rule('reviveBerry');
-    place(revive?'revive':synergyActive('sitrusBerries') || Math.random()<.25?'berry_sitrus':'berry_oran');
+    const berries = Object.keys(game.items).filter(id=>game.items[id].berry);
+    const berry = synergyActive('sitrusBerries') ? 'berry_sitrus' : berries[Math.floor(Math.random()*berries.length)];
+    place(revive ? 'revive' : berry);
   }
   const available = Object.keys(game.items).filter(itemId => {
     const item=game.items[itemId];
-    return !(itemId==='revive' && game.reviveSpent) && (item.consumable || game.inventory.size < 75) && !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
+    return !(itemId==='revive' && game.reviveSpent) && (item.consumable || game.inventory.size < 75) && !item.berry && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < (.225 + amount('scaled') + rule('itemChance'))*(game.runRelics?.has('debugger')?1.5:1)) {
+  if (sites.length && available.length && mission.itemsPlaced < 3 && Math.random() < (.10 + amount('scaled') + rule('itemChance'))*(game.runRelics?.has('debugger')?1.5:1)) {
     const itemId=available[Math.floor(Math.random() * available.length)];
     place(itemId);
     if (game.items[itemId].oncePerMission) mission.candyPlaced=true;
@@ -110,6 +117,7 @@ export function collectItems(player, strike = null) {
       }
       if(type==='electric' && game.runRelics?.has('depleted_battery'))game.batteryEnergy+=quantity;
       else game.essences[type]=(game.essences[type] || 0)+quantity;
+      refreshEssenceAttack();
       return false;
     }
     const item = game.items[drop.id];
@@ -117,6 +125,11 @@ export function collectItems(player, strike = null) {
     if (!item.consumable && game.inventory.has(drop.id)) return false;
     const bonuses = { ...player.bonuses };
     for (const [key, delta] of Object.entries(item.stats)) bonuses[key] = (bonuses[key]??0) + delta;
+    if (item.thresholdStat) {
+      const {key,threshold,delta} = item.thresholdStat;
+      const applies = delta < 0 ? player.stats[key] > threshold : player.stats[key] < threshold;
+      bonuses[key] += applies ? delta : Math.sign(delta);
+    }
     const oldStats = player.stats;
     const previous = { ...oldStats, hp: player.hp };
     if (!item.consumable) game.inventory.add(drop.id);
@@ -136,17 +149,25 @@ export function collectItems(player, strike = null) {
       Object.assign(player, freePosition);
     }
     player.bonuses = bonuses;
+    if (item.frameColor) {
+      game.frameColor=item.frameColor;
+      const frame='textbox-b'+(item.frameColor==='blue'?'':'-'+item.frameColor)+'.png';
+      document.querySelector('#poke-walk-app').style.setProperty('--textbox-blue','url("'+assetUrl('../../assets/ui/'+frame,import.meta.url).href+'")');
+    }
+    if (drop.id==='shiny_elixir') applyShinyAppearance(player);
     if (drop.id==='rarecandy') { game.xp=0; levelUp(); }
     if (item.doubleEssences) {
       const mostAbundantTypes = Object.keys(game.essences).sort((firstType,secondType)=>game.essences[secondType]-game.essences[firstType]).slice(0,item.doubleEssences);
       for (const type of mostAbundantTypes) game.essences[type]*=2;
     }
-    pickupEffect(player,item.healFraction?'heal':'boost');
+    if (item.essence) player.hp = Math.min(player.stats.hpMax,player.hp+(game.essences[item.essence]??0));
+    refreshEssenceAttack();
+    pickupEffect(player,item.berry || item.essence?'heal':'boost');
     console.info('[Objeto] Recogido', item.name);
     player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('minty'):0))));
     // Usamos la diferencia después del límite de PV para mostrar solo la curación efectiva.
-    discover('items',drop.id);checkpoint();playSound(item.healFraction?'berry':'item');
-    if (item.healFraction) showWorldNotice(player, player.hp - previous.hp, 'HP');
+    discover('items',drop.id);checkpoint();playSound(item.berry?'berry':'item');
+    if (item.healFraction || item.essence) showWorldNotice(player, player.hp - previous.hp, 'HP');
     const simulationTime = gameTime();
     for (const key of [...Object.keys(item.stats), 'hp']) {
       const delta = (key === 'hp' ? player.hp : player.stats[key]) - previous[key];

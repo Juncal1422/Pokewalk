@@ -21,7 +21,7 @@ import { statsFor, emptyBonuses, movementRate, attackRate, levelFor, enemyProgre
 import { groundFree, hasSight } from './terrain.js';
 import { generateDungeon } from './dungeon.js';
 import { game } from './state.js';
-import { loadPokemonData } from '../data/pokemon-data.js';
+import { loadPokemonData, applyShinyAppearance } from '../data/pokemon-data.js';
 
 // Muestra un aviso temporal y sustituye el temporizador del aviso anterior.
 export function showToast(message) {
@@ -63,6 +63,12 @@ export function createEntity(spriteData, room, isPlayer) {
 
 // Reinicia el fotograma y el temporizador únicamente al cambiar de acción.
 export function setState(entity, state) {
+  if ((state==='Idle' || state==='Walk') && entity.pendingShinyAnims) {
+    entity.anims=entity.pendingShinyAnims;
+    entity.pendingShinyAnims=null;
+    entity.shinySheet=true;
+    entity.frame=0;
+  }
   if (entity.state !== state) {
     const sheet = state === 'Attack' ? entity.attackAnimation : entity.anims[state] ?? entity.anims.Idle;
     const speed = state === 'Attack' ? attackRate(entity.stats.attackSpeed)*(entity.isPlayer?1:.48) :
@@ -252,7 +258,7 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
 // Precargamos todos los sprites antes de sustituir el piso actual.
 export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.player?.bonuses ?? emptyBonuses()) {
   const enemyDexNumbers = encounters(mission, floor);
-  const [playerData, ...opponents] = await Promise.all([pokedexNumber, ...enemyDexNumbers].map(loadPokemonData));
+  const [playerData, ...opponents] = await Promise.all([pokedexNumber, ...enemyDexNumbers].map(dex => loadPokemonData(dex)));
   if (!playerData || opponents.some(spriteData => !spriteData)) throw new Error('No se pudieron cargar los Pokémon de este piso.');
   // Los recursos se validan antes de reemplazar el piso. La nueva forma conserva los PV actuales hasta su máximo.
   const previousPlayer = game.player;
@@ -276,6 +282,7 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
   if (!previousPlayer) game.initialHP = player.stats.hpMax;
   player.hp = previousPlayer ? Math.min(player.stats.hpMax, previousPlayer.hp) : player.stats.hpMax;
   game.player = player;
+  if (game.inventory.has('shiny_elixir')) applyShinyAppearance(player);
   game.drops = [];
   game.entities = [player];
   opponents.forEach((spriteData, index) => {
@@ -286,20 +293,22 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
     enemy.stats = statsFor(species, enemyDifficulty, {}, bossFloor, true);
     enemy.ally=mission.type==='rescue' && floor===mission.floors && index===opponents.length-1;
     if(mission.red || enemy.ally){
-      const level=enemy.ally ? (mission.red?player.level:Math.min(100,player.level+5)) : Math.min(100,Math.max(enemy.level,player.level)+15);
+      const level=enemy.ally ? (mission.red?player.level:Math.min(100,player.level+5)) : Math.min(100,enemy.level+15);
       enemy.level=enemy.ally && mission.red ? player.level : levelFor(species,level);
       // Los límites del líder progresan con el encargo rojo, además del nivel efectivo.
       enemy.stats=statsFor(species,enemyDifficulty+(mission.red?15:0),{},bossFloor,true,enemy.level);
     }
     if(enemy.ally)game.rescueAlly=enemy;
+    else if(Math.random() < (game.inventory.has('shiny_elixir') ? .05 : .001)) applyShinyAppearance(enemy);
     {
       const benefit = game.donors.get(species.name);
       enemy.activeBenefit = benefit?.active ? benefit.id : null;
       enemy.home = { x: enemy.x, y: enemy.y };
       enemy.benefits=new Set(benefit?[benefit.id]:[]);
       applyBenefitStats(enemy.stats,enemy.benefits,100);
-      enemy.tracking = bossFloor || !!rule('exitRange');
-      if(rule('exitRange'))enemy.lastSeen={x:player.x,y:player.y};
+      enemy.provoked = !enemy.ally && !!rule('floorAggro');
+      enemy.tracking = bossFloor || enemy.provoked || !!rule('exitRange');
+      if(enemy.provoked || rule('exitRange'))enemy.lastSeen={x:player.x,y:player.y};
     }
     enemy.hp = enemy.stats.hpMax;
     game.entities.push(enemy);
