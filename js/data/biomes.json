@@ -3,209 +3,531 @@
     "id": "amp-plains",
     "name": "Llanuras Amperio",
     "tileset": "tiled/tilesets/Amp Plains.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Magnemite", "Joltik", "Pichu", "Pachirisu"], "17-36": ["Pikachu", "Jolteon"], "37-60": ["Luxray", "Raichu"], "61-100": ["Luxio", "Ampharos"]},
-    "leaders": {"1-16": ["Pikachu", "Ampharos", "Magneton", "Manectric"], "17-36": ["Eelektrik", "Magnezone", "Galvantula", "Manectric"], "37-60": ["Galvantula", "Luxio", "Eelektrik", "Electabuzz"], "61-100": ["Ampharos", "Eelektross", "Galvantula", "Luxray"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Magnemite", "Joltik", "Pichu", "Pachirisu"],
+      "17-36": ["Pikachu", "Jolteon"],
+      "37-60": ["Luxray", "Raichu"],
+      "61-100": ["Luxio", "Ampharos"]
+    },
+    "leaders": {
+      "1-16": ["Pikachu", "Ampharos", "Magneton", "Manectric"],
+      "17-36": ["Eelektrik", "Magnezone", "Galvantula", "Manectric"],
+      "37-60": ["Galvantula", "Luxio", "Eelektrik", "Electabuzz"],
+      "61-100": ["Ampharos", "Eelektross", "Galvantula", "Luxray"]
+    }
   },
   {
     "id": "autumn-forest",
     "name": "Bosque Otoñal",
     "tileset": "tiled/tilesets/Autumn Forest.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 2,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Shroomish", "Lileep", "Seedot", "Weedle"], "17-36": ["Whirlipede", "Volcarona"], "37-60": ["Beautifly", "Venusaur"], "61-100": ["Sceptile", "Victreebel"]},
-    "leaders": {"1-16": ["Yanma", "Swadloon", "Ivysaur", "Grovyle"], "17-36": ["Bellossom", "Meganium", "Cradily", "Sceptile"], "37-60": ["Carnivine", "Victreebel", "Parasect", "Shiftry"], "61-100": ["Scizor", "Torterra", "Durant", "Breloom"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Shroomish", "Lileep", "Seedot", "Weedle"],
+      "17-36": ["Whirlipede", "Volcarona"],
+      "37-60": ["Beautifly", "Venusaur"],
+      "61-100": ["Sceptile", "Victreebel"]
+    },
+    "leaders": {
+      "1-16": ["Yanma", "Swadloon", "Ivysaur", "Grovyle"],
+      "17-36": ["Bellossom", "Meganium", "Cradily", "Sceptile"],
+      "37-60": ["Carnivine", "Victreebel", "Parasect", "Shiftry"],
+      "61-100": ["Scizor", "Torterra", "Durant", "Breloom"]
+    }
   },
   {
     "id": "badlands",
     "name": "Tierras Baldías",
     "tileset": "tiled/tilesets/Badlands.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
-    "mediumFrequency": 0,
+    "mediumFrequency": 0.1,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Wooper", "Baltoy", "Nincada", "Nosepass"], "17-36": ["Whiscash", "Claydol"], "37-60": ["Swampert", "Krookodile"], "61-100": ["Torterra", "Flygon"]},
-    "leaders": {"1-16": ["Vibrava", "Larvitar", "Hippopotas", "Golett"], "17-36": ["Steelix", "Rhyhorn", "Drilbur", "Gastrodon"], "37-60": ["Flygon", "Boldore", "Camerupt", "Aerodactyl"], "61-100": ["Golem", "Mamoswine", "Golurk", "Krookodile"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Wooper", "Baltoy", "Nincada", "Nosepass"],
+      "17-36": ["Whiscash", "Claydol"],
+      "37-60": ["Swampert", "Krookodile"],
+      "61-100": ["Torterra", "Flygon"]
+    },
+    "leaders": {
+      "1-16": ["Vibrava", "Larvitar", "Hippopotas", "Golett"],
+      "17-36": ["Steelix", "Rhyhorn", "Drilbur", "Gastrodon"],
+      "37-60": ["Flygon", "Boldore", "Camerupt", "Aerodactyl"],
+      "61-100": ["Golem", "Mamoswine", "Golurk", "Krookodile"]
+    }
   },
   {
     "id": "barren-valley",
     "name": "Valle Yermo",
     "tileset": "tiled/tilesets/Barren Valley.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
-    "mediumFrequency": 0,
+    "mediumFrequency": 0.1,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Omanyte", "Shieldon", "Lileep", "Onix"], "17-36": ["Vibrava", "Omastar"], "37-60": ["Nidoking", "Swampert"], "61-100": ["Seismitoad", "Krookodile"]},
-    "leaders": {"1-16": ["Golett", "Larvitar", "Gible", "Sandshrew"], "17-36": ["Lairon", "Steelix", "Pupitar", "Gabite"], "37-60": ["Aerodactyl", "Nidoking", "Camerupt", "Boldore"], "61-100": ["Donphan", "Golurk", "Kabutops", "Cranidos"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Omanyte", "Shieldon", "Lileep", "Onix"],
+      "17-36": ["Vibrava", "Omastar"],
+      "37-60": ["Nidoking", "Swampert"],
+      "61-100": ["Seismitoad", "Krookodile"]
+    },
+    "leaders": {
+      "1-16": ["Golett", "Larvitar", "Gible", "Sandshrew"],
+      "17-36": ["Lairon", "Steelix", "Pupitar", "Gabite"],
+      "37-60": ["Aerodactyl", "Nidoking", "Camerupt", "Boldore"],
+      "61-100": ["Donphan", "Golurk", "Kabutops", "Cranidos"]
+    }
   },
   {
     "id": "boulder-quarry",
     "name": "Cantera de Rocas",
     "tileset": "tiled/tilesets/Boulder Quarry.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Omanyte", "Nosepass", "Wooper", "Nincada"], "17-36": ["Whiscash", "Palpitoad"], "37-60": ["Seismitoad", "Krookodile"], "61-100": ["Swampert", "Aggron"]},
-    "leaders": {"1-16": ["Palpitoad", "Sandshrew", "Hippopotas", "Sandile"], "17-36": ["Relicanth", "Quagsire", "Gabite", "Marshtomp"], "37-60": ["Nidoking", "Boldore", "Camerupt", "Sudowoodo"], "61-100": ["Golurk", "Rhydon", "Kabutops", "Mamoswine"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Omanyte", "Nosepass", "Wooper", "Nincada"],
+      "17-36": ["Whiscash", "Palpitoad"],
+      "37-60": ["Seismitoad", "Krookodile"],
+      "61-100": ["Swampert", "Aggron"]
+    },
+    "leaders": {
+      "1-16": ["Palpitoad", "Sandshrew", "Hippopotas", "Sandile"],
+      "17-36": ["Relicanth", "Quagsire", "Gabite", "Marshtomp"],
+      "37-60": ["Nidoking", "Boldore", "Camerupt", "Sudowoodo"],
+      "61-100": ["Golurk", "Rhydon", "Kabutops", "Mamoswine"]
+    }
   },
   {
     "id": "relic",
     "name": "Reliquia Enterrada",
     "tileset": "tiled/tilesets/Buried Relic.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Solosis", "Abra", "Litwick", "Chingling", "Munna"], "17-36": ["Duosion", "Munna", "Cubone"], "37-60": ["Beheeyem", "Sigilyph"], "61-100": ["Golurk", "Beheeyem", "Sigilyph"]},
-    "leaders": {"1-16": ["Unown", "Claydol", "Beheeyem", "Chimecho"], "17-36": ["Espeon", "Metagross", "Alakazam", "Rotom"], "37-60": ["Regirock", "Regice", "Registeel", "Azelf"], "61-100": ["Regigigas", "Arceus", "Golurk", "Beheeyem"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Solosis", "Abra", "Litwick", "Chingling", "Munna"],
+      "17-36": ["Duosion", "Munna", "Cubone"],
+      "37-60": ["Beheeyem", "Sigilyph"],
+      "61-100": ["Golurk", "Beheeyem", "Sigilyph"]
+    },
+    "leaders": {
+      "1-16": ["Unown", "Claydol", "Beheeyem", "Chimecho"],
+      "17-36": ["Espeon", "Metagross", "Alakazam", "Rotom"],
+      "37-60": ["Regirock", "Regice", "Registeel", "Azelf"],
+      "61-100": ["Regigigas", "Arceus", "Golurk", "Beheeyem"]
+    }
   },
   {
     "id": "chasm-cave",
     "name": "Cueva del Abismo",
     "tileset": "tiled/tilesets/Chasm Cave.png",
-    "columns": ["legend", "void", "voidAlt", "voidAlt", "floor", "floorAlt", "floorAlt"],
+    "columns": [
+      "legend",
+      "void",
+      "voidAlt",
+      "voidAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt"
+    ],
     "terrain": "void",
     "mediumFrequency": 0.55,
     "level": 6,
     "canCross": ["fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Misdreavus", "Drifloon", "Purrloin", "Vullaby"], "17-36": ["Nuzleaf", "Dusclops"], "37-60": ["Dusknoir", "Hydreigon"], "61-100": ["Tyranitar", "Skuntank"]},
-    "leaders": {"1-16": ["Sandile", "Gengar", "Dusclops", "Scraggy"], "17-36": ["Liepard", "Skuntank", "Houndoom", "Scrafty"], "37-60": ["Shiftry", "Banette", "Crawdaunt", "Sharpedo"], "61-100": ["Bisharp", "Cacturne", "Weavile", "Krookodile"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Misdreavus", "Drifloon", "Purrloin", "Vullaby"],
+      "17-36": ["Nuzleaf", "Dusclops"],
+      "37-60": ["Dusknoir", "Hydreigon"],
+      "61-100": ["Tyranitar", "Skuntank"]
+    },
+    "leaders": {
+      "1-16": ["Sandile", "Gengar", "Dusclops", "Scraggy"],
+      "17-36": ["Liepard", "Skuntank", "Houndoom", "Scrafty"],
+      "37-60": ["Shiftry", "Banette", "Crawdaunt", "Sharpedo"],
+      "61-100": ["Bisharp", "Cacturne", "Weavile", "Krookodile"]
+    }
   },
   {
     "id": "cloud-meadow",
     "name": "Pradera de Nubes",
     "tileset": "tiled/tilesets/Cloud Meadow.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "void"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "void"
+    ],
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 3,
     "canCross": ["fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Lileep", "Snivy", "Seedot", "Venipede"], "17-36": ["Lilligant", "Masquerain"], "37-60": ["Venusaur", "Serperior"], "61-100": ["Beedrill", "Scolipede"]},
-    "leaders": {"1-16": ["Whimsicott", "Ivysaur", "Yanma", "Grovyle"], "17-36": ["Maractus", "Bellossom", "Sceptile", "Venusaur"], "37-60": ["Shiftry", "Scolipede", "Carnivine", "Parasect"], "61-100": ["Cacturne", "Pinsir", "Torterra", "Durant"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Lileep", "Snivy", "Seedot", "Venipede"],
+      "17-36": ["Lilligant", "Masquerain"],
+      "37-60": ["Venusaur", "Serperior"],
+      "61-100": ["Beedrill", "Scolipede"]
+    },
+    "leaders": {
+      "1-16": ["Whimsicott", "Ivysaur", "Yanma", "Grovyle"],
+      "17-36": ["Maractus", "Bellossom", "Sceptile", "Venusaur"],
+      "37-60": ["Shiftry", "Scolipede", "Carnivine", "Parasect"],
+      "61-100": ["Cacturne", "Pinsir", "Torterra", "Durant"]
+    }
   },
   {
     "id": "cobalt-cave",
     "name": "Cueva Cobalto",
     "tileset": "tiled/tilesets/Cobalt Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Onix", "Omanyte", "Nincada", "Baltoy"], "17-36": ["Bastiodon", "Probopass"], "37-60": ["Aggron", "Krookodile"], "61-100": ["Nidoqueen", "Seismitoad"]},
-    "leaders": {"1-16": ["Vibrava", "Claydol", "Sandile", "Aron"], "17-36": ["Marshtomp", "Rhyhorn", "Gabite", "Drilbur"], "37-60": ["Flygon", "Nidoking", "Aerodactyl", "Sandslash"], "61-100": ["Armaldo", "Donphan", "Mamoswine", "Kabutops"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Onix", "Omanyte", "Nincada", "Baltoy"],
+      "17-36": ["Bastiodon", "Probopass"],
+      "37-60": ["Aggron", "Krookodile"],
+      "61-100": ["Nidoqueen", "Seismitoad"]
+    },
+    "leaders": {
+      "1-16": ["Vibrava", "Claydol", "Sandile", "Aron"],
+      "17-36": ["Marshtomp", "Rhyhorn", "Gabite", "Drilbur"],
+      "37-60": ["Flygon", "Nidoking", "Aerodactyl", "Sandslash"],
+      "61-100": ["Armaldo", "Donphan", "Mamoswine", "Kabutops"]
+    }
   },
   {
     "id": "concealed-ruins",
     "name": "Ruinas Ocultas",
     "tileset": "tiled/tilesets/Concealed Ruins.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Baltoy", "Exeggcute", "Natu", "Meditite"], "17-36": ["Espeon", "Claydol"], "37-60": ["Klinklang", "Gothitelle"], "61-100": ["Gallade", "Magnezone"]},
-    "leaders": {"1-16": ["Starmie", "Hypno", "Magnezone", "Claydol"], "17-36": ["Ferrothorn", "Lairon", "Forretress", "Bronzong"], "37-60": ["Bisharp", "Forretress", "Exeggutor", "Durant"], "61-100": ["Aggron", "Excadrill", "Durant", "Gallade"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Baltoy", "Exeggcute", "Natu", "Meditite"],
+      "17-36": ["Espeon", "Claydol"],
+      "37-60": ["Klinklang", "Gothitelle"],
+      "61-100": ["Gallade", "Magnezone"]
+    },
+    "leaders": {
+      "1-16": ["Starmie", "Hypno", "Magnezone", "Claydol"],
+      "17-36": ["Ferrothorn", "Lairon", "Forretress", "Bronzong"],
+      "37-60": ["Bisharp", "Forretress", "Exeggutor", "Durant"],
+      "61-100": ["Aggron", "Excadrill", "Durant", "Gallade"]
+    }
   },
   {
     "id": "dark-crater",
     "name": "Cráter Oscuro",
     "tileset": "tiled/tilesets/Dark Crater.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "lava"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "lava"
+    ],
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 9,
     "canCross": ["lavawalk", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Corsola", "Chimchar", "Torchic", "Houndour"], "17-36": ["Volcarona", "Ninetales"], "37-60": ["Golem", "Aggron"], "61-100": ["Infernape", "Tyranitar"]},
-    "leaders": {"1-16": ["Typhlosion", "Charizard", "Bonsly", "Monferno"], "17-36": ["Solrock", "Magmar", "Magmortar", "Camerupt"], "37-60": ["Arcanine", "Infernape", "Golem", "Kabutops"], "61-100": ["Gigalith", "Darmanitan", "Archeops", "Armaldo"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Corsola", "Chimchar", "Torchic", "Houndour"],
+      "17-36": ["Volcarona", "Ninetales"],
+      "37-60": ["Golem", "Aggron"],
+      "61-100": ["Infernape", "Tyranitar"]
+    },
+    "leaders": {
+      "1-16": ["Typhlosion", "Charizard", "Bonsly", "Monferno"],
+      "17-36": ["Solrock", "Magmar", "Magmortar", "Camerupt"],
+      "37-60": ["Arcanine", "Infernape", "Golem", "Kabutops"],
+      "61-100": ["Gigalith", "Darmanitan", "Archeops", "Armaldo"]
+    }
   },
   {
     "id": "dark-hill",
     "name": "Colina Oscura",
     "tileset": "tiled/tilesets/Dark Hill.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Duskull", "Poochyena", "Rotom", "Gastly"], "17-36": ["Mismagius", "Haunter"], "37-60": ["Krookodile", "Hydreigon"], "61-100": ["Gengar", "Chandelure"]},
-    "leaders": {"1-16": ["Dusclops", "Gengar", "Sandile", "Golett"], "17-36": ["Houndoom", "Drapion", "Pawniard", "Mightyena"], "37-60": ["Shiftry", "Krookodile", "Dusknoir", "Cacturne"], "61-100": ["Honchkrow", "Krookodile", "Banette", "Crawdaunt"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Duskull", "Poochyena", "Rotom", "Gastly"],
+      "17-36": ["Mismagius", "Haunter"],
+      "37-60": ["Krookodile", "Hydreigon"],
+      "61-100": ["Gengar", "Chandelure"]
+    },
+    "leaders": {
+      "1-16": ["Dusclops", "Gengar", "Sandile", "Golett"],
+      "17-36": ["Houndoom", "Drapion", "Pawniard", "Mightyena"],
+      "37-60": ["Shiftry", "Krookodile", "Dusknoir", "Cacturne"],
+      "61-100": ["Honchkrow", "Krookodile", "Banette", "Crawdaunt"]
+    }
   },
   {
     "id": "dark-ice-mountain-peak",
     "name": "Cumbre del Hielo Oscuro",
     "tileset": "tiled/tilesets/Dark Ice Mountain Peak.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Spheal", "Delibird", "Cryogonal", "Swinub"], "17-36": ["Glaceon", "Abomasnow"], "37-60": ["Piloswine", "Glalie"], "61-100": ["Walrein", "Cloyster"]},
-    "leaders": {"1-16": ["Vanillish", "Cubchoo", "Glalie", "Lapras"], "17-36": ["Lapras", "Cloyster", "Froslass", "Walrein"], "37-60": ["Cloyster", "Beartic", "Weavile", "Mamoswine"], "61-100": ["Vanilluxe", "Weavile", "Abomasnow", "Lapras"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Spheal", "Delibird", "Cryogonal", "Swinub"],
+      "17-36": ["Glaceon", "Abomasnow"],
+      "37-60": ["Piloswine", "Glalie"],
+      "61-100": ["Walrein", "Cloyster"]
+    },
+    "leaders": {
+      "1-16": ["Vanillish", "Cubchoo", "Glalie", "Lapras"],
+      "17-36": ["Lapras", "Cloyster", "Froslass", "Walrein"],
+      "37-60": ["Cloyster", "Beartic", "Weavile", "Mamoswine"],
+      "61-100": ["Vanilluxe", "Weavile", "Abomasnow", "Lapras"]
+    }
   },
   {
     "id": "deep-cave",
     "name": "Cueva Profunda",
     "tileset": "tiled/tilesets/Deep Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Nosepass", "Swinub", "Cubone", "Nincada"], "17-36": ["Palpitoad", "Vibrava"], "37-60": ["Aggron", "Seismitoad"], "61-100": ["Flygon", "Torterra"]},
-    "leaders": {"1-16": ["Hippopotas", "Aron", "Vibrava", "Roggenrola"], "17-36": ["Graveler", "Gabite", "Rhyhorn", "Steelix"], "37-60": ["Hippowdon", "Nidoking", "Kabutops", "Swampert"], "61-100": ["Tyranitar", "Mamoswine", "Armaldo", "Cranidos"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Nosepass", "Swinub", "Cubone", "Nincada"],
+      "17-36": ["Palpitoad", "Vibrava"],
+      "37-60": ["Aggron", "Seismitoad"],
+      "61-100": ["Flygon", "Torterra"]
+    },
+    "leaders": {
+      "1-16": ["Hippopotas", "Aron", "Vibrava", "Roggenrola"],
+      "17-36": ["Graveler", "Gabite", "Rhyhorn", "Steelix"],
+      "37-60": ["Hippowdon", "Nidoking", "Kabutops", "Swampert"],
+      "61-100": ["Tyranitar", "Mamoswine", "Armaldo", "Cranidos"]
+    }
   },
   {
     "id": "deep-limestone-cavern",
     "name": "Caverna Caliza Profunda",
     "tileset": "tiled/tilesets/Deep Limestone Cavern.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Onix", "Diglett", "Cubone", "Wooper"], "17-36": ["Probopass", "Claydol"], "37-60": ["Seismitoad", "Aggron"], "61-100": ["Golem", "Swampert"]},
-    "leaders": {"1-16": ["Hippopotas", "Golett", "Gligar", "Roggenrola"], "17-36": ["Gabite", "Solrock", "Rhyhorn", "Gliscor"], "37-60": ["Nidoking", "Hippowdon", "Archen", "Aggron"], "61-100": ["Armaldo", "Tyranitar", "Cranidos", "Mamoswine"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Onix", "Diglett", "Cubone", "Wooper"],
+      "17-36": ["Probopass", "Claydol"],
+      "37-60": ["Seismitoad", "Aggron"],
+      "61-100": ["Golem", "Swampert"]
+    },
+    "leaders": {
+      "1-16": ["Hippopotas", "Golett", "Gligar", "Roggenrola"],
+      "17-36": ["Gabite", "Solrock", "Rhyhorn", "Gliscor"],
+      "37-60": ["Nidoking", "Hippowdon", "Archen", "Aggron"],
+      "61-100": ["Armaldo", "Tyranitar", "Cranidos", "Mamoswine"]
+    }
   },
   {
     "id": "deep-manglar",
     "name": "Manglar Profundo",
     "tileset": "tiled/tilesets/Deep Manglar.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "void"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "void"
+    ],
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 4,
     "canCross": ["fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Horsea", "Staryu", "Wooper", "Tentacool"], "17-36": ["Sealeo", "Omastar"], "37-60": ["Ludicolo", "Seismitoad"], "61-100": ["Blastoise", "Samurott"]},
-    "leaders": {"1-16": ["Ludicolo", "Tentacruel", "Poliwhirl", "Slowpoke"], "17-36": ["Bibarel", "Lapras", "Marshtomp", "Golduck"], "37-60": ["Floatzel", "Octillery", "Swampert", "Cloyster"], "61-100": ["Gyarados", "Swampert", "Floatzel", "Sharpedo"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Horsea", "Staryu", "Wooper", "Tentacool"],
+      "17-36": ["Sealeo", "Omastar"],
+      "37-60": ["Ludicolo", "Seismitoad"],
+      "61-100": ["Blastoise", "Samurott"]
+    },
+    "leaders": {
+      "1-16": ["Ludicolo", "Tentacruel", "Poliwhirl", "Slowpoke"],
+      "17-36": ["Bibarel", "Lapras", "Marshtomp", "Golduck"],
+      "37-60": ["Floatzel", "Octillery", "Swampert", "Cloyster"],
+      "61-100": ["Gyarados", "Swampert", "Floatzel", "Sharpedo"]
+    }
   },
   {
     "id": "deep-sea",
@@ -216,528 +538,1350 @@
     "mediumFrequency": 0.55,
     "level": 7,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Psyduck", "Tympole", "Piplup", "Shellos"], "17-36": ["Vaporeon", "Tentacruel"], "37-60": ["Politoed", "Seismitoad"], "61-100": ["Samurott", "Poliwrath"]},
-    "leaders": {"1-16": ["Dewgong", "Tentacruel", "Ludicolo", "Starmie"], "17-36": ["Kingdra", "Poliwrath", "Cloyster", "Wailord"], "37-60": ["Floatzel", "Crawdaunt", "Swampert", "Samurott"], "61-100": ["Krabby", "Gyarados", "Kingler", "Crawdaunt"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Psyduck", "Tympole", "Piplup", "Shellos"],
+      "17-36": ["Vaporeon", "Tentacruel"],
+      "37-60": ["Politoed", "Seismitoad"],
+      "61-100": ["Samurott", "Poliwrath"]
+    },
+    "leaders": {
+      "1-16": ["Dewgong", "Tentacruel", "Ludicolo", "Starmie"],
+      "17-36": ["Kingdra", "Poliwrath", "Cloyster", "Wailord"],
+      "37-60": ["Floatzel", "Crawdaunt", "Swampert", "Samurott"],
+      "61-100": ["Krabby", "Gyarados", "Kingler", "Crawdaunt"]
+    }
   },
   {
     "id": "diamond-cave",
     "name": "Cueva Diamante",
     "tileset": "tiled/tilesets/Diamond Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Onix", "Wooper", "Shieldon", "Nincada"], "17-36": ["Whiscash", "Palpitoad"], "37-60": ["Aggron", "Swampert"], "61-100": ["Nidoking", "Krookodile"]},
-    "leaders": {"1-16": ["Golett", "Roggenrola", "Hippopotas", "Vibrava"], "17-36": ["Rhyhorn", "Steelix", "Pupitar", "Drilbur"], "37-60": ["Boldore", "Aggron", "Torterra", "Aerodactyl"], "61-100": ["Mamoswine", "Rhydon", "Armaldo", "Golem"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Onix", "Wooper", "Shieldon", "Nincada"],
+      "17-36": ["Whiscash", "Palpitoad"],
+      "37-60": ["Aggron", "Swampert"],
+      "61-100": ["Nidoking", "Krookodile"]
+    },
+    "leaders": {
+      "1-16": ["Golett", "Roggenrola", "Hippopotas", "Vibrava"],
+      "17-36": ["Rhyhorn", "Steelix", "Pupitar", "Drilbur"],
+      "37-60": ["Boldore", "Aggron", "Torterra", "Aerodactyl"],
+      "61-100": ["Mamoswine", "Rhydon", "Armaldo", "Golem"]
+    }
   },
   {
     "id": "doomed-tower",
     "name": "Torre Maldita",
     "tileset": "tiled/tilesets/Doomed Tower.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 9,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 1, "cruces": 1},
-    "wild": {"1-16": ["Klink", "Lunatone", "Elgyem", "Beldum"], "17-36": ["Slowking", "Claydol"], "37-60": ["Aggron", "Gardevoir"], "61-100": ["Magnezone", "Gothitelle"]},
-    "leaders": {"1-16": ["Starmie", "Slowbro", "Beheeyem", "Klang"], "17-36": ["Empoleon", "Steelix", "Bronzong", "Solrock"], "37-60": ["Durant", "Gallade", "Bisharp", "Ferrothorn"], "61-100": ["Lucario", "Durant", "Escavalier", "Bisharp"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Klink", "Lunatone", "Elgyem", "Beldum"],
+      "17-36": ["Slowking", "Claydol"],
+      "37-60": ["Aggron", "Gardevoir"],
+      "61-100": ["Magnezone", "Gothitelle"]
+    },
+    "leaders": {
+      "1-16": ["Starmie", "Slowbro", "Beheeyem", "Klang"],
+      "17-36": ["Empoleon", "Steelix", "Bronzong", "Solrock"],
+      "37-60": ["Durant", "Gallade", "Bisharp", "Ferrothorn"],
+      "61-100": ["Lucario", "Durant", "Escavalier", "Bisharp"]
+    }
   },
   {
     "id": "dusk-forest",
     "name": "Bosque del Ocaso",
     "tileset": "tiled/tilesets/Dusk Forest.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Nincada", "Venipede", "Shroomish", "Exeggcute"], "17-36": ["Ivysaur", "Volcarona"], "37-60": ["Ludicolo", "Roserade"], "61-100": ["Scolipede", "Meganium"]},
-    "leaders": {"1-16": ["Tropius", "Venomoth", "Roserade", "Turtwig"], "17-36": ["Kricketune", "Larvesta", "Sceptile", "Maractus"], "37-60": ["Sawsbuck", "Leavanny", "Tangrowth", "Shiftry"], "61-100": ["Pinsir", "Armaldo", "Scyther", "Escavalier"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Nincada", "Venipede", "Shroomish", "Exeggcute"],
+      "17-36": ["Ivysaur", "Volcarona"],
+      "37-60": ["Ludicolo", "Roserade"],
+      "61-100": ["Scolipede", "Meganium"]
+    },
+    "leaders": {
+      "1-16": ["Tropius", "Venomoth", "Roserade", "Turtwig"],
+      "17-36": ["Kricketune", "Larvesta", "Sceptile", "Maractus"],
+      "37-60": ["Sawsbuck", "Leavanny", "Tangrowth", "Shiftry"],
+      "61-100": ["Pinsir", "Armaldo", "Scyther", "Escavalier"]
+    }
   },
   {
     "id": "empty-chasm",
     "name": "Abismo Vacío",
     "tileset": "tiled/tilesets/Empty Chasm.png",
-    "columns": ["legend", "void", "voidAlt", "voidAlt", "floor", "floorAlt", "floorAlt"],
+    "columns": [
+      "legend",
+      "void",
+      "voidAlt",
+      "voidAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt"
+    ],
     "terrain": "void",
     "mediumFrequency": 0.55,
     "level": 7,
     "canCross": ["fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Houndour", "Vullaby", "Misdreavus", "Duskull"], "17-36": ["Krokorok", "Froslass"], "37-60": ["Chandelure", "Zweilous"], "61-100": ["Tyranitar", "Krookodile"]},
-    "leaders": {"1-16": ["Sandile", "Golett", "Shuppet", "Sableye"], "17-36": ["Liepard", "Sneasel", "Drapion", "Scrafty"], "37-60": ["Cacturne", "Zoroark", "Sharpedo", "Hydreigon"], "61-100": ["Golurk", "Krookodile", "Bisharp", "Absol"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Houndour", "Vullaby", "Misdreavus", "Duskull"],
+      "17-36": ["Krokorok", "Froslass"],
+      "37-60": ["Chandelure", "Zweilous"],
+      "61-100": ["Tyranitar", "Krookodile"]
+    },
+    "leaders": {
+      "1-16": ["Sandile", "Golett", "Shuppet", "Sableye"],
+      "17-36": ["Liepard", "Sneasel", "Drapion", "Scrafty"],
+      "37-60": ["Cacturne", "Zoroark", "Sharpedo", "Hydreigon"],
+      "61-100": ["Golurk", "Krookodile", "Bisharp", "Absol"]
+    }
   },
   {
     "id": "faraway-crater",
     "name": "Cráter Remoto",
     "tileset": "tiled/tilesets/Faraway Crater.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Torchic", "Corsola", "Nosepass", "Onix"], "17-36": ["Charmeleon", "Quilava"], "37-60": ["Golem", "Magmortar"], "61-100": ["Infernape", "Gigalith"]},
-    "leaders": {"1-16": ["Monferno", "Cradily", "Geodude", "Ninetales"], "17-36": ["Pignite", "Houndoom", "Lairon", "Relicanth"], "37-60": ["Arcanine", "Aerodactyl", "Infernape", "Emboar"], "61-100": ["Emboar", "Flareon", "Rhyperior", "Blaziken"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Torchic", "Corsola", "Nosepass", "Onix"],
+      "17-36": ["Charmeleon", "Quilava"],
+      "37-60": ["Golem", "Magmortar"],
+      "61-100": ["Infernape", "Gigalith"]
+    },
+    "leaders": {
+      "1-16": ["Monferno", "Cradily", "Geodude", "Ninetales"],
+      "17-36": ["Pignite", "Houndoom", "Lairon", "Relicanth"],
+      "37-60": ["Arcanine", "Aerodactyl", "Infernape", "Emboar"],
+      "61-100": ["Emboar", "Flareon", "Rhyperior", "Blaziken"]
+    }
   },
   {
     "id": "foggy-forest",
     "name": "Bosque Brumoso",
     "tileset": "tiled/tilesets/Foggy Forest.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Venipede", "Nincada", "Seedot", "Wurmple"], "17-36": ["Wormadam", "Cherrim"], "37-60": ["Venusaur", "Meganium"], "61-100": ["Victreebel", "Beedrill"]},
-    "leaders": {"1-16": ["Ivysaur", "Grovyle", "Tropius", "Pineco"], "17-36": ["Sceptile", "Cacnea", "Larvesta", "Venusaur"], "37-60": ["Carnivine", "Scolipede", "Simisage", "Exeggutor"], "61-100": ["Heracross", "Scyther", "Cacturne", "Scizor"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Venipede", "Nincada", "Seedot", "Wurmple"],
+      "17-36": ["Wormadam", "Cherrim"],
+      "37-60": ["Venusaur", "Meganium"],
+      "61-100": ["Victreebel", "Beedrill"]
+    },
+    "leaders": {
+      "1-16": ["Ivysaur", "Grovyle", "Tropius", "Pineco"],
+      "17-36": ["Sceptile", "Cacnea", "Larvesta", "Venusaur"],
+      "37-60": ["Carnivine", "Scolipede", "Simisage", "Exeggutor"],
+      "61-100": ["Heracross", "Scyther", "Cacturne", "Scizor"]
+    }
   },
   {
     "id": "great-canyon",
     "name": "Gran Cañón",
     "tileset": "tiled/tilesets/Great Canyon.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Barboach", "Onix", "Nincada", "Shieldon"], "17-36": ["Claydol", "Bastiodon"], "37-60": ["Torterra", "Aggron"], "61-100": ["Golem", "Swampert"]},
-    "leaders": {"1-16": ["Hippopotas", "Claydol", "Roggenrola", "Sandile"], "17-36": ["Marshtomp", "Nidoqueen", "Pupitar", "Drilbur"], "37-60": ["Piloswine", "Swampert", "Torterra", "Aggron"], "61-100": ["Golurk", "Garchomp", "Golem", "Krookodile"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Barboach", "Onix", "Nincada", "Shieldon"],
+      "17-36": ["Claydol", "Bastiodon"],
+      "37-60": ["Torterra", "Aggron"],
+      "61-100": ["Golem", "Swampert"]
+    },
+    "leaders": {
+      "1-16": ["Hippopotas", "Claydol", "Roggenrola", "Sandile"],
+      "17-36": ["Marshtomp", "Nidoqueen", "Pupitar", "Drilbur"],
+      "37-60": ["Piloswine", "Swampert", "Torterra", "Aggron"],
+      "61-100": ["Golurk", "Garchomp", "Golem", "Krookodile"]
+    }
   },
   {
     "id": "guild's-maze",
     "name": "Laberinto del Gremio",
     "tileset": "tiled/tilesets/Guild's Maze.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Baltoy", "Onix", "Shieldon", "Nosepass"], "17-36": ["Omastar", "Whiscash"], "37-60": ["Flygon", "Krookodile"], "61-100": ["Nidoking", "Nidoqueen"]},
-    "leaders": {"1-16": ["Palpitoad", "Larvitar", "Omastar", "Claydol"], "17-36": ["Steelix", "Rhyhorn", "Krokorok", "Geodude"], "37-60": ["Flygon", "Sandslash", "Piloswine", "Trapinch"], "61-100": ["Krookodile", "Armaldo", "Golem", "Rhydon"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Baltoy", "Onix", "Shieldon", "Nosepass"],
+      "17-36": ["Omastar", "Whiscash"],
+      "37-60": ["Flygon", "Krookodile"],
+      "61-100": ["Nidoking", "Nidoqueen"]
+    },
+    "leaders": {
+      "1-16": ["Palpitoad", "Larvitar", "Omastar", "Claydol"],
+      "17-36": ["Steelix", "Rhyhorn", "Krokorok", "Geodude"],
+      "37-60": ["Flygon", "Sandslash", "Piloswine", "Trapinch"],
+      "61-100": ["Krookodile", "Armaldo", "Golem", "Rhydon"]
+    }
   },
   {
     "id": "hidden-land",
     "name": "Tierra Oculta",
     "tileset": "tiled/tilesets/Hidden Land.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "void"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "void"
+    ],
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 8,
     "canCross": ["fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Cubone", "Wooper", "Lunatone", "Swinub"], "17-36": ["Palpitoad", "Claydol"], "37-60": ["Aggron", "Swampert"], "61-100": ["Nidoking", "Torterra"]},
-    "leaders": {"1-16": ["Gligar", "Golett", "Sandshrew", "Geodude"], "17-36": ["Solrock", "Sandslash", "Lairon", "Gliscor"], "37-60": ["Aerodactyl", "Torterra", "Boldore", "Aggron"], "61-100": ["Tyranitar", "Armaldo", "Gigalith", "Cranidos"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Cubone", "Wooper", "Lunatone", "Swinub"],
+      "17-36": ["Palpitoad", "Claydol"],
+      "37-60": ["Aggron", "Swampert"],
+      "61-100": ["Nidoking", "Torterra"]
+    },
+    "leaders": {
+      "1-16": ["Gligar", "Golett", "Sandshrew", "Geodude"],
+      "17-36": ["Solrock", "Sandslash", "Lairon", "Gliscor"],
+      "37-60": ["Aerodactyl", "Torterra", "Boldore", "Aggron"],
+      "61-100": ["Tyranitar", "Armaldo", "Gigalith", "Cranidos"]
+    }
   },
   {
     "id": "ice-aegis-cave",
     "name": "Cueva Égida de Hielo",
     "tileset": "tiled/tilesets/Ice Aegis Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Swinub", "Smoochum", "Snover", "Cryogonal"], "17-36": ["Abomasnow", "Glalie"], "37-60": ["Vanilluxe", "Piloswine"], "61-100": ["Cloyster", "Beartic"]},
-    "leaders": {"1-16": ["Snover", "Glaceon", "Lapras", "Glalie"], "17-36": ["Piloswine", "Walrein", "Abomasnow", "Vanilluxe"], "37-60": ["Abomasnow", "Sneasel", "Cloyster", "Piloswine"], "61-100": ["Mamoswine", "Beartic", "Abomasnow", "Lapras"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Swinub", "Smoochum", "Snover", "Cryogonal"],
+      "17-36": ["Abomasnow", "Glalie"],
+      "37-60": ["Vanilluxe", "Piloswine"],
+      "61-100": ["Cloyster", "Beartic"]
+    },
+    "leaders": {
+      "1-16": ["Snover", "Glaceon", "Lapras", "Glalie"],
+      "17-36": ["Piloswine", "Walrein", "Abomasnow", "Vanilluxe"],
+      "37-60": ["Abomasnow", "Sneasel", "Cloyster", "Piloswine"],
+      "61-100": ["Mamoswine", "Beartic", "Abomasnow", "Lapras"]
+    }
   },
   {
     "id": "jade-caverns",
     "name": "Cavernas de Jade",
     "tileset": "tiled/tilesets/Jade Caverns.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Shieldon", "Barboach", "Onix", "Wooper"], "17-36": ["Bastiodon", "Palpitoad"], "37-60": ["Krookodile", "Nidoking"], "61-100": ["Aggron", "Nidoqueen"]},
-    "leaders": {"1-16": ["Sandshrew", "Golett", "Gligar", "Claydol"], "17-36": ["Drilbur", "Quagsire", "Gabite", "Pupitar"], "37-60": ["Aggron", "Piloswine", "Nidoking", "Swampert"], "61-100": ["Golurk", "Donphan", "Armaldo", "Kabutops"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Shieldon", "Barboach", "Onix", "Wooper"],
+      "17-36": ["Bastiodon", "Palpitoad"],
+      "37-60": ["Krookodile", "Nidoking"],
+      "61-100": ["Aggron", "Nidoqueen"]
+    },
+    "leaders": {
+      "1-16": ["Sandshrew", "Golett", "Gligar", "Claydol"],
+      "17-36": ["Drilbur", "Quagsire", "Gabite", "Pupitar"],
+      "37-60": ["Aggron", "Piloswine", "Nidoking", "Swampert"],
+      "61-100": ["Golurk", "Donphan", "Armaldo", "Kabutops"]
+    }
   },
   {
     "id": "joyous-tower",
     "name": "Torre Júbilo",
     "tileset": "tiled/tilesets/Joyous Tower.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 1, "cruces": 1},
-    "wild": {"1-16": ["Baltoy", "Natu", "Meditite", "Woobat"], "17-36": ["Espeon", "Claydol"], "37-60": ["Reuniclus", "Magnezone"], "61-100": ["Metagross", "Aggron"]},
-    "leaders": {"1-16": ["Starmie", "Hypno", "Aron", "Magnezone"], "17-36": ["Lairon", "Ferrothorn", "Pawniard", "Steelix"], "37-60": ["Solrock", "Exeggutor", "Aggron", "Lucario"], "61-100": ["Escavalier", "Lucario", "Gallade", "Durant"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Baltoy", "Natu", "Meditite", "Woobat"],
+      "17-36": ["Espeon", "Claydol"],
+      "37-60": ["Reuniclus", "Magnezone"],
+      "61-100": ["Metagross", "Aggron"]
+    },
+    "leaders": {
+      "1-16": ["Starmie", "Hypno", "Aron", "Magnezone"],
+      "17-36": ["Lairon", "Ferrothorn", "Pawniard", "Steelix"],
+      "37-60": ["Solrock", "Exeggutor", "Aggron", "Lucario"],
+      "61-100": ["Escavalier", "Lucario", "Gallade", "Durant"]
+    }
   },
   {
     "id": "lead-beach",
     "name": "Playa de Plomo",
     "tileset": "tiled/tilesets/Lead Beach.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 3,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Omanyte", "Ducklett", "Spheal", "Wooper"], "17-36": ["Sealeo", "Vaporeon"], "37-60": ["Seismitoad", "Walrein"], "61-100": ["Empoleon", "Feraligatr"]},
-    "leaders": {"1-16": ["Vaporeon", "Goldeen", "Slowpoke", "Prinplup"], "17-36": ["Blastoise", "Empoleon", "Lapras", "Golduck"], "37-60": ["Floatzel", "Cloyster", "Poliwrath", "Krabby"], "61-100": ["Feraligatr", "Swampert", "Octillery", "Gyarados"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Omanyte", "Ducklett", "Spheal", "Wooper"],
+      "17-36": ["Sealeo", "Vaporeon"],
+      "37-60": ["Seismitoad", "Walrein"],
+      "61-100": ["Empoleon", "Feraligatr"]
+    },
+    "leaders": {
+      "1-16": ["Vaporeon", "Goldeen", "Slowpoke", "Prinplup"],
+      "17-36": ["Blastoise", "Empoleon", "Lapras", "Golduck"],
+      "37-60": ["Floatzel", "Cloyster", "Poliwrath", "Krabby"],
+      "61-100": ["Feraligatr", "Swampert", "Octillery", "Gyarados"]
+    }
   },
   {
     "id": "lush-prairie",
     "name": "Pradera Frondosa",
     "tileset": "tiled/tilesets/Lush Prairie.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 2,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Hoppip", "Weedle", "Petilil", "Seedot"], "17-36": ["Volcarona", "Masquerain"], "37-60": ["Beautifly", "Ludicolo"], "61-100": ["Beedrill", "Scolipede"]},
-    "leaders": {"1-16": ["Gloom", "Whimsicott", "Venomoth", "Yanma"], "17-36": ["Cacnea", "Larvesta", "Sceptile", "Venusaur"], "37-60": ["Leavanny", "Shiftry", "Scolipede", "Sawsbuck"], "61-100": ["Scizor", "Pinsir", "Durant", "Cacturne"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Hoppip", "Weedle", "Petilil", "Seedot"],
+      "17-36": ["Volcarona", "Masquerain"],
+      "37-60": ["Beautifly", "Ludicolo"],
+      "61-100": ["Beedrill", "Scolipede"]
+    },
+    "leaders": {
+      "1-16": ["Gloom", "Whimsicott", "Venomoth", "Yanma"],
+      "17-36": ["Cacnea", "Larvesta", "Sceptile", "Venusaur"],
+      "37-60": ["Leavanny", "Shiftry", "Scolipede", "Sawsbuck"],
+      "61-100": ["Scizor", "Pinsir", "Durant", "Cacturne"]
+    }
   },
   {
     "id": "magma_cavern",
     "name": "Caverna Magma",
     "tileset": "tiled/tilesets/Magma Cavern.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "lava"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "lava"
+    ],
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["lavawalk", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Litwick", "Wooper", "Diglett", "Swinub", "Baltoy"], "17-36": ["Aron", "Hippopotas"], "37-60": ["Dugtrio"], "61-100": ["Torterra", "Relicanth"]},
-    "leaders": {"1-16": ["Corsola", "Magcargo", "Shuckle", "Camerupt"], "17-36": ["Omastar", "Claydol", "Bastiodon", "Volcarona"], "37-60": ["Seismitoad", "Kabutops", "Swampert", "Flygon"], "61-100": ["Excadrill", "Mamoswine", "Aggron", "Garchomp"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Litwick", "Wooper", "Diglett", "Swinub", "Baltoy"],
+      "17-36": ["Aron", "Hippopotas"],
+      "37-60": ["Dugtrio"],
+      "61-100": ["Torterra", "Relicanth"]
+    },
+    "leaders": {
+      "1-16": ["Corsola", "Magcargo", "Shuckle", "Camerupt"],
+      "17-36": ["Omastar", "Claydol", "Bastiodon", "Volcarona"],
+      "37-60": ["Seismitoad", "Kabutops", "Swampert", "Flygon"],
+      "61-100": ["Excadrill", "Mamoswine", "Aggron", "Garchomp"]
+    }
   },
   {
     "id": "magma-caves",
     "name": "Cuevas de Magma",
     "tileset": "tiled/tilesets/Magma Caves.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "lava"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "lava"
+    ],
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["lavawalk", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Shieldon", "Lunatone", "Corsola", "Nosepass"], "17-36": ["Ninetales", "Quilava"], "37-60": ["Typhlosion", "Charizard"], "61-100": ["Blaziken", "Aggron"]},
-    "leaders": {"1-16": ["Growlithe", "Geodude", "Ninetales", "Kabuto"], "17-36": ["Magmortar", "Darumaka", "Lairon", "Houndoom"], "37-60": ["Golem", "Kabutops", "Arcanine", "Boldore"], "61-100": ["Cranidos", "Golem", "Flareon", "Armaldo"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Shieldon", "Lunatone", "Corsola", "Nosepass"],
+      "17-36": ["Ninetales", "Quilava"],
+      "37-60": ["Typhlosion", "Charizard"],
+      "61-100": ["Blaziken", "Aggron"]
+    },
+    "leaders": {
+      "1-16": ["Growlithe", "Geodude", "Ninetales", "Kabuto"],
+      "17-36": ["Magmortar", "Darumaka", "Lairon", "Houndoom"],
+      "37-60": ["Golem", "Kabutops", "Arcanine", "Boldore"],
+      "61-100": ["Cranidos", "Golem", "Flareon", "Armaldo"]
+    }
   },
   {
     "id": "meteor-cave",
     "name": "Cueva Meteoro",
     "tileset": "tiled/tilesets/Meteor Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 9,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 1, "cruces": 1},
-    "wild": {"1-16": ["Elgyem", "Natu", "Drowzee", "Beldum"], "17-36": ["Starmie", "Slowbro"], "37-60": ["Bronzong", "Alakazam"], "61-100": ["Metagross", "Beheeyem"]},
-    "leaders": {"1-16": ["Starmie", "Hypno", "Claydol", "Slowking"], "17-36": ["Slowking", "Starmie", "Exeggutor", "Bronzong"], "37-60": ["Metagross", "Gallade", "Slowking", "Slowbro"], "61-100": ["Metagross", "Slowking", "Gallade", "Exeggutor"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Elgyem", "Natu", "Drowzee", "Beldum"],
+      "17-36": ["Starmie", "Slowbro"],
+      "37-60": ["Bronzong", "Alakazam"],
+      "61-100": ["Metagross", "Beheeyem"]
+    },
+    "leaders": {
+      "1-16": ["Starmie", "Hypno", "Claydol", "Slowking"],
+      "17-36": ["Slowking", "Starmie", "Exeggutor", "Bronzong"],
+      "37-60": ["Metagross", "Gallade", "Slowking", "Slowbro"],
+      "61-100": ["Metagross", "Slowking", "Gallade", "Exeggutor"]
+    }
   },
   {
     "id": "miracle-sea",
     "name": "Mar Milagro",
     "tileset": "tiled/tilesets/Miracle Sea.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "waterBase", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "waterBase",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Staryu", "Barboach", "Finneon", "Shellos"], "17-36": ["Palpitoad", "Prinplup"], "37-60": ["Walrein", "Blastoise"], "61-100": ["Samurott", "Politoed"]},
-    "leaders": {"1-16": ["Lumineon", "Slowking", "Mudkip", "Dewgong"], "17-36": ["Wailord", "Swanna", "Seaking", "Cloyster"], "37-60": ["Feraligatr", "Crawdaunt", "Sharpedo", "Kabutops"], "61-100": ["Floatzel", "Gyarados", "Kingler", "Swampert"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Staryu", "Barboach", "Finneon", "Shellos"],
+      "17-36": ["Palpitoad", "Prinplup"],
+      "37-60": ["Walrein", "Blastoise"],
+      "61-100": ["Samurott", "Politoed"]
+    },
+    "leaders": {
+      "1-16": ["Lumineon", "Slowking", "Mudkip", "Dewgong"],
+      "17-36": ["Wailord", "Swanna", "Seaking", "Cloyster"],
+      "37-60": ["Feraligatr", "Crawdaunt", "Sharpedo", "Kabutops"],
+      "61-100": ["Floatzel", "Gyarados", "Kingler", "Swampert"]
+    }
   },
   {
     "id": "mt.-faraway",
     "name": "Monte Remoto",
     "tileset": "tiled/tilesets/Mt. Faraway.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Drifloon", "Delibird", "Vullaby", "Taillow"], "17-36": ["Omastar", "Yanmega"], "37-60": ["Golem", "Beautifly"], "61-100": ["Crobat", "Aggron"]},
-    "leaders": {"1-16": ["Golbat", "Yanmega", "Emolga", "Gligar"], "17-36": ["Ninjask", "Mothim", "Crobat", "Anorith"], "37-60": ["Braviary", "Boldore", "Golem", "Aggron"], "61-100": ["Gyarados", "Braviary", "Rhydon", "Honchkrow"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Drifloon", "Delibird", "Vullaby", "Taillow"],
+      "17-36": ["Omastar", "Yanmega"],
+      "37-60": ["Golem", "Beautifly"],
+      "61-100": ["Crobat", "Aggron"]
+    },
+    "leaders": {
+      "1-16": ["Golbat", "Yanmega", "Emolga", "Gligar"],
+      "17-36": ["Ninjask", "Mothim", "Crobat", "Anorith"],
+      "37-60": ["Braviary", "Boldore", "Golem", "Aggron"],
+      "61-100": ["Gyarados", "Braviary", "Rhydon", "Honchkrow"]
+    }
   },
   {
     "id": "mt.-freeze",
     "name": "Monte Helado",
     "tileset": "tiled/tilesets/Mt. Freeze.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Snorunt", "Swinub", "Smoochum", "Vanillite"], "17-36": ["Dewgong", "Sealeo"], "37-60": ["Glalie", "Vanilluxe"], "61-100": ["Cloyster", "Abomasnow"]},
-    "leaders": {"1-16": ["Cubchoo", "Lapras", "Froslass", "Sealeo"], "17-36": ["Piloswine", "Cloyster", "Sneasel", "Glalie"], "37-60": ["Weavile", "Sneasel", "Lapras", "Beartic"], "61-100": ["Beartic", "Piloswine", "Weavile", "Lapras"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Snorunt", "Swinub", "Smoochum", "Vanillite"],
+      "17-36": ["Dewgong", "Sealeo"],
+      "37-60": ["Glalie", "Vanilluxe"],
+      "61-100": ["Cloyster", "Abomasnow"]
+    },
+    "leaders": {
+      "1-16": ["Cubchoo", "Lapras", "Froslass", "Sealeo"],
+      "17-36": ["Piloswine", "Cloyster", "Sneasel", "Glalie"],
+      "37-60": ["Weavile", "Sneasel", "Lapras", "Beartic"],
+      "61-100": ["Beartic", "Piloswine", "Weavile", "Lapras"]
+    }
   },
   {
     "id": "mt.-travail",
     "name": "Monte Esfuerzo",
     "tileset": "tiled/tilesets/Mt. Travail.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
-    "mediumFrequency": 0,
+    "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Pidgey", "Natu", "Woobat", "Drifloon"], "17-36": ["Pidgeotto", "Altaria"], "37-60": ["Charizard", "Aggron"], "61-100": ["Pidgeot", "Tyranitar"]},
-    "leaders": {"1-16": ["Xatu", "Emolga", "Tropius", "Beautifly"], "17-36": ["Swanna", "Crobat", "Fearow", "Farfetch_d"], "37-60": ["Boldore", "Kabutops", "Scyther", "Golem"], "61-100": ["Braviary", "Dragonite", "Cranidos", "Staraptor"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Pidgey", "Natu", "Woobat", "Drifloon"],
+      "17-36": ["Pidgeotto", "Altaria"],
+      "37-60": ["Charizard", "Aggron"],
+      "61-100": ["Pidgeot", "Tyranitar"]
+    },
+    "leaders": {
+      "1-16": ["Xatu", "Emolga", "Tropius", "Beautifly"],
+      "17-36": ["Swanna", "Crobat", "Fearow", "Farfetch_d"],
+      "37-60": ["Boldore", "Kabutops", "Scyther", "Golem"],
+      "61-100": ["Braviary", "Dragonite", "Cranidos", "Staraptor"]
+    }
   },
   {
     "id": "murky-cave",
     "name": "Cueva Turbia",
     "tileset": "tiled/tilesets/Murky Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Poochyena", "Purrloin", "Houndour", "Duskull"], "17-36": ["Umbreon", "Dusclops"], "37-60": ["Chandelure", "Dusknoir"], "61-100": ["Mightyena", "Tyranitar"]},
-    "leaders": {"1-16": ["Zorua", "Nuzleaf", "Gengar", "Umbreon"], "17-36": ["Zweilous", "Scrafty", "Murkrow", "Houndoom"], "37-60": ["Krookodile", "Shiftry", "Sharpedo", "Banette"], "61-100": ["Golurk", "Honchkrow", "Cacturne", "Banette"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Poochyena", "Purrloin", "Houndour", "Duskull"],
+      "17-36": ["Umbreon", "Dusclops"],
+      "37-60": ["Chandelure", "Dusknoir"],
+      "61-100": ["Mightyena", "Tyranitar"]
+    },
+    "leaders": {
+      "1-16": ["Zorua", "Nuzleaf", "Gengar", "Umbreon"],
+      "17-36": ["Zweilous", "Scrafty", "Murkrow", "Houndoom"],
+      "37-60": ["Krookodile", "Shiftry", "Sharpedo", "Banette"],
+      "61-100": ["Golurk", "Honchkrow", "Cacturne", "Banette"]
+    }
   },
   {
     "id": "mystery-jungle",
     "name": "Jungla Misteriosa",
     "tileset": "tiled/tilesets/Mystery Jungle.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "unused", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "unused",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Nincada", "Joltik", "Snivy", "Wurmple"], "17-36": ["Bayleef", "Volcarona"], "37-60": ["Venusaur", "Meganium"], "61-100": ["Torterra", "Leavanny"]},
-    "leaders": {"1-16": ["Ludicolo", "Bellsprout", "Roserade", "Sunflora"], "17-36": ["Grotle", "Maractus", "Mothim", "Weepinbell"], "37-60": ["Scyther", "Durant", "Leafeon", "Leavanny"], "61-100": ["Armaldo", "Pinsir", "Scizor", "Heracross"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Nincada", "Joltik", "Snivy", "Wurmple"],
+      "17-36": ["Bayleef", "Volcarona"],
+      "37-60": ["Venusaur", "Meganium"],
+      "61-100": ["Torterra", "Leavanny"]
+    },
+    "leaders": {
+      "1-16": ["Ludicolo", "Bellsprout", "Roserade", "Sunflora"],
+      "17-36": ["Grotle", "Maractus", "Mothim", "Weepinbell"],
+      "37-60": ["Scyther", "Durant", "Leafeon", "Leavanny"],
+      "61-100": ["Armaldo", "Pinsir", "Scizor", "Heracross"]
+    }
   },
   {
     "id": "northern-desert",
     "name": "Desierto Septentrional",
     "tileset": "tiled/tilesets/Northern Desert.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
-    "mediumFrequency": 0,
+    "mediumFrequency": 0.1,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 0, "cruces": 1},
-    "wild": {"1-16": ["Omanyte", "Wooper", "Nosepass", "Shieldon"], "17-36": ["Palpitoad", "Bastiodon"], "37-60": ["Swampert", "Krookodile"], "61-100": ["Torterra", "Golem"]},
-    "leaders": {"1-16": ["Claydol", "Gligar", "Gible", "Sandile"], "17-36": ["Lairon", "Pupitar", "Marshtomp", "Gabite"], "37-60": ["Swampert", "Torterra", "Aerodactyl", "Piloswine"], "61-100": ["Armaldo", "Rhydon", "Garchomp", "Kabutops"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 0, "cruces": 1 },
+    "wild": {
+      "1-16": ["Omanyte", "Wooper", "Nosepass", "Shieldon"],
+      "17-36": ["Palpitoad", "Bastiodon"],
+      "37-60": ["Swampert", "Krookodile"],
+      "61-100": ["Torterra", "Golem"]
+    },
+    "leaders": {
+      "1-16": ["Claydol", "Gligar", "Gible", "Sandile"],
+      "17-36": ["Lairon", "Pupitar", "Marshtomp", "Gabite"],
+      "37-60": ["Swampert", "Torterra", "Aerodactyl", "Piloswine"],
+      "61-100": ["Armaldo", "Rhydon", "Garchomp", "Kabutops"]
+    }
   },
   {
     "id": "purity-beach",
     "name": "Playa Pureza",
     "tileset": "tiled/tilesets/Purity Beach.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 2,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Chinchou", "Tentacool", "Seel", "Spheal"], "17-36": ["Lombre", "Omastar"], "37-60": ["Politoed", "Ludicolo"], "61-100": ["Samurott", "Poliwrath"]},
-    "leaders": {"1-16": ["Slowpoke", "Poliwhirl", "Shellder", "Clamperl"], "17-36": ["Gorebyss", "Kabuto", "Blastoise", "Gastrodon"], "37-60": ["Feraligatr", "Krabby", "Kingdra", "Cloyster"], "61-100": ["Octillery", "Sharpedo", "Floatzel", "Kabutops"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Chinchou", "Tentacool", "Seel", "Spheal"],
+      "17-36": ["Lombre", "Omastar"],
+      "37-60": ["Politoed", "Ludicolo"],
+      "61-100": ["Samurott", "Poliwrath"]
+    },
+    "leaders": {
+      "1-16": ["Slowpoke", "Poliwhirl", "Shellder", "Clamperl"],
+      "17-36": ["Gorebyss", "Kabuto", "Blastoise", "Gastrodon"],
+      "37-60": ["Feraligatr", "Krabby", "Kingdra", "Cloyster"],
+      "61-100": ["Octillery", "Sharpedo", "Floatzel", "Kabutops"]
+    }
   },
   {
     "id": "flowers",
     "name": "Bosque Floral Pureza",
     "tileset": "tiled/tilesets/Purity Flower Forest.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 2,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Sunkern", "Burmy", "Hoppip", "Budew", "Cherubi"], "17-36": ["Deerling", "Roselia"], "37-60": ["Bellossom", "Roserade"], "61-100": ["Bellossom", "Breloom", "Roserade"]},
-    "leaders": {"1-16": ["Butterfree", "Beautifly", "Beedrill", "Mothim"], "17-36": ["Sceptile", "Sawsbuck", "Torterra", "Serperior"], "37-60": ["Shaymin", "Celebi", "Bellossom", "Butterfree"], "61-100": ["Virizion", "Genesect", "Celebi", "Shaymin"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Sunkern", "Burmy", "Hoppip", "Budew", "Cherubi"],
+      "17-36": ["Deerling", "Roselia"],
+      "37-60": ["Bellossom", "Roserade"],
+      "61-100": ["Bellossom", "Breloom", "Roserade"]
+    },
+    "leaders": {
+      "1-16": ["Butterfree", "Beautifly", "Beedrill", "Mothim"],
+      "17-36": ["Sceptile", "Sawsbuck", "Torterra", "Serperior"],
+      "37-60": ["Shaymin", "Celebi", "Bellossom", "Butterfree"],
+      "61-100": ["Virizion", "Genesect", "Celebi", "Shaymin"]
+    }
   },
   {
     "id": "forest",
     "name": "Bosque Pureza",
     "tileset": "tiled/tilesets/Purity Forest.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "water", "unused", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "water",
+      "unused",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 1,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Sunkern", "Kricketot", "Wurmple", "Burmy", "Caterpie"], "17-36": ["Sunflora", "Kricketune"], "37-60": ["Tropius"], "61-100": ["Vileplume", "Whimsicott"]},
-    "leaders": {"1-16": ["Victreebel", "Leavanny", "Roserade", "Lilligant"], "17-36": ["Simisage", "Galvantula", "Escavalier", "Sunflora"], "37-60": ["Venusaur", "Sceptile", "Meganium", "Serperior"], "61-100": ["Scizor", "Heracross", "Pinsir", "Genesect"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Sunkern", "Kricketot", "Wurmple", "Burmy", "Caterpie"],
+      "17-36": ["Sunflora", "Kricketune"],
+      "37-60": ["Tropius"],
+      "61-100": ["Vileplume", "Whimsicott"]
+    },
+    "leaders": {
+      "1-16": ["Victreebel", "Leavanny", "Roserade", "Lilligant"],
+      "17-36": ["Simisage", "Galvantula", "Escavalier", "Sunflora"],
+      "37-60": ["Venusaur", "Sceptile", "Meganium", "Serperior"],
+      "61-100": ["Scizor", "Heracross", "Pinsir", "Genesect"]
+    }
   },
   {
     "id": "lake",
     "name": "Lago Pureza",
     "tileset": "tiled/tilesets/Purity Lake.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 3,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Feebas", "Quagsire", "Magikarp", "Surskit", "Carvanha", "Paras"], "17-36": ["Feebas", "Quagsire", "Masquerain", "Paras", "Carvanha"], "37-60": ["Volbeat", "Carvanha", "Masquerain"], "61-100": ["Toxicroak", "Pinsir"]},
-    "leaders": {"1-16": ["Poliwrath", "Bibarel", "Floatzel", "Whiscash"], "17-36": ["Politoed", "Armaldo", "Yanmega", "Leafeon"], "37-60": ["Celebi", "Seismitoad", "Blastoise", "Swampert"], "61-100": ["Virizion", "Keldeo", "Suicune", "Celebi"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": [
+        "Feebas",
+        "Quagsire",
+        "Magikarp",
+        "Surskit",
+        "Carvanha",
+        "Paras"
+      ],
+      "17-36": ["Feebas", "Quagsire", "Masquerain", "Paras", "Carvanha"],
+      "37-60": ["Volbeat", "Carvanha", "Masquerain"],
+      "61-100": ["Toxicroak", "Pinsir"]
+    },
+    "leaders": {
+      "1-16": ["Poliwrath", "Bibarel", "Floatzel", "Whiscash"],
+      "17-36": ["Politoed", "Armaldo", "Yanmega", "Leafeon"],
+      "37-60": ["Celebi", "Seismitoad", "Blastoise", "Swampert"],
+      "61-100": ["Virizion", "Keldeo", "Suicune", "Celebi"]
+    }
   },
   {
     "id": "rock-aegis-cave",
     "name": "Cueva Égida de Roca",
     "tileset": "tiled/tilesets/Rock Aegis Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 1, "cruces": 0},
-    "wild": {"1-16": ["Nosepass", "Shieldon", "Wooper", "Onix"], "17-36": ["Claydol", "Magcargo"], "37-60": ["Torterra", "Flygon"], "61-100": ["Golem", "Seismitoad"]},
-    "leaders": {"1-16": ["Vibrava", "Sandile", "Hippopotas", "Sandshrew"], "17-36": ["Steelix", "Quagsire", "Marshtomp", "Lairon"], "37-60": ["Nidoking", "Swampert", "Dugtrio", "Torterra"], "61-100": ["Armaldo", "Krookodile", "Cranidos", "Rhydon"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 1, "cruces": 0 },
+    "wild": {
+      "1-16": ["Nosepass", "Shieldon", "Wooper", "Onix"],
+      "17-36": ["Claydol", "Magcargo"],
+      "37-60": ["Torterra", "Flygon"],
+      "61-100": ["Golem", "Seismitoad"]
+    },
+    "leaders": {
+      "1-16": ["Vibrava", "Sandile", "Hippopotas", "Sandshrew"],
+      "17-36": ["Steelix", "Quagsire", "Marshtomp", "Lairon"],
+      "37-60": ["Nidoking", "Swampert", "Dugtrio", "Torterra"],
+      "61-100": ["Armaldo", "Krookodile", "Cranidos", "Rhydon"]
+    }
   },
   {
     "id": "ruby-road",
     "name": "Camino Rubí",
     "tileset": "tiled/tilesets/Ruby Road.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Nosepass", "Vulpix", "Cyndaquil", "Lileep"], "17-36": ["Probopass", "Bastiodon"], "37-60": ["Aggron", "Infernape"], "61-100": ["Magmortar", "Charizard"]},
-    "leaders": {"1-16": ["Charmeleon", "Quilava", "Roggenrola", "Kabuto"], "17-36": ["Graveler", "Magmar", "Lairon", "Darumaka"], "37-60": ["Infernape", "Boldore", "Aggron", "Camerupt"], "61-100": ["Gigalith", "Kabutops", "Tyranitar", "Flareon"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Nosepass", "Vulpix", "Cyndaquil", "Lileep"],
+      "17-36": ["Probopass", "Bastiodon"],
+      "37-60": ["Aggron", "Infernape"],
+      "61-100": ["Magmortar", "Charizard"]
+    },
+    "leaders": {
+      "1-16": ["Charmeleon", "Quilava", "Roggenrola", "Kabuto"],
+      "17-36": ["Graveler", "Magmar", "Lairon", "Darumaka"],
+      "37-60": ["Infernape", "Boldore", "Aggron", "Camerupt"],
+      "61-100": ["Gigalith", "Kabutops", "Tyranitar", "Flareon"]
+    }
   },
   {
     "id": "sky-island",
     "name": "Isla Celeste",
     "tileset": "tiled/tilesets/Sky Island.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "void"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "void"
+    ],
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Drifloon", "Woobat", "Natu", "Pidgey"], "17-36": ["Yanmega", "Masquerain"], "37-60": ["Pidgeot", "Charizard"], "61-100": ["Staraptor", "Gigalith"]},
-    "leaders": {"1-16": ["Aron", "Roggenrola", "Pidgeot", "Staravia"], "17-36": ["Graveler", "Solrock", "Fearow", "Farfetch_d"], "37-60": ["Dodrio", "Aggron", "Archen", "Staraptor"], "61-100": ["Rhydon", "Braviary", "Dragonite", "Gigalith"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Drifloon", "Woobat", "Natu", "Pidgey"],
+      "17-36": ["Yanmega", "Masquerain"],
+      "37-60": ["Pidgeot", "Charizard"],
+      "61-100": ["Staraptor", "Gigalith"]
+    },
+    "leaders": {
+      "1-16": ["Aron", "Roggenrola", "Pidgeot", "Staravia"],
+      "17-36": ["Graveler", "Solrock", "Fearow", "Farfetch_d"],
+      "37-60": ["Dodrio", "Aggron", "Archen", "Staraptor"],
+      "61-100": ["Rhydon", "Braviary", "Dragonite", "Gigalith"]
+    }
   },
   {
     "id": "spacial-cliffs",
     "name": "Acantilados Espaciales",
     "tileset": "tiled/tilesets/Spacial Cliffs.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 1, "cruces": 1},
-    "wild": {"1-16": ["Woobat", "Elgyem", "Baltoy", "Sigilyph"], "17-36": ["Hypno", "Slowking"], "37-60": ["Gardevoir", "Gallade"], "61-100": ["Bronzong", "Metagross"]},
-    "leaders": {"1-16": ["Slowbro", "Unown", "Hypno", "Claydol"], "17-36": ["Beheeyem", "Bronzong", "Starmie", "Slowbro"], "37-60": ["Bronzong", "Xatu", "Gallade", "Metagross"], "61-100": ["Gallade", "Metagross", "Exeggutor", "Xatu"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Woobat", "Elgyem", "Baltoy", "Sigilyph"],
+      "17-36": ["Hypno", "Slowking"],
+      "37-60": ["Gardevoir", "Gallade"],
+      "61-100": ["Bronzong", "Metagross"]
+    },
+    "leaders": {
+      "1-16": ["Slowbro", "Unown", "Hypno", "Claydol"],
+      "17-36": ["Beheeyem", "Bronzong", "Starmie", "Slowbro"],
+      "37-60": ["Bronzong", "Xatu", "Gallade", "Metagross"],
+      "61-100": ["Gallade", "Metagross", "Exeggutor", "Xatu"]
+    }
   },
   {
     "id": "steam-cave",
     "name": "Cueva Vapor",
     "tileset": "tiled/tilesets/Steam Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Onix", "Vulpix", "Charmander", "Cyndaquil"], "17-36": ["Omastar", "Charmeleon"], "37-60": ["Golem", "Magmortar"], "61-100": ["Aggron", "Charizard"]},
-    "leaders": {"1-16": ["Ninetales", "Roggenrola", "Quilava", "Growlithe"], "17-36": ["Combusken", "Relicanth", "Pignite", "Graveler"], "37-60": ["Aggron", "Infernape", "Sudowoodo", "Archen"], "61-100": ["Gigalith", "Golem", "Rhydon", "Cranidos"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Onix", "Vulpix", "Charmander", "Cyndaquil"],
+      "17-36": ["Omastar", "Charmeleon"],
+      "37-60": ["Golem", "Magmortar"],
+      "61-100": ["Aggron", "Charizard"]
+    },
+    "leaders": {
+      "1-16": ["Ninetales", "Roggenrola", "Quilava", "Growlithe"],
+      "17-36": ["Combusken", "Relicanth", "Pignite", "Graveler"],
+      "37-60": ["Aggron", "Infernape", "Sudowoodo", "Archen"],
+      "61-100": ["Gigalith", "Golem", "Rhydon", "Cranidos"]
+    }
   },
   {
     "id": "steel",
     "name": "Égida de Acero",
     "tileset": "tiled/tilesets/Steel Aegis.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
-    "mediumFrequency": 0,
+    "mediumFrequency": 0.1,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": 1, "cruces": 0},
-    "wild": {"1-16": ["Tyrogue", "Wooper", "Magnemite", "Diglett", "Meditite"], "17-36": ["Corsola", "Phanpy"], "37-60": ["Boldore"], "61-100": ["Durant", "Mienshao"]},
-    "leaders": {"1-16": ["Corsola", "Magcargo", "Shuckle", "Mawile"], "17-36": ["Empoleon", "Ferrothorn", "Whiscash", "Primeape"], "37-60": ["Mienshao", "Infernape", "Kabutops", "Swampert"], "61-100": ["Durant", "Steelix", "Gliscor", "Archeops"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": 1, "cruces": 0 },
+    "wild": {
+      "1-16": ["Tyrogue", "Wooper", "Magnemite", "Diglett", "Meditite"],
+      "17-36": ["Corsola", "Phanpy"],
+      "37-60": ["Boldore"],
+      "61-100": ["Durant", "Mienshao"]
+    },
+    "leaders": {
+      "1-16": ["Corsola", "Magcargo", "Shuckle", "Mawile"],
+      "17-36": ["Empoleon", "Ferrothorn", "Whiscash", "Primeape"],
+      "37-60": ["Mienshao", "Infernape", "Kabutops", "Swampert"],
+      "61-100": ["Durant", "Steelix", "Gliscor", "Archeops"]
+    }
   },
   {
     "id": "temporal-tower",
     "name": "Torre Temporal",
     "tileset": "tiled/tilesets/Temporal Tower.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 9,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 1, "cruces": 1},
-    "wild": {"1-16": ["Ralts", "Abra", "Smoochum", "Gothita", "Spoink"], "17-36": ["Exeggcute", "Duosion"], "37-60": ["Metang"], "61-100": ["Fraxure", "Lairon"]},
-    "leaders": {"1-16": ["Unown", "Girafarig", "Medicham", "Hypno"], "17-36": ["Solrock", "Gardevoir", "Skarmory", "Starmie"], "37-60": ["Bisharp", "Excadrill", "Aggron", "Garchomp"], "61-100": ["Mesprit", "Mew", "Palkia", "Mewtwo"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Ralts", "Abra", "Smoochum", "Gothita", "Spoink"],
+      "17-36": ["Exeggcute", "Duosion"],
+      "37-60": ["Metang"],
+      "61-100": ["Fraxure", "Lairon"]
+    },
+    "leaders": {
+      "1-16": ["Unown", "Girafarig", "Medicham", "Hypno"],
+      "17-36": ["Solrock", "Gardevoir", "Skarmory", "Starmie"],
+      "37-60": ["Bisharp", "Excadrill", "Aggron", "Garchomp"],
+      "61-100": ["Mesprit", "Mew", "Palkia", "Mewtwo"]
+    }
   },
   {
     "id": "tiny-meadow",
     "name": "Pradera Pequeña",
     "tileset": "tiled/tilesets/Tiny Meadow.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
-    "mediumFrequency": 0,
+    "mediumFrequency": 0.1,
     "level": 1,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": -1, "habitaciones": -1, "cruces": -1},
-    "wild": {"1-16": ["Cherubi", "Exeggcute", "Lileep", "Shroomish"], "17-36": ["Masquerain", "Volcarona"], "37-60": ["Ludicolo", "Beautifly"], "61-100": ["Meganium", "Scolipede"]},
-    "leaders": {"1-16": ["Servine", "Spinarak", "Lilligant", "Bayleef"], "17-36": ["Vileplume", "Meganium", "Bellsprout", "Venusaur"], "37-60": ["Exeggutor", "Scolipede", "Simisage", "Shiftry"], "61-100": ["Cacturne", "Torterra", "Scyther", "Pinsir"]}
+    "layoutModifier": { "pasillos": -1, "habitaciones": -1, "cruces": -1 },
+    "wild": {
+      "1-16": ["Cherubi", "Exeggcute", "Lileep", "Shroomish"],
+      "17-36": ["Masquerain", "Volcarona"],
+      "37-60": ["Ludicolo", "Beautifly"],
+      "61-100": ["Meganium", "Scolipede"]
+    },
+    "leaders": {
+      "1-16": ["Servine", "Spinarak", "Lilligant", "Bayleef"],
+      "17-36": ["Vileplume", "Meganium", "Bellsprout", "Venusaur"],
+      "37-60": ["Exeggutor", "Scolipede", "Simisage", "Shiftry"],
+      "61-100": ["Cacturne", "Torterra", "Scyther", "Pinsir"]
+    }
   },
   {
     "id": "treeshroud",
     "name": "Bosque Envolvente",
     "tileset": "tiled/tilesets/Treeshroud Forest.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 0},
-    "wild": {"1-16": ["Sunkern", "Wurmple", "Hoppip", "Petilil", "Spinarak"], "17-36": ["Cacnea", "Snover"], "37-60": ["Emolga"], "61-100": ["Exeggutor", "Escavalier"]},
-    "leaders": {"1-16": ["Shedinja", "Illumise", "Butterfree", "Ariados"], "17-36": ["Mothim", "Cacturne", "Galvantula", "Vileplume"], "37-60": ["Bellossom", "Jumpluff", "Dodrio", "Scizor"], "61-100": ["Braviary", "Scolipede", "Salamence", "Genesect"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 0 },
+    "wild": {
+      "1-16": ["Sunkern", "Wurmple", "Hoppip", "Petilil", "Spinarak"],
+      "17-36": ["Cacnea", "Snover"],
+      "37-60": ["Emolga"],
+      "61-100": ["Exeggutor", "Escavalier"]
+    },
+    "leaders": {
+      "1-16": ["Shedinja", "Illumise", "Butterfree", "Ariados"],
+      "17-36": ["Mothim", "Cacturne", "Galvantula", "Vileplume"],
+      "37-60": ["Bellossom", "Jumpluff", "Dodrio", "Scizor"],
+      "61-100": ["Braviary", "Scolipede", "Salamence", "Genesect"]
+    }
   },
   {
     "id": "water-maze",
     "name": "Laberinto Acuático",
     "tileset": "tiled/tilesets/Water Maze.png",
-    "columns": ["legend", "wall", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "waterBase", "water"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "waterBase",
+      "water"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 4,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 1, "habitaciones": -1, "cruces": 1},
-    "wild": {"1-16": ["Seel", "Omanyte", "Ducklett", "Wooper"], "17-36": ["Sealeo", "Seadra"], "37-60": ["Ludicolo", "Blastoise"], "61-100": ["Kingdra", "Swampert"]},
-    "leaders": {"1-16": ["Poliwhirl", "Wailmer", "Slowpoke", "Lumineon"], "17-36": ["Quagsire", "Swanna", "Golduck", "Empoleon"], "37-60": ["Floatzel", "Octillery", "Poliwrath", "Huntail"], "61-100": ["Swampert", "Octillery", "Kingler", "Sharpedo"]}
+    "layoutModifier": { "pasillos": 1, "habitaciones": -1, "cruces": 1 },
+    "wild": {
+      "1-16": ["Seel", "Omanyte", "Ducklett", "Wooper"],
+      "17-36": ["Sealeo", "Seadra"],
+      "37-60": ["Ludicolo", "Blastoise"],
+      "61-100": ["Kingdra", "Swampert"]
+    },
+    "leaders": {
+      "1-16": ["Poliwhirl", "Wailmer", "Slowpoke", "Lumineon"],
+      "17-36": ["Quagsire", "Swanna", "Golduck", "Empoleon"],
+      "37-60": ["Floatzel", "Octillery", "Poliwrath", "Huntail"],
+      "61-100": ["Swampert", "Octillery", "Kingler", "Sharpedo"]
+    }
   },
   {
     "id": "western-cave",
     "name": "Cueva Occidental",
     "tileset": "tiled/tilesets/Western Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Onix", "Nincada", "Corsola", "Swinub"], "17-36": ["Probopass", "Marowak"], "37-60": ["Seismitoad", "Krookodile"], "61-100": ["Golem", "Torterra"]},
-    "leaders": {"1-16": ["Hippopotas", "Aron", "Whiscash", "Sandile"], "17-36": ["Rhyhorn", "Nidoqueen", "Gabite", "Graveler"], "37-60": ["Boldore", "Torterra", "Aerodactyl", "Hippowdon"], "61-100": ["Gigalith", "Garchomp", "Excadrill", "Cranidos"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Onix", "Nincada", "Corsola", "Swinub"],
+      "17-36": ["Probopass", "Marowak"],
+      "37-60": ["Seismitoad", "Krookodile"],
+      "61-100": ["Golem", "Torterra"]
+    },
+    "leaders": {
+      "1-16": ["Hippopotas", "Aron", "Whiscash", "Sandile"],
+      "17-36": ["Rhyhorn", "Nidoqueen", "Gabite", "Graveler"],
+      "37-60": ["Boldore", "Torterra", "Aerodactyl", "Hippowdon"],
+      "61-100": ["Gigalith", "Garchomp", "Excadrill", "Cranidos"]
+    }
   },
   {
     "id": "wish-cave",
     "name": "Cueva Deseo",
     "tileset": "tiled/tilesets/Wish Cave.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "water", "waterAlt"],
+    "columns": [
+      "legend",
+      "wall",
+      "wallAlt",
+      "wallAlt",
+      "floor",
+      "floorAlt",
+      "floorAlt",
+      "unused",
+      "water",
+      "waterAlt"
+    ],
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
     "canCross": ["swim", "fly"],
-    "layoutModifier": {"pasillos": 0, "habitaciones": 0, "cruces": 0},
-    "wild": {"1-16": ["Lunatone", "Woobat", "Sigilyph", "Drowzee"], "17-36": ["Starmie", "Slowking"], "37-60": ["Reuniclus", "Gardevoir"], "61-100": ["Exeggutor", "Gothitelle"]},
-    "leaders": {"1-16": ["Xatu", "Slowking", "Claydol", "Girafarig"], "17-36": ["Metang", "Starmie", "Girafarig", "Beheeyem"], "37-60": ["Slowking", "Girafarig", "Xatu", "Starmie"], "61-100": ["Exeggutor", "Starmie", "Bronzong", "Metagross"]}
+    "layoutModifier": { "pasillos": 0, "habitaciones": 0, "cruces": 0 },
+    "wild": {
+      "1-16": ["Lunatone", "Woobat", "Sigilyph", "Drowzee"],
+      "17-36": ["Starmie", "Slowking"],
+      "37-60": ["Reuniclus", "Gardevoir"],
+      "61-100": ["Exeggutor", "Gothitelle"]
+    },
+    "leaders": {
+      "1-16": ["Xatu", "Slowking", "Claydol", "Girafarig"],
+      "17-36": ["Metang", "Starmie", "Girafarig", "Beheeyem"],
+      "37-60": ["Slowking", "Girafarig", "Xatu", "Starmie"],
+      "61-100": ["Exeggutor", "Starmie", "Bronzong", "Metagross"]
+    }
   }
 ]
