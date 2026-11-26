@@ -1,3 +1,5 @@
+import {rule} from './modifiers.js';
+import {dropNewItem} from './items.js';
 import { awardExperience } from './experience.js';
 import { evolutionPayment } from './evolution.js';
 import { game } from './state.js';
@@ -99,19 +101,27 @@ export function newMission(
 }
 
 // La tirada roja pertenece al par completo; como máximo hay un papel rojo.
-export function missionOffers(number, level) {
+export function missionOffers(number, level, held=game.held) {
   const count=game.inventory?.has('lost_ticket')?4:3;
-  const redChance=game.inventory?.has('lost_map')?.225:.15;
-  const types = Object.keys(layouts),
+  const redChance=(game.inventory?.has('lost_map')?.225:.15)+rule('redChance',held);
+  const redReward=rule('redReward',held), leaderChance=rule('leaderChance',held);
+  const types = Object.keys(layouts).filter(type=>type!=='clear' || !leaderChance),
     redIndex = Math.random() < redChance ? Math.floor(Math.random() * count) : -1;
+  // Se ajusta la probabilidad del tablón completo, sin repetir encargos.
+  const baseLeaderChance=count/types.length;
+  const forceLeader=baseLeaderChance<1 && Math.random()<Math.min(1,leaderChance/(1-baseLeaderChance));
   const offers = [];
   for (let index = 0; index < count; index++) {
     const biome = chooseBiome(
       game.biomes.filter((row) => !offers.some((offer) => offer.biome === row)),
       number,
     );
-    const type = types.splice(Math.floor(Math.random() * types.length), 1)[0];
-    offers.push(newMission(number, biome, level, type, index === redIndex));
+    const leader=types.indexOf('leader');
+    const pick=index===0 && forceLeader && leader>=0?leader:Math.floor(Math.random()*types.length);
+    const type=types.splice(pick,1)[0];
+    const mission=newMission(number,biome,level,type,!!redReward || index===redIndex);
+    mission.reward*=redReward||1;
+    offers.push(mission);
   }
   return offers;
 }
@@ -157,6 +167,7 @@ export function onDefeat(target, attacker) {
   const amount = baseEssenceCount * (target.boss ? 2 : 1);
   game.drops.push({ essence, amount, x: target.x, y: target.y });
   if (!attacker.isPlayer) return;
+  if(target.boss && rule('bossLoot'))dropNewItem(target);
   awardExperience(target);
   if (!target.boss) mission.defeated.push(target.dex);
   if (mission.target === target.dex) mission.kills++;

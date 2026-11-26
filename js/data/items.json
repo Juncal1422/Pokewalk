@@ -1,7 +1,7 @@
 {
   "berry_oran": {
     "name": "Baya Aranja",
-    "description": "Regenera el 10 % de los PV máximos.",
+    "description": "Regenera el 10 por ciento de los PV máximos.",
     "image": "assets/items/berry_oran.png",
     "stats": {},
     "healFraction": 0.1,
@@ -9,7 +9,7 @@
   },
   "berry_sitrus": {
     "name": "Baya Zidra",
-    "description": "Regenera el 40 % de los PV máximos.",
+    "description": "Regenera el 40 por ciento de los PV máximos.",
     "image": "assets/items/berry_sitrus.png",
     "stats": {},
     "healFraction": 0.4,
@@ -87,7 +87,7 @@
   },
   "boost_steroids": {
     "name": "Esteroides",
-    "description": "Reduce un 15 % la recarga de ambas activas.",
+    "description": "Reduce un 15 por ciento la recarga de ambas activas.",
     "image": "assets/items/boost_steroids.png",
     "stats": {},
     "cooldown": 0.15
@@ -264,7 +264,7 @@
   },
   "golden_disk": {
     "name": "Disco Dorado",
-    "description": "Reduce las recargas un 25 %.",
+    "description": "Reduce las recargas un 25 por ciento.",
     "image": "assets/items/golden_disc.png",
     "stats": {}
   },
@@ -282,7 +282,7 @@
   },
   "lost_map": {
     "name": "Mapa perdido",
-    "description": "Aumenta la probabilidad de papel rojo un 50 %.",
+    "description": "Aumenta la probabilidad de papel rojo un 50 por ciento.",
     "image": "assets/items/lost_map.png",
     "stats": {}
   },
@@ -313,7 +313,7 @@
   },
   "revive": {
     "name": "Revivir",
-    "description": "Una vez por aventura, recupera el 20 % de los PV al caer y gana invulnerabilidad.",
+    "description": "Una vez por aventura, recupera el 20 por ciento de los PV al caer y gana invulnerabilidad.",
     "image": "assets/items/revive.png",
     "stats": {}
   }

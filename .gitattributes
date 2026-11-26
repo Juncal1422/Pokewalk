@@ -25,3 +25,10 @@ sounds/*.wav export-ignore
 "sounds/Cursor.wav" -export-ignore
 "sounds/Exclamation.wav" -export-ignore
 "sounds/Use TM.wav" -export-ignore
+
+"sounds/Item Gift.wav" -export-ignore
+"sounds/Ice Beam Hit.wav" -export-ignore
+"sounds/Eruption.wav" -export-ignore
+"sounds/Whirlpool.wav" -export-ignore
+"sounds/Bubble.wav" -export-ignore
+"sounds/Flame Wheel Hit.wav" -export-ignore

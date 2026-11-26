@@ -1,3 +1,4 @@
+import {actorRule} from './modifiers.js';
 import { assetUrl } from './asset-url.js';
 import { drawWorldNotices } from './world-notices.js';
 import { synergyActive } from './benefits.js';
@@ -67,12 +68,13 @@ export function draw() {
     Math.ceil((cameraY + canvas.height) / RTILE),
   );
   const palettePhase = Math.floor(gameTime() / (game.currentBiome.paletteStepMs ?? 133));
+  const sparklePhase = Math.floor(gameTime() / (game.currentBiome.sparkleStepMs ?? game.currentBiome.paletteStepMs ?? 133));
   for (let y = rowStart; y <= rowEnd; y++) {
     for (let x = colStart; x <= colEnd; x++) {
       const terrain = game.grid[y][x];
       const material = terrain === 0 ? 'floor' : terrain === 1 ? 'wall' : game.currentBiome.terrain;
       drawTerrainTile(drawingContext,tileSheet,game.autotileGrid[y][x].mask,material,
-        game.variantGrid[y][x],palettePhase,x*RTILE-cameraX,y*RTILE-cameraY,RTILE);
+        game.variantGrid[y][x],palettePhase,x*RTILE-cameraX,y*RTILE-cameraY,RTILE,sparklePhase);
       if (game.portal?.x === x && game.portal.y === y) {
         const icon = { stairs: stairsImage, objective: objectiveImage, portal: portalImage }[game.portal.kind];
         drawingContext.drawImage(icon, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
@@ -114,6 +116,9 @@ export function draw() {
 
     // Dorado es el tinte base del jugador. Las señales temporales tienen prioridad.
     if (entity.isPlayer && game.held.has('golden')) drawingContext.filter = theme.goldenFilter;
+    if (actorRule(entity,'tropicalEssence')) drawingContext.filter=theme.tropicalFilter;
+    if (entity.state==='Attack' && actorRule(entity,'fireAttack')) drawingContext.filter=theme.fireFilter;
+    if(entity.shellUntil>now)drawingContext.filter=theme.shellFilter;
     if (entity.isPlayer && game.amuletUntil > now) drawingContext.filter = theme.amuletFilter;
     if (entity.evasionUntil > now) drawingContext.filter = theme.evasionFilter;
     if (elapsed < 110) drawingContext.filter = theme.hitFilter;
@@ -136,7 +141,7 @@ export function draw() {
       const horn = entity.doubleStrike ? offset.secondWeapon : (entity.isPlayer?game.held:entity.benefits).has('rhyhorn_horn');
       const gold = entity.isPlayer && synergyActive(horn?'goldHorn':'goldSpike');
       drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,
-        ZOOM,offset.opacity,horn?'fang':'spine',gold?theme.goldenWeaponFilter:'none');
+        ZOOM,offset.opacity,actorRule(entity,'fireAttack')?'fire_spike':horn?'fang':'spine',gold?theme.goldenWeaponFilter:'none');
     }
     if (!entity.isPlayer && gameTime() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;

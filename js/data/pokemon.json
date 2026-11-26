@@ -25026,5 +25026,6 @@
     "fly": false,
     "swim": false,
     "lavawalk": false
-  }
+  },
+  {"dex": 10009, "name": "Rotom-Lavadora", "heightDm": 3, "stats": {"hpMax": 50, "attack": 65, "defense": 107, "speed": 86, "size": 96, "attackSpeed": 48}, "maxLevel": 100, "animations": ["Walk", "Attack", "Strike", "Shoot", "SpAttack", "Emit", "Sleep", "Hurt", "Idle", "Swing", "Double", "Hop", "Charge", "Rotate"], "types": ["electric", "water"], "essences": ["electric", "water"], "stage": 1, "root": 479, "next": [], "evolutions": [], "final": true, "legendary": false, "mythical": false, "fly": true, "swim": false, "lavawalk": false, "spritePath": "0479/0002"}
 ]

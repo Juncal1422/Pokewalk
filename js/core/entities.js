@@ -1,11 +1,12 @@
+import {actorRule,combatChance,rule} from './modifiers.js';
 import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
-import { updateWildAbility, releaseSpines, effect, launchWeapon, featherStun } from './abilities.js';
-import { amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
+import { updateWildAbility, releaseSpines, effect, attackElement, elementalHit, launchWeapon, featherStun } from './abilities.js';
+import { applyBenefitStats, amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, fleeRescue, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
-import { collectItems, spawnFloorItems } from './items.js';
+import { collectItems, dropItem, spawnFloorItems } from './items.js';
 import {
   ANIM_SPEED,
   BODY_RADIUS,
@@ -102,7 +103,7 @@ export function canMove(entity, x, y) {
 // Prepara un solo impacto pendiente y selecciona la animación para el arma equipada.
 export function triggerAttack(attacker) {
   if (!['Idle','Walk'].includes(attacker.state)) return;
-  if (attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
+  if (attacker.frozenUntil>gameTime() || attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
   attacker.fangStrike = !['acuatic','rock_thrower','ancient'].some(id=>combatBenefits(attacker)?.has(id)) && (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
@@ -144,15 +145,16 @@ function resolveImpact(attacker) {
     if (!inStrike(target.x, target.y, strikeRadius + bodyRadius(target))) continue;
     const simulationTime = gameTime();
     if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) continue;
-    const dodge = .05 + (target.evasionUntil>simulationTime?.2:0) + amount('swift',combatBenefits(target)??new Set());
+    const dodge = dodgeChance(target);
     if (Math.random() < dodge) {
       playSound('miss');
       target.missUntil = simulationTime + 750;
       if (attacker.isPlayer && !target.isPlayer && !target.abilityCast) trySidestep(target, attacker, canMove, simulationTime);
       continue;
     }
-    const critical = Math.random() < 0.10;
-    if(!inflictDamage(attacker,target,damageFor(attacker, target, critical),critical))continue;
+    const critical = Math.random()*100 < attacker.stats.critical;
+    const power=damageFor(attacker,target,critical),element=attackElement(attacker);
+    if(!(element ? elementalHit(attacker,target,power,element,false,critical) : inflictDamage(attacker,target,power,critical)))continue;
     if (target.hp && (target.abilityCast || (target.boss && (target.bossResponse || target.state==='Attack')))) continue;
     if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
@@ -164,19 +166,31 @@ function resolveImpact(attacker) {
   }
 }
 
+// Modificadores temporales y fijación de evasión se aplican a todo ataque esquivable.
+export function dodgeChance(target){
+  return combatChance(target,'evasion')/100;
+}
+
 // Ataques normales, habilidades y reflejos comparten derrota, botín y Hurt.
-export function inflictDamage(attacker,target,incomingDamage,critical=false,ability=false) {
+export function inflictDamage(attacker,target,incomingDamage,critical=false,ability=false,exact=false) {
   if (!target.hp) return;
   const simulationTime = gameTime();
-  if(target.invulnerableUntil>simulationTime)return;
+  if(!exact && target.invulnerableUntil>simulationTime)return;
   let blocked = false;
   const defendingBenefits=combatBenefits(target)??new Set();
-  if (attacker!==target) {
+  if (!exact && attacker!==target) {
     if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) return;
     const species = game.pokemon.get(attacker.dex), targetSpecies = game.pokemon.get(target.dex);
     if (attacker !== target && species.essences.some(type => targetSpecies.essences.includes(type))) incomingDamage *= 1 - amount('heartbreaker',defendingBenefits);
-    blocked = attacker !== target && Math.random() < amount('protected',defendingBenefits) + amount('reinforced',defendingBenefits);
-    if (blocked) incomingDamage *= .5;
+    blocked = attacker !== target && Math.random()*100 < combatChance(target,'block');
+    if (blocked) {
+      incomingDamage *= .5;
+      if(target.shellUntil>simulationTime){
+        const duration=actorRule(target,'freezeMs');
+        attacker.frozenUntil=simulationTime+duration;
+        effect('frozen',attacker.x,attacker.y,duration/2).follow=attacker;
+      }
+    }
   }
   let damage = Math.min(target.hp, Math.max(1, Math.round(incomingDamage)));
   if (ability && attacker.boss && target.isPlayer) damage = Math.min(damage, Math.floor(target.stats.hpMax / 2));
@@ -185,6 +199,12 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   target.hp = Math.max(0, previousHP - damage);
   target.hitNumbers=(target.hitNumbers??[]).filter(hit=>simulationTime-hit.time<750);
   target.hitNumbers.push({damage:previousHP-target.hp,critical,time:simulationTime});
+  if(critical){
+    if(Math.random()<actorRule(target,'criticalBerry'))dropItem('berry_oran',target);
+    if(actorRule(target,'reflectCritical'))for(const enemy of game.entities){
+      if(enemy.hp && !enemy.ally && enemy.isPlayer!==target.isPlayer)inflictDamage(target,enemy,damage,false,false,true);
+    }
+  }
   if(defendingBenefits.has('champion')){
     if(target.isPlayer){game.mission.championAttack=(game.mission.championAttack??0)+10;
       target.stats=playerStats(game.pokemon.get(target.dex),game.progress,target.bonuses);}
@@ -251,7 +271,7 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
   const enemyDifficulty = 4 + mission.number;
   const player = createEntity(playerData, game.rooms[0], true);
   player.bonuses = bonuses;
-  if(previousPlayer) for(const timer of ['evasionUntil','invulnerableUntil','paralyzedUntil']) player[timer]=previousPlayer[timer];
+  if(previousPlayer) for(const timer of ['shellUntil','evasionUntil','invulnerableUntil','paralyzedUntil']) player[timer]=previousPlayer[timer];
   player.stats = playerStats(game.pokemon.get(pokedexNumber), game.progress, bonuses);
   if (!previousPlayer) game.initialHP = player.stats.hpMax;
   player.hp = previousPlayer ? Math.min(player.stats.hpMax, previousPlayer.hp) : player.stats.hpMax;
@@ -277,11 +297,9 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
       enemy.activeBenefit = benefit?.active ? benefit.id : null;
       enemy.home = { x: enemy.x, y: enemy.y };
       enemy.benefits=new Set(benefit?[benefit.id]:[]);
-      for(const [key,modifier] of Object.entries(benefit?.stats??{})){
-        enemy.stats[key]=Math.round(enemy.stats[key]*(1+modifier));
-        if(['speed','attackSpeed'].includes(key))enemy.stats[key]=Math.min(180,enemy.stats[key]);
-      }
-      enemy.tracking = bossFloor;
+      applyBenefitStats(enemy.stats,enemy.benefits,100);
+      enemy.tracking = bossFloor || !!rule('exitRange');
+      if(rule('exitRange'))enemy.lastSeen={x:player.x,y:player.y};
     }
     enemy.hp = enemy.stats.hpMax;
     game.entities.push(enemy);
@@ -311,6 +329,7 @@ function moveEntity(entity, deltaX, deltaY) {
 
 // Procesa controles o IA y avanza la animación hasta el impacto y el final de la acción.
 export function updateEntity(entity) {
+  if(entity.frozenUntil>gameTime())return;
   if(entity.hp && entity.rockUntil>gameTime()){setState(entity,'Charge');entity.frame=(Math.floor(gameTime()/90)%(entity.anims.Charge??entity.anims.Idle).frames);return;}
   if(entity.state==='Charge' && !entity.finishingSpecial && !entity.abilityCast && !(entity.isPlayer && game.cast) && !(entity.rockUntil>gameTime())) entity.finishingSpecial=true;
   if(entity.hp && entity.paralyzedUntil>gameTime() && !entity.abilityCast)return;
@@ -329,7 +348,7 @@ export function updateEntity(entity) {
       } else setState(entity, 'Idle');
     }
   } else if (!['Attack', 'Hurt'].includes(entity.state) && (!entity.finishingSpecial || entity.abilityCast)) {
-    entity.prey=!entity.provoked && game.rescueAlly?.hp && !entity.ally ? game.rescueAlly : game.player;
+    entity.prey=!rule('rescueAggro') && !entity.provoked && game.rescueAlly?.hp && !entity.ally ? game.rescueAlly : game.player;
     if (entity.ally) fleeRescue(entity,moveEntity,setState,canMove);
     else if ((entity.prey!==game.player && !entity.abilityCast) || !updateWildAbility(entity))
       updateEnemy(entity, moveEntity, setState, triggerAttack, terrainFree, canMove);

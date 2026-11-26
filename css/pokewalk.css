@@ -116,6 +116,9 @@
   --player-shadow: rgb(30 64 175 / 42%);
   --other-pokemon-shadow: rgb(0 0 0 / 42%);
   --player-grace-opacity: .2;
+  --shell-filter: sepia(1) saturate(4) hue-rotate(135deg);
+  --fire-attack-filter: sepia(1) saturate(5) hue-rotate(330deg);
+  --tropical-filter: saturate(2);
   --player-golden-filter: sepia(1) saturate(3) brightness(1.15);
   --player-amulet-filter: sepia(.35) hue-rotate(235deg) saturate(1.45);
   --pokemon-evasion-filter: saturate(.5);
@@ -332,7 +335,7 @@
 #nearby-loot-panel {
   position: absolute;
   right: 8px;
-  bottom: 8px;
+  bottom: 36px;
   width: max-content;
   max-width: min(41vw, 380px);
   max-height: 28.5vh;
@@ -399,7 +402,7 @@
 #equipment-panel {
   left: min(223px, 38vw);
   right: min(30vw, 380px);
-  bottom: 8px;
+  bottom: 34px;
   grid-template-columns: repeat(25, minmax(0, 1fr));
   align-items: end;
 }

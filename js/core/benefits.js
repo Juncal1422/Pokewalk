@@ -1,5 +1,7 @@
+import {relics} from './collection.js';
 import { gameTime } from './clock.js';
-import { statsFor } from './stats.js';
+import {rule} from './modifiers.js';
+import { limitStat, statsFor } from './stats.js';
 import { game } from './state.js';
 
 // Resuelve las combinaciones del catálogo sobre los beneficios equipados.
@@ -23,7 +25,7 @@ export function combatBenefits(entity) {
   return entity.isPlayer ? game.held : entity.benefits;
 }
 
-// Los porcentajes se calculan de nuevo sobre la forma actual, nunca sobre
+// Se recomputan los bonos planos desde la forma y el nivel actuales, sin reutilizar
 // el resultado de una transformación anterior.
 export function playerStats(
   species,
@@ -37,61 +39,30 @@ export function playerStats(
       (bonuses?.attack ?? 0) +
       (heldBenefits.has('champion') ? (game.mission?.championAttack ?? 0) : 0),
   });
+  const naturalSize = 100;
+  applyBenefitStats(stats,heldBenefits,naturalSize,true);
   if (game.runRelics?.has('black_sash')) {
-    // Una transformación fija un nuevo valor base al nivel de entrada de esa forma.
-    const entryLevel =
-      game.player?.dex === species.dex
-        ? (game.defenseEntryLevel ?? 5)
-        : playerLevel;
-    const base = statsFor(species, entryLevel).defense;
-    stats.attack += Math.floor(Math.max(0, stats.defense - base) / 2);
-    stats.defense = Math.min(base, stats.defense);
+    const entry = game.player?.dex === species.dex ? game.defenseEntryLevel ?? 5 : playerLevel;
+    const cap = statsFor(species,entry).defense;
+    stats.attack += Math.floor(Math.max(0,stats.defense-cap)/2);
+    stats.defense=Math.min(stats.defense,cap);
   }
-  const modifiers = {
-    size: 0,
-    hpMax: 0,
-    attack: 0,
-    range: 0,
-    speed: 0,
-    defense: 0,
-    attackSpeed: 0,
-  };
-  for (const benefitId of heldBenefits) {
-    for (const [statKey, value] of Object.entries(
-      game.benefits.get(benefitId).stats ?? {},
-    ))
-      modifiers[statKey] += value;
+  return stats;
+}
+
+// Se comparte entre salvajes, jugador y la comparación previa a elegir carta.
+export function applyBenefitStats(stats,held,naturalSize,equipment=false){
+  for(const id of held)for(const [key,delta] of Object.entries(game.benefits.get(id)?.stats??{}))stats[key]+=delta;
+  if(equipment){
+    for(const id of game.runRelics??[])for(const [key,delta] of Object.entries(relics[id]?.stats??{}))stats[key]+=delta;
+    if(held.has('seer') && game.amuletUntil>gameTime())for(const key of ['attack','speed','attackSpeed'])stats[key]+=50;
+    if(synergyActive('royalCrown',held))for(const key of ['attack','defense','speed','attackSpeed','range','size','hpMax'])stats[key]+=key==='size'?50:15;
   }
-  if (heldBenefits.has('seer') && game.amuletUntil > gameTime()) {
-    for (const statKey of ['attack', 'speed', 'attackSpeed'])
-      modifiers[statKey] += 0.5;
-  }
-  if (synergyActive('royalCrown', heldBenefits))
-    for (const key of Object.keys(modifiers))
-      modifiers[key] += key === 'size' ? 0.5 : 0.15;
-  for (const [statKey, modifier] of Object.entries(modifiers)) {
-    stats[statKey] = Math.round(stats[statKey] * (1 + modifier));
-    if (statKey === 'speed' || statKey === 'attackSpeed')
-      stats[statKey] = Math.min(180, stats[statKey]);
-  }
-  // La cinta también convierte la mejora porcentual de defensa una vez calculada.
-  if (game.runRelics?.has('black_sash')) {
-    const entry =
-      game.player?.dex === species.dex
-        ? (game.defenseEntryLevel ?? 5)
-        : playerLevel;
-    const cap = statsFor(species, entry).defense;
-    stats.attack += Math.floor(Math.max(0, stats.defense - cap) / 2);
-    stats.defense = Math.min(stats.defense, cap);
-  }
-  if (game.runRelics?.has('debugger')) {
-    for (const key of Object.keys(stats)) stats[key] *= 2;
-    // Conserva el tamaño de la forma y aplica el extra de movilidad sobre la velocidad duplicada.
-    stats.attack *= 2;
-    stats.defense *= 2;
-    stats.size *= 0.5;
-    stats.speed = Math.round(stats.speed * 1.5);
-  }
+  const small=rule('normalizeSmall',held,equipment),large=rule('normalizeLarge',held,equipment);
+  stats.size=limitStat('size',stats.size<100?Math.min(100,stats.size+small):Math.max(100,stats.size-large));
+  stats.defense+=(naturalSize-stats.size)*rule('sizeDefense',held,equipment);
+  if(rule('noDodge',held,equipment))stats.evasion=0;
+  for(const key of Object.keys(stats))stats[key]=limitStat(key,Math.round(stats[key]));
   return stats;
 }
 
@@ -111,7 +82,7 @@ export function projectReward(state, option) {
   const benefit = game.donors.get(option.row.name);
   // Una sustitución libera una plaza incluso cuando el inventario ya contiene 27 beneficios.
   const conflicts = [...heldBenefits].filter(id => benefit && (
-    weaponConflict(id, benefit.id) || (benefit.active && game.benefits.get(id).slot === benefit.slot)
+    benefit.excludes?.includes(id) || game.benefits.get(id)?.excludes?.includes(benefit.id) || weaponConflict(id, benefit.id) || (benefit.active && game.benefits.get(id).slot === benefit.slot)
   ));
   const allStats = option.bonus || heldBenefits.has(benefit?.id) || (heldBenefits.size >= 27 && !conflicts.length);
   const lostBenefits = allStats ? [] : conflicts;

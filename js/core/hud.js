@@ -3,7 +3,8 @@ import { experienceCost } from './experience.js';
 import { gameTime } from './clock.js';
 import { game } from './state.js';
 import { playerStats } from './benefits.js';
-import { labels } from './stats.js';
+import {combatChance} from './modifiers.js';
+import { chanceBases, labels, statText } from './stats.js';
 
 import { drawFrame } from './message-frame.js';
 
@@ -86,36 +87,39 @@ export function drawHud(drawingContext, canvas, player) {
   const pointer = game.hudPointer;
   const hudScale = drawingContext.getTransform().a;
   const pointerX = pointer?.x/hudScale, pointerY = pointer?.y/hudScale;
-  const columns = Math.max(1, Math.min(5, Math.floor(canvas.width / 146)));
-  const essenceTop = canvas.width < 580 ? 109 : 48;
-  const entries = Object.entries(game.essences);
-  if (entries.length) textBox(drawingContext, theme.frames.essences, 4, essenceTop, Math.min(columns, entries.length) * 80 + 9, Math.ceil(entries.length / columns) * 40 + 10);
-  for (const [id, count] of entries) {
-    const x = 8 + (index % columns) * 80, y = essenceTop + 4 + Math.floor(index / columns) * 40;
-    drawingContext.drawImage(icons['essence-' + id], x, y, 38.4, 38.4);
-    drawingContext.fillStyle = theme.hudText;
-    drawingContext.fillText(formatValue(count), x + 40, y + 20);
-    if(pointerX>=x && pointerX<x+38.4 && pointerY>=y && pointerY<y+38.4) hoveredType=typeLabels[id];
-    index++;
+  const entries = Object.entries(game.essences).filter(([,count])=>count>0);
+  const cell=Math.min(37,(canvas.width-8)/Math.max(1,entries.length));
+  const icon=Math.min(15,cell*.65), essenceLeft=(canvas.width-cell*entries.length)/2, essenceTop=canvas.height-26;
+  if(entries.length)textBox(drawingContext,theme.frames.essences,essenceLeft-3,essenceTop-2,cell*entries.length+6,28);
+  drawingContext.font='bold 10px Wondermail';
+  drawingContext.textAlign='center';
+  for(const [id,count] of entries){
+    const center=essenceLeft+(index++ + .5)*cell,x=center-icon/2;
+    drawingContext.drawImage(icons['essence-'+id],x,essenceTop,icon,icon);
+    drawingContext.fillStyle=theme.hudText;
+    drawingContext.fillText(formatValue(count),center,essenceTop+icon+5,cell);
+    if(pointerX>=x && pointerX<x+icon && pointerY>=essenceTop && pointerY<essenceTop+icon)hoveredType=typeLabels[id];
   }
+  drawingContext.textAlign='left';
   drawingContext.save();
   drawingContext.translate(0,canvas.height);
   drawingContext.scale(theme.hudStatsScale, theme.hudStatsScale);
   drawingContext.translate(0,-canvas.height);
   drawingContext.font = 'bold 13px Wondermail';
-  let y = canvas.height - 19 * Object.keys(labels).length - 6;
-  textBox(drawingContext, theme.frames.stats, 4, y - 25, 198, canvas.height - y + 25);
+  let y = canvas.height - 30 - 19 * Object.keys(labels).length - 6;
+  textBox(drawingContext, theme.frames.stats, 4, y - 25, 198, canvas.height - y - 5);
   drawingContext.fillStyle = theme.hudText;
   drawingContext.fillText('Nv. '+player.level+' · '+(game.progress<100 ? game.xp+'/'+experienceCost(game.progress)+' EXP' : 'MÁX'),12,y-10);
   // Comparamos con los mismos objetos y nivel, antes de aplicar los beneficios.
   const baseStats = playerStats(game.pokemon.get(player.dex), game.progress, player.bonuses, new Set());
   for (const [key, label] of Object.entries(labels)) {
-    const delta = (player.stats[key] - baseStats[key]) * (key === 'size' ? -1 : 1);
+    const value = key in chanceBases ? combatChance(player,key) : player.stats[key];
+    const delta = (value - baseStats[key]) * (key === 'size' ? -1 : 1);
     drawingContext.fillStyle = delta > 0 ? theme.statIncrease : delta < 0 ? theme.statDecrease : theme.hudText;
     drawingContext.textAlign = 'left';
     drawingContext.fillText(label,12,y+9);
     drawingContext.textAlign = 'right';
-    drawingContext.fillText(String(player.stats[key]),178,y+9);
+    drawingContext.fillText(statText(key,value),178,y+9);
     drawingContext.textAlign = 'left';
     indicators(drawingContext, key, 182, y + 9, simulationTime);
     y += 19;

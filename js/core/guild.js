@@ -5,7 +5,7 @@ import {element,portrait,gem} from './pokemon-panel.js';
 import {playSound} from './audio.js';
 import {relics,saveCollection,emptyCollection,parseCollection} from './collection.js';
 import {synergyText} from './benefits.js';
-import {labels} from './stats.js';
+import {labels,statText} from './stats.js';
 
 const story=[
   'Bienvenido a *Pommedew*, la capital de los *Gremios de Aventureros*. Ahora que todo el papeleo está finalizado ya puedes empezar a aceptar misiones y, lo mejor, reclamar sus recompensas.',
@@ -126,7 +126,7 @@ function historyDetail(run,back) {
   const dialog=screen('Aventura · Nv. '+run.level);
   const record=element('article');record.className='adventure-summary';
   record.append(element('p',new Date(run.date).toLocaleDateString('es')+' · '+run.status));
-  const stats=Object.entries(run.stats).map(([key,v])=>(labels[key]??key)+' '+v);
+  const stats=Object.entries(run.stats).map(([key,v])=>(labels[key]??key)+' '+statText(key,v));
   if(run.hp!=null)stats.unshift('PV restantes '+run.hp);
   record.append(element('p',stats.join(' · ')));
   for(const [title,ids,lookup,isForm] of [

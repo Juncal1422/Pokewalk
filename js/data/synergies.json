@@ -75,7 +75,7 @@
     "items": [
       "kings_rock"
     ],
-    "description": "Tamaño +50 %, demás atributos +15 % y recargas −50 %."
+    "description": "Tamaño +50, PV, ataque, defensa, velocidad, rango y velocidad de ataque +15. Recargas a la mitad."
   },
   {
     "effect": "waterGrowth",
@@ -96,5 +96,26 @@
       "rock_thrower"
     ],
     "description": "Tiñe de oro el proyectil de Tirarrocas."
+  },
+  {
+    "effect": "fireSpike",
+    "name": "Espina de fuego",
+    "requires": [
+      "flaming"
+    ],
+    "anyOf": [
+      "spiky",
+      "rhyhorn_horn"
+    ],
+    "description": "Sustituye la espina o el cuerno por su animación de fuego."
+  },
+  {
+    "effect": "vipWarp",
+    "name": "Salida preferente",
+    "requires": [
+      "vip",
+      "machinery"
+    ],
+    "description": "Engranaje salta a una casilla junto a la salida disponible."
   }
 ]

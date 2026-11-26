@@ -2,7 +2,7 @@ import { playSound } from './audio.js';
 import { assetUrl } from './asset-url.js';
 import { evolutionCost } from './evolution.js';
 import { game } from './state.js';
-import { labels, levelFor } from './stats.js';
+import { labels, levelFor, statText } from './stats.js';
 import { projectReward, playerStats } from './benefits.js';
 import { element, gem, portrait } from './pokemon-panel.js';
 
@@ -59,9 +59,9 @@ function rewardCard(option, state) {
     const statRow = tableBody.insertRow();
     const change = stats[key] - baseline[key];
     statRow.insertCell().textContent = label;
-    statRow.insertCell().textContent = stats[key];
+    statRow.insertCell().textContent = statText(key,stats[key]);
     const delta = statRow.insertCell();
-    delta.textContent = change ? (change > 0 ? '+' : '') + change : '—';
+    delta.textContent = change ? (change > 0 ? '+' : '') + statText(key,change) : '—';
     if (change) delta.className = (key === 'size' ? change < 0 : change > 0) ? 'upgrade-stat-increase' : 'upgrade-stat-decrease';
   }
   card.append(table, evolutionBars(species,state));

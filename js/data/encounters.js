@@ -1,5 +1,5 @@
 import { assetUrl } from '../core/asset-url.js';
-import { labels } from '../core/stats.js';
+import { labels, chanceBases } from '../core/stats.js';
 
 // Lee un catálogo relativo al módulo y conserva el nombre del fichero en el error de carga.
 async function readData(filename) {
@@ -13,7 +13,7 @@ export async function loadEncountersCatalog() {
   const [speciesDefinitions, items] = await Promise.all([readData('pokemon.json'), readData('items.json')]);
   const pokemon = new Map();
   // El rango ausente hereda el alcance estándar; los demás atributos deben ser positivos.
-  const statKeys = Object.keys(labels);
+  const statKeys = Object.keys(labels).filter(key=>!(key in chanceBases));
   for (const speciesDefinition of speciesDefinitions) {
     if (pokemon.has(speciesDefinition.dex) ||
         !Number.isInteger(speciesDefinition.maxLevel) || speciesDefinition.maxLevel < 1 || !statKeys.every(statKey => (statKey === 'range' && speciesDefinition.stats[statKey] === undefined) || (Number.isInteger(speciesDefinition.stats[statKey]) && speciesDefinition.stats[statKey] > 0))) {
