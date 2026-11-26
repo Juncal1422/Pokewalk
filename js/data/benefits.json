@@ -171,7 +171,7 @@
   {
     "id": "golden",
     "name": "Dorado",
-    "description": "Ataque y rango +10. Tiñe de oro al jugador y a Cuerno de Rhyhorn, Punzante y Colmillo de Mamoswine.",
+    "description": "Ataque y rango +10. Tiñe de oro al jugador.",
     "image": "assets/benefits/golden.png",
     "active": false,
     "amount": 0.1,
@@ -1034,7 +1034,7 @@
   {
     "id": "flaming",
     "name": "Ardiente",
-    "description": "Resiste Fuego e inflige daño de fuego. Cuerno y Espiga se convierten en espinas de fuego.",
+    "description": "Resiste Fuego e inflige daño de fuego.",
     "image": "assets/benefits/flaming.png",
     "rules": {
       "fireAttack": 1

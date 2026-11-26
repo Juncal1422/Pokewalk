@@ -105,7 +105,7 @@ export function draw() {
       Math.floor(animation.img.height / animation.fh) - 1,
     );
     const correction = entity.state === 'Attack' && !usesWeaponEffect ? animation.offsets?.[row]?.[entity.frame] : null;
-    const stationary = usesWeaponEffect || (entity.state === 'Attack' && entity.attackAnimation === entity.anims.Shoot);
+    const stationary = !!entity.relicWeapon && entity.state==='Attack' || usesWeaponEffect || (entity.state === 'Attack' && entity.attackAnimation === entity.anims.Shoot);
     const shiftX = (stationary ? 0 : offset.x*ZOOM) + (correction?.x ?? 0)*scale;
     const shiftY = (stationary ? 0 : offset.y*ZOOM) + (correction?.y ?? 0)*scale;
     const now = gameTime();
@@ -115,7 +115,7 @@ export function draw() {
       drawingContext.globalAlpha *= theme.graceOpacity;
 
     // Dorado es el tinte base del jugador. Las señales temporales tienen prioridad.
-    if (entity.isPlayer && game.held.has('golden')) drawingContext.filter = theme.goldenFilter;
+
     if (actorRule(entity,'tropicalEssence')) drawingContext.filter=theme.tropicalFilter;
     const filters = entity.isPlayer ? [...game.inventory].map(id=>game.items[id]?.spriteFilter).filter(Boolean) : [];
     if (entity.shiny && !entity.shinySheet) filters.push('hue-rotate(100deg) saturate(1.45)');
@@ -127,6 +127,12 @@ export function draw() {
     if (elapsed < 110) drawingContext.filter = theme.hitFilter;
     const flash = now - entity.championFlash;
     if (flash >= 0 && flash < 405) drawingContext.filter = theme.leaderFlashFilters[Math.floor(flash / 45) % 3];
+    if (entity.isPlayer) {
+      const tint=[drawingContext.filter==='none'?'':drawingContext.filter,
+        game.runRelics?.has('jade_pearl')?'sepia(1) saturate(3) hue-rotate(78deg)':'',
+        game.held.has('golden')?theme.goldenFilter:''].filter(Boolean).join(' ');
+      drawingContext.filter=tint || 'none';
+    }
     drawingContext.drawImage(
       animation.img,
       entity.frame * animation.fw,
@@ -164,11 +170,6 @@ export function draw() {
       drawingContext.fillStyle = hitNumber.critical ? theme.criticalDamageText : theme.damageText;
       drawingContext.strokeText(hitNumber.damage, screenX, screenY - spriteHeight / 2 - risePixels);
       drawingContext.fillText(hitNumber.damage, screenX, screenY - spriteHeight / 2 - risePixels);
-    }
-    if (entity.immuneUntil > gameTime()) {
-      drawingContext.fillStyle = theme.hudText;
-      drawingContext.font = 'bold 14px Wondermail';
-      drawingContext.fillText('Inmune',screenX-20,screenY-spriteHeight/2-10);
     }
     if (entity.missUntil > gameTime()) drawingContext.drawImage(missImage, screenX - 15, screenY - spriteHeight / 2 - 22, 30, 16);
     drawingContext.restore();

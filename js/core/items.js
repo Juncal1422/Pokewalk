@@ -8,10 +8,10 @@ import { levelUp } from './experience.js';
 import { effect, pickupEffect } from './abilities.js';
 import { gameTime } from './clock.js';
 import { canMove } from './entities.js';
-import { essenceIcon } from './hud.js';
+import { essenceIcon,essenceNames } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
-import { playerStats, amount, synergyActive } from './benefits.js';
+import { settleStats, playerStats, amount, synergyActive } from './benefits.js';
 
 // Todos los objetos que entran en el piso pasan por aquí, incluidos premios y bayas.
 export function dropItem(id,site) {
@@ -39,7 +39,7 @@ export function dropNewItem(origin) {
 export function refreshEssenceAttack() {
   const player=game.player;
   if (player && [...game.inventory].some(id=>game.items?.[id]?.attackEssence))
-    player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
+    player.stats=settleStats(game.pokemon.get(player.dex),game.progress,player.bonuses,player.stats);
 }
 
 const images = new Map();
@@ -85,6 +85,33 @@ export function spawnFloorItems() {
   }
 }
 
+// La Semilla crece sólo con las nuevas recogidas que disparan Brote acuático.
+function collectEssence(player,drop,type,units){
+  const candy = 'candy_'+(type==='fighting'?'fight':type);
+  let quantity=units*(game.runRelics?.has('debugger')?4:1)*(game.inventory.has(candy)?2:1);
+  if(['grass','water','fire'].includes(type))quantity*=rule('tropicalEssence')||1;
+  if(type==='grass' && rule('healGrass') && player.hp<player.stats.hpMax){
+    const healed=Math.min(quantity,player.stats.hpMax-player.hp);
+    player.hp+=healed; quantity-=healed;
+    pickupEffect(player,'heal');showWorldNotice(player,healed,'HP');
+    if(!quantity)return;
+  }
+  if(type==='water' && game.inventory.has('seed') && synergyActive('waterGrowth')){
+    player.bonuses.size+=quantity;
+    player.bonuses.attack+=quantity;
+    player.stats=settleStats(game.pokemon.get(player.dex),game.progress,player.bonuses,player.stats);
+  }
+  if(type==='water' && game.held.has('blooming')){
+    effect('grow',drop.x,drop.y,350);
+    const healed=Math.min(quantity,player.stats.hpMax-player.hp);
+    player.hp+=healed; quantity-=healed;
+    if(healed)showWorldNotice(player,healed,'HP');
+    if(!quantity)return;
+  }
+  if(type==='electric' && game.runRelics?.has('depleted_battery'))game.batteryEnergy+=quantity;
+  else game.essences[type]=(game.essences[type] || 0)+quantity;
+}
+
 // Resuelve las recogidas por contacto o alcance y aplica sus efectos antes de retirar el objeto.
 export function collectItems(player, strike = null) {
   if (!player.hp) return;
@@ -93,30 +120,15 @@ export function collectItems(player, strike = null) {
       if (game.grid[Math.floor(drop.y / TILE)][Math.floor(drop.x / TILE)] === 0 || !strike(drop)) return true;
     } else if (Math.hypot(drop.x - player.x, drop.y - player.y) > 12) return true;
     if (drop.essence) {
-      const type=drop.essence;
-      const candy = 'candy_'+(type==='fighting'?'fight':type);
-      let quantity=drop.amount*(game.runRelics?.has('debugger')?4:1)*(game.inventory.has(candy)?2:1);
-      if(['grass','water','fire'].includes(type))quantity*=rule('tropicalEssence')||1;
-      if(type==='grass' && rule('healGrass') && player.hp<player.stats.hpMax){
-        const healed=Math.min(quantity,player.stats.hpMax-player.hp);
-        player.hp+=healed; quantity-=healed;
-        pickupEffect(player,'heal');showWorldNotice(player,healed,'HP');
-        if(!quantity)return false;
-      }
-      if(type==='water' && synergyActive('waterGrowth')){
-        player.bonuses.size+=quantity;
-        player.bonuses.attack+=quantity;
-        player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
-      }
-      if(type==='water' && game.held.has('blooming')){
-        effect('grow',drop.x,drop.y,350);
-        const healed=Math.min(quantity,player.stats.hpMax-player.hp);
-        player.hp+=healed; quantity-=healed;
-        if(healed)showWorldNotice(player,healed,'HP');
-        if(!quantity)return false;
-      }
-      if(type==='electric' && game.runRelics?.has('depleted_battery'))game.batteryEnergy+=quantity;
-      else game.essences[type]=(game.essences[type] || 0)+quantity;
+      if(game.runRelics?.has('misterious_wallet')){
+        const alternatives=essenceNames.filter(type=>type!==drop.essence);
+        const groups=new Map();
+        for(let i=0;i<drop.amount;i++){
+          const type=alternatives[Math.floor(Math.random()*alternatives.length)];
+          groups.set(type,(groups.get(type)??0)+1);
+        }
+        for(const [type,units] of groups)collectEssence(player,drop,type,units);
+      }else collectEssence(player,drop,drop.essence,drop.amount);
       refreshEssenceAttack();
       return false;
     }
@@ -133,7 +145,7 @@ export function collectItems(player, strike = null) {
     const oldStats = player.stats;
     const previous = { ...oldStats, hp: player.hp };
     if (!item.consumable) game.inventory.add(drop.id);
-    player.stats = playerStats(game.pokemon.get(player.dex), game.progress, bonuses);
+    player.stats = settleStats(game.pokemon.get(player.dex), game.progress, bonuses,oldStats);
     // Al crecer junto a una pared empujamos el cuerpo al punto válido más
     // cercano. Si no cabe en las inmediaciones, el objeto sigue en el suelo.
     if (player.stats.size > oldStats.size && !canMove(player, player.x, player.y)) {

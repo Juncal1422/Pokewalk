@@ -3,7 +3,7 @@ import {checkpoint} from './collection.js';
 import {playSound} from './audio.js';
 import { game } from './state.js';
 import { showWorldNotice } from './world-notices.js';
-import { playerStats } from './benefits.js';
+import { settleStats, playerStats } from './benefits.js';
 import { levelFor } from './stats.js';
 
 // El coste corresponde a un nivel, no al total acumulado de la partida.
@@ -16,7 +16,7 @@ export function levelUp() {
   const player = game.player, species = game.pokemon.get(player.dex);
   player.level = levelFor(species, game.progress);
   const previous=player.stats;
-  player.stats = playerStats(species, game.progress, player.bonuses);
+  player.stats = settleStats(species, game.progress, player.bonuses,previous);
   // Compara atributos efectivos: un nivel puede aumentar algunos y dejar otros en su tope.
   for (const [key,value] of Object.entries(player.stats)) {
     const delta=value-previous[key];
@@ -28,7 +28,7 @@ export function levelUp() {
 export function awardExperience(enemy) {
   const stats = game.pokemon.get(enemy.dex).stats;
   const baseStatMultiplier = (stats.hpMax + stats.attack + stats.defense + stats.speed) / 500;
-  const earnedExperience = Math.max(1, Math.round(enemy.level * baseStatMultiplier)) * (enemy.boss ? 2 : 1) * (enemy.shiny && game.inventory.has('shiny_elixir') ? 3 : 1);
+  const earnedExperience = Math.max(1, Math.round(enemy.level * baseStatMultiplier)) * (game.runRelics?.has('exp_share')?2:1) * (enemy.boss ? 2 : 1) * (enemy.shiny && game.inventory.has('shiny_elixir') ? 3 : 1);
   showWorldNotice(game.player, earnedExperience, 'EXP');
   game.xp += earnedExperience;
   // Una baja puede cubrir varios umbrales. Se conserva la EXP sobrante hasta llegar al nivel 100.

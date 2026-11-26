@@ -1,6 +1,10 @@
 // Origen y tamaño de cada fotograma en effects.png. Dirección por fila, tiempo por columna.
 // offsetX positivo mueve a la derecha; offsetY positivo baja el efecto antes del zoom.
 export const effectSheets = {
+  // Hueso olvidado: vuelo.
+  bone_throw: {x:0,y:1824,width:16,height:16,columns:8,rows:1,offsetX:0,offsetY:0},
+  // Hueso olvidado: impacto.
+  bone_impact: {x:128,y:1824,width:56,height:48,columns:6,rows:1,offsetX:0,offsetY:0},
   air_vortex: {"x": 0, "y": 0, "width": 24, "height": 24, "columns": 16, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Descarga de la batería.
   battery: {"x": 384, "y": 0, "width": 88, "height": 88, "columns": 9, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 44},

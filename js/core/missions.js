@@ -127,14 +127,14 @@ export function missionOffers(number, level, held=game.held) {
 // Una presa garantizada por piso permite completar cualquier cuota de caza.
 export function encounters(mission, floor) {
   if (mission.type === 'leader' && floor === mission.floors) {
-    return [sample(mission.pool)];
+    return [sample(mission.pool),...(game.runRelics?.has('guild_ring') ? Array.from({length:3},()=>sample(mission.biome.wild[mission.number<=8?'1-8':mission.number<=16?'9-16':mission.number<=25?'17-25':mission.number<=36?'26-36':'37-50'])) : [])];
   }
   const speciesIds = mission.target ? [mission.target] : [];
   const max =
     enemyCaps[mission.type === 'rescue' ? 'clear' : mission.type][
       mission.biome.level - 1
     ];
-  const count = between(Math.ceil(max / 2), max);
+  const count = between(Math.ceil(max / 2), max)+(game.runRelics?.has('guild_ring')?3:0);
   while (speciesIds.length < count) {
     speciesIds.push(sample(mission.pool));
   }
@@ -175,6 +175,7 @@ export function onDefeat(target, attacker) {
 
 // Determina qué salida u objetivo se puede colocar según el estado de la misión.
 export function exitKind(mission, floor, cleared) {
+  if (mission.ejected) return 'portal';
   if (mission.type === 'rescue') {
     if (floor < mission.floors) return 'stairs';
     return mission.failed ||

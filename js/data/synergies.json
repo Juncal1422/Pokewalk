@@ -117,5 +117,17 @@
       "machinery"
     ],
     "description": "Engranaje salta a una casilla junto a la salida disponible."
+  },
+  {
+    "effect": "fireSpikes",
+    "name": "Espinas de fuego",
+    "requires": [
+      "flaming"
+    ],
+    "anyOf": [
+      "rhyhorn_horn",
+      "spiky"
+    ],
+    "description": "El cuerno o la espiga adoptan su animación de fuego."
   }
 ]

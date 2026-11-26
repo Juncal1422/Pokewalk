@@ -8,6 +8,23 @@ export function isUnlocked(key,id) {
 }
 export const relics = {
   ...Object.fromEntries([
+    ['bike_ticket','Ticket bici','Las mejoras de otros atributos también aumentan la velocidad.'],
+    ['cranium','Cráneo','Los ataques por la espalda son críticos y bloqueas los impactos frontales.'],
+    ['death_flute','Flauta mortal','R · Consume 50 esencias. Tras cargar 4 s vence a los salvajes del piso. Recarga 3 min.',{slot:'r',cooldown:180,cost:50,charge:4000}],
+    ['eject_button','Botón eyector','R · Falla la misión y abre un teletransportador cercano. Recarga 10 min.',{slot:'r',cooldown:600}],
+    ['exp_share','Comparte experiencia','Duplica la experiencia obtenida al vencer enemigos.'],
+    ['forgotten_bone','Hueso olvidado','Reduce a la mitad las mejoras de velocidad de ataque. Lanza un hueso de tierra al doble de rango.',{weapon:'bone_throw',halve:'attackSpeed'}],
+    ['guild_ring','Anillo del Gremio','Añade tres Pokémon salvajes a cada piso.'],
+    ['jade_pearl','Perla de jade','Tiñe al jugador de verde jade.'],
+    ['leftovers','Restos','Recuperas 1 HP al subir unas escaleras.'],
+    ['magnet','Imán','Reduce a la mitad las mejoras de velocidad de ataque. Lanza una bomba de acero al doble de rango.',{weapon:'iron_bomb',halve:'attackSpeed'}],
+    ['misterious_wallet','Cartera misteriosa','Cada esencia recogida se convierte en una de otro tipo.'],
+    ['occult_powder','Polvos de ocultista','Reduce a la mitad las mejoras de rango. +10% Crítico. Carga un tajo fantasma.',{weapon:'dark_cut',halve:'range',stats:{critical:10}}],
+    ['pressure_pill','Píldora de presión','R · Consume 5 esencias de Volador. El tornado empuja 10 veces tu rango. Recarga 30 s.',{slot:'r',cooldown:30,cost:5,essence:'flying'}],
+    ['sharp_beak','Pico afilado','Reduce a la mitad las mejoras de rango. +10% Crítico. Carga un tajo volador.',{weapon:'slash',halve:'range',stats:{critical:10}}],
+    ['void_orb','Orbe vacío','R · Consume 10 esencias. Una onda siniestra de triple rango daña y empuja. Recarga 1 min.',{slot:'r',cooldown:60,cost:10}],
+  ].map(([id,name,description,config])=>[id,{name,description,price:1,purchasable:true,...config}])),
+  ...Object.fromEntries([
     ['egg_articuno','Huevo de Articuno','mt.-freeze','Monte Helado',144,'Articuno','items/gem_articuno.png'],
     ['egg_zapdos','Huevo de Zapdos','mt.-travail','Monte Esfuerzo',145,'Zapdos','items/gem_zapdos.png'],
     ['egg_moltres','Huevo de Moltres','burning-mountain','Monte Ardiente',146,'Moltres','items/gem_moltres.png'],
@@ -30,7 +47,7 @@ export const relics = {
       'Fija la defensa base de cada forma. La mitad de los aumentos de defensa se convierte en ataque.',
   },
   depleted_battery: {
-    name: 'Batería agotada',
+    name: 'Batería agotada',slot:'r',
     price: 18,
     description:
       'R · Cada 4 esencias eléctricas almacena una descarga de ataque ×4 y alcance ×3.',

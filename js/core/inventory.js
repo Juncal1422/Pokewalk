@@ -1,7 +1,6 @@
 import { positionTooltip } from './message-frame.js';
 import { assetUrl } from './asset-url.js';
-import {synergyText} from './benefits.js';
-import { gameTime } from './clock.js';
+import { cooldownTime } from './clock.js';
 import { game } from './state.js';
 
 // Los iconos conservan sus nodos durante el combate para no perder el hover.
@@ -18,7 +17,7 @@ export function attachInventory(root) {
   // Convierte el tiempo restante de cada activa en el ángulo sombreado de su icono.
   function updateCooldown() {
     for (const [id,icon] of activeIcons) {
-      const fraction = Math.max(0,Math.min(1,((game.cooldowns[id] ?? 0)-gameTime())/(game.cooldownDurations[id] || 1)));
+      const fraction = Math.max(0,Math.min(1,((game.cooldowns[id] ?? 0)-cooldownTime())/(game.cooldownDurations[id] || 1)));
       icon.style.setProperty('--cooldown-angle',fraction*360+'deg');
     }
   }
@@ -45,8 +44,7 @@ export function attachInventory(root) {
         }
         // El tooltip describe el icono bajo el cursor y no captura el clic de ataque.
         iconImage.onpointerenter = event => {
-          const id=entry.id??[...game.inventory][index];
-          tooltip.textContent = [entry.name,entry.description,synergyText(id)].filter(Boolean).join(' · ');
+          tooltip.textContent = [entry.name,entry.description].filter(Boolean).join(' · ');
           tooltip.hidden = false;
           positionTooltip(tooltip,event,iconImage);
         };

@@ -3,7 +3,7 @@ import { ATTACK_RANGE } from './constants.js';
 export const chanceBases = {evasion:5,block:0,critical:10};
 // Las probabilidades se almacenan en puntos y se convierten sólo al tirar.
 export const limitStat = (key,value) => key in chanceBases ? Math.max(0,Math.min(key==='evasion'?50:100,value)) :
-  Math.max(5,['speed','attackSpeed'].includes(key)?Math.min(key==='speed'?200:180,value):value);
+  Math.max(5,['speed','attackSpeed'].includes(key)?Math.min(200,value):value);
 export const statText = (key,value) => String(value)+(key in chanceBases?'%':'');
 export const labels = {
   evasion:'Evasión',block:'Bloqueo crítico',critical:'Ataque crítico',
@@ -36,10 +36,8 @@ export const attackReach = (stats) => (stats.range * stats.size) / 100;
 // Convierte velocidad en un multiplicador de movimiento y animación.
 export const movementRate = (speed) => 0.85 + speed / 150;
 
-// La rama positiva de tanh crece con rendimientos decrecientes. Un 9 mantiene
-// el ritmo original de la animación; su fotograma de impacto escala con ella.
-export const attackRate = (score) =>
-  1 + 1.5 * (Math.tanh((score - 5) / 65) - Math.tanh(4 / 65));
+// A 5, la hoja avanza a un cuarto de su cadencia. A 200 alcanza 2,5 veces la cadencia.
+export const attackRate = score => .25 + 2.25 * (limitStat('attackSpeed',score)-5)/195;
 
 // Calcula un atributo de la especie antes de equipo, beneficios o ajustes del líder.
 function naturalStat(species, statKey, level) {
@@ -54,7 +52,7 @@ function naturalStat(species, statKey, level) {
   const value = Math.floor((2 * species.stats[statKey] * level) / 100) + 5;
   // El crecimiento natural deja un punto de margen para bonos y líderes.
   return statKey === 'speed' || statKey === 'attackSpeed'
-    ? Math.min(statKey==='speed'?200:180, value)
+    ? Math.min(200, value)
     : value;
 }
 

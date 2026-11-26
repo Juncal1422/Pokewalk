@@ -84,6 +84,7 @@ async function nextLevel() {
     const mission = game.mission;
     if (game.portal.kind === 'stairs') {
       await loadLevel(game.player.dex, mission, game.floor + 1);
+      if(game.runRelics.has('leftovers')) game.player.hp=Math.min(game.player.stats.hpMax,game.player.hp+1);
       recordFloor();
       playSound('stairs');
     } else {

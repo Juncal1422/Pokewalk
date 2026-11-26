@@ -33,6 +33,7 @@ export function playerStats(
   bonuses,
   heldBenefits = game.held,
   balances = game.essences,
+  raw,
 ) {
   const stats = statsFor(species, playerLevel);
   // Suma equipo y beneficios antes de limitar: Metalizador también descuenta defensa de las reliquias.
@@ -45,7 +46,7 @@ export function playerStats(
     for (const [key, value] of Object.entries(item?.equippedStats ?? {})) stats[key] += value;
   }
   const naturalSize = 100;
-  applyBenefitStats(stats,heldBenefits,naturalSize,true);
+  applyBenefitStats(stats,heldBenefits,naturalSize,true,raw);
   if (game.runRelics?.has('black_sash')) {
     const entry = game.player?.dex === species.dex ? game.defenseEntryLevel ?? 5 : playerLevel;
     const cap = statsFor(species,entry).defense;
@@ -56,19 +57,47 @@ export function playerStats(
 }
 
 // Se comparte entre salvajes, jugador y la comparación previa a elegir carta.
-export function applyBenefitStats(stats,held,naturalSize,equipment=false){
+export function applyBenefitStats(stats,held,naturalSize,equipment=false,raw){
   for(const id of held)for(const [key,delta] of Object.entries(game.benefits.get(id)?.stats??{}))stats[key]+=delta;
   if(equipment){
-    for(const id of game.runRelics??[])for(const [key,delta] of Object.entries(relics[id]?.stats??{}))stats[key]+=delta;
-    if(held.has('seer') && game.amuletUntil>gameTime())for(const key of ['attack','speed','attackSpeed'])stats[key]+=50;
+    const half=new Set([...(game.runRelics??[])].map(id=>relics[id]?.halve));
+    function equipStat(key,delta){
+      const gain=delta>0 && half.has(key)?delta/2:delta;
+      stats[key]+=gain;
+      if(key!=='speed' && gain>0 && game.runRelics?.has('bike_ticket'))stats.speed+=gain;
+    }
+    for(const id of game.runRelics??[])for(const [key,delta] of Object.entries(relics[id]?.stats??{}))equipStat(key,delta);
+    if(held.has('seer') && game.amuletUntil>gameTime())for(const key of ['attack','speed','attackSpeed'])equipStat(key,50);
     if(synergyActive('royalCrown',held))for(const key of ['attack','defense','speed','attackSpeed','range','size','hpMax'])stats[key]+=key==='size'?50:15;
   }
   const small=rule('normalizeSmall',held,equipment),large=rule('normalizeLarge',held,equipment);
-  stats.size=limitStat('size',stats.size<100?Math.min(100,stats.size+small):Math.max(100,stats.size-large));
+  stats.size=stats.size<100?Math.min(100,stats.size+small):Math.max(100,stats.size-large);
   stats.defense+=(naturalSize-stats.size)*rule('sizeDefense',held,equipment);
   if(rule('noDodge',held,equipment))stats.evasion=0;
+  if(equipment && game.runRelics?.has('cranium'))stats.block=stats.critical=0;
+  if(raw)Object.assign(raw,stats);
   for(const key of Object.keys(stats))stats[key]=limitStat(key,Math.round(stats[key]));
   return stats;
+}
+
+// Liquida una adquisición una sola vez. Las vistas previas entregan su propia copia de bonos.
+export function settleStats(species,level,bonuses,previous,held=game.held,balances=game.essences){
+  const raw={};
+  const after=playerStats(species,level,bonuses,held,balances,raw);
+  const halves=new Set([...(game.runRelics??[])].map(id=>relics[id]?.halve));
+  let speedGain=0;
+  for(const key of Object.keys(raw)){
+    const minimum=limitStat(key,-Infinity);
+    const overflow=Math.max(0,minimum-raw[key]);
+    // Un −10 desde 8 guarda −3; la siguiente mejora comienza realmente en 5.
+    if(overflow)bonuses[key]=(bonuses[key]??0)+overflow;
+    const gain=Math.max(0,after[key]-previous[key]);
+    const discount=halves.has(key)?gain/2:0;
+    if(discount)bonuses[key]=(bonuses[key]??0)-discount;
+    if(key!=='speed')speedGain+=gain-discount;
+  }
+  if(game.runRelics?.has('bike_ticket'))bonuses.speed=(bonuses.speed??0)+speedGain;
+  return playerStats(species,level,bonuses,held,balances);
 }
 
 // Cuerno y Punzante comparten el ataque direccional. Los otros tres lo sustituyen entero.
@@ -100,6 +129,8 @@ export function projectReward(state, option) {
     heldBenefits.add(benefit.id);
   }
   if (option.payment) balances[option.payment.type] -= option.payment.amount;
+  const baseline=playerStats(option.row,game.progress,state.bonuses,state.held,state.balances);
+  settleStats(option.row,game.progress,bonuses,baseline,heldBenefits,balances);
   return {
     held: heldBenefits,
     bonuses,
@@ -112,14 +143,14 @@ export function projectReward(state, option) {
   };
 }
 
-// Presenta cada combinación relevante por su nombre y por el efecto que concede.
-export function synergyText(id) {
+// Las sinergias aparecen únicamente en la ficha del beneficio. Conserva la alternativa «o».
+export function benefitSynergies(id){
+  const name=key=>game.benefits.get(key)?.name??game.items[key]?.name??key;
   return [...game.synergies.values()]
-    .filter((rule) =>
-      [...rule.requires, ...(rule.anyOf ?? []), ...(rule.items ?? [])].includes(
-        id,
-      ),
-    )
-    .map((rule) => rule.name + ' · ' + rule.description)
-    .join(' · ');
+    .filter(s=>[...s.requires,...(s.anyOf??[]),...(s.items??[])].includes(id))
+    .map(s=>{
+      const partners=[...s.requires,...(s.items??[])].filter(key=>key!==id).map(name);
+      if(s.anyOf?.length && !s.anyOf.includes(id))partners.push(s.anyOf.map(name).join(' o '));
+      return [s.name,partners.join(' + '),s.description].filter(Boolean).join(' · ');
+    });
 }

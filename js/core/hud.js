@@ -1,6 +1,7 @@
 import { assetUrl } from './asset-url.js';
 import { experienceCost } from './experience.js';
-import { gameTime } from './clock.js';
+import {relics} from './collection.js';
+import { gameTime,cooldownTime } from './clock.js';
 import { game } from './state.js';
 import { playerStats } from './benefits.js';
 import {combatChance} from './modifiers.js';
@@ -145,8 +146,11 @@ export function drawHud(drawingContext, canvas, player) {
   drawingContext.fillStyle = theme.hudText;
   drawingContext.fillText(counter, canvas.width - 15, panelTop + 8);
   drawingContext.fillText(goal, canvas.width - 15, panelTop + 31);
-  if(game.runRelics?.has('depleted_battery')){
-    const battery='R · Batería '+Math.floor(game.batteryEnergy/4)+' · '+game.batteryEnergy%4+'/4';
+  const activeRelic=[...(game.runRelics??[])].find(id=>relics[id]?.slot==='r');
+  if(activeRelic){
+    const remaining=Math.max(0,Math.ceil(((game.cooldowns[activeRelic]??0)-cooldownTime())/1000));
+    const battery=activeRelic==='depleted_battery' ? 'R · Batería '+Math.floor(game.batteryEnergy/4)+' · '+game.batteryEnergy%4+'/4' :
+      'R · '+relics[activeRelic].name+(remaining?' · '+remaining+' s':'');
     const batteryWidth=drawingContext.measureText(battery).width;
     textBox(drawingContext, theme.frames.battery, canvas.width-batteryWidth-27,panelTop+60,batteryWidth+22,30);
     drawingContext.fillStyle=theme.batteryText;

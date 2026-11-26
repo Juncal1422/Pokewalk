@@ -18,6 +18,8 @@ const sounds = {
   spin: 'Fury Swipes',
   machinery: 'Warp Orb',
   featherfall:'Fog', rock_aura:'Huge Stomp (high)',regenerative:'Healing Wish Hit',watergun:'Water Gun',rockImpact:'Rollout',
+  bone_throw:'Bone Rush',bone_impact:'Giga Impact',iron_bomb:'Magnet Bomb',bombImpact:'Giga Impact',
+  death_chant:'Perish Song',tornado:'Gust',void_zone:'Ominous Wind',slash:'Air Slash',dark_cut:'Night Slash',
   charge: 'Charge', itemGift:'Item Gift', frozen:'Ice Beam Hit', erupt:'Eruption',water_burst:'Whirlpool',
   shell:'Bubble',dealer:'Use TM',inflame:'Inflame',fire_spike:'Inflame',boost:'Charge',heal:'Healing Wish Hit',iron_hit:'Mach Punch',
 };

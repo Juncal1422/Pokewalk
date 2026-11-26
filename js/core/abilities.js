@@ -1,15 +1,16 @@
+import {relics} from './collection.js';
 import { assetUrl } from './asset-url.js';
 import {playSound} from './audio.js';
-import { gameTime } from './clock.js';
+import { gameTime,cooldownTime } from './clock.js';
 import { game } from './state.js';
 import { DIR_VEC, TILE } from './constants.js';
 import { hasSight } from './terrain.js';
-import { playerStats, synergyActive } from './benefits.js';
+import { settleStats, playerStats, synergyActive } from './benefits.js';
 import { attackReach, damageFor } from './stats.js';
 import { bodyRadius, canMove, dodgeChance, inflictDamage, setState, showToast } from './entities.js';
 
 import {effectSheets} from '../data/effect-atlas.js';
-import {actorRule,affinity} from './modifiers.js';
+import {criticalHit,actorRule,affinity} from './modifiers.js';
 import {dropNewItem,refreshEssenceAttack} from './items.js';
 import {essenceNames} from './hud.js';
 
@@ -40,7 +41,8 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
   for (const visualEffect of game.effects) {
     const sheet = effectSheets[visualEffect.kind];
     const progress = Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
-    const frame = Math.min(sheet.columns-1,Math.floor(progress*sheet.columns));
+    const count=visualEffect.frameCount??sheet.columns;
+    const frame=(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor(progress*count));
     const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX;
     const y = (visualEffect.follow?.y ?? visualEffect.y)*renderZoom-cameraY;
     const scale = renderZoom*(visualEffect.follow?.stats.size ?? 100)/100*(visualEffect.kind==='mine'?2.4:1);
@@ -123,11 +125,72 @@ function utilityCast(id,owner) {
 }
 const utilities=new Set(['machinery','spoink_pearl','transparent','royalty']);
 
+// La misma reducción de recarga se aplica a beneficios y reliquias.
+function cooldownDuration(seconds){
+  return seconds*1000*(1-actorRule(game.player,'cooldownReduction')) * (game.held.has('heritage_water')?.9:1)
+    * (game.inventory.has('boost_steroids')?.85:1) * (game.inventory.has('golden_disk')?.75:1) * (synergyActive('royalCrown')?.5:1);
+}
+
+function wildEnemies(){
+  return game.entities.filter(e=>!e.isPlayer && !e.ally && e.hp>0);
+}
+
+// Encuentra la primera casilla de suelo conectada al jugador y libre de enemigos.
+function ejectSite(owner){
+  const start={x:Math.floor(owner.x/TILE),y:Math.floor(owner.y/TILE)};
+  const seen=new Set([start.x+','+start.y]), queue=[start];
+  for(let i=0;i<queue.length;i++)for(const [dx,dy] of [[0,1],[1,0],[-1,0],[0,-1]]){
+    const x=queue[i].x+dx,y=queue[i].y+dy,key=x+','+y;
+    if(seen.has(key)||game.grid[y]?.[x]!==0)continue;
+    seen.add(key);queue.push({x,y});
+    if(!game.entities.some(e=>e.hp && Math.floor(e.x/TILE)===x && Math.floor(e.y/TILE)===y))return {x,y};
+  }
+}
+
+function activateRelic(id,owner){
+  if(!owner.hp || game.changingLevel || game.cast || !['Idle','Walk'].includes(owner.state))return;
+  const config=relics[id], now=cooldownTime(), remaining=(game.cooldowns[id]??0)-now;
+  if(remaining>0)return showToast('Recarga: '+Math.ceil(remaining/1000)+' s');
+  const site=id==='eject_button'?ejectSite(owner):null;
+  if(id==='eject_button' && !site)return showToast('No hay espacio para el teletransportador.');
+  const balances=game.essences;
+  if(config.cost){
+    const available=config.essence?(balances[config.essence]??0):Object.values(balances).reduce((a,b)=>a+b,0);
+    if(available<config.cost)return showToast('Esencias insuficientes');
+    for(let i=0;i<config.cost;i++){
+      const types=Object.keys(balances).filter(k=>balances[k]>0);
+      balances[config.essence??types[Math.floor(Math.random()*types.length)]]--;
+    }
+    refreshEssenceAttack();
+  }
+  game.cooldownDurations[id]=cooldownDuration(config.cooldown);
+  game.cooldowns[id]=now+game.cooldownDurations[id];
+  const reach=attackReach(owner.stats);
+  if(id==='death_flute'){
+    game.cast={id,start:gameTime(),dir:owner.dir};setState(owner,'Charge');playSound('charge');
+  }else if(id==='eject_button'){
+    game.mission.failed=game.mission.ejected=true;
+    game.portal={...site,kind:'portal',entered:false};playSound('machinery');
+  }else if(id==='pressure_pill'){
+    effect('tornado',owner.x,owner.y,300).follow=owner;
+    for(const target of wildEnemies()){
+      target.windPush={x:owner.x,y:owner.y,remaining:10*reach,step:10*reach/30};
+      setState(target,'Hurt');
+    }
+  }else{
+    const wave=effect('void_zone',owner.x,owner.y,350);
+    Object.assign(wave,{owner,radius:3*reach,hit:new Set(),diameter:1});
+  }
+}
+
 // Valida la tecla, el estado del jugador y el coste antes de iniciar el lanzamiento y su recarga.
 export function useActive(slot) {
   const player=game.player, simulationTime=gameTime();
   if(player.frozenUntil>simulationTime || player.paralyzedUntil>simulationTime || player.rockUntil>simulationTime)return;
-  if(slot==='r' && game.runRelics?.has('depleted_battery')){
+  if(slot==='r'){
+    const id=[...(game.runRelics??[])].find(key=>relics[key]?.slot==='r');
+    if(id && id!=='depleted_battery')return activateRelic(id,player);
+    if(id!=='depleted_battery')return;
     if(!player.hp||game.changingLevel||game.cast||!['Idle','Walk'].includes(player.state))return;
     if(game.batteryEnergy<4)return showToast('Batería · '+game.batteryEnergy+'/4 esencias eléctricas');
     game.batteryEnergy-=4;
@@ -140,7 +203,7 @@ export function useActive(slot) {
   const benefitId=[...game.held].find(key=>game.benefits.get(key).slot === slot);
   if (!benefitId || !player.hp || game.changingLevel || game.cast || !['Idle','Walk'].includes(player.state)) return;
   const benefit=game.benefits.get(benefitId);
-  if ((game.cooldowns[benefitId]??0)>simulationTime) return showToast('Recarga: '+Math.ceil((game.cooldowns[benefitId]-simulationTime)/1000)+' s');
+  if ((game.cooldowns[benefitId]??0)>cooldownTime()) return showToast('Recarga: '+Math.ceil((game.cooldowns[benefitId]-cooldownTime())/1000)+' s');
   if(benefitId==='machinery' && actorRule(player,'exitRange') && !exitNeighbor(player))return showToast('La salida aún no está disponible.');
   if(!payEssences(player,benefitId))return showToast('PV completos o esencias insuficientes');
   if (benefitId==='seer') {
@@ -148,10 +211,9 @@ export function useActive(slot) {
     player.hp--;
   }
   // La reducción de cada fuente se multiplica una vez, al iniciar la recarga de esta tecla.
-  const duration = benefit.amount*1000 * (1-actorRule(player,'cooldownReduction')) * (game.held.has('heritage_water')?.9:1)
-    * (game.inventory.has('boost_steroids')?.85:1) * (game.inventory.has('golden_disk')?.75:1) * (synergyActive('royalCrown')?.5:1);
+  const duration = cooldownDuration(benefit.amount);
   game.cooldownDurations[benefitId]=duration;
-  game.cooldowns[benefitId]=simulationTime+duration;
+  game.cooldowns[benefitId]=cooldownTime()+duration;
   game.cast={id: benefitId,start:simulationTime,dir:player.dir,hit:new Set()};
   setState(player,['dealer','mamoswine_fang'].includes(benefitId)?'Spin':'Charge');
 
@@ -168,22 +230,22 @@ function launchFlare(owner, directionIndex) {
 }
 
 // Solo los efectos tipados consultan afinidades. Los dos tipos defensivos
-// se combinan multiplicando, incluida la inmunidad eléctrica de Tierra.
-export function elementalHit(owner,target,power,element,ownerAbility=true,critical=false) {
+// se combinan multiplicando, con resistencia parcial de Tierra a Eléctrico.
+export function elementalHit(owner,target,power,element,ownerAbility=true,critical=false,fixedElement=false) {
   const chart={
     fire:{grass:2,ice:2,bug:2,steel:2,fire:.5,water:.5,rock:.5,dragon:.5},
     water:{fire:2,ground:2,rock:2,water:.5,grass:.5,dragon:.5},
     rock:{fire:2,ice:2,flying:2,bug:2,fighting:.5,ground:.5,steel:.5},
-    psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:0},
-    electric:{water:2,flying:2,electric:.5,grass:.5,dragon:.5,ground:0}
+    psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:.5},
+    ground:{electric:2,fire:2,rock:2,steel:2,poison:2,grass:.5,bug:.5,flying:.5},
+    steel:{rock:2,ice:2,steel:.5,fire:.5,water:.5,electric:.5},
+    dark:{psychic:2,ghost:2,dark:.5,fighting:.5},
+    ghost:{ghost:2,psychic:2,dark:.5,normal:.5},
+    flying:{grass:2,fighting:2,bug:2,electric:.5,rock:.5,steel:.5},
+    electric:{water:2,flying:2,electric:.5,grass:.5,dragon:.5,ground:.5}
   };
-  if (!ownerAbility) element=attackElement(owner)??element;
+  if (!ownerAbility && !fixedElement) element=attackElement(owner)??element;
   const factor=affinity(element,target)*game.pokemon.get(target.dex).types.reduce((value,type)=>value*(chart[element]?.[type]??1),1);
-  if (!factor) {
-    target.immuneUntil = gameTime()+750;
-    playSound('miss');
-    return 0;
-  }
   const damage = inflictDamage(owner,target,power*factor,critical,ownerAbility);
   const scorched = damage && target.isPlayer && [...game.inventory].find(id=>game.items[id]?.burnsOn===element);
   if (scorched) {
@@ -245,8 +307,20 @@ export function knockback(owner,target,steps) {
 export function launchWeapon(owner,kind){
   const projectile=effect(kind,owner.x,owner.y,260,owner.dir);
   projectile.ms/=1+actorRule(owner,'projectileBonus');
-  Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:attackReach(owner.stats),
-    element:kind==='watergun'?'water':'rock',weapon:true});
+  const relicShot=['bone_throw','iron_bomb'].includes(kind);
+  Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:attackReach(owner.stats)*(relicShot?2:1),
+    element:({watergun:'water',rock_throw:'rock',bone_throw:'ground',iron_bomb:'steel'})[kind],weapon:true,relicShot});
+  if(kind==='iron_bomb')projectile.frameCount=9;
+}
+
+// Impacto terminal de un proyectil. La bomba reserva los fotogramas 10–12 para la explosión.
+function projectileImpact(projectile,x,y){
+  if(projectile.kind==='bone_throw')effect('bone_impact',x,y,130);
+  if(projectile.kind==='iron_bomb'){
+    const blast=effect('iron_bomb',x,y,140);
+    blast.firstFrame=9;blast.frameCount=3;
+    playSound('bombImpact');
+  }
 }
 
 // Emplumado interrumpe los efectos ofensivos del adversario y reinicia su tiempo de reacción.
@@ -262,7 +336,7 @@ export function featherStun(owner){
       game.cast=null;
       for(const id of game.held)if(game.benefits.get(id).active){
         const duration=game.cooldownDurations[id]??game.benefits.get(id).amount*1000;
-        game.cooldownDurations[id]=duration;game.cooldowns[id]=now+duration;
+        game.cooldownDurations[id]=duration;game.cooldowns[id]=cooldownTime()+duration;
       }
     }
     for(const fx of game.effects)if(fx.owner===target||fx.follow===target)fx.cancelled=true;
@@ -327,7 +401,7 @@ function releaseSpecial(owner,id){
     Object.assign(aura,{owner,follow:owner,diameter:2*radius,radius,hit:new Set()});
     owner.rockUntil=gameTime()+1000;setState(owner,'Charge');
   }else if(id==='silken'){
-    if(owner.isPlayer){owner.bonuses.defense+=3;owner.stats=playerStats(game.pokemon.get(owner.dex),game.progress,owner.bonuses);}
+    if(owner.isPlayer){owner.bonuses.defense+=3;owner.stats=settleStats(game.pokemon.get(owner.dex),game.progress,owner.bonuses,owner.stats);}
     else owner.stats.defense+=3;
     effect('webshield',owner.x,owner.y,400).follow=owner;
   }else if(id==='regenerative'){
@@ -424,8 +498,11 @@ export function tickAbilities() {
     const castElapsedMs=simulationTime-activeCast.start;
     if (activeCast.id==='mamoswine_fang') spin(player,activeCast,castElapsedMs);
     if(activeCast.id==='dealer')player.dir=(activeCast.dir+Math.floor(castElapsedMs/100))%8;
-    if (castElapsedMs >= (game.benefits.get(activeCast.id)?.rules?.shuffleMs ?? (activeCast.id==='mamoswine_fang'?560:['rock_core','seer'].includes(activeCast.id)?500:activeCast.id==='gunpowder_core'?350:200))) {
-      if(specials.has(activeCast.id))releaseSpecial(player,activeCast.id);
+    if (castElapsedMs >= (relics[activeCast.id]?.charge ?? game.benefits.get(activeCast.id)?.rules?.shuffleMs ?? (activeCast.id==='mamoswine_fang'?560:['rock_core','seer'].includes(activeCast.id)?500:activeCast.id==='gunpowder_core'?350:200))) {
+      if(activeCast.id==='death_flute'){
+        effect('death_chant',player.x,player.y,600).follow=player;
+        for(const enemy of wildEnemies())inflictDamage(player,enemy,enemy.hp,false,false,true);
+      }else if(specials.has(activeCast.id))releaseSpecial(player,activeCast.id);
       else if (utilities.has(activeCast.id)) utilityCast(activeCast.id,player);
       else if (activeCast.id==='seer') {
         game.amuletUntil=simulationTime+10000;
@@ -451,6 +528,15 @@ export function tickAbilities() {
       const dest={x:visualEffect.x+chain.step*dx/length,y:visualEffect.y+chain.step*dy/length};
       if(hasSight(visualEffect,dest))erupt(dest.x,dest.y,chain);
     }
+    if(visualEffect.kind==='void_zone' && visualEffect.hit){
+      const radius=visualEffect.radius*lifetimeFraction;
+      visualEffect.diameter=Math.max(1,2*radius);
+      for(const target of wildEnemies()){
+        if(visualEffect.hit.has(target) || Math.hypot(target.x-visualEffect.x,target.y-visualEffect.y)>radius+bodyRadius(target))continue;
+        visualEffect.hit.add(target);
+        if(elementalHit(visualEffect.owner,target,visualEffect.owner.stats.attack,'dark'))knockback(visualEffect,target,visualEffect.radius);
+      }
+    }
     if(visualEffect.kind==='rock_aura'){
       for(const target of game.entities){
         if(!target.hp||target.ally||target.isPlayer===visualEffect.owner.isPlayer||visualEffect.hit.has(target))continue;
@@ -474,19 +560,28 @@ export function tickAbilities() {
           closestTarget=enemy;nearestDistance=along;
         }
       }
-      if(!hasSight({x:visualEffect.originX,y:visualEffect.originY},closestTarget??visualEffect)){visualEffect.finishedImpact=true;return lifetimeFraction<1;}
-      if (closestTarget) {
-        if(visualEffect.weapon && Math.random()<dodgeChance(closestTarget)){
-          closestTarget.missUntil=simulationTime+750;playSound('miss');visualEffect.finishedImpact=true;return lifetimeFraction<1;
+      if(!hasSight({x:visualEffect.originX,y:visualEffect.originY},closestTarget??visualEffect)){
+        if(visualEffect.relicShot){
+          projectileImpact(visualEffect,visualEffect.originX+previousDistance*deltaX/directionLength,
+            visualEffect.originY+previousDistance*deltaY/directionLength);
+          return false;
         }
-        const critical=visualEffect.weapon && Math.random()*100<visualEffect.owner.stats.critical;
+        visualEffect.finishedImpact=true;
+        return lifetimeFraction<1;
+      }
+      if (closestTarget) {
+        if(visualEffect.relicShot)projectileImpact(visualEffect,closestTarget.x,closestTarget.y);
+        if(visualEffect.weapon && Math.random()<dodgeChance(closestTarget)){
+          closestTarget.missUntil=simulationTime+750;playSound('miss');visualEffect.finishedImpact=true;return !visualEffect.relicShot && lifetimeFraction<1;
+        }
+        const critical=visualEffect.weapon && criticalHit(visualEffect.owner,closestTarget);
         const power=(visualEffect.weapon?damageFor(visualEffect.owner,closestTarget,critical):visualEffect.damage)*(1+actorRule(visualEffect.owner,'projectileBonus'));
-        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical) && visualEffect.weapon){
+        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical,visualEffect.relicShot) && visualEffect.weapon){
           knockback(visualEffect.owner,closestTarget,visualEffect.kind==='rock_throw'?20:10);
           if(visualEffect.kind==='rock_throw')playSound('rockImpact');
         }
         visualEffect.finishedImpact=true;
-        return lifetimeFraction<1;
+        return !visualEffect.relicShot && lifetimeFraction<1;
       }
       visualEffect.travel=travel;
     }

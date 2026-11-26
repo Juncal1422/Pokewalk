@@ -50,7 +50,7 @@ El pago base es el nivel de bioma ×0,7 redondeado hacia arriba, más 0 por recu
 
 La clave local `pokewalk.pommedew.collection.v1` conserva metadatos, identificadores y datos históricos. No serializar catálogos, combatientes, inventarios jugables ni mapas. En historial se guardan las formas, el equipo descubierto, los beneficios, el nivel, los atributos y las misiones con su bioma, piso, estado y pago. El reinicio no reanuda una crónica interrumpida. Los ID desconocidos siguen siendo consultables tras importar. Exportar e importar usan el mismo JSON; se valida antes de reemplazar.
 
-En pruebas, las tiendas permiten activar reliquias desde el inicio. Los huevos están en la Tienda del Gremio y los objetos de los Regis en la Tienda de Aventureros. Las compras quedan activadas y se pueden alternar en Colección → Reliquias. Los interruptores se fijan al aceptar el primer encargo. Cinta Negra limita defensa a la base de entrada de cada forma y convierte la mitad entera del excedente en ataque. La batería se activa con R. Cada 4 esencias eléctricas compran una descarga en la aventura. Las afinidades de Fuego y Eléctrico se multiplican por cada tipo defensor; la inmunidad evita el impacto. Punzante y los ataques normales conservan daño neutro.
+En pruebas, todas las reliquias están disponibles en el gremio. Las quince reliquias de combate y exploración nuevas cuestan un emblema cada una. La Tienda del Gremio reúne todos los huevos y reliquias. Las compras quedan activadas y se pueden alternar en Colección → Reliquias. Los interruptores se fijan al aceptar el primer encargo. Cinta Negra limita defensa a la base de entrada de cada forma y convierte la mitad entera del excedente en ataque. La batería se activa con R. Cada 4 esencias eléctricas compran una descarga en la aventura. Las afinidades de Fuego y Eléctrico se multiplican por cada tipo defensor; una antigua inmunidad aplica un multiplicador de 0,5. Punzante y los ataques normales conservan daño neutro.
 
 ## Archivos y ámbitos de estado
 
@@ -319,7 +319,7 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 
 ## Catálogos y combate del gremio
 
-Las cuadrículas de colección usan los gráficos de ui. `speciesPage` muestra la ficha base y `catalogCard` permite consultar donantes. `synergyText` resuelve los nombres y efectos de las combinaciones tanto en colección como en el HUD. Al cargar o importar una colección, se traducen los identificadores históricos de beneficios.
+Las cuadrículas de colección usan los gráficos de ui. `speciesPage` muestra la ficha base y `catalogCard` permite consultar donantes. `benefitSynergies` resuelve los nombres y efectos de las combinaciones en la ficha de cada beneficio. Al cargar o importar una colección, se traducen los identificadores históricos de beneficios.
 
 Los objetos y beneficios aportan bonos planos. Ditto parte de tamaño 100. Corona real y Brote acuático consultan tanto el equipo como los beneficios. Revivir se consume en el primer golpe letal y no vuelve a aparecer en esa aventura. La carga salvaje dura 500 ms y un golpe ordinario no la cancela. Los aliados de rescate usan colisión de suelo y los encuentros se sortean con reemplazo. Los indicadores de subida de nivel duran cuatro segundos.
 
@@ -387,3 +387,11 @@ La dificultad del tablón y de los enemigos es uno más que el número de éxito
 damageFor aplica Ataque × 100 / (100 + Defensa) antes de afinidades y bloqueo. Las subidas por EXP suman 3 de tamaño. Los porcentajes dependen de equipo y beneficios. La velocidad llega a 200. Un salvaje shiny siempre deja equipo como recompensa de combate. El cupo de tres limita los objetos aleatorios de exploración de la misión.
 
 items.json configura efectos de umbral, equipo condicional, filtro, tinte de marco y desbloqueo. refreshEssenceAttack actualiza las gemas tras variaciones del saldo. applyShinyAppearance carga la variante de SpriteCollab y conserva el ataque en curso. Cuando falta la hoja se distingue la variante con un tinte. Los grupos de paleta avanzan al 80% de su frecuencia original.
+
+### Reliquias del Gremio y combate
+
+La tienda reúne todas las reliquias. Cada una de las quince nuevas cuesta un emblema la primera vez. Colección permite equipar las adquiridas. equipRelic reemplaza únicamente la otra activa R o la otra arma básica al equipar una de su clase. cooldownTime avanza en pasos de simulación con al menos un salvaje vivo. Los relojes de animación, empuje y carga siguen usando gameTime.
+
+settleStats liquida los aumentos de equipo, niveles y recompensas, conserva el límite inferior sin deuda y comparte la proyección con las tarjetas. Velocidad de ataque va de 5 a 200. El nivel da tres puntos de tamaño. collectEssence aplica Brote acuático al recoger agua cuando ya se posee Semilla. La cartera sortea cada unidad por separado.
+
+activateRelic comprueba coste y recarga antes del gasto. La Flauta vence salvajes tras cuatro segundos, el Botón crea una salida del encargo fallido, la Píldora desplaza en Hurt y el Orbe expande su zona una vez por enemigo. projectileImpact usa las hojas de impacto del hueso y los cuadros 10–12 de la bomba. criticalHit y criticalBlock consultan la orientación del defensor con Cráneo.

@@ -1,8 +1,9 @@
-import {actorRule,combatChance,rule} from './modifiers.js';
+import {criticalBlock,criticalHit,actorRule,combatChance,rule} from './modifiers.js';
 import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
-import { updateWildAbility, releaseSpines, effect, attackElement, elementalHit, launchWeapon, featherStun } from './abilities.js';
-import { applyBenefitStats, amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
+import { knockback,updateWildAbility, releaseSpines, effect, attackElement, elementalHit, launchWeapon, featherStun } from './abilities.js';
+import {relics} from './collection.js';
+import { settleStats,applyBenefitStats, amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, fleeRescue, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
@@ -112,11 +113,12 @@ export function triggerAttack(attacker) {
   if (attacker.frozenUntil>gameTime() || attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
-  attacker.fangStrike = !['acuatic','rock_thrower','ancient'].some(id=>combatBenefits(attacker)?.has(id)) && (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
+  attacker.relicWeapon=attacker.isPlayer && [...(game.runRelics??[])].map(id=>relics[id]?.weapon).find(Boolean);
+  attacker.fangStrike = !attacker.relicWeapon && !['acuatic','rock_thrower','ancient'].some(id=>combatBenefits(attacker)?.has(id)) && (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
   attacker.doubleStrike = attacker.fangStrike && attacker.isPlayer && synergyActive('doubleStrike');
   // Fija una sola hoja para que los fotogramas de impacto y el render usen el mismo reloj.
   const weapon = [...(combatBenefits(attacker) ?? [])].map(id => game.benefits.get(id)).find(benefit => benefit?.spriteanimations);
-  attacker.attackAnimation = weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
+  attacker.attackAnimation = attacker.relicWeapon ? (['slash','dark_cut'].includes(attacker.relicWeapon)?attacker.anims.Charge:attacker.anims.Shoot) ?? attacker.anims.Attack : weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
   attacker.strikesDone = 0;
   setState(attacker, 'Attack');
 }
@@ -141,14 +143,22 @@ function resolveImpact(attacker) {
     Math.hypot(drop.x - attacker.x, drop.y - attacker.y) <= reach && inStrike(drop.x, drop.y, strikeRadius));
 
   const weapons=combatBenefits(attacker);
-  if(weapons?.has('acuatic')||weapons?.has('rock_thrower')){
+  const replacement=attacker.relicWeapon;
+  const cut=replacement==='slash' || replacement==='dark_cut';
+  if(replacement && !cut){launchWeapon(attacker,replacement);return;}
+  if(cut){
+    effect(replacement,attacker.x+directionX*reach*.65,attacker.y+directionY*reach*.65,200,attacker.dir).diameter=2*reach;
+  }
+  if(!replacement && (weapons?.has('acuatic')||weapons?.has('rock_thrower'))){
     launchWeapon(attacker,weapons.has('rock_thrower')?'rock_throw':'watergun');return;
   }
-  if(weapons?.has('ancient'))effect('iron_hit',attacker.x+directionX*reach,attacker.y+directionY*reach,230,attacker.dir);
+  if(!replacement && weapons?.has('ancient'))effect('iron_hit',attacker.x+directionX*reach,attacker.y+directionY*reach,230,attacker.dir);
   for (const target of game.entities) {
     if (!target.hp || target===attacker || (attacker.isPlayer ? target.ally : target!==(attacker.prey??game.player))) continue;
     if (!hasSight(attacker,target)) continue;
-    if (!inStrike(target.x, target.y, strikeRadius + bodyRadius(target))) continue;
+    if (cut ? ((target.x-attacker.x)*directionX+(target.y-attacker.y)*directionY<=0 ||
+        Math.hypot(target.x-attacker.x-directionX*reach*.65,target.y-attacker.y-directionY*reach*.65)>reach+bodyRadius(target))
+        : !inStrike(target.x,target.y,strikeRadius+bodyRadius(target))) continue;
     const simulationTime = gameTime();
     if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) continue;
     const dodge = dodgeChance(target);
@@ -158,9 +168,9 @@ function resolveImpact(attacker) {
       if (attacker.isPlayer && !target.isPlayer && !target.abilityCast) trySidestep(target, attacker, canMove, simulationTime);
       continue;
     }
-    const critical = Math.random()*100 < attacker.stats.critical;
-    const power=damageFor(attacker,target,critical),element=attackElement(attacker);
-    if(!(element ? elementalHit(attacker,target,power,element,false,critical) : inflictDamage(attacker,target,power,critical)))continue;
+    const critical = criticalHit(attacker,target);
+    const power=damageFor(attacker,target,critical),element=cut?(replacement==='slash'?'flying':'ghost'):attackElement(attacker);
+    if(!(element ? elementalHit(attacker,target,power,element,false,critical,!!cut) : inflictDamage(attacker,target,power,critical)))continue;
     if (target.hp && (target.abilityCast || (target.boss && (target.bossResponse || target.state==='Attack')))) continue;
     if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
@@ -182,13 +192,16 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   if (!target.hp) return;
   const simulationTime = gameTime();
   if(!exact && target.invulnerableUntil>simulationTime)return;
+  if (!exact && ability && !critical && attacker.isPlayer && game.runRelics?.has('cranium') && criticalHit(attacker,target)) {
+    critical=true; incomingDamage*=1.5;
+  }
   let blocked = false;
   const defendingBenefits=combatBenefits(target)??new Set();
   if (!exact && attacker!==target) {
     if (target.isPlayer && simulationTime - target.lastHit < PLAYER_GRACE_MS) return;
     const species = game.pokemon.get(attacker.dex), targetSpecies = game.pokemon.get(target.dex);
     if (attacker !== target && species.essences.some(type => targetSpecies.essences.includes(type))) incomingDamage *= 1 - amount('heartbreaker',defendingBenefits);
-    blocked = attacker !== target && Math.random()*100 < combatChance(target,'block');
+    blocked = attacker !== target && criticalBlock(attacker,target);
     if (blocked) {
       incomingDamage *= .5;
       if(target.shellUntil>simulationTime){
@@ -213,7 +226,7 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   }
   if(defendingBenefits.has('champion')){
     if(target.isPlayer){game.mission.championAttack=(game.mission.championAttack??0)+10;
-      target.stats=playerStats(game.pokemon.get(target.dex),game.progress,target.bonuses);}
+      target.stats=settleStats(game.pokemon.get(target.dex),game.progress,target.bonuses,target.stats);}
     else target.stats.attack+=10;
     target.championFlash=simulationTime;
   }
@@ -286,17 +299,27 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
   game.drops = [];
   game.entities = [player];
   opponents.forEach((spriteData, index) => {
-    const enemy = createEntity(spriteData, game.rooms[index + 1], false);
-    enemy.boss = bossFloor;
+    // Los refuerzos de arena y los pisos con pocas salas toman centros libres de suelo.
+    let site=game.rooms[index+1];
+    if(!site){
+      const free=[];
+      game.grid.forEach((row,cy)=>row.forEach((tile,cx)=>{
+        if(!tile && game.entities.every(e=>Math.hypot(e.x-(cx+.5)*TILE,e.y-(cy+.5)*TILE)>TILE))free.push({cx,cy});
+      }));
+      site=free[Math.floor(Math.random()*free.length)];
+    }
+    if(!site)return;
+    const enemy = createEntity(spriteData,site,false);
+    enemy.boss = bossFloor && index===0;
     const species = game.pokemon.get(spriteData.dex);
     enemy.level = levelFor(species, enemyProgress(enemyDifficulty));
-    enemy.stats = statsFor(species, enemyDifficulty, {}, bossFloor, true);
+    enemy.stats = statsFor(species, enemyDifficulty, {}, enemy.boss, true);
     enemy.ally=mission.type==='rescue' && floor===mission.floors && index===opponents.length-1;
     if(mission.red || enemy.ally){
       const level=enemy.ally ? (mission.red?player.level:Math.min(100,player.level+5)) : Math.min(100,enemy.level+15);
       enemy.level=enemy.ally && mission.red ? player.level : levelFor(species,level);
       // Los límites del líder progresan con el encargo rojo, además del nivel efectivo.
-      enemy.stats=statsFor(species,enemyDifficulty+(mission.red?15:0),{},bossFloor,true,enemy.level);
+      enemy.stats=statsFor(species,enemyDifficulty+(mission.red?15:0),{},enemy.boss,true,enemy.level);
     }
     if(enemy.ally)game.rescueAlly=enemy;
     else if(Math.random() < (game.inventory.has('shiny_elixir') ? .05 : .001)) applyShinyAppearance(enemy);
@@ -338,6 +361,14 @@ function moveEntity(entity, deltaX, deltaY) {
 
 // Procesa controles o IA y avanza la animación hasta el impacto y el final de la acción.
 export function updateEntity(entity) {
+  if(entity.windPush && entity.hp){
+    const push=entity.windPush,remaining=Math.min(push.step,push.remaining);
+    const x=entity.x,y=entity.y;
+    knockback(push,entity,remaining);
+    push.remaining-=remaining;
+    if(push.remaining<=0 || (x===entity.x && y===entity.y))entity.windPush=null;
+    else {const anim=entity.anims.Hurt;entity.timer++;if(entity.timer>=(anim.durs[entity.frame]||8)){entity.timer=0;entity.frame=(entity.frame+1)%anim.frames;}return;}
+  }
   if(entity.frozenUntil>gameTime())return;
   if(entity.hp && entity.rockUntil>gameTime()){setState(entity,'Charge');entity.frame=(Math.floor(gameTime()/90)%(entity.anims.Charge??entity.anims.Idle).frames);return;}
   if(entity.state==='Charge' && !entity.finishingSpecial && !entity.abilityCast && !(entity.isPlayer && game.cast) && !(entity.rockUntil>gameTime())) entity.finishingSpecial=true;
