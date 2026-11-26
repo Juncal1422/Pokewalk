@@ -1,6 +1,6 @@
 import { loadInterfaceStylesheet, readCanvasTheme } from './core/interface-theme.js';
 import { assetUrl } from './core/asset-url.js';
-import { visitGuild, selectMission, guildMessage, preloadMenuArt } from './core/guild.js';
+import { visitGuild, selectMission, guildMessage } from './core/guild.js';
 import {
   loadCollection,
   beginChronicle,
@@ -215,12 +215,13 @@ function pagePanel(panel, list, pageSize) {
 // El panel comparte los valores de combate y solo cambia el DOM cuando varían.
 function updateRoster() {
   const rosterList = document.querySelector('#floor-pokemon-panel ul');
+  let rosterChanged=false;
   const livingEnemies = game.entities.filter(
     (combatant) => !combatant.isPlayer && combatant.hp > 0,
   );
   // Conservamos el nodo y el retrato durante los cambios de PV.
   for (const rosterCard of Array.from(rosterList.children))
-    if (!livingEnemies.includes(rosterCard.combatant)) rosterCard.remove();
+    if (!livingEnemies.includes(rosterCard.combatant)) {rosterCard.remove();rosterChanged=true;}
   for (const enemy of livingEnemies) {
     const species = game.pokemon.get(enemy.dex);
     let rosterCard = enemy.rosterCard;
@@ -257,6 +258,7 @@ function updateRoster() {
         rosterCard.append(image);
       }
       rosterList.append(rosterCard);
+      rosterChanged=true;
     }
     const stats =
       'HP ' +
@@ -270,7 +272,7 @@ function updateRoster() {
     if (rosterCard.children[2].textContent !== stats)
       rosterCard.children[2].textContent = stats;
   }
-  pagePanel(rosterList.parentNode, rosterList, 9);
+  if(rosterChanged)pagePanel(rosterList.parentNode, rosterList, 9);
 }
 
 // Agrupa duplicados y actualiza el panel solo al entrar o salir de su radio.
@@ -442,12 +444,16 @@ export async function startGame({
   };
   resize();
   const benefitsUrl = assetUrl('./data/benefits.json', import.meta.url);
-  const [synergies, benefits] = await Promise.all([
+  const [catalog,synergies, benefits] = await Promise.all([
+    loadEncountersCatalog().then(async ({pokemon,items})=>{
+      const [biomes]=await Promise.all([loadBiomes(pokemon),loadItemImages(items)]);
+      return {pokemon,items,biomes};
+    }),
     fetch(assetUrl('./data/synergies.json', import.meta.url)).then((response) =>
       response.json(),
     ),
     fetch(benefitsUrl).then((response) => response.json()),
-    preloadMenuArt(app),
+
     preparePortal(),
     loadHud(),
     loadTerrain(),
@@ -462,12 +468,11 @@ export async function startGame({
         throw new Error('Beneficio duplicado para ' + name);
       game.donors.set(name, benefit);
     }
-  const { pokemon, items } = await loadEncountersCatalog();
-  const biomes = await loadBiomes(pokemon);
+  const {pokemon,items,biomes}=catalog;
   game.biomes = biomes;
   game.pokemon = pokemon;
   game.items = items;
-  await loadItemImages(items);
+
   game.progress = 5;
   game.xp = 0;
   game.cooldownDurations = {};

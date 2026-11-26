@@ -37,7 +37,10 @@ export const attackReach = (stats) => (stats.range * stats.size) / 100;
 export const movementRate = (speed) => 0.85 + speed / 150;
 
 // A 5, la hoja avanza a un cuarto de su cadencia. A 200 alcanza 2,5 veces la cadencia.
-export const attackRate = score => .25 + 2.25 * (limitStat('attackSpeed',score)-5)/195;
+export function attackRate(score) {
+  const progress=(limitStat('attackSpeed',score)-5)/195;
+  return .25+2.25*progress*(2-progress);
+}
 
 // Calcula un atributo de la especie antes de equipo, beneficios o ajustes del líder.
 function naturalStat(species, statKey, level) {
@@ -49,7 +52,7 @@ function naturalStat(species, statKey, level) {
       species.dex === 292 ? 1 : Math.floor(species.stats.hpMax / 10) + 15;
     return Math.max(1, startingHP + level - 5);
   }
-  const value = Math.floor((2 * species.stats[statKey] * level) / 100) + 5;
+  const value = Math.floor((2 * species.stats[statKey] * level) / 100) + (statKey==='attackSpeed'?15:5);
   // El crecimiento natural deja un punto de margen para bonos y líderes.
   return statKey === 'speed' || statKey === 'attackSpeed'
     ? Math.min(200, value)
@@ -85,7 +88,7 @@ export function statsFor(
         attack: 16 + tier * 10,
         defense: 16 + tier * 7,
         speed: 20 + tier * 5,
-        attackSpeed: 16 + tier * 3,
+        attackSpeed: 48 + tier * 9,
         size: 185 + tier * 2,
         range: 30 + tier,
       };

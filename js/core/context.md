@@ -352,7 +352,7 @@ El detalle de crónica reúne stats, misiones, formas y equipo en una vista. Las
 
 ### Carga de menús y final de aventura
 
-preloadMenuArt (guild.js) decodifica los trece fondos y los cinco atlas de catálogo durante el arranque. El tablero muestra las ocho partes exteriores del atlas alrededor de sus 64 celdas. Las confirmaciones del gremio usan textbox-p. La crónica reserva los retratos para la lista de formas.
+Cada pantalla carga su fondo y su atlas de catálogo a través del CSS al abrirse. El tablero muestra las ocho partes exteriores del atlas alrededor de sus 64 celdas. Las confirmaciones del gremio usan textbox-p. La crónica reserva los retratos para la lista de formas.
 Los pisos se cargan desde loadLevel sin depender de un indicador de carga en el DOM. settleMission liquida una sola vez el premio final y registra Exitosa al completar 50 misiones con éxito. El siguiente fotograma devuelve al gremio. Si falla un rescate, la siguiente oferta conserva el número de dificultad y abre un nuevo registro de misión. Una derrota cierra la aventura como Fallida y una recarga como Interrumpida.
 
 
@@ -395,3 +395,9 @@ La tienda reúne todas las reliquias. Cada una de las quince nuevas cuesta un em
 settleStats liquida los aumentos de equipo, niveles y recompensas, conserva el límite inferior sin deuda y comparte la proyección con las tarjetas. Velocidad de ataque va de 5 a 200. El nivel da tres puntos de tamaño. collectEssence aplica Brote acuático al recoger agua cuando ya se posee Semilla. La cartera sortea cada unidad por separado.
 
 activateRelic comprueba coste y recarga antes del gasto. La Flauta vence salvajes tras cuatro segundos, el Botón crea una salida del encargo fallido, la Píldora desplaza en Hurt y el Orbe expande su zona una vez por enemigo. projectileImpact usa las hojas de impacto del hueso y los cuadros 10–12 de la bomba. criticalHit y criticalBlock consultan la orientación del defensor con Cráneo.
+
+### Cadencia y rendimiento
+
+Las 628 fichas tienen la velocidad de ataque base triplicada. La progresión de este atributo parte de 15 antes de aplicar los ajustes de forma, y los límites efectivos siguen en 5–200. attackRate acelera más los primeros puntos y alcanza 2,5 en 200. Ditto inicia el nivel 5 con 18 HP, 9 de Ataque, 9 de Defensa y 23 de Velocidad de ataque.
+
+loadPokemonData comparte las solicitudes en curso de cada especie y variante. fetchAnimation comparte la imagen física de acciones CopyOf. Los fallos de carga de especie se pueden reintentar. El catálogo y los recursos de combate se preparan en paralelo. loadTileset lee los píxeles del canvas una vez. draw conserva el terreno visible hasta que cambia el piso, el área visible o la fase de paleta. La salida, los objetos y los Pokémon se dibujan por separado en cada fotograma. La IA espera hasta 200 ms para repetir una búsqueda sin ruta al mismo destino.

@@ -24,7 +24,7 @@ function frameCenters(animation) {
 }
 
 // Prueba las acciones disponibles en orden y resuelve CopyOf antes de descargar la hoja y sus duraciones.
-async function fetchAnimation(baseUrl, animations, candidates) {
+async function fetchAnimation(baseUrl, animations, candidates, images) {
   for (const name of candidates) {
     let node = animations.find(
       (item) => item.getElementsByTagName('Name')[0]?.textContent === name,
@@ -51,13 +51,14 @@ async function fetchAnimation(baseUrl, animations, candidates) {
       (item) => parseInt(item.textContent, 10),
     );
     try {
-      const image = await new Promise((resolve, reject) => {
+      if (!images.has(imageName)) images.set(imageName,new Promise((resolve, reject) => {
         const element = new Image();
         element.crossOrigin = 'Anonymous';
         element.onload = () => resolve(element);
         element.onerror = reject;
         element.src = `${baseUrl}/${imageName}-Anim.png`;
-      });
+      }));
+      const image=await images.get(imageName);
       return {
         img: image,
         // HitFrame indica en qué fotograma conecta el golpe de esta hoja.
@@ -77,6 +78,17 @@ export async function loadPokemonData(pokedexNumber, shiny=false) {
   if (EXCLUDED_DEX.has(pokedexNumber)) return null;
   const key=shiny ? pokedexNumber+':shiny' : pokedexNumber;
   if (game.spriteCache.has(key)) return game.spriteCache.get(key);
+  const request=fetchSpecies(pokedexNumber,shiny);
+  game.spriteCache.set(key,request);
+  const result=await request;
+  if(game.spriteCache.get(key)===request){
+    if(result)game.spriteCache.set(key,result);
+    else game.spriteCache.delete(key);
+  }
+  return result;
+}
+
+async function fetchSpecies(pokedexNumber,shiny){
   const paddedDexNumber = game.pokemon.get(pokedexNumber)?.spritePath ?? String(pokedexNumber).padStart(4, '0');
   const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${paddedDexNumber}${shiny ? (paddedDexNumber.includes("/") ? "/0001" : "/0000/0001") : ""}`;
   try {
@@ -87,10 +99,14 @@ export async function loadPokemonData(pokedexNumber, shiny=false) {
       'text/xml',
     );
     const animations = Array.from(documentXml.getElementsByTagName('Anim'));
-    const [walk, idle, attack, hurt, charge] = await Promise.all([
-      fetchAnimation(baseUrl, animations, ['Walk', 'Idle']),
-      fetchAnimation(baseUrl, animations, ['Idle', 'Walk']),
-      fetchAnimation(baseUrl, animations, [
+    const images=new Map();
+    const load=candidates=>fetchAnimation(baseUrl,animations,candidates,images);
+    const candidates=new Set([...game.benefits.values()].flatMap(b=>b.spriteanimations??[]));
+    candidates.delete('Charge');
+    const [walk, idle, attack, hurt, charge, alternateAnimations] = await Promise.all([
+      load(['Walk', 'Idle']),
+      load(['Idle', 'Walk']),
+      load([
         'Attack',
         'Shoot',
         'Strike',
@@ -98,16 +114,11 @@ export async function loadPokemonData(pokedexNumber, shiny=false) {
         'SpAttack',
         'Walk',
       ]),
-      fetchAnimation(baseUrl, animations, ['Hurt', 'Faint', 'Idle']),
-      fetchAnimation(baseUrl, animations, ['Charge']),
+      load(['Hurt', 'Faint', 'Idle']),
+      load(['Charge']),
+      Promise.all([...candidates].map(async name=>[name,await load([name])])),
     ]);
     if (!walk) return null;
-    // Las prioridades proceden del catálogo. Sólo pedimos hojas presentes en el XML;
-    // Charge ya está cargada y sirve de última opción para cualquier arma.
-    const candidates = new Set([...game.benefits.values()].flatMap(benefit => benefit.spriteanimations ?? []));
-    candidates.delete('Charge');
-    const alternateAnimations = await Promise.all([...candidates].map(async name =>
-      [name, await fetchAnimation(baseUrl, animations, [name])]));
     const spriteData = {
       dex: pokedexNumber,
       dexStr: paddedDexNumber,
@@ -127,7 +138,7 @@ export async function loadPokemonData(pokedexNumber, shiny=false) {
       const origin = idleCenters[Math.min(directionIndex,idleCenters.length-1)][0];
       return frames.map(point => ({x:origin.x-point.x,y:origin.y-point.y}));
     });
-    game.spriteCache.set(key, spriteData);
+
     return spriteData;
   } catch {
     return null;

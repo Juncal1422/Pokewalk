@@ -24,28 +24,7 @@ const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
 const backgrounds = {Pommedew:'home',Beneficios:'benefits',Objetos:'items','Tablón de misiones':'missions','Pokédex':'pokedex',Reliquias:'relics'};
 const sectionArt = {'Tienda del Gremio':'shop','Pokédex':'pokedex',Objetos:'items',Beneficios:'benefits',Reliquias:'relics'};
-const menuImages = new Map();
-
-// Retiene las imágenes decodificadas usando las mismas rutas que el CSS.
-export async function preloadMenuArt(app) {
-  const theme = getComputedStyle(app);
-  const properties = [
-    '--guild-default-background',
-    ...Object.values(sectionArt).map(section => '--catalog-' + section + '-art'),
-    ...Object.values(backgrounds).flatMap(section => [
-      '--guild-' + section + '-background-1', '--guild-' + section + '-background-2',
-    ]),
-  ];
-  await Promise.all(properties.map(async property => {
-    const url = theme.getPropertyValue(property).trim().match(/^url\(["']?([^"']+?)["']?\)$/)?.[1];
-    if (!url || menuImages.has(url)) return;
-    const image = new Image();
-    image.src = url;
-    await image.decode();
-    menuImages.set(url, image);
-  }));
-}
-
+// El navegador carga el fondo CSS de cada pantalla al abrirla.
 // Crea un control nativo que también funciona con teclado.
 function button(label,action,sound='select') {
   const control=element('button',label);

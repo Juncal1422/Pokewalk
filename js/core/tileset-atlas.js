@@ -67,7 +67,13 @@ export async function loadTileset(biome) {
     const layers = {};
     for (const [column,role] of columns.entries()) {
       if (role==='legend' || role==='unused') continue;
-      const data = context.getImageData(x+75*column,y,tileSize,tileSize);
+      // Extrae las filas de la copia del atlas. Leer el canvas por cada pieza sincronizaba la GPU.
+      const pixels = new Uint8ClampedArray(tileSize*tileSize*4);
+      for(let row=0;row<tileSize;row++){
+        const start=((y+row)*image.width+x+75*column)*4;
+        pixels.set(source.subarray(start,start+tileSize*4),row*tileSize*4);
+      }
+      const data = {data:pixels};
       const colors = new Set();
       for(let i=0;i<data.data.length;i+=4){
         const rgb=data.data[i]*65536+data.data[i+1]*256+data.data[i+2];
@@ -84,6 +90,7 @@ export async function loadTileset(biome) {
     tiles.set(mask,layers);
   }
   if(tiles.size!==47) throw Error('Leyenda de autotiles inválida: '+biome.name);
+  tiles.animated=banks.some(bank=>bank.length>1);
   tiles.floorChoices=[...choices.values()];
   return tiles;
 }
