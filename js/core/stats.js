@@ -1,6 +1,12 @@
 import { ATTACK_RANGE } from './constants.js';
 
+export const chanceBases = {evasion:5,block:0,critical:10};
+// Las probabilidades se almacenan en puntos y se convierten sólo al tirar.
+export const limitStat = (key,value) => key in chanceBases ? Math.max(0,Math.min(100,value)) :
+  Math.max(5,['speed','attackSpeed'].includes(key)?Math.min(180,value):value);
+export const statText = (key,value) => String(value)+(key in chanceBases?'%':'');
 export const labels = {
+  evasion:'Evasión',block:'Bloqueo crítico',critical:'Ataque crítico',
   hpMax: 'HP',
   attack: 'Ataque',
   defense: 'Defensa',
@@ -11,6 +17,7 @@ export const labels = {
 };
 // Crea un conjunto independiente de bonos permanentes con todos sus valores a cero.
 export const emptyBonuses = () => ({
+  evasion:0, block:0, critical:0,
   hpMax: 0,
   attack: 0,
   defense: 0,
@@ -63,6 +70,7 @@ export function statsFor(
   const level = effectiveLevel ?? levelFor(species, isWild ? enemyProgress(progressionLevel) : progressionLevel);
   const result = {};
   for (const statKey of Object.keys(labels)) {
+    if(statKey in chanceBases){result[statKey]=limitStat(statKey,chanceBases[statKey]+(bonuses[statKey]??0));continue;}
     // Los PV del líder parten exactamente de la curva anterior antes del ×10.
     const statLevel =
       effectiveLevel==null && isBoss && statKey === 'hpMax' ? levelFor(species, progressionLevel) : level;
@@ -100,7 +108,7 @@ export function statsFor(
     result[statKey] =
       statKey === 'speed' || statKey === 'attackSpeed'
         ? Math.max(5, Math.min(180, value))
-        : Math.max(statKey === 'size' ? 40 : 1, value);
+        : Math.max(5,value);
   }
   return result;
 }

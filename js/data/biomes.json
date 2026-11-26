@@ -533,7 +533,6 @@
     "id": "deep-sea",
     "name": "Mar Profundo",
     "tileset": "tiled/tilesets/Deep Sea.png",
-    "columns": ["legend", "wall", "wallAlt", "wallAlt", "floor", "water"],
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 7,

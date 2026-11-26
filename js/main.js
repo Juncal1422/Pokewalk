@@ -11,7 +11,8 @@ import {
 } from './core/collection.js';
 import { playSound } from './core/audio.js';
 import { gameTime, resetClock, advanceClock } from './core/clock.js';
-import { levelFor } from './core/stats.js';
+import {rule} from './core/modifiers.js';
+import { attackReach, levelFor } from './core/stats.js';
 import { loadTerrain } from './core/terrain.js';
 import { attachInventory } from './core/inventory.js';
 import { missionOffers, exitKind, rewardOptions } from './core/missions.js';
@@ -50,6 +51,7 @@ function mountApp(root) {
 // El portal sustituye un suelo común y nunca se genera bajo el jugador.
 function placePortal(playerTileX, playerTileY, kind) {
   const floors = [];
+  const exitRadius = kind==='objective'?0:rule('exitRange')*attackReach(game.player.stats);
   game.grid.forEach((row, y) =>
     row.forEach((terrain, x) => {
       if (
@@ -64,7 +66,10 @@ function placePortal(playerTileX, playerTileY, kind) {
       }
     }),
   );
-  game.portal = floors[Math.floor(Math.random() * floors.length)];
+  const distance=tile=>Math.hypot((tile.x+.5)*TILE-game.player.x,(tile.y+.5)*TILE-game.player.y);
+  const nearby=exitRadius?floors.filter(tile=>distance(tile)<=exitRadius):floors;
+  game.portal=nearby.length?nearby[Math.floor(Math.random()*nearby.length)]:floors.sort((a,b)=>distance(a)-distance(b))[0];
+  if(kind==='objective' && game.portal)playSound('itemGift');
 }
 
 // Pausa los controles y gestiona el paso de piso o la selección de mejora y el cambio de misión.
@@ -127,7 +132,7 @@ async function nextLevel() {
         }
       }
       const nextMission = await selectMission(
-        missionOffers(Math.min(100, mission.number + 1), levelFor(state.row, game.progress)),
+        missionOffers(Math.min(100, mission.number + 1), levelFor(state.row, game.progress),state.held),
       );
       await changeBiome(nextMission.biome);
       const previousHeld = game.held;

@@ -321,7 +321,7 @@ Constantes de escala, temporización, direcciones y especies excluidas.
 
 Las cuadrículas de colección usan los gráficos de ui. `speciesPage` muestra la ficha base y `catalogCard` permite consultar donantes. `synergyText` resuelve los nombres y efectos de las combinaciones tanto en colección como en el HUD. Al cargar o importar una colección, se traducen los identificadores históricos de beneficios.
 
-Los objetos aportan bonos planos antes de los porcentajes de beneficio. Ditto parte de tamaño 100. Corona real y Brote acuático consultan tanto el equipo como los beneficios. Revivir se consume en el primer golpe letal y no vuelve a aparecer en esa aventura. La carga salvaje dura 500 ms y un golpe ordinario no la cancela. Los aliados de rescate usan colisión de suelo y los encuentros se sortean con reemplazo. Los indicadores de subida de nivel duran cuatro segundos.
+Los objetos y beneficios aportan bonos planos. Ditto parte de tamaño 100. Corona real y Brote acuático consultan tanto el equipo como los beneficios. Revivir se consume en el primer golpe letal y no vuelve a aparecer en esa aventura. La carga salvaje dura 500 ms y un golpe ordinario no la cancela. Los aliados de rescate usan colisión de suelo y los encuentros se sortean con reemplazo. Los indicadores de subida de nivel duran cuatro segundos.
 
 ## Pruebas del gremio y combate elemental
 
@@ -364,8 +364,18 @@ Los fondos pixelados se escalan con `image-rendering`. Mejoras conserva visible 
 
 ### Atlas rotulados, animaciones y diagnóstico
 
-Los PNG originales de los biomas están en tiled/tilesets. Para añadir uno con la misma plantilla, copia una entrada de biomes.json, conserva el nombre de archivo en tileset y escribe el nombre visible en español. columns enumera las cabeceras de izquierda a derecha, empezando por legend. Usa wall, floor, water, lava o void para el dibujo principal, el sufijo Alt para alternativas y unused para omitir una columna. El motor lee las 47 máscaras de la leyenda y prepara los fotogramas de las paletas laterales bajo demanda. paletteStepMs controla el intervalo de cambio (133 ms por defecto).
+Los PNG de tiled/tilesets comparten una plantilla física. Para añadir biomas y ajustar las probabilidades consulta [biomeguide.md](../../tiled/tilesets/biomeguide.md).
 
 mediumFrequency controla la proporción esperada de manchas de terreno secundario dentro de los obstáculos. Cero genera sólo muros. El suelo, el muro y el medio secundario tienen valores lógicos 0, 1 y 2. La conexión visual exige igualdad de material. Los muros bloquean la visión y el paso incluso para especies con vuelo. Las cuatro franjas de wild y leaders se editan por nombre de especie.
 
 La consola registra decisiones con [IA], transiciones de sprite con [Animación] y secuencias visuales con [Animación de efecto]. El daño ordinario permite terminar las hojas alternativas y los lanzamientos especiales. Los proyectiles que han impactado terminan sus fotogramas en el punto de contacto.
+
+### Combate, catálogo y arte de noviembre
+
+La guía de la plantilla física, las paletas y las probabilidades del piso está en [biomeguide.md](../../tiled/tilesets/biomeguide.md). Los suelos se sortean entre piezas únicas. Las cantidades de esencia se muestran en una fila inferior.
+
+Los campos stats de los catálogos son puntos planos. Evasión, bloqueo y ataque crítico parten de 5, 0 y 10, con límites 0–100. Los demás atributos tienen mínimo 5. Compacto compara el tamaño efectivo con 100 al recalcular la defensa. applyBenefitStats y playerStats se usan también en la previsión. modifiers.js reúne rules y affinity de beneficios, equipo y reliquias. rule suma magnitudes por evento, actorRule selecciona las fuentes del combatiente y affinity multiplica resistencias.
+
+Las activas especifican slot y amount (segundos de recarga). Crupier y Botín carecen de recarga adicional: los limitan su animación y el coste que corresponda. dropItem reproduce Item Gift al colocar el objeto. dropNewItem escoge equipo disponible y usa Zidra como respaldo. El atlas visual compartido es assets/effects/effects.png. El mapa de celdas, direcciones y desplazamientos editables está en js/data/effect-atlas.js.
+
+Las asignaciones fijas incluyen los ancestros evolutivos. Rotom-Lavadora usa el identificador de forma 10009 y la ruta gráfica 0479/0002. Osado se asigna a la forma de agua independientemente de Rotom base. La lista de especies sin encuentros se encuentra en [sin-encuentro.md](../data/sin-encuentro.md).

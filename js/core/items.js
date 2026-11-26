@@ -1,3 +1,4 @@
+import {rule} from './modifiers.js';
 import { assetUrl } from './asset-url.js';
 import { showWorldNotice } from './world-notices.js';
 import {discover,checkpoint} from './collection.js';
@@ -10,6 +11,29 @@ import { essenceIcon } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
 import { playerStats, amount, synergyActive } from './benefits.js';
+
+// Todos los objetos que entran en el piso pasan por aquí, incluidos premios y bayas.
+export function dropItem(id,site) {
+  game.drops.push({id,x:site.x,y:site.y});
+  playSound('itemGift');
+}
+
+// Selecciona equipo aún disponible y el suelo libre más cercano al origen.
+export function dropNewItem(origin) {
+  const available=Object.keys(game.items).filter(id=>!game.items[id].consumable && !game.items[id].healFraction && !game.items[id].objective &&
+    !game.inventory.has(id) && !game.drops.some(drop=>drop.id===id) && !(id==='revive' && game.reviveSpent) &&
+    !(game.items[id].oncePerMission && game.mission.candyPlaced));
+  const id=available[Math.floor(Math.random()*available.length)]??'berry_sitrus';
+  const sites=[];
+  game.grid.forEach((row,y)=>row.forEach((tile,x)=>{
+    if(tile===0)sites.push({x:(x+.5)*TILE,y:(y+.5)*TILE});
+  }));
+  sites.sort((a,b)=>Math.hypot(a.x-origin.x,a.y-origin.y)-Math.hypot(b.x-origin.x,b.y-origin.y));
+  const site=sites.find(s=>!game.entities.some(e=>e.hp && Math.hypot(e.x-s.x,e.y-s.y)<12) &&
+    !game.drops.some(d=>d.x===s.x && d.y===s.y))??origin;
+  if(game.items[id].oncePerMission)game.mission.candyPlaced=true;
+  dropItem(id,site);
+}
 
 const images = new Map();
 // Precarga las imágenes por identificador para reutilizarlas en cada piso.
@@ -36,14 +60,17 @@ export function spawnFloorItems() {
   // Reserva una casilla libre del conjunto de ubicaciones y sitúa el objeto en su centro.
   function place(itemId) {
     const [site] = sites.splice(Math.floor(Math.random() * sites.length), 1);
-    game.drops.push({ id: itemId, ...site });
+    dropItem(itemId,site);
   }
-  if (sites.length && Math.random() < .5) place(synergyActive('sitrusBerries') || Math.random()<.25 ? 'berry_sitrus' : 'berry_oran');
+  if (sites.length && Math.random()<.5+rule('berryChance')){
+    const revive=!game.reviveSpent && !game.inventory.has('revive') && Math.random()<rule('reviveBerry');
+    place(revive?'revive':synergyActive('sitrusBerries') || Math.random()<.25?'berry_sitrus':'berry_oran');
+  }
   const available = Object.keys(game.items).filter(itemId => {
     const item=game.items[itemId];
     return !(itemId==='revive' && game.reviveSpent) && (item.consumable || game.inventory.size < 75) && !item.healFraction && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < (.225 + amount('scaled'))*(game.runRelics?.has('debugger')?1.5:1)) {
+  if (sites.length && available.length && mission.itemsPlaced < 2 && Math.random() < (.225 + amount('scaled') + rule('itemChance'))*(game.runRelics?.has('debugger')?1.5:1)) {
     const itemId=available[Math.floor(Math.random() * available.length)];
     place(itemId);
     if (game.items[itemId].oncePerMission) mission.candyPlaced=true;
@@ -62,6 +89,13 @@ export function collectItems(player, strike = null) {
       const type=drop.essence;
       const candy = 'candy_'+(type==='fighting'?'fight':type);
       let quantity=drop.amount*(game.runRelics?.has('debugger')?4:1)*(game.inventory.has(candy)?2:1);
+      if(['grass','water','fire'].includes(type))quantity*=rule('tropicalEssence')||1;
+      if(type==='grass' && rule('healGrass') && player.hp<player.stats.hpMax){
+        const healed=Math.min(quantity,player.stats.hpMax-player.hp);
+        player.hp+=healed; quantity-=healed;
+        pickupEffect(player,'heal');showWorldNotice(player,healed,'HP');
+        if(!quantity)return false;
+      }
       if(type==='water' && synergyActive('waterGrowth')){
         player.bonuses.size+=quantity;
         player.bonuses.attack+=quantity;
@@ -82,7 +116,7 @@ export function collectItems(player, strike = null) {
     if (!item.consumable && game.inventory.size >= 75 && !game.inventory.has(drop.id)) return true;
     if (!item.consumable && game.inventory.has(drop.id)) return false;
     const bonuses = { ...player.bonuses };
-    for (const [key, delta] of Object.entries(item.stats)) bonuses[key] += delta;
+    for (const [key, delta] of Object.entries(item.stats)) bonuses[key] = (bonuses[key]??0) + delta;
     const oldStats = player.stats;
     const previous = { ...oldStats, hp: player.hp };
     if (!item.consumable) game.inventory.add(drop.id);

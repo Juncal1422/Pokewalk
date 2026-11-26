@@ -1,6 +1,23 @@
+// Orden físico de las columnas compartido por todos los biomas.
+const columns = ["legend", "wall", "wallAlt", "wallAlt", "wallAlt", "wallAlt", "floor", "floorAlt", "floorAlt", "unused", "unused", "waterBase", "water", "waterAlt", "lava", "void", "voidAlt", "voidAlt"];
 // Orden de las ocho muestras de la leyenda: N, NE, E, SE, S, SO, O, NO.
 const neighbors = [[12,4],[20,4],[20,12],[20,20],[12,20],[4,20],[4,12],[4,4]];
 const tileSize = 24;
+const templateKeys = new Set([0x008080, 0xff00ff, 0x00ff00]);
+
+// Un brillo puede ocupar sólo unas pocas piezas. Ignora los separadores de la plantilla.
+function hasArtwork(column, top, colorAt) {
+  for (let cell = 0; cell < 72; cell++) {
+    const x = 9 + column * 75 + (cell % 3) * 25;
+    const y = top + Math.floor(cell / 3) * 25;
+    for (let dy = 0; dy < tileSize; dy++) {
+      for (let dx = 0; dx < tileSize; dx++) {
+        if (!templateKeys.has(colorAt(x + dx, y + dy))) return true;
+      }
+    }
+  }
+  return false;
+}
 
 // Lee los bancos de 16 colores; cada fila sucesiva es una fase de animación.
 function readPalettes(colorAt, x, width, height) {
@@ -37,28 +54,37 @@ export async function loadTileset(biome) {
     return source[i]*65536+source[i+1]*256+source[i+2];
   };
   const top = image.height - 607;
-  const banks = readPalettes(colorAt,16+75*biome.columns.length,image.width,image.height);
+  const banks = readPalettes(colorAt,16+75*columns.length,image.width,image.height);
+  const sparkleColumn=columns.indexOf('waterAlt');
+  const hasSparkles = hasArtwork(sparkleColumn, top, colorAt);
   const tiles = new Map();
+  const choices = new Map();
   for (let cell=0; cell<72; cell++) {
     const x = 9+25*(cell%3), y = top+25*Math.floor(cell/3);
     const center=colorAt(x+12,y+12);
     if ((center & 0xf0f0f0)!==0xf0f0f0) continue;
     const mask = neighbors.reduce((bits,[dx,dy],i)=>bits | ((colorAt(x+dx,y+dy) & 0xf8f8f8)===0 ? 1<<i : 0),0);
     const layers = {};
-    for (const [column,role] of biome.columns.entries()) {
+    for (const [column,role] of columns.entries()) {
       if (role==='legend' || role==='unused') continue;
       const data = context.getImageData(x+75*column,y,tileSize,tileSize);
       const colors = new Set();
       for(let i=0;i<data.data.length;i+=4){
         const rgb=data.data[i]*65536+data.data[i+1]*256+data.data[i+2];
-        if(rgb===0x008080 || rgb===0xff00ff || rgb===0x00ff00) data.data[i+3]=0;
+        if(templateKeys.has(rgb)) data.data[i+3]=0;
         else if(data.data[i+3]) colors.add(rgb);
       }
-      if(colors.size) (layers[role]??=[]).push(makeTile(data,colors,banks));
+      if(!colors.size)continue;
+      const paletteBanks=role==='waterAlt' ? banks.slice(-1) :
+        role==='water' && banks.length>1 && hasSparkles ? banks.slice(0,-1) : banks;
+      const tile=makeTile(data,colors,paletteBanks);
+      (layers[role]??=[]).push(tile);
+      if(role==='floor' || role==='floorAlt')choices.set(data.data.join(','),tile);
     }
     tiles.set(mask,layers);
   }
   if(tiles.size!==47) throw Error('Leyenda de autotiles inválida: '+biome.name);
+  tiles.floorChoices=[...choices.values()];
   return tiles;
 }
 
@@ -82,6 +108,7 @@ function makeTile(original, colors, banks) {
         const rgb=pixels.data[i]*65536+pixels.data[i+1]*256+pixels.data[i+2];
         const next=replacements.get(rgb);
         if(next===undefined)continue;
+        if(next===0xff00ff || next===0x00ff00){pixels.data[i+3]=0;continue;}
         pixels.data[i]=next>>16; pixels.data[i+1]=(next>>8)&255; pixels.data[i+2]=next&255;
       }
     }
@@ -91,15 +118,14 @@ function makeTile(original, colors, banks) {
 }
 
 // Suelo, borde del material y alternativa comparten máscara y fase; el vacío de una alternativa deja ver la base.
-export function drawTerrainTile(ctx, tiles, mask, material, variant, phase, x, y, size) {
+export function drawTerrainTile(ctx, tiles, mask, material, variant, phase, x, y, size, sparklePhase=phase) {
   const layers=tiles.get(mask);
   const paint=tile=>{if(tile)ctx.drawImage(tile(phase),x,y,size,size);};
+  if(material==='floor'){paint(tiles.floorChoices[variant % tiles.floorChoices.length]);return;}
   paint(tiles.get(255).floor?.[0]);
-  if(material==='floor') paint(layers.floor?.[0]);
-  else {
-    if(material==='water')paint(layers.waterBase?.[0]);
-    paint(layers[material]?.[0] ?? layers.void?.[0]);
-  }
+  if(material==='water')paint(layers.waterBase?.[0]);
+  paint(layers[material]?.[0] ?? layers.void?.[0]);
   const alternatives=layers[material+'Alt'];
-  if(variant && alternatives?.length)paint(alternatives[(variant-1)%alternatives.length]);
+  if(material==='water' && alternatives?.length)ctx.drawImage(alternatives[0](sparklePhase),x,y,size,size);
+  else if(variant && alternatives?.length)paint(alternatives[(variant-1)%alternatives.length]);
 }

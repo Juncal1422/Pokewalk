@@ -4,9 +4,10 @@ const storageKey = 'pokewalk.pommedew.collection.v1';
 export const relics = {
   debugger: {
     name: 'Debugger',
+    stats: {attack:300,defense:300,speed:200,attackSpeed:100,range:100,hpMax:100},
     price: 0,
     image: 'items/weird_token.png',
-    description: 'Empieza con 100 esencias de cada tipo. Ataque y defensa ×4, velocidad ×3, tamaño normal, demás atributos ×2 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
+    description: 'Empieza con 100 esencias de cada tipo. Ataque y defensa +300, velocidad +200, PV, rango y velocidad de ataque +100 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
   },
   black_sash: {
     name: 'Cinta Negra',

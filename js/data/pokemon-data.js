@@ -76,7 +76,7 @@ async function fetchAnimation(baseUrl, animations, candidates) {
 export async function loadPokemonData(pokedexNumber) {
   if (EXCLUDED_DEX.has(pokedexNumber)) return null;
   if (game.spriteCache.has(pokedexNumber)) return game.spriteCache.get(pokedexNumber);
-  const paddedDexNumber = String(pokedexNumber).padStart(4, '0');
+  const paddedDexNumber = game.pokemon.get(pokedexNumber)?.spritePath ?? String(pokedexNumber).padStart(4, '0');
   const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${paddedDexNumber}`;
   try {
     const response = await fetch(`${baseUrl}/AnimData.xml`);

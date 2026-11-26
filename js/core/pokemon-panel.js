@@ -2,7 +2,7 @@ import { assetUrl } from './asset-url.js';
 // Recursos compartidos entre las fichas de salvajes y las opciones de Ditto.
 export function portrait(species) {
   const iconImage = new Image();
-  const path = 'portrait/' + String(species.dex).padStart(4, '0') + '/Normal.png';
+  const path = 'portrait/' + (species.spritePath ?? String(species.dex).padStart(4, '0')) + '/Normal.png';
   iconImage.alt = '';
   iconImage.className = 'pokemon-portrait';
   // Si falla el origen principal, intenta una sola vez el recurso de respaldo.

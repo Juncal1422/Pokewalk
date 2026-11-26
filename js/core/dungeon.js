@@ -323,5 +323,5 @@ export function generateDungeon({ pasillos = 5, habitaciones = 5, cruces = 5, op
     row.map((_, x) => autotile(grid, x, y)),
   );
 
-  game.variantGrid = grid.map(row => row.map(() => Math.random()<.12 ? randomInt(1,4) : 0));
+  game.variantGrid = grid.map(row => row.map(terrain => terrain===0 ? randomInt(0,game.tileSheet.floorChoices.length-1) : Math.random()<.12 ? randomInt(1,4) : 0));
 }
