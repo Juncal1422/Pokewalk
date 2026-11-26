@@ -78,7 +78,7 @@ export function groundFree(x, y, radius, crosses = false) {
   if (x - radius < TILE || y - radius < TILE || x + radius > right * TILE || y + radius > bottom * TILE) return false;
   for (let tileRow = Math.floor((y - radius) / TILE); tileRow <= Math.floor((y + radius) / TILE); tileRow++) {
     for (let tileColumn = Math.floor((x - radius) / TILE); tileColumn <= Math.floor((x + radius) / TILE); tileColumn++) {
-      if (game.grid[tileRow][tileColumn] === 0 || (crosses && game.grid[tileRow][tileColumn] === 2)) continue;
+      if (game.grid[tileRow][tileColumn] === 0 || (crosses && (game.grid[tileRow][tileColumn] === 2 || game.currentBiome.wallMaterial==='void'))) continue;
       const localX = x - tileColumn * TILE, localY = y - tileRow * TILE;
       for (const solidRectangle of wallShapes[game.autotileGrid[tileRow][tileColumn].index]) {
         const deltaX = Math.max(solidRectangle.left - localX, 0, localX - solidRectangle.right);

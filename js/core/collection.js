@@ -1,12 +1,26 @@
 import { game } from './state.js';
 
 const storageKey = 'pokewalk.pommedew.collection.v1';
+// Durante las pruebas se puede activar cualquier reliquia y visitar todos los biomas.
+export const testingUnlocks = true;
+export function isUnlocked(key,id) {
+  return testingUnlocks || game.collection?.[key]?.includes(id);
+}
 export const relics = {
+  ...Object.fromEntries([
+    ['egg_articuno','Huevo de Articuno','mt.-freeze','Monte Helado',144,'Articuno','items/gem_articuno.png'],
+    ['egg_zapdos','Huevo de Zapdos','mt.-travail','Monte Esfuerzo',145,'Zapdos','items/gem_zapdos.png'],
+    ['egg_moltres','Huevo de Moltres','burning-mountain','Monte Ardiente',146,'Moltres','items/gem_moltres.png'],
+    ['relic_ice','Criorreliquia','relic','Reliquia Enterrada',378,'Regice','relics/relic_ice.png'],
+    ['relic_rock','Petrorreliquia','relic','Reliquia Enterrada',377,'Regirock','relics/relic_rock.png'],
+    ['relic_steel','Siderorreliquia','relic','Reliquia Enterrada',379,'Registeel','relics/relic_steel.png'],
+  ].map(([id,name,biome,place,dex,species,image]) => [id,{name,biome,dex,image,guildEgg:id.startsWith('egg_'),price:0,
+    description:'Desde la misión 25, '+species+' aparece como líder en '+place+'.'}])),
   debugger: {
     name: 'Debugger',
     stats: {attack:300,defense:300,speed:200,attackSpeed:100,range:100,hpMax:100},
     price: 0,
-    image: 'items/weird_token.png',
+    image: 'relics/debugger.png',
     description: 'Empieza con 100 esencias de cada tipo. Ataque y defensa +300, velocidad +200, PV, rango y velocidad de ataque +100 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
   },
   black_sash: {
@@ -34,6 +48,7 @@ export function emptyCollection() {
     items: [],
     benefits: [],
     synergies: [],
+    biomes: [],
     relics: ['debugger'],
     enabled: [],
     history: [],
@@ -118,6 +133,8 @@ export function parseCollection(text) {
       if (['Derrota','Rescate fallido'].includes(mission.status)) mission.status = 'Fallida';
     }
   }
+  data.biomes ??= [];
+  if (!list(data.biomes,id)) throw Error('Lista de biomas desbloqueados inválida.');
   if (!data.relics.includes('debugger')) data.relics.push('debugger');
   return data;
 }
@@ -213,7 +230,14 @@ export function settleMission() {
   const entry = game.chronicle.missions.at(-1);
   if (entry.status !== 'En curso') return 0;
   entry.status = game.mission.failed ? 'Fallida' : 'Exitosa';
-  if (game.mission.number === 100 && !game.mission.failed) {
+  if (game.chronicle.missions.filter(m => m.status === 'Exitosa').length >= 50) {
+    for (const id of game.inventory) {
+      const item = game.items[id];
+      for (const [field, key] of [['unlockRelic','relics'],['unlockBiome','biomes']]) {
+        const list = game.collection[key] ??= [];
+        if (item?.[field] && !list.includes(item[field])) list.push(item[field]);
+      }
+    }
     game.chronicle.status = 'Exitosa';
     game.chronicle.ended = new Date().toISOString();
   }

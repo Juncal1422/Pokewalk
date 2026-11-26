@@ -1,6 +1,6 @@
 # Pokémon sin encuentro
 
-233 entradas (232 especies y la forma Rotom-Lavadora) ausentes como salvajes y líderes en todas las franjas.
+230 entradas sin encuentro ordinario ni de reliquia.
 
 - 1 · Bulbasaur
 - 7 · Squirtle
@@ -53,9 +53,6 @@
 - 133 · Eevee
 - 137 · Porygon
 - 143 · Snorlax
-- 144 · Articuno
-- 145 · Zapdos
-- 146 · Moltres
 - 147 · Dratini
 - 148 · Dragonair
 - 152 · Chikorita
@@ -234,4 +231,4 @@
 - 645 · Landorus
 - 646 · Kyurem
 - 648 · Meloetta
-- 479 · Rotom-Lavadora (forma)
+- 10009 · Rotom-Lavadora

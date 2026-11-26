@@ -34,14 +34,14 @@ function rewardCard(option, state) {
   const { row: species, essence } = option;
   const projected = projectReward(state,option);
   const progress = game.progress;
-  const stats = playerStats(species,progress,projected.bonuses,projected.held);
+  const stats = playerStats(species,progress,projected.bonuses,projected.held,projected.balances);
   const card = element('button');
   card.type = 'button';
   card.style.setProperty('--primary-essence-rgb', 'var(--essence-' + essence + ')');
   const heading = element('strong', species.name);
   heading.prepend(gem(essence));
   card.append(portrait(species), heading, element('small', 'Nv. ' + levelFor(species, progress)));
-  if (projected.allStats) card.append(element('span', '+1 a todos los atributos'));
+  if (projected.allStats) card.append(element('span', '+3 Tamaño y +1 HP, Ataque, Defensa, Velocidad, Velocidad de ataque y Rango'));
   else {
     const benefit = projected.benefit, icon = new Image();
     icon.src = assetUrl('../../'+benefit.image,import.meta.url).href;

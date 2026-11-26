@@ -5,7 +5,8 @@
     "image": "assets/items/berry_oran.png",
     "stats": {},
     "healFraction": 0.1,
-    "consumable": true
+    "consumable": true,
+    "berry": true
   },
   "berry_sitrus": {
     "name": "Baya Zidra",
@@ -13,7 +14,8 @@
     "image": "assets/items/berry_sitrus.png",
     "stats": {},
     "healFraction": 0.4,
-    "consumable": true
+    "consumable": true,
+    "berry": true
   },
   "boost_calcium": {
     "name": "Calcio",
@@ -110,119 +112,119 @@
   },
   "candy_electric": {
     "name": "Grajea Eléctrica",
-    "description": "Recoges el doble de esencias de tipo Eléctrico.",
+    "description": "Recoges el doble de esencias de tipo Eléctrico. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_electric.png",
     "stats": {},
     "essence": "electric"
   },
   "candy_dragon": {
     "name": "Grajea Dragón",
-    "description": "Recoges el doble de esencias de tipo Dragón.",
+    "description": "Recoges el doble de esencias de tipo Dragón. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_dragon.png",
     "stats": {},
     "essence": "dragon"
   },
   "candy_water": {
     "name": "Grajea Agua",
-    "description": "Recoges el doble de esencias de tipo Agua.",
+    "description": "Recoges el doble de esencias de tipo Agua. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_water.png",
     "stats": {},
     "essence": "water"
   },
   "candy_normal": {
     "name": "Grajea Común",
-    "description": "Recoges el doble de esencias de tipo Normal.",
+    "description": "Recoges el doble de esencias de tipo Normal. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_normal.png",
     "stats": {},
     "essence": "normal"
   },
   "candy_flying": {
     "name": "Grajea Pluma",
-    "description": "Recoges el doble de esencias de tipo Volador.",
+    "description": "Recoges el doble de esencias de tipo Volador. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_flying.png",
     "stats": {},
     "essence": "flying"
   },
   "candy_rock": {
     "name": "Grajea Roca",
-    "description": "Recoges el doble de esencias de tipo Roca.",
+    "description": "Recoges el doble de esencias de tipo Roca. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_rock.png",
     "stats": {},
     "essence": "rock"
   },
   "candy_ice": {
     "name": "Grajea Helada",
-    "description": "Recoges el doble de esencias de tipo Hielo.",
+    "description": "Recoges el doble de esencias de tipo Hielo. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_ice.png",
     "stats": {},
     "essence": "ice"
   },
   "candy_ground": {
     "name": "Grajea Tierra",
-    "description": "Recoges el doble de esencias de tipo Tierra.",
+    "description": "Recoges el doble de esencias de tipo Tierra. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_ground.png",
     "stats": {},
     "essence": "ground"
   },
   "candy_ghost": {
     "name": "Grajea Fantasma",
-    "description": "Recoges el doble de esencias de tipo Fantasma.",
+    "description": "Recoges el doble de esencias de tipo Fantasma. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_ghost.png",
     "stats": {},
     "essence": "ghost"
   },
   "candy_fight": {
     "name": "Grajea Lucha",
-    "description": "Recoges el doble de esencias de tipo Lucha.",
+    "description": "Recoges el doble de esencias de tipo Lucha. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_fight.png",
     "stats": {},
     "essence": "fighting"
   },
   "candy_dark": {
     "name": "Grajea Oscura",
-    "description": "Recoges el doble de esencias de tipo Siniestro.",
+    "description": "Recoges el doble de esencias de tipo Siniestro. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_dark.png",
     "stats": {},
     "essence": "dark"
   },
   "candy_psychic": {
     "name": "Grajea Psíquica",
-    "description": "Recoges el doble de esencias de tipo Psíquico.",
+    "description": "Recoges el doble de esencias de tipo Psíquico. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_psychic.png",
     "stats": {},
     "essence": "psychic"
   },
   "candy_grass": {
     "name": "Grajea Planta",
-    "description": "Recoges el doble de esencias de tipo Planta.",
+    "description": "Recoges el doble de esencias de tipo Planta. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_grass.png",
     "stats": {},
     "essence": "grass"
   },
   "candy_steel": {
     "name": "Grajea Metálica",
-    "description": "Recoges el doble de esencias de tipo Acero.",
+    "description": "Recoges el doble de esencias de tipo Acero. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_steel.png",
     "stats": {},
     "essence": "steel"
   },
   "candy_fire": {
     "name": "Grajea Picante",
-    "description": "Recoges el doble de esencias de tipo Fuego.",
+    "description": "Recoges el doble de esencias de tipo Fuego. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_fire.png",
     "stats": {},
     "essence": "fire"
   },
   "candy_poison": {
     "name": "Grajea Venenosa",
-    "description": "Recoges el doble de esencias de tipo Veneno.",
+    "description": "Recoges el doble de esencias de tipo Veneno. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_poison.png",
     "stats": {},
     "essence": "poison"
   },
   "candy_bug": {
     "name": "Grajea Bicho",
-    "description": "Recoges el doble de esencias de tipo Bicho.",
+    "description": "Recoges el doble de esencias de tipo Bicho. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
     "image": "assets/items/candy_bug.png",
     "stats": {},
     "essence": "bug"
@@ -282,15 +284,17 @@
   },
   "lost_map": {
     "name": "Mapa perdido",
-    "description": "Aumenta la probabilidad de papel rojo un 50 por ciento.",
+    "description": "Aumenta un 50% la probabilidad de papel rojo. Ganar la aventura desbloquea Isla Celeste.",
     "image": "assets/items/lost_map.png",
-    "stats": {}
+    "stats": {},
+    "unlockBiome": "sky-island"
   },
   "lost_ticket": {
     "name": "Ticket perdido",
-    "description": "Añade un cuarto encargo al tablón.",
+    "description": "Añade un cuarto encargo al tablón. Ganar la aventura desbloquea Laberinto del Gremio.",
     "image": "assets/items/lost_ticket.png",
-    "stats": {}
+    "stats": {},
+    "unlockBiome": "guild's-maze"
   },
   "ribbon": {
     "name": "Cinta",
@@ -316,5 +320,250 @@
     "description": "Una vez por aventura, recupera el 20 por ciento de los PV al caer y gana invulnerabilidad.",
     "image": "assets/items/revive.png",
     "stats": {}
+  },
+  "apricorn_black": {
+    "name": "Bonguri Negro",
+    "description": "+5 Tamaño, +5 Ataque. Tiñe los marcos azules de color negro durante la aventura.",
+    "image": "assets/items/apricorn_black.png",
+    "stats": {
+      "size": 5,
+      "attack": 5
+    },
+    "frameColor": "black"
+  },
+  "apricorn_blue": {
+    "name": "Bonguri Azul",
+    "description": "+5 Tamaño, +5 Defensa. Tiñe los marcos azules de color azul durante la aventura.",
+    "image": "assets/items/apricorn_blue.png",
+    "stats": {
+      "size": 5,
+      "defense": 5
+    },
+    "frameColor": "blue"
+  },
+  "apricorn_green": {
+    "name": "Bonguri Verde",
+    "description": "+5 Tamaño, +10 HP máximos. Tiñe los marcos azules de color verde durante la aventura.",
+    "image": "assets/items/apricorn_green.png",
+    "stats": {
+      "size": 5,
+      "hpMax": 10
+    },
+    "frameColor": "green"
+  },
+  "apricorn_pink": {
+    "name": "Bonguri Rosa",
+    "description": "+5 Tamaño, +5 Rango. Tiñe los marcos azules de color rosa durante la aventura.",
+    "image": "assets/items/apricorn_pink.png",
+    "stats": {
+      "size": 5,
+      "range": 5
+    },
+    "frameColor": "pink"
+  },
+  "apricorn_red": {
+    "name": "Bonguri Rojo",
+    "description": "+5 Tamaño, +5% Ataque crítico. Tiñe los marcos azules de color rojo durante la aventura.",
+    "image": "assets/items/apricorn_red.png",
+    "stats": {
+      "size": 5,
+      "critical": 5
+    },
+    "frameColor": "red"
+  },
+  "apricorn_yellow": {
+    "name": "Bonguri Amarillo",
+    "description": "+5 Tamaño, +5 Velocidad. Tiñe los marcos azules de color amarillo durante la aventura.",
+    "image": "assets/items/apricorn_yellow.png",
+    "stats": {
+      "size": 5,
+      "speed": 5
+    },
+    "frameColor": "yellow"
+  },
+  "apricorn_white": {
+    "name": "Bonguri Blanco",
+    "description": "+5 Tamaño, +5 Velocidad de ataque. Tiñe los marcos azules de color blanco durante la aventura.",
+    "image": "assets/items/apricorn_white.png",
+    "stats": {
+      "size": 5,
+      "attackSpeed": 5
+    },
+    "frameColor": "white"
+  },
+  "gem_articuno": {
+    "name": "Gema Articuno",
+    "description": "+1 Ataque por esencia de tipo Hielo en tu poder. Ganar la aventura desbloquea el Huevo de Articuno.",
+    "image": "assets/items/gem_articuno.png",
+    "stats": {},
+    "attackEssence": "ice",
+    "unlockRelic": "egg_articuno"
+  },
+  "gem_zapdos": {
+    "name": "Gema Zapdos",
+    "description": "+1 Ataque por esencia de tipo Eléctrico en tu poder. Ganar la aventura desbloquea el Huevo de Zapdos.",
+    "image": "assets/items/gem_zapdos.png",
+    "stats": {},
+    "attackEssence": "electric",
+    "unlockRelic": "egg_zapdos"
+  },
+  "gem_moltres": {
+    "name": "Gema Moltres",
+    "description": "+1 Ataque por esencia de tipo Fuego en tu poder. Ganar la aventura desbloquea el Huevo de Moltres.",
+    "image": "assets/items/gem_moltres.png",
+    "stats": {},
+    "attackEssence": "fire",
+    "unlockRelic": "egg_moltres"
+  },
+  "snowbag": {
+    "name": "Bolsanieve",
+    "description": "+10 Rango. Ganar la aventura desbloquea la Criorreliquia.",
+    "image": "assets/items/snowbag.png",
+    "stats": {
+      "range": 10
+    },
+    "unlockRelic": "relic_ice"
+  },
+  "scripture": {
+    "name": "Escritura",
+    "description": "+10 Ataque. Ganar la aventura desbloquea la Petrorreliquia.",
+    "image": "assets/items/scripture.png",
+    "stats": {
+      "attack": 10
+    },
+    "unlockRelic": "relic_rock"
+  },
+  "iron_ingot": {
+    "name": "Lingote de hierro",
+    "description": "+10 Defensa. Ganar la aventura desbloquea la Siderorreliquia.",
+    "image": "assets/items/iron_ingot.png",
+    "stats": {
+      "defense": 10
+    },
+    "unlockRelic": "relic_steel"
+  },
+  "berry_safre": {
+    "name": "Baya Safre",
+    "description": "+5 Rango si está por debajo de 40. En otro caso, +1.",
+    "image": "assets/items/berry_safre.png",
+    "stats": {},
+    "consumable": true,
+    "berry": true,
+    "thresholdStat": {
+      "key": "range",
+      "threshold": 40,
+      "delta": 5
+    }
+  },
+  "berry_meloc": {
+    "name": "Baya Meloc",
+    "description": "-5 Tamaño si está por encima de 160. En otro caso, -1.",
+    "image": "assets/items/berry_meloc.png",
+    "stats": {},
+    "consumable": true,
+    "berry": true,
+    "thresholdStat": {
+      "key": "size",
+      "threshold": 160,
+      "delta": -5
+    }
+  },
+  "berry_atania": {
+    "name": "Baya Atania",
+    "description": "+5 Velocidad si está por debajo de 70. En otro caso, +1.",
+    "image": "assets/items/berry_atania.png",
+    "stats": {},
+    "consumable": true,
+    "berry": true,
+    "thresholdStat": {
+      "key": "speed",
+      "threshold": 70,
+      "delta": 5
+    }
+  },
+  "dried_cane": {
+    "name": "Cañas secas",
+    "description": "+15% Evasión y Ataque crítico. Se quema al recibir daño de fuego.",
+    "image": "assets/items/dried_cane.png",
+    "stats": {},
+    "equippedStats": {
+      "evasion": 15,
+      "critical": 15
+    },
+    "burnsOn": "fire"
+  },
+  "fast_claw": {
+    "name": "Garra rápida",
+    "description": "+20 Velocidad de ataque.",
+    "image": "assets/items/fast_claw.png",
+    "stats": {
+      "attackSpeed": 20
+    }
+  },
+  "dark_key": {
+    "name": "Llave oscura",
+    "description": "+5 Velocidad. Ganar la aventura desbloquea Torre Maldita.",
+    "image": "assets/items/dark_key.png",
+    "stats": {
+      "speed": 5
+    },
+    "unlockBiome": "doomed-tower"
+  },
+  "shell_lunar": {
+    "name": "Concha Lunar",
+    "description": "+10 Defensa y +5 adicionales si eres de tipo Agua o Siniestro.",
+    "image": "assets/items/shell_lunar.png",
+    "stats": {
+      "defense": 10
+    },
+    "typeDefense": [
+      "water",
+      "dark"
+    ]
+  },
+  "scope_lens": {
+    "name": "Lentes de aumento",
+    "description": "+10 Tamaño y Rango, −5 Velocidad y −5% Ataque crítico.",
+    "image": "assets/items/scope_lens.png",
+    "stats": {
+      "size": 10,
+      "range": 10,
+      "speed": -5,
+      "critical": -5
+    }
+  },
+  "ambrosia": {
+    "name": "Ambrosía",
+    "description": "Recuperas la mitad de tus HP máximos al completar Vence al líder.",
+    "image": "assets/items/ambrosia.png",
+    "stats": {},
+    "spriteFilter": "brightness(1.5) saturate(.4)",
+    "leaderHeal": 0.5
+  },
+  "aromatizer": {
+    "name": "Aromatizador",
+    "description": "Los enemigos te persiguen al entrar en cada piso.",
+    "image": "assets/items/aromatizer.png",
+    "stats": {},
+    "spriteFilter": "sepia(.6) hue-rotate(285deg) saturate(2)",
+    "rules": {
+      "floorAggro": 1
+    }
+  },
+  "shiny_elixir": {
+    "name": "Elixir Brillante",
+    "description": "Adoptas la forma shiny. Los salvajes tienen un 5% de probabilidad de ser shiny y dan el triple de EXP si lo son.",
+    "image": "assets/items/shiny_elixir.png",
+    "stats": {}
+  },
+  "metalizer": {
+    "name": "Metalizador",
+    "description": "−30 Defensa y +50% Bloqueo crítico.",
+    "image": "assets/items/metalizer.png",
+    "stats": {
+      "defense": -30,
+      "block": 50
+    },
+    "spriteFilter": "grayscale(.9) contrast(1.5)"
   }
 }

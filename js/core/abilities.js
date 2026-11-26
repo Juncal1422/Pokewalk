@@ -10,7 +10,7 @@ import { bodyRadius, canMove, dodgeChance, inflictDamage, setState, showToast } 
 
 import {effectSheets} from '../data/effect-atlas.js';
 import {actorRule,affinity} from './modifiers.js';
-import {dropNewItem} from './items.js';
+import {dropNewItem,refreshEssenceAttack} from './items.js';
 import {essenceNames} from './hud.js';
 
 const effectAtlas=new Image();
@@ -177,9 +177,22 @@ export function elementalHit(owner,target,power,element,ownerAbility=true,critic
     psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:0},
     electric:{water:2,flying:2,electric:.5,grass:.5,dragon:.5,ground:0}
   };
-  element=attackElement(owner)??element;
+  if (!ownerAbility) element=attackElement(owner)??element;
   const factor=affinity(element,target)*game.pokemon.get(target.dex).types.reduce((value,type)=>value*(chart[element]?.[type]??1),1);
-  if(factor)return inflictDamage(owner,target,power*factor,critical,ownerAbility);
+  if (!factor) {
+    target.immuneUntil = gameTime()+750;
+    playSound('miss');
+    return 0;
+  }
+  const damage = inflictDamage(owner,target,power*factor,critical,ownerAbility);
+  const scorched = damage && target.isPlayer && [...game.inventory].find(id=>game.items[id]?.burnsOn===element);
+  if (scorched) {
+    game.inventory.delete(scorched);
+    target.stats=playerStats(game.pokemon.get(target.dex),game.progress,target.bonuses);
+    showToast('El fuego ha quemado '+game.items[scorched].name+'.');
+    playSound('inflame');
+  }
+  return damage;
 }
 
 // El ataque elemental se comparte entre contacto, proyectiles y habilidades.
@@ -277,6 +290,7 @@ function payEssences(owner,id){
       balances[types[Math.floor(Math.random()*types.length)]]--;
     }
   }
+  if (owner.isPlayer) refreshEssenceAttack();
   return true;
 }
 
@@ -294,6 +308,7 @@ function releaseSpecial(owner,id){
       const type=essenceNames[Math.floor(Math.random()*essenceNames.length)];
       balances[type]=(balances[type]??0)+1;
     }
+    if (owner.isPlayer) refreshEssenceAttack();
     playSound('dealer');
   }else if(config.lootCost)dropNewItem(owner);
   else if(config.burstRange){
@@ -468,8 +483,7 @@ export function tickAbilities() {
         const power=(visualEffect.weapon?damageFor(visualEffect.owner,closestTarget,critical):visualEffect.damage)*(1+actorRule(visualEffect.owner,'projectileBonus'));
         if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical) && visualEffect.weapon){
           knockback(visualEffect.owner,closestTarget,visualEffect.kind==='rock_throw'?20:10);
-          if(visualEffect.owner && actorRule(visualEffect.owner,'fireAttack') && (visualEffect.weapon || visualEffect.kind==='flare'))drawingContext.filter=game.canvasTheme.fireFilter;
-    if(visualEffect.kind==='rock_throw')playSound('rockImpact');
+          if(visualEffect.kind==='rock_throw')playSound('rockImpact');
         }
         visualEffect.finishedImpact=true;
         return lifetimeFraction<1;

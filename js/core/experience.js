@@ -10,7 +10,9 @@ import { levelFor } from './stats.js';
 export const experienceCost = level => Math.ceil(26 * 1.105 ** (level - 5));
 // Actualiza el nivel de la partida y recalcula los atributos de la forma actual respetando su límite.
 export function levelUp() {
-  game.progress = Math.min(100, game.progress + 1);
+  if (game.progress >= 100) return;
+  game.progress++;
+  game.player.bonuses.size += 3;
   const player = game.player, species = game.pokemon.get(player.dex);
   player.level = levelFor(species, game.progress);
   const previous=player.stats;
@@ -26,7 +28,7 @@ export function levelUp() {
 export function awardExperience(enemy) {
   const stats = game.pokemon.get(enemy.dex).stats;
   const baseStatMultiplier = (stats.hpMax + stats.attack + stats.defense + stats.speed) / 500;
-  const earnedExperience = Math.max(1, Math.round(enemy.level * baseStatMultiplier)) * (enemy.boss ? 2 : 1);
+  const earnedExperience = Math.max(1, Math.round(enemy.level * baseStatMultiplier)) * (enemy.boss ? 2 : 1) * (enemy.shiny && game.inventory.has('shiny_elixir') ? 3 : 1);
   showWorldNotice(game.player, earnedExperience, 'EXP');
   game.xp += earnedExperience;
   // Una baja puede cubrir varios umbrales. Se conserva la EXP sobrante hasta llegar al nivel 100.

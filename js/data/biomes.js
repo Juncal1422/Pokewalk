@@ -9,7 +9,7 @@ export async function loadBiomes(pokemon) {
   const byName = new Map([...pokemon.values()].map(species => [species.name, species.dex]));
   // El JSON se edita por nombre. El motor y los sprites comparten el número de Pokédex.
   function roster(encounterBands, biome) {
-    return Object.fromEntries(['1-16', '17-36', '37-60', '61-100'].map(levelBand => {
+    return Object.fromEntries(['1-8','9-16','17-25','26-36','37-50'].map(levelBand => {
       const names = encounterBands?.[levelBand];
       if (!names?.length) throw new Error('Lista vacía en ' + biome + ' · ' + levelBand);
       return [levelBand, names.map(name => {

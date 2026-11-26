@@ -73,11 +73,12 @@ async function fetchAnimation(baseUrl, animations, candidates) {
 }
 
 // Carga y almacena en caché las acciones de una especie, con alternativas cuando falta una animación.
-export async function loadPokemonData(pokedexNumber) {
+export async function loadPokemonData(pokedexNumber, shiny=false) {
   if (EXCLUDED_DEX.has(pokedexNumber)) return null;
-  if (game.spriteCache.has(pokedexNumber)) return game.spriteCache.get(pokedexNumber);
+  const key=shiny ? pokedexNumber+':shiny' : pokedexNumber;
+  if (game.spriteCache.has(key)) return game.spriteCache.get(key);
   const paddedDexNumber = game.pokemon.get(pokedexNumber)?.spritePath ?? String(pokedexNumber).padStart(4, '0');
-  const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${paddedDexNumber}`;
+  const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${paddedDexNumber}${shiny ? (paddedDexNumber.includes("/") ? "/0001" : "/0000/0001") : ""}`;
   try {
     const response = await fetch(`${baseUrl}/AnimData.xml`);
     if (!response.ok) return null;
@@ -126,9 +127,16 @@ export async function loadPokemonData(pokedexNumber) {
       const origin = idleCenters[Math.min(directionIndex,idleCenters.length-1)][0];
       return frames.map(point => ({x:origin.x-point.x,y:origin.y-point.y}));
     });
-    game.spriteCache.set(pokedexNumber, spriteData);
+    game.spriteCache.set(key, spriteData);
     return spriteData;
   } catch {
     return null;
   }
+}
+
+// Mantiene el combate activo mientras se descarga la variante de la forma actual.
+export async function applyShinyAppearance(entity) {
+  entity.shiny=true;
+  const variant=await loadPokemonData(entity.dex,true);
+  if (variant) entity.pendingShinyAnims=variant.anims;
 }

@@ -400,16 +400,16 @@
   zoom: var(--equipment-zoom);
 }
 #equipment-panel {
-  left: min(223px, 38vw);
+  left: min(calc(205px * var(--hud-stats-scale) * var(--hud-scale) / var(--equipment-zoom)), calc(38vw / var(--equipment-zoom)));
   right: min(30vw, 380px);
-  bottom: 34px;
+  bottom: 53px;
   grid-template-columns: repeat(25, minmax(0, 1fr));
   align-items: end;
 }
 #species-benefit-panel {
   --benefit-icon-size: min(50px, 4.6dvh);
   left: 8px;
-  top: 29%;
+  top: calc(42px * var(--hud-scale) / var(--equipment-zoom));
   grid-auto-flow: column;
   grid-template-rows: repeat(9, var(--benefit-icon-size));
   grid-template-columns: repeat(3, var(--benefit-icon-size));
@@ -495,4 +495,16 @@
 #mission-upgrade-dialog .keep-current-form .pokemon-portrait { width: 44px; height: 44px; }
 @media (max-width: 440px) {
   #mission-upgrade-dialog button { padding: 1px; --frame-width: 7px; font-size: 15px; }
+}
+
+/* El control sigue disponible cuando se pliega el panel dibujado en el canvas. */
+#toggle-stats {
+  position: absolute;
+  bottom: 3px;
+  left: 5px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--hud-text, white);
+  background: #14233b;
+  border: 1px solid #718bb5;
 }

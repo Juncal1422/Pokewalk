@@ -19,7 +19,7 @@ const sounds = {
   machinery: 'Warp Orb',
   featherfall:'Fog', rock_aura:'Huge Stomp (high)',regenerative:'Healing Wish Hit',watergun:'Water Gun',rockImpact:'Rollout',
   charge: 'Charge', itemGift:'Item Gift', frozen:'Ice Beam Hit', erupt:'Eruption',water_burst:'Whirlpool',
-  shell:'Bubble',dealer:'Use TM',fire_spike:'Flame Wheel Hit',boost:'Charge',heal:'Healing Wish Hit',iron_hit:'Mach Punch',
+  shell:'Bubble',dealer:'Use TM',inflame:'Inflame',fire_spike:'Inflame',boost:'Charge',heal:'Healing Wish Hit',iron_hit:'Mach Punch',
 };
 
 // Cada voz lee el volumen actual; se reutiliza la URL del banco local de efectos.
