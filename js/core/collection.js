@@ -54,6 +54,24 @@ export const relics = {
   },
 };
 
+export function biomeRequirement(biome) {
+  return Object.values(game.items ?? {}).find(item => item.unlockBiome === biome.id);
+}
+
+export function biomeAvailable(biome) {
+  return !biomeRequirement(biome) || isUnlocked('biomes', biome.id);
+}
+
+// El permiso permanente procede de la reliquia ganada. Equiparla activa el encuentro en la aventura.
+export function biomeLeaderList(biome) {
+  const leaders = new Map(Object.values(biome.leaders).flat().map(dex => [dex, {dex, available:true}]));
+  for (const [relicId, relic] of Object.entries(relics)) {
+    if (relic.biome === biome.id)
+      leaders.set(relic.dex, {dex:relic.dex, relicId, available:isUnlocked('relics',relicId)});
+  }
+  return [...leaders.values()];
+}
+
 // El archivo conserva IDs y crónicas, nunca referencias a pisos, entidades o catálogos.
 export function emptyCollection() {
   return {

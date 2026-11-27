@@ -1,4 +1,4 @@
-import {isUnlocked,relics} from './collection.js';
+import {biomeAvailable,biomeLeaderList} from './collection.js';
 import {rule} from './modifiers.js';
 import {dropNewItem} from './items.js';
 import { awardExperience } from './experience.js';
@@ -32,8 +32,7 @@ const between = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 // Pondera cada bioma por la distancia entre su nivel y la dificultad preferida de la misión.
 export function chooseBiome(biomes, missionNumber) {
   biomes = biomes.filter(b => b.level >= 5 ? missionNumber >= 24 : missionNumber < 25);
-  const gated = Object.values(game.items ?? {}).map(item=>item.unlockBiome).filter(Boolean);
-  biomes = biomes.filter(b => !gated.includes(b.id) || isUnlocked('biomes',b.id));
+  biomes = biomes.filter(biomeAvailable);
   const preferred = missionNumber < 24 ? 1 + (missionNumber-1)/8 : 5 + (missionNumber-24)/5;
   const weights = biomes.map((candidateBiome) =>
     Math.exp(-Math.abs(candidateBiome.level - preferred) / 1.5),
@@ -59,10 +58,12 @@ export function newMission(
       ? 1
       : between(biome.level, floorCaps[capType][biome.level - 1]);
   const levelBand = number <= 8 ? '1-8' : number <= 16 ? '9-16' : number <= 25 ? '17-25' : number <= 36 ? '26-36' : '37-50';
-  const specialLeaders = number >= 25 && type === 'leader'
-    ? [...(game.runRelics ?? [])].map(id => relics[id]).filter(r => r?.biome === biome.id)
-    : [];
-  const encounterPool = specialLeaders.length ? specialLeaders.map(r => r.dex) : (type === 'leader' ? biome.leaders : biome.wild)[levelBand];
+  const leaders = type === 'leader' ? biomeLeaderList(biome) : [];
+  const specialLeaders = leaders.filter(entry => entry.relicId && entry.available &&
+    number >= 25 && game.runRelics?.has(entry.relicId));
+  const regular = type === 'leader' ? biome.leaders[levelBand].filter(dex =>
+    !leaders.some(entry => entry.dex === dex && entry.relicId)) : biome.wild[levelBand];
+  const encounterPool = specialLeaders.length ? specialLeaders.map(entry => entry.dex) : regular;
   const target = type === 'hunt' ? sample(encounterPool) : null;
   const layout = { pasillos, habitaciones, cruces };
   for (const key of Object.keys(layout))

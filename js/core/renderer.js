@@ -7,7 +7,7 @@ import { drawEffects, drawFang } from './abilities.js';
 import { attackMotion } from './attack-motion.js';
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
-import { PLAYER_GRACE_MS, FADE_MS, MAP_H, MAP_W, RTILE, ZOOM } from './constants.js';
+import { PLAYER_GRACE_MS, FADE_MS, MAP_H, MAP_W, TILE, RTILE, ZOOM } from './constants.js';
 import { game } from './state.js';
 
 import { loadTileset, drawTerrainTile } from './tileset-atlas.js';
@@ -51,6 +51,39 @@ export function preparePortal() {
 
 const terrainView={};
 
+// Los bloques se rasterizan a resolución nativa al entrar en cámara y se reutilizan durante todo el piso.
+const chunkSize = 8;
+function drawTerrainChunk(target, cx, cy, phase, sparkle, cameraX, cameraY) {
+  const left = cx*chunkSize, top = cy*chunkSize;
+  const key = cy*Math.ceil(MAP_W/chunkSize)+cx;
+  let chunk = terrainView.chunks.get(key);
+  function paint(x,y) {
+    const value = game.grid[y][x];
+    const material = value === 0 ? 'floor' : value === 1 ? game.currentBiome.wallMaterial ?? 'wall' : game.currentBiome.terrain;
+    return drawTerrainTile(chunk.ctx,game.tileSheet,game.autotileGrid[y][x].mask,material,
+      game.variantGrid[y][x],phase,(x-left)*TILE,(y-top)*TILE,TILE,sparkle);
+  }
+  if (!chunk) {
+    const image = document.createElement('canvas');
+    image.width = Math.min(chunkSize,MAP_W-left)*TILE;
+    image.height = Math.min(chunkSize,MAP_H-top)*TILE;
+    chunk = {image,ctx:image.getContext('2d'),animated:[],phase,sparkle};
+    terrainView.chunks.set(key,chunk);
+    for (let y=top;y<Math.min(top+chunkSize,MAP_H);y++)
+      for (let x=left;x<Math.min(left+chunkSize,MAP_W);x++)
+        if (paint(x,y)) chunk.animated.push([x,y]);
+  } else if (chunk.phase !== phase || chunk.sparkle !== sparkle) {
+    for (const [x,y] of chunk.animated) {
+      chunk.ctx.clearRect((x-left)*TILE,(y-top)*TILE,TILE,TILE);
+      paint(x,y);
+    }
+    chunk.phase=phase;
+    chunk.sparkle=sparkle;
+  }
+  target.drawImage(chunk.image,left*RTILE-cameraX,top*RTILE-cameraY,
+    chunk.image.width*ZOOM,chunk.image.height*ZOOM);
+}
+
 // Proyecta el piso, ordena combatientes por profundidad y compone efectos, avisos y HUD.
 export function draw() {
   const { player, tileSheet, ctx: drawingContext, canvas } = game;
@@ -76,26 +109,11 @@ export function draw() {
   const paletteTime=tileSheet.animated ? gameTime()*.8 : 0;
   const palettePhase = Math.floor(paletteTime / (game.currentBiome.paletteStepMs ?? 133));
   const sparklePhase = Math.floor(paletteTime / (game.currentBiome.sparkleStepMs ?? game.currentBiome.paletteStepMs ?? 133));
-  // Conserva el terreno visible mientras cambian los sprites o la cámara se mueve dentro de la casilla.
-  const cache=terrainView;
-  const w=colEnd-colStart+1,h=rowEnd-rowStart+1;
-  if (!cache.image)cache.image=document.createElement('canvas');
-  if(cache.grid!==game.grid || cache.biome!==game.currentBiome || cache.tiles!==tileSheet || cache.left!==colStart || cache.top!==rowStart ||
-      cache.w!==w || cache.h!==h || cache.phase!==palettePhase || cache.sparkle!==sparklePhase){
-    if(cache.image.width!==w*RTILE)cache.image.width=w*RTILE;
-    if(cache.image.height!==h*RTILE)cache.image.height=h*RTILE;
-    const ctx=cache.image.getContext('2d');
-    ctx.imageSmoothingEnabled=false;
-    ctx.clearRect(0,0,cache.image.width,cache.image.height);
-    for(let y=rowStart;y<=rowEnd;y++)for(let x=colStart;x<=colEnd;x++){
-      const terrain=game.grid[y][x];
-      const material=terrain===0?'floor':terrain===1?(game.currentBiome.wallMaterial??'wall'):game.currentBiome.terrain;
-      drawTerrainTile(ctx,tileSheet,game.autotileGrid[y][x].mask,material,game.variantGrid[y][x],
-        palettePhase,(x-colStart)*RTILE,(y-rowStart)*RTILE,RTILE,sparklePhase);
-    }
-    Object.assign(cache,{grid:game.grid,biome:game.currentBiome,tiles:tileSheet,left:colStart,top:rowStart,w,h,phase:palettePhase,sparkle:sparklePhase});
-  }
-  drawingContext.drawImage(cache.image,colStart*RTILE-cameraX,rowStart*RTILE-cameraY);
+  if (terrainView.grid!==game.grid || terrainView.tiles!==tileSheet || terrainView.biome!==game.currentBiome)
+    Object.assign(terrainView,{grid:game.grid,tiles:tileSheet,biome:game.currentBiome,chunks:new Map()});
+  for (let cy=Math.floor(rowStart/chunkSize);cy<=Math.floor(rowEnd/chunkSize);cy++)
+    for (let cx=Math.floor(colStart/chunkSize);cx<=Math.floor(colEnd/chunkSize);cx++)
+      drawTerrainChunk(drawingContext,cx,cy,palettePhase,sparklePhase,cameraX,cameraY);
   if(game.portal){
     const icon={stairs:stairsImage,objective:objectiveImage,portal:portalImage}[game.portal.kind];
     drawingContext.drawImage(icon,game.portal.x*RTILE-cameraX,game.portal.y*RTILE-cameraY,RTILE,RTILE);

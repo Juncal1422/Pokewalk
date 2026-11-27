@@ -3,7 +3,7 @@ import { assetUrl } from './asset-url.js';
 import {game} from './state.js';
 import {element,portrait,gem} from './pokemon-panel.js';
 import {playSound} from './audio.js';
-import {isUnlocked,relics,saveCollection,emptyCollection,parseCollection} from './collection.js';
+import {biomeRequirement,biomeAvailable,biomeLeaderList,isUnlocked,relics,saveCollection,emptyCollection,parseCollection} from './collection.js';
 import {benefitSynergies} from './benefits.js';
 import {labels,statText} from './stats.js';
 
@@ -24,7 +24,36 @@ const asset=path=>assetUrl('../../assets/'+path,import.meta.url).href;
 
 const backgrounds = {Pommedew:'home',Beneficios:'benefits',Objetos:'items','Tablón de misiones':'missions','Pokédex':'pokedex',Reliquias:'relics'};
 const sectionArt = {'Tienda del Gremio':'shop','Pokédex':'pokedex',Objetos:'items',Beneficios:'benefits',Reliquias:'relics'};
-// El navegador carga el fondo CSS de cada pantalla al abrirla.
+// Conserva una variante por visita al juego y reutiliza las imágenes ya decodificadas.
+const backgroundVariables = new Map(Object.values(backgrounds).map(section =>
+  [section, '--guild-' + section + '-background-' + (Math.random() < .5 ? 1 : 2)]));
+const decodedBackgrounds = new Map();
+const defaultBackground = '--guild-default-background';
+let backgroundRequest = 0;
+let lastBackground;
+function decodeBackground(variable, dialog) {
+  if (decodedBackgrounds.has(variable)) return decodedBackgrounds.get(variable);
+  const css = getComputedStyle(dialog).getPropertyValue(variable).trim();
+  const url = css.match(/^url\(["']?(.*?)["']?\)$/)?.[1];
+  if (!url) return Promise.resolve(null);
+  const image = new Image();
+  image.src = url;
+  const ready = image.decode().then(() => image).catch(() => {
+    decodedBackgrounds.delete(variable);
+    return null;
+  });
+  decodedBackgrounds.set(variable, ready);
+  return ready;
+}
+
+let warming;
+export function warmGuildBackgrounds(dialog) {
+  warming ??= (async () => {
+    for (const variable of [backgroundVariables.get('home'), defaultBackground, ...backgroundVariables.values()])
+      await decodeBackground(variable, dialog);
+  })();
+}
+
 // Crea un control nativo que también funciona con teclado.
 function button(label,action,sound='select') {
   const control=element('button',label);
@@ -38,8 +67,14 @@ function screen(title) {
   dialog.replaceChildren();
   dialog.className='';
   const section = backgrounds[title];
-  const background = section ? '--guild-' + section + '-background-' + (Math.random() < .5 ? '1' : '2') : '--guild-default-background';
-  dialog.style.setProperty('--guild-background-image', title ? 'var(' + background + ')' : 'none');
+  const variable = backgroundVariables.get(section) ?? defaultBackground;
+  const request = ++backgroundRequest;
+  dialog.style.setProperty('--guild-background-image', title && lastBackground ? 'var('+lastBackground+')' : 'none');
+  if (title) decodeBackground(variable, dialog).then(image => {
+    if (request !== backgroundRequest) return;
+    if (image) lastBackground = variable;
+    dialog.style.setProperty('--guild-background-image', 'var('+(image ? variable : lastBackground ?? variable)+')');
+  });
   if(title)dialog.append(element('h1',title));
   dialog.oncancel=event=>event.preventDefault();
   if(!dialog.open)dialog.showModal();
@@ -177,6 +212,21 @@ function collectionMenu(back) {
       if(!row)return element('p',String(id));
       const card=button(row.name,()=>speciesPage(row,()=>open('Pokédex')));
       card.prepend(portrait(row));return card;
+    }),
+    Biomas:game.biomes.map(biome=>()=> {
+      const required = biomeRequirement(biome);
+      const label = biome.name + (biomeAvailable(biome) ? '' : ' · Bloqueado');
+      return button(label, () => {
+        const rows = biomeLeaderList(biome).map(({dex,relicId,available}) => () => {
+          const species = game.pokemon.get(dex);
+          const entry = element('p', species.name + (available ? '' : ' · Bloqueado') +
+            (relicId ? ' · Misión 25 · '+relics[relicId].name : ''));
+          entry.prepend(portrait(species));
+          return entry;
+        });
+        if (required && !biomeAvailable(biome)) rows.unshift(() => element('p','Completa una aventura con '+required.name+'.'));
+        listPage('Líderes · '+biome.name, rows, 0, () => open('Biomas'));
+      });
     }),
     Objetos:Object.keys(game.items).map(id=>()=>catalogCard(id,game.items[id])),
     Beneficios:[...game.benefits.keys()].map(id=>()=>catalogCard(id,game.benefits.get(id),()=>{
