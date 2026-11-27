@@ -51,6 +51,8 @@ export async function loadTileset(biome) {
   const source = context.getImageData(0,0,image.width,image.height).data;
   const colorAt = (x,y) => {
     const i = (y*image.width+x)*4;
+    // Canvas pierde el RGB del blanco transparente de la leyenda y las paletas.
+    if (!source[i+3]) return 0xffffff;
     return source[i]*65536+source[i+1]*256+source[i+2];
   };
   const top = image.height - 607;
@@ -85,7 +87,7 @@ export async function loadTileset(biome) {
         role==='water' && banks.length>1 && hasSparkles ? banks.slice(0,-1) : banks;
       const tile=makeTile(data,colors,paletteBanks);
       (layers[role]??=[]).push(tile);
-      if(role==='floor' || role==='floorAlt')choices.set(data.data.join(','),tile);
+      if(role==='floor' || role==='floorAlt')choices.set(String.fromCharCode(...pixels),tile);
     }
     tiles.set(mask,layers);
   }
@@ -102,8 +104,11 @@ function makeTile(original, colors, banks) {
     const score=new Set(bank[0].filter(color=>colors.has(color))).size;
     if(score>best){best=score;palette=bank;}
   }
+  // Muchas piezas comparten paleta pero sólo unas pocas usan sus colores cambiantes.
+  if (palette && !palette.some(row => row.some((color,i) =>
+    color !== palette[0][i] && colors.has(palette[0][i])))) palette = null;
   const frames=[];
-  return phase=>{
+  const frame = phase=>{
     const index=palette ? phase%palette.length : 0;
     if(frames[index]) return frames[index];
     const canvas=document.createElement('canvas');
@@ -115,24 +120,35 @@ function makeTile(original, colors, banks) {
         const rgb=pixels.data[i]*65536+pixels.data[i+1]*256+pixels.data[i+2];
         const next=replacements.get(rgb);
         if(next===undefined)continue;
-        if(next===0xff00ff || next===0x00ff00){pixels.data[i+3]=0;continue;}
+        if(next===0xffffff || next===0xff00ff || next===0x00ff00){pixels.data[i+3]=0;continue;}
         pixels.data[i]=next>>16; pixels.data[i+1]=(next>>8)&255; pixels.data[i+2]=next&255;
       }
     }
     canvas.getContext('2d').putImageData(pixels,0,0);
     return frames[index]=canvas;
   };
+  frame.animated = Boolean(palette && palette.length > 1);
+  return frame;
 }
 
 // Suelo, borde del material y alternativa comparten máscara y fase; el vacío de una alternativa deja ver la base.
 export function drawTerrainTile(ctx, tiles, mask, material, variant, phase, x, y, size, sparklePhase=phase) {
   const layers=tiles.get(mask);
-  const paint=tile=>{if(tile)ctx.drawImage(tile(phase),x,y,size,size);};
-  if(material==='floor'){paint(tiles.floorChoices[variant % tiles.floorChoices.length]);return;}
-  paint(tiles.get(255).floor?.[0]);
-  if(material==='water')paint(layers.waterBase?.[0]);
-  paint(layers[material]?.[0] ?? layers.void?.[0]);
-  const alternatives=layers[material+'Alt'];
-  if(material==='water' && alternatives?.length)ctx.drawImage(alternatives[0](sparklePhase),x,y,size,size);
-  else if(variant && alternatives?.length)paint(alternatives[(variant-1)%alternatives.length]);
+  let animated = false;
+  function paint(tile, step=phase) {
+    if (!tile) return;
+    animated ||= tile.animated;
+    ctx.drawImage(tile(step),x,y,size,size);
+  }
+  if (material === 'floor') {
+    paint(tiles.floorChoices[variant % tiles.floorChoices.length]);
+  } else {
+    paint(tiles.get(255).floor?.[0]);
+    if(material==='water')paint(layers.waterBase?.[0]);
+    paint(layers[material]?.[0] ?? layers.void?.[0]);
+    const alternatives=layers[material+'Alt'];
+    if(material==='water' && alternatives?.length)paint(alternatives[0],sparklePhase);
+    else if(variant && alternatives?.length)paint(alternatives[(variant-1)%alternatives.length]);
+  }
+  return animated;
 }

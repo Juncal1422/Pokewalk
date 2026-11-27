@@ -1,6 +1,6 @@
 import { loadInterfaceStylesheet, readCanvasTheme } from './core/interface-theme.js';
 import { assetUrl } from './core/asset-url.js';
-import { visitGuild, selectMission, guildMessage } from './core/guild.js';
+import { warmGuildBackgrounds, visitGuild, selectMission, guildMessage } from './core/guild.js';
 import {
   loadCollection,
   beginChronicle,
@@ -407,6 +407,7 @@ export async function startGame({
   mountApp(root);
   await loadInterfaceStylesheet();
   const app = root.querySelector('#poke-walk-app');
+  warmGuildBackgrounds(app.querySelector('#guild-screen'));
   app.style.removeProperty('--textbox-blue');
   game.frameColor = 'blue';
   game.statsCollapsed = false;
@@ -446,7 +447,7 @@ export async function startGame({
   const benefitsUrl = assetUrl('./data/benefits.json', import.meta.url);
   const [catalog,synergies, benefits] = await Promise.all([
     loadEncountersCatalog().then(async ({pokemon,items})=>{
-      const [biomes]=await Promise.all([loadBiomes(pokemon),loadItemImages(items)]);
+      const biomes=await loadBiomes(pokemon);
       return {pokemon,items,biomes};
     }),
     fetch(assetUrl('./data/synergies.json', import.meta.url)).then((response) =>
@@ -454,10 +455,6 @@ export async function startGame({
     ),
     fetch(benefitsUrl).then((response) => response.json()),
 
-    preparePortal(),
-    loadHud(),
-    loadTerrain(),
-    loadEffects(),
   ]);
   game.synergies = new Map(synergies.map((rule) => [rule.effect, rule]));
   game.benefits = new Map(benefits.map((benefit) => [benefit.id, benefit]));
@@ -487,8 +484,13 @@ export async function startGame({
   game.formEssence = null;
   game.batteryEnergy = 0;
   // Si falla un recurso remoto se puede volver al tablón sin abrir una crónica vacía.
+  let battleResources;
   while (!game.player) {
-    await visitGuild();
+    const visit = visitGuild();
+    // El gremio ya está visible mientras se preparan los recursos de la primera mazmorra.
+    battleResources ??= Promise.all([preparePortal(),loadHud(),loadTerrain(),loadEffects(),loadItemImages(items)])
+      .then(() => null, error => error);
+    await visit;
     const firstMission = await selectMission(missionOffers(1, 5));
     game.runRelics = new Set(game.collection.enabled);
     // Asignar el saldo inicial también hace idempotente un reintento de carga desde el gremio.
@@ -496,6 +498,11 @@ export async function startGame({
       ? Object.fromEntries(essenceNames.map((type) => [type, 100]))
       : {};
     try {
+      const resourceError = await battleResources;
+      if (resourceError) {
+        battleResources = null;
+        throw resourceError;
+      }
       await changeBiome(firstMission.biome);
       await loadLevel(DEFAULT_DEX, firstMission, 1);
     } catch (error) {

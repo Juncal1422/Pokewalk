@@ -403,3 +403,11 @@ Las 628 fichas tienen la velocidad de ataque base triplicada. La progresión de 
 loadPokemonData comparte las solicitudes en curso de cada especie y variante. fetchAnimation comparte la imagen física de acciones CopyOf. Los fallos de carga de especie se pueden reintentar. El catálogo y los recursos de combate se preparan en paralelo. loadTileset lee los píxeles del canvas una vez. draw conserva el terreno visible hasta que cambia el piso, el área visible o la fase de paleta. La salida, los objetos y los Pokémon se dibujan por separado en cada fotograma. La IA espera hasta 200 ms para repetir una búsqueda sin ruta al mismo destino.
 
 Las Cañas secas son el único objeto con `burnsOn: "fire"`. `elementalHit` comprueba que el jugador haya recibido daño de fuego antes de consultar esa propiedad. Las espinas sin elemento conservan todo el inventario.
+
+### Acceso, fondos y efectos
+
+En Colección → Biomas, biomeAvailable y biomeLeaderList alimentan la lista y el generador de encargos. testingUnlocks en collection.js mantiene abiertos los permisos de prueba. En estable se comprueba el bioma ganado con su objeto o la reliquia del líder. Las aves y los tres Regis conservan la condición de equipar su reliquia y alcanzar la misión 25.
+
+warmGuildBackgrounds decodifica una variante por sección al arrancar. screen conserva el último fondo disponible durante la navegación. drawTerrainChunk conserva bloques nativos de 8 × 8 por piso y actualiza las casillas con colores animados. El lector de la leyenda interpreta el blanco transparente como blanco.
+
+Tras actualizar assets/effects, ejecutar python tools/build_effects.py con Pillow. Compone las secuencias numéricas y las filas direccionales, conserva las hojas de autor y regenera effects.png y effect-atlas.js con sus offsets. El impacto del hueso y las piezas del aura tienen entradas independientes.
