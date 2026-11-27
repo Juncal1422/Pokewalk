@@ -468,11 +468,11 @@
   {
     "id": "groudons_scale",
     "name": "Escama de Groudon",
-    "description": "E · Erupciones sucesivas cada 32 píxeles hasta la pared. Daño de fuego ×2. Recarga de 120 s.",
+    "description": "E · Erupciones sucesivas cada 16 píxeles hasta la pared. Daño de fuego ×3. Recarga de 120 s.",
     "image": "assets/benefits/groudons_scale.png",
     "rules": {
-      "eruptionStep": 32,
-      "power": 2
+      "eruptionStep": 16,
+      "power": 3
     },
     "active": true,
     "pokemon": [
@@ -952,7 +952,6 @@
       "Natu",
       "Sandshrew",
       "Sceptile",
-      "Simisage",
       "Unown",
       "Weavile",
       "Yanmega",
