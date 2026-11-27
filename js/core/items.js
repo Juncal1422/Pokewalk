@@ -54,6 +54,12 @@ export async function loadItemImages(items) {
   }));
 }
 
+export function randomBerry(){
+  if(synergyActive('sitrusBerries'))return 'berry_sitrus';
+  const berries=Object.keys(game.items).filter(id=>game.items[id].berry);
+  return berries[Math.floor(Math.random()*berries.length)];
+}
+
 // Las bayas tienen una tirada independiente. El cupo cuenta apariciones,
 // incluso si el jugador abandona la planta sin recoger el objeto.
 export function spawnFloorItems() {
@@ -70,9 +76,7 @@ export function spawnFloorItems() {
   }
   if (sites.length && Math.random()<.5+rule('berryChance')){
     const revive=!game.reviveSpent && !game.inventory.has('revive') && Math.random()<rule('reviveBerry');
-    const berries = Object.keys(game.items).filter(id=>game.items[id].berry);
-    const berry = synergyActive('sitrusBerries') ? 'berry_sitrus' : berries[Math.floor(Math.random()*berries.length)];
-    place(revive ? 'revive' : berry);
+    place(revive ? 'revive' : randomBerry());
   }
   const extraRevive = rule('reviveChance');
   if (extraRevive && sites.length && !game.reviveSpent && !game.inventory.has('revive') &&
@@ -84,7 +88,7 @@ export function spawnFloorItems() {
     const item=game.items[itemId];
     return !(itemId==='revive' && (game.reviveSpent || game.drops.some(drop=>drop.id==='revive'))) && (item.consumable || game.inventory.size < 75) && !item.berry && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
-  if (sites.length && available.length && mission.itemsPlaced < 3 && Math.random() < (.10 + amount('scaled') + rule('itemChance'))*(game.runRelics?.has('debugger')?1.5:1)) {
+  if (sites.length && available.length && mission.itemsPlaced < 3 && Math.random() < (.10 + rule('itemChance'))*(game.runRelics?.has('debugger')?1.5:1)) {
     const itemId=available[Math.floor(Math.random() * available.length)];
     place(itemId);
     if (game.items[itemId].oncePerMission) mission.candyPlaced=true;

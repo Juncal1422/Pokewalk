@@ -6,7 +6,15 @@
     "image": "assets/benefits/heritage_earth.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Quagsire"],
+    "pokemon": [
+      "Sandile",
+      "Krokorok",
+      "Krookodile",
+      "Sandshrew",
+      "Sandslash",
+      "Wooper",
+      "Quagsire"
+    ],
     "stats": {
       "defense": 10
     }
@@ -19,13 +27,12 @@
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Chatot",
-      "Mandibuzz",
-      "Qwilfish",
-      "Rufflet",
-      "Swoobat",
-      "Vespiquen",
-      "Weedle"
+      "Scyther",
+      "Scizor",
+      "Skarmory",
+      "Nincada",
+      "Ninjask",
+      "Shedinja"
     ],
     "stats": {
       "speed": 10,
@@ -40,13 +47,11 @@
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Lampent",
       "Litwick",
-      "Mareep",
-      "Minun",
-      "Numel",
-      "Plusle",
-      "Voltorb"
+      "Magby",
+      "Ponyta",
+      "Darumaka",
+      "Larvesta"
     ],
     "stats": {
       "attack": 10
@@ -60,17 +65,14 @@
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Alomomola",
-      "Azumarill",
-      "Basculin",
-      "Croconaw",
-      "Dewott",
-      "Feebas",
-      "Kyogre",
-      "Lanturn",
-      "Luvdisc",
-      "Pelipper",
-      "Remoraid"
+      "Poliwag",
+      "Poliwhirl",
+      "Poliwrath",
+      "Politoed",
+      "Seel",
+      "Dewgong",
+      "Remoraid",
+      "Octillery"
     ],
     "stats": {
       "range": 10
@@ -83,58 +85,78 @@
     "image": "assets/benefits/rhyhorn_horn.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Porygon", "Porygon2", "Sunkern"],
+    "pokemon": [
+      "Nidoran_F",
+      "Nidorina",
+      "Nidoqueen",
+      "Nidoran_M",
+      "Nidorino",
+      "Nidoking",
+      "Rhyhorn",
+      "Rhydon",
+      "Rhyperior",
+      "Stantler",
+      "Sawsbuck"
+    ],
     "stats": {
       "attack": 10
     },
-    "spriteanimations": ["Charge"]
+    "spriteanimations": [
+      "Charge"
+    ]
   },
   {
     "id": "machinery",
     "name": "Maquinaria",
-    "description": "Q · Teletranspórtate a un punto aleatorio de suelo del piso. Recarga: 15 s.",
+    "description": "Q · Te teletransportas junto a un objeto o enemigo del piso y paralizas durante 1 s a los enemigos en tu rango. Recarga de 20 s.",
     "image": "assets/benefits/machinery.png",
     "active": true,
-    "amount": 15,
-    "pokemon": ["Pichu"],
+    "amount": 20,
+    "pokemon": [
+      "Baltoy",
+      "Claydol",
+      "Klink",
+      "Klang",
+      "Klinklang"
+    ],
     "slot": "q",
     "stats": {}
   },
   {
     "id": "reinforced",
     "name": "Reforzado",
-    "description": "Defensa +10. Bloqueo crítico +10%.",
+    "description": "Defensa +25. Bloqueo crítico +25%.",
     "image": "assets/benefits/reinforced.png",
     "active": false,
     "amount": 0.1,
     "pokemon": [
-      "Corphish",
-      "Haxorus",
-      "Latias",
-      "Milotic",
-      "Poliwag",
-      "Psyduck",
-      "Rayquaza",
-      "Reshiram",
-      "Spiritomb",
-      "Totodile"
+      "Sudowoodo",
+      "Pineco",
+      "Forretress",
+      "Relicanth",
+      "Durant"
     ],
     "stats": {
-      "defense": 10,
-      "block": 10
+      "defense": 25,
+      "block": 25
     }
   },
   {
     "id": "scaled",
     "name": "Escamado",
-    "description": "Defensa +5. Probabilidad de encontrar objetos +10 puntos.",
+    "description": "Defensa +10. Velocidad +10. Velocidad de ataque +10. Se pierde Emplumado.",
     "image": "assets/benefits/scaled.png",
     "active": false,
-    "amount": 0.1,
-    "pokemon": ["Burmy", "Druddigon", "Sewaddle", "Silcoon"],
+    "amount": 0,
+    "pokemon": [],
     "stats": {
-      "defense": 5
-    }
+      "defense": 10,
+      "speed": 10,
+      "attackSpeed": 10
+    },
+    "excludes": [
+      "feathered"
+    ]
   },
   {
     "id": "facechanger",
@@ -144,12 +166,14 @@
     "active": false,
     "amount": 1,
     "pokemon": [
-      "Abra",
-      "Cofagrigus",
-      "Kadabra",
-      "Kirlia",
-      "Musharna",
-      "Yamask"
+      "Ditto",
+      "Unown",
+      "Smeargle",
+      "Castform",
+      "Kecleon",
+      "Rotom",
+      "Arceus",
+      "Genesect"
     ],
     "stats": {}
   },
@@ -160,7 +184,16 @@
     "image": "assets/benefits/golden.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Cubone", "Rampardos"],
+    "pokemon": [
+      "Yamask",
+      "Cofagrigus",
+      "Meowth",
+      "Persian",
+      "Zapdos",
+      "Dunsparce",
+      "Joltik",
+      "Galvantula"
+    ],
     "stats": {
       "attack": 10,
       "range": 10
@@ -173,7 +206,14 @@
     "image": "assets/benefits/spiked.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Dustox", "Hoppip"],
+    "pokemon": [
+      "Qwilfish",
+      "Corsola",
+      "Cacnea",
+      "Cacturne",
+      "Carnivine",
+      "Maractus"
+    ],
     "stats": {}
   },
   {
@@ -183,7 +223,15 @@
     "image": "assets/benefits/protected.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Klink"],
+    "pokemon": [
+      "Venipede",
+      "Whirlipede",
+      "Krabby",
+      "Kingler",
+      "Beldum",
+      "Metang",
+      "Metagross"
+    ],
     "stats": {
       "block": 10
     }
@@ -195,7 +243,21 @@
     "image": "assets/benefits/heartbreaker.png",
     "active": false,
     "amount": 0.25,
-    "pokemon": ["Drowzee", "Gothorita", "Porygon_Z", "Wobbuffet", "Wynaut"],
+    "pokemon": [
+      "Igglybuff",
+      "Jigglypuff",
+      "Wigglytuff",
+      "Cleffa",
+      "Clefairy",
+      "Clefable",
+      "Happiny",
+      "Chansey",
+      "Blissey",
+      "Azurill",
+      "Marill",
+      "Azumarill",
+      "Luvdisc"
+    ],
     "stats": {}
   },
   {
@@ -205,7 +267,15 @@
     "image": "assets/benefits/mamoswine_fang.png",
     "active": true,
     "amount": 30,
-    "pokemon": ["Articuno", "Jynx", "Spheal"],
+    "pokemon": [
+      "Toxicroak",
+      "Scolipede",
+      "Carvanha",
+      "Sharpedo",
+      "Swinub",
+      "Piloswine",
+      "Mamoswine"
+    ],
     "slot": "e",
     "stats": {}
   },
@@ -216,7 +286,16 @@
     "image": "assets/benefits/minty.png",
     "active": false,
     "amount": 0.5,
-    "pokemon": ["Cascoon", "Kricketot", "Skiploom", "Skorupi", "Treecko"],
+    "pokemon": [
+      "Oddish",
+      "Gloom",
+      "Vileplume",
+      "Bellossom",
+      "Sewaddle",
+      "Swadloon",
+      "Leavanny",
+      "Bellsprout"
+    ],
     "stats": {}
   },
   {
@@ -227,15 +306,14 @@
     "active": false,
     "amount": 0.05,
     "pokemon": [
-      "Combee",
-      "Drifblim",
-      "Mantine",
-      "Mantyke",
-      "Spearow",
-      "Starly",
-      "Vullaby",
-      "Wingull",
-      "Zapdos"
+      "Diglett",
+      "Dugtrio",
+      "Kabuto",
+      "Kabutops",
+      "Electrike",
+      "Manectric",
+      "Purrloin",
+      "Liepard"
     ],
     "stats": {
       "evasion": 5
@@ -248,7 +326,13 @@
     "image": "assets/benefits/hooh_brooch.png",
     "active": true,
     "amount": 30,
-    "pokemon": ["Cottonee", "Croagunk", "Hitmonchan", "Tyrogue"],
+    "pokemon": [
+      "Lampent",
+      "Chandelure",
+      "Magmar",
+      "Magmortar",
+      "Ho_Oh"
+    ],
     "slot": "e",
     "stats": {}
   },
@@ -259,12 +343,26 @@
     "amount": 0.1,
     "active": false,
     "slot": null,
-    "pokemon": ["Taillow", "Togetic"],
+    "pokemon": [
+      "Weedle",
+      "Kakuna",
+      "Beedrill",
+      "Doduo",
+      "Dodrio",
+      "Skorupi",
+      "Drapion",
+      "Drilbur",
+      "Excadrill",
+      "Pawniard",
+      "Bisharp"
+    ],
     "image": "assets/benefits/spiky.png",
     "stats": {
       "range": 10
     },
-    "spriteanimations": ["Charge"]
+    "spriteanimations": [
+      "Charge"
+    ]
   },
   {
     "id": "seer",
@@ -273,7 +371,13 @@
     "amount": 90,
     "active": true,
     "slot": "q",
-    "pokemon": ["Electrode", "Shieldon"],
+    "pokemon": [
+      "Abra",
+      "Kadabra",
+      "Alakazam",
+      "Natu",
+      "Xatu"
+    ],
     "image": "assets/benefits/seer.png",
     "stats": {}
   },
@@ -284,7 +388,16 @@
     "amount": 60,
     "active": true,
     "slot": "e",
-    "pokemon": ["Budew", "Hitmonlee", "Hitmontop"],
+    "pokemon": [
+      "Stunky",
+      "Skuntank",
+      "Voltorb",
+      "Electrode",
+      "Koffing",
+      "Weezing",
+      "Numel",
+      "Camerupt"
+    ],
     "image": "assets/benefits/gunpowder_core.png",
     "stats": {}
   },
@@ -295,7 +408,19 @@
     "image": "assets/benefits/blooming.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Bulbasaur", "Cherubi"],
+    "pokemon": [
+      "Leafeon",
+      "Sunkern",
+      "Sunflora",
+      "Budew",
+      "Roselia",
+      "Roserade",
+      "Burmy",
+      "Wormadam",
+      "Mothim",
+      "Petilil",
+      "Lilligant"
+    ],
     "stats": {}
   },
   {
@@ -305,7 +430,21 @@
     "image": "assets/benefits/royalty.png",
     "active": true,
     "amount": 30,
-    "pokemon": ["Surskit"],
+    "pokemon": [
+      "Pinsir",
+      "Heracross",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Slakoth",
+      "Vigoroth",
+      "Slaking",
+      "Combee",
+      "Vespiquen",
+      "Cobalion",
+      "Terrakion",
+      "Virizion"
+    ],
     "stats": {},
     "slot": "q"
   },
@@ -316,7 +455,15 @@
     "image": "assets/benefits/spoink_pearl.png",
     "active": true,
     "amount": 10,
-    "pokemon": ["Spoink"],
+    "pokemon": [
+      "Mew",
+      "Ralts",
+      "Kirlia",
+      "Gardevoir",
+      "Gallade",
+      "Spoink",
+      "Grumpig"
+    ],
     "stats": {},
     "slot": "q"
   },
@@ -327,7 +474,21 @@
     "image": "assets/benefits/tailed.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Buizel", "Paras"],
+    "pokemon": [
+      "Rattata",
+      "Raticate",
+      "Tauros",
+      "Sentret",
+      "Furret",
+      "Zigzagoon",
+      "Linoone",
+      "Bidoof",
+      "Bibarel",
+      "Buizel",
+      "Floatzel",
+      "Minccino",
+      "Cinccino"
+    ],
     "stats": {
       "defense": -15,
       "speed": 25,
@@ -337,11 +498,17 @@
   {
     "id": "transparent",
     "name": "Transparente",
-    "description": "Q · Evasión +20 puntos durante 5 s. Recarga: 5 min.",
+    "description": "Q · Evasión +25% durante 7 s. Recarga de 2 min.",
     "image": "assets/benefits/transparent.png",
     "active": true,
-    "amount": 300,
-    "pokemon": ["Petilil"],
+    "amount": 120,
+    "pokemon": [
+      "Porygon",
+      "Porygon2",
+      "Sableye",
+      "Drifloon",
+      "Drifblim"
+    ],
     "stats": {},
     "slot": "q"
   },
@@ -352,17 +519,36 @@
     "image": "assets/benefits/champion.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Spinarak"],
+    "pokemon": [
+      "Growlithe",
+      "Arcanine",
+      "Kangaskhan",
+      "Snubbull",
+      "Granbull",
+      "Deoxys"
+    ],
     "stats": {}
   },
   {
     "id": "feathered",
     "name": "Emplumado",
-    "description": "Al recibir daño aturde e interrumpe a los enemigos en un radio de dos veces tu rango.",
+    "description": "Al recibir un ataque crítico, aturdes e interrumpes a los enemigos en tu rango durante 0,3 s.",
     "image": "assets/benefits/feathered.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Chingling"],
+    "pokemon": [
+      "Pidgey",
+      "Spearow",
+      "Articuno",
+      "Swablu",
+      "Altaria",
+      "Archen",
+      "Vullaby",
+      "Taillow",
+      "Starly",
+      "Ducklett",
+      "Rufflet"
+    ],
     "stats": {}
   },
   {
@@ -372,7 +558,15 @@
     "image": "assets/benefits/silken.png",
     "active": true,
     "amount": 20,
-    "pokemon": ["Munna"],
+    "pokemon": [
+      "Spinarak",
+      "Ariados",
+      "Wurmple",
+      "Silcoon",
+      "Beautifly",
+      "Cascoon",
+      "Dustox"
+    ],
     "stats": {},
     "slot": "q"
   },
@@ -383,11 +577,24 @@
     "image": "assets/benefits/ancient.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Meditite"],
+    "pokemon": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Dialga",
+      "Palkia",
+      "Regigigas",
+      "Golett",
+      "Golurk"
+    ],
     "stats": {
       "range": -10
     },
-    "spriteanimations": ["Strike", "Swing", "Charge"]
+    "spriteanimations": [
+      "Strike",
+      "Swing",
+      "Charge"
+    ]
   },
   {
     "id": "rock_core",
@@ -396,7 +603,16 @@
     "image": "assets/benefits/rock_core.png",
     "active": true,
     "amount": 120,
-    "pokemon": ["Lotad", "Woobat"],
+    "pokemon": [
+      "Larvitar",
+      "Pupitar",
+      "Tyranitar",
+      "Aerodactyl",
+      "Lileep",
+      "Cradily",
+      "Shieldon",
+      "Heatran"
+    ],
     "stats": {},
     "slot": "e"
   },
@@ -407,7 +623,13 @@
     "image": "assets/benefits/regenerative.png",
     "active": true,
     "amount": 20,
-    "pokemon": ["Baltoy"],
+    "pokemon": [
+      "Weepinbell",
+      "Victreebel",
+      "Lickitung",
+      "Lickilicky",
+      "Miltank"
+    ],
     "stats": {},
     "slot": "q"
   },
@@ -418,12 +640,25 @@
     "image": "assets/benefits/acuatic.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Horsea"],
+    "pokemon": [
+      "Goldeen",
+      "Seaking",
+      "Barboach",
+      "Whiscash",
+      "Finneon",
+      "Lumineon",
+      "Alomomola",
+      "Horsea",
+      "Seadra"
+    ],
     "stats": {
       "attack": -10,
       "range": 20
     },
-    "spriteanimations": ["Shoot", "Charge"]
+    "spriteanimations": [
+      "Shoot",
+      "Charge"
+    ]
   },
   {
     "id": "rock_thrower",
@@ -432,13 +667,27 @@
     "image": "assets/benefits/rock_thrower.png",
     "active": false,
     "amount": 0,
-    "pokemon": ["Vanillite"],
+    "pokemon": [
+      "Geodude",
+      "Graveler",
+      "Golem",
+      "Lunatone",
+      "Solrock",
+      "Cranidos",
+      "Rampardos",
+      "Roggenrola",
+      "Boldore",
+      "Gigalith"
+    ],
     "stats": {
       "range": 100,
       "speed": -60,
       "attackSpeed": -60
     },
-    "spriteanimations": ["Shoot", "Charge"]
+    "spriteanimations": [
+      "Shoot",
+      "Charge"
+    ]
   },
   {
     "id": "shelders_shell",
@@ -452,15 +701,11 @@
     },
     "active": true,
     "pokemon": [
-      "Alakazam",
-      "Beartic",
-      "Duosion",
-      "Krokorok",
-      "Sealeo",
-      "Shellos",
-      "Umbreon",
-      "Vanilluxe",
-      "Zoroark"
+      "Lapras",
+      "Glaceon",
+      "Vanillite",
+      "Vanillish",
+      "Vanilluxe"
     ],
     "slot": "q",
     "amount": 60
@@ -468,23 +713,19 @@
   {
     "id": "groudons_scale",
     "name": "Escama de Groudon",
-    "description": "E · Erupciones sucesivas cada 16 píxeles hasta la pared. Daño de fuego ×3. Recarga de 120 s.",
+    "description": "E · Consume 10 esencias aleatorias para liberar una línea de erupciones de Fuego. Daño igual al triple de tu Ataque. Recarga de 120 s.",
     "image": "assets/benefits/groudons_scale.png",
     "rules": {
       "eruptionStep": 16,
-      "power": 3
+      "power": 3,
+      "essenceCost": 10
     },
     "active": true,
     "pokemon": [
-      "Azelf",
-      "Caterpie",
-      "Darmanitan",
-      "Dewgong",
-      "Dodrio",
-      "Klang",
-      "Mesprit",
-      "Pinsir",
-      "Raichu"
+      "Druddigon",
+      "Groudon",
+      "Heatmor",
+      "Torkoal"
     ],
     "slot": "e",
     "amount": 120
@@ -499,13 +740,12 @@
     },
     "active": true,
     "pokemon": [
-      "Archen",
-      "Bellsprout",
-      "Jumpluff",
-      "Magneton",
-      "Manectric",
-      "Reuniclus",
-      "Toxicroak"
+      "Porygon_Z",
+      "Farfetch_d",
+      "Togepi",
+      "Togetic",
+      "Togekiss",
+      "Spinda"
     ],
     "slot": "q",
     "amount": 0
@@ -513,7 +753,7 @@
   {
     "id": "treasure_finder",
     "name": "Buscatesoros",
-    "description": "Objetos +25 puntos de probabilidad, bayas −15.",
+    "description": "Objetos +25% de probabilidad. Bayas −15%.",
     "image": "assets/benefits/treasure_finder.png",
     "rules": {
       "itemChance": 0.25,
@@ -521,21 +761,22 @@
     },
     "active": false,
     "pokemon": [
-      "Eelektrik",
-      "Emboar",
-      "Graveler",
-      "Pidgeot",
-      "Pidgey",
-      "Sandile",
-      "Seel",
-      "Sunflora",
-      "Tentacruel"
+      "Chinchou",
+      "Lanturn",
+      "Clamperl",
+      "Huntail",
+      "Gorebyss",
+      "Lillipup",
+      "Herdier",
+      "Stoutland",
+      "Trubbish",
+      "Garbodor"
     ],
     "stats": {}
   },
   {
     "id": "spell_weaver",
-    "name": "Hechizero",
+    "name": "Hechicero",
     "description": "Velocidad y daño de proyectiles ×1,5.",
     "image": "assets/benefits/spell_weaver.png",
     "rules": {
@@ -543,15 +784,16 @@
     },
     "active": false,
     "pokemon": [
-      "Beldum",
-      "Excadrill",
-      "Exeggutor",
-      "Fearow",
-      "Golem",
-      "Haunter",
-      "Masquerain",
-      "Mienshao",
-      "Volbeat"
+      "Drowzee",
+      "Hypno",
+      "Cresselia",
+      "Phione",
+      "Manaphy",
+      "Munna",
+      "Musharna",
+      "Solosis",
+      "Duosion",
+      "Reuniclus"
     ],
     "stats": {}
   },
@@ -565,17 +807,12 @@
     },
     "active": true,
     "pokemon": [
-      "Charizard",
-      "Cryogonal",
-      "Deerling",
-      "Genesect",
-      "Gible",
-      "Heracross",
-      "Lumineon",
-      "Pachirisu",
-      "Phanpy",
-      "Scolipede",
-      "Snorunt"
+      "Skitty",
+      "Delcatty",
+      "Buneary",
+      "Lopunny",
+      "Aipom",
+      "Ambipom"
     ],
     "slot": "q",
     "amount": 0
@@ -588,15 +825,11 @@
     "rules": {},
     "active": false,
     "pokemon": [
-      "Charmander",
-      "Hypno",
-      "Kabuto",
-      "Kricketune",
-      "Nincada",
-      "Nuzleaf",
-      "Torchic",
-      "Typhlosion",
-      "Whimsicott"
+      "Mantyke",
+      "Mantine",
+      "Tornadus",
+      "Thundurus",
+      "Landorus"
     ],
     "stats": {
       "size": 20,
@@ -617,16 +850,17 @@
     },
     "active": false,
     "pokemon": [
-      "Blaziken",
-      "Bonsly",
-      "Drapion",
-      "Drilbur",
-      "Gigalith",
-      "Meganium",
-      "Mudkip",
-      "Poliwhirl",
-      "Scrafty",
-      "Whiscash"
+      "Teddiursa",
+      "Ursaring",
+      "Trapinch",
+      "Vibrava",
+      "Flygon",
+      "Snorunt",
+      "Glalie",
+      "Froslass",
+      "Shinx",
+      "Luxio",
+      "Luxray"
     ],
     "stats": {
       "speed": 15
@@ -635,28 +869,21 @@
   {
     "id": "guild_leyend",
     "name": "Leyenda del Gremio",
-    "description": "Todos los encargos son rojos y su pago se triplica. Ataque +20. Defensa +20. Velocidad +20.",
+    "description": "Todos los encargos son rojos y su pago se triplica. Ataque +30. Defensa +30. Velocidad +20.",
     "image": "assets/benefits/guild_leyend.png",
     "rules": {
       "redReward": 3
     },
     "active": false,
     "pokemon": [
-      "Aggron",
-      "Ariados",
-      "Banette",
-      "Camerupt",
-      "Carnivine",
-      "Clamperl",
-      "Goldeen",
-      "Palpitoad",
-      "Piloswine",
-      "Ralts",
-      "Yanma"
+      "Riolu",
+      "Lucario",
+      "Celebi",
+      "Rayquaza"
     ],
     "stats": {
-      "attack": 20,
-      "defense": 20,
+      "attack": 30,
+      "defense": 30,
       "speed": 20
     }
   },
@@ -668,16 +895,14 @@
     "rules": {},
     "active": false,
     "pokemon": [
-      "Dusclops",
-      "Gastly",
-      "Gastrodon",
-      "Leavanny",
-      "Mightyena",
-      "Poliwrath",
-      "Staraptor",
-      "Tentacool",
-      "Virizion",
-      "Wailmer"
+      "Paras",
+      "Parasect",
+      "Omanyte",
+      "Omastar",
+      "Corphish",
+      "Crawdaunt",
+      "Anorith",
+      "Armaldo"
     ],
     "stats": {
       "block": 10,
@@ -687,52 +912,56 @@
   {
     "id": "aviodant",
     "name": "Evasivo",
-    "description": "Evasión +15%. Velocidad +15. Ataque -10. Defensa -10.",
+    "description": "Evasión +15%. Defensa -5. Crítico fijo al 0%. Elimina Luchador.",
     "image": "assets/benefits/aviodant.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Aron",
-      "Darumaka",
-      "Diglett",
-      "Omanyte",
-      "Rotom",
-      "Shiftry",
-      "Smoochum",
-      "Wooper"
+      "Caterpie",
+      "Metapod",
+      "Butterfree",
+      "Mareep",
+      "Flaaffy",
+      "Ampharos",
+      "Woobat",
+      "Swoobat"
     ],
     "stats": {
       "evasion": 15,
-      "speed": 15,
-      "attack": -10,
-      "defense": -10
-    }
+      "defense": -5
+    },
+    "excludes": [
+      "fighter"
+    ]
   },
   {
     "id": "fighter",
     "name": "Luchador",
-    "description": "Evasión fijada a 0%. Ataque +15.",
+    "description": "Crítico +15%. Ataque +5. Evasión fija al 0%. Elimina Evasivo.",
     "image": "assets/benefits/fighter.png",
     "rules": {
       "noDodge": 1
     },
     "active": false,
     "pokemon": [
-      "Drifloon",
-      "Dusknoir",
-      "Elgyem",
-      "Flareon",
-      "Grovyle",
-      "Ninetales",
-      "Sandslash",
-      "Scraggy",
-      "Shaymin",
-      "Sneasel",
-      "Tympole"
+      "Mankey",
+      "Primeape",
+      "Tyrogue",
+      "Hitmontop",
+      "Hitmonlee",
+      "Hitmonchan",
+      "Meditite",
+      "Medicham",
+      "Makuhita",
+      "Hariyama"
     ],
     "stats": {
-      "attack": 15
-    }
+      "critical": 15,
+      "attack": 5
+    },
+    "excludes": [
+      "aviodant"
+    ]
   },
   {
     "id": "wooden",
@@ -744,13 +973,13 @@
     },
     "active": false,
     "pokemon": [
-      "Aerodactyl",
-      "Bastiodon",
-      "Crawdaunt",
-      "Gothita",
-      "Mewtwo",
-      "Parasect",
-      "Slowking"
+      "Exeggutor",
+      "Ludicolo",
+      "Seedot",
+      "Nuzleaf",
+      "Shiftry",
+      "Snover",
+      "Abomasnow"
     ],
     "stats": {},
     "affinity": {
@@ -768,15 +997,17 @@
     },
     "active": false,
     "pokemon": [
-      "Beedrill",
-      "Breloom",
-      "Cherrim",
-      "Galvantula",
-      "Gothitelle",
-      "Leafeon",
-      "Metang",
-      "Mismagius",
-      "Piplup"
+      "Whismur",
+      "Loudred",
+      "Exploud",
+      "Volbeat",
+      "Illumise",
+      "Chingling",
+      "Chimecho",
+      "Kricketot",
+      "Kricketune",
+      "Chatot",
+      "Audino"
     ],
     "stats": {
       "evasion": 5
@@ -785,7 +1016,7 @@
   {
     "id": "collector",
     "name": "Recolector",
-    "description": "Bayas +20 puntos de probabilidad, objetos −10.",
+    "description": "Bayas +20% de probabilidad. Objetos −10%.",
     "image": "assets/benefits/collector.png",
     "rules": {
       "berryChance": 0.2,
@@ -793,40 +1024,37 @@
     },
     "active": false,
     "pokemon": [
-      "Delibird",
-      "Donphan",
-      "Gengar",
-      "Golurk",
-      "Kingdra",
-      "Larvesta",
-      "Purrloin",
-      "Seadra",
-      "Solosis",
-      "Solrock"
+      "Yanma",
+      "Yanmega",
+      "Eevee",
+      "Surskit",
+      "Masquerain",
+      "Gulpin",
+      "Swalot"
     ],
     "stats": {}
   },
   {
     "id": "key",
     "name": "Clave",
-    "description": "Suprime Limpiar piso. Probabilidad de encargo de líder +15 puntos.",
+    "description": "Suprime Limpiar piso. Probabilidad de encargo de líder +15%.",
     "image": "assets/benefits/key.png",
     "rules": {
       "leaderChance": 0.15
     },
     "active": false,
     "pokemon": [
-      "Eelektross",
-      "Emolga",
-      "Exeggcute",
-      "Gorebyss",
-      "Mothim",
-      "Palkia",
-      "Probopass",
-      "Shedinja",
-      "Swampert",
-      "Swinub",
-      "Whirlipede"
+      "Mime_Jr_",
+      "Mr_Mime",
+      "Glameow",
+      "Purugly",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Shaymin",
+      "Scraggy",
+      "Scrafty",
+      "Psyduck"
     ],
     "stats": {}
   },
@@ -840,54 +1068,50 @@
     },
     "active": false,
     "pokemon": [
-      "Chinchou",
-      "Gardevoir",
-      "Growlithe",
-      "Jolteon",
-      "Pidgeotto",
-      "Seedot",
-      "Walrein"
+      "Shellos",
+      "Gastrodon",
+      "Tympole",
+      "Palpitoad",
+      "Seismitoad",
+      "Cottonee",
+      "Whimsicott",
+      "Reshiram",
+      "Zekrom",
+      "Kyurem",
+      "Victini"
     ],
     "stats": {}
   },
   {
     "id": "fruitbearing",
     "name": "Frutal",
-    "description": "Un crítico recibido tiene una posibilidad entre diez de dejar una Aranja.",
+    "description": "Al recibir un ataque crítico tienes un 10% de probabilidad de generar una baya.",
     "image": "assets/benefits/fruitbearing.png",
     "rules": {
       "criticalBerry": 0.1
     },
     "active": false,
     "pokemon": [
-      "Glalie",
-      "Kingler",
-      "Mawile",
-      "Seismitoad",
-      "Sigilyph",
-      "Snivy"
+      "Tropius",
+      "Cherubi",
+      "Cherrim"
     ],
     "stats": {}
   },
   {
     "id": "gifted",
     "name": "Dotado",
-    "description": "Vencer al líder deja equipo nuevo o una Zidra con el equipo completo.",
+    "description": "Vencer a un líder dejará un objeto en el suelo.",
     "image": "assets/benefits/gifted.png",
     "rules": {
       "bossLoot": 1
     },
     "active": false,
     "pokemon": [
-      "Bibarel",
-      "Butterfree",
-      "Ivysaur",
-      "Joltik",
-      "Klinklang",
-      "Ludicolo",
-      "Magnezone",
-      "Ninjask",
-      "Quilava"
+      "Girafarig",
+      "Delibird",
+      "Wingull",
+      "Pelipper"
     ],
     "stats": {}
   },
@@ -901,14 +1125,11 @@
     },
     "active": false,
     "pokemon": [
-      "Anorith",
-      "Armaldo",
-      "Boldore",
-      "Cradily",
-      "Dugtrio",
-      "Gloom",
-      "Sudowoodo",
-      "Wurmple"
+      "Houndour",
+      "Houndoom",
+      "Gothita",
+      "Gothorita",
+      "Gothitelle"
     ],
     "stats": {}
   },
@@ -923,14 +1144,9 @@
     },
     "active": true,
     "pokemon": [
-      "Ampharos",
-      "Bellossom",
-      "Glaceon",
-      "Lapras",
-      "Lilligant",
-      "Marowak",
-      "Regirock",
-      "Sableye"
+      "Kingdra",
+      "Lugia",
+      "Kyogre"
     ],
     "slot": "e",
     "amount": 45
@@ -945,19 +1161,20 @@
     },
     "active": false,
     "pokemon": [
-      "Espeon",
-      "Finneon",
-      "Houndoom",
-      "Natu",
-      "Sandshrew",
-      "Sceptile",
-      "Unown",
-      "Weavile",
-      "Yanmega",
-      "Moltres"
+      "Rapidash",
+      "Darmanitan",
+      "Volcarona",
+      "Vulpix",
+      "Ninetales",
+      "Moltres",
+      "Slugma",
+      "Magcargo"
     ],
     "stats": {},
-    "excludes": ["acuatic", "wooden"],
+    "excludes": [
+      "acuatic",
+      "wooden"
+    ],
     "affinity": {
       "fire": 0.5
     }
@@ -973,15 +1190,11 @@
     },
     "active": false,
     "pokemon": [
-      "Abomasnow",
-      "Blastoise",
-      "Girafarig",
-      "Kabutops",
-      "Lunatone",
-      "Medicham",
-      "Omastar",
-      "Sawsbuck",
-      "Volcarona"
+      "Golduck",
+      "Smoochum",
+      "Jynx",
+      "Espeon",
+      "Sigilyph"
     ],
     "stats": {}
   },
@@ -993,14 +1206,11 @@
     "rules": {},
     "active": false,
     "pokemon": [
-      "Celebi",
-      "Illumise",
-      "Lairon",
-      "Marshtomp",
-      "Relicanth",
-      "Skuntank",
-      "Vanillish",
-      "Vulpix"
+      "Elgyem",
+      "Beheeyem",
+      "Darkrai",
+      "Umbreon",
+      "Mewtwo"
     ],
     "stats": {},
     "affinity": {
@@ -1012,7 +1222,7 @@
   {
     "id": "soothsayer",
     "name": "Agorero",
-    "description": "Papel rojo +25 puntos. Una baya puede convertirse en Revivir.",
+    "description": "Papel rojo +25%. Una baya tiene un 15% de probabilidad de convertirse en Revivir.",
     "image": "assets/benefits/soothsayer.png",
     "rules": {
       "redChance": 0.25,
@@ -1020,204 +1230,156 @@
     },
     "active": false,
     "pokemon": [
-      "Archeops",
-      "Combusken",
-      "Crobat",
-      "Cubchoo",
-      "Luxray",
-      "Mamoswine",
-      "Regigigas",
-      "Torterra",
-      "Wailord"
+      "Murkrow",
+      "Honchkrow",
+      "Absol",
+      "Staryu",
+      "Starmie"
     ],
     "stats": {}
   },
   {
     "id": "adamant",
     "name": "Firme",
-    "description": "Ataque +20. Rango -15.",
+    "description": "Ataque +20. Rango -10.",
     "image": "assets/benefits/adamant.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Altaria",
+      "Machop",
+      "Machoke",
+      "Machamp",
+      "Magikarp",
+      "Gyarados",
+      "Dratini",
       "Dragonair",
       "Dragonite",
-      "Dratini",
-      "Empoleon",
-      "Gabite",
-      "Golbat",
-      "Grotle",
-      "Gyarados",
-      "Larvitar",
-      "Liepard",
-      "Machamp",
-      "Machoke",
-      "Machop",
-      "Magikarp",
-      "Pupitar",
-      "Scizor",
-      "Scyther",
-      "Starmie",
-      "Tyranitar",
-      "Venipede",
-      "Victreebel",
-      "Vileplume"
+      "Torchic",
+      "Combusken",
+      "Blaziken"
     ],
     "stats": {
       "attack": 20,
-      "range": -15
+      "range": -10
     }
   },
   {
     "id": "impish",
     "name": "Agitado",
-    "description": "Defensa +15. Rango -15.",
+    "description": "Defensa +20. Rango -10.",
     "image": "assets/benefits/impish.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Braviary",
-      "Cacnea",
-      "Chimecho",
-      "Flygon",
+      "Tangela",
+      "Tangrowth",
       "Gligar",
       "Gliscor",
+      "Phanpy",
+      "Donphan",
+      "Turtwig",
+      "Grotle",
+      "Torterra",
       "Hippopotas",
-      "Hippowdon",
-      "Houndour",
-      "Magnemite",
-      "Roselia",
-      "Skarmory",
-      "Tangela",
-      "Tangrowth"
+      "Hippowdon"
     ],
     "stats": {
-      "defense": 15,
-      "range": -15
+      "defense": 20,
+      "range": -10
     }
   },
   {
     "id": "lax",
     "name": "Flojo",
-    "description": "Defensa +10. Evasión -5%. Velocidad de ataque -15.",
+    "description": "Defensa +20. Velocidad de ataque -10.",
     "image": "assets/benefits/lax.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Beautifly",
-      "Cloyster",
-      "Ducklett",
-      "Huntail",
-      "Koffing",
-      "Onix",
-      "Politoed",
-      "Serperior",
       "Shellder",
-      "Shroomish",
-      "Steelix",
-      "Turtwig",
-      "Weezing",
-      "Wormadam"
+      "Cloyster",
+      "Aron",
+      "Lairon",
+      "Aggron",
+      "Cubchoo",
+      "Beartic"
     ],
     "stats": {
-      "defense": 10,
-      "evasion": -5,
-      "attackSpeed": -15
+      "defense": 20,
+      "attackSpeed": -10
     }
   },
   {
     "id": "bold",
     "name": "Osado",
-    "description": "Defensa +20. Ataque -20.",
+    "description": "Defensa +20. Ataque -10.",
     "image": "assets/benefits/bold.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Arcanine",
-      "Blissey",
-      "Cacturne",
-      "Chansey",
-      "Eevee",
-      "Feraligatr",
-      "Gallade",
-      "Happiny",
-      "Luxio",
-      "Octillery",
-      "Shuppet",
-      "Snover",
-      "Suicune",
-      "Trapinch",
-      "Vaporeon"
+      "Vaporeon",
+      "Shuckle",
+      "Spheal",
+      "Sealeo",
+      "Walrein",
+      "Piplup",
+      "Prinplup",
+      "Empoleon"
     ],
     "stats": {
       "defense": 20,
-      "attack": -20
+      "attack": -10
     }
   },
   {
     "id": "naughty",
     "name": "Pícaro",
-    "description": "Velocidad +20. Defensa -10. Ataque -10.",
+    "description": "Velocidad +20. Defensa -5. Ataque -5.",
     "image": "assets/benefits/naughty.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Arceus",
+      "Jolteon",
       "Bagon",
-      "Chimchar",
-      "Deino",
-      "Farfetch_d",
-      "Hydreigon",
-      "Infernape",
-      "Krabby",
-      "Lucario",
-      "Magmortar",
-      "Monferno",
-      "Poochyena",
-      "Primeape",
-      "Riolu",
-      "Roserade",
-      "Salamence",
       "Shelgon",
-      "Swadloon",
-      "Weepinbell",
-      "Xatu",
-      "Zweilous"
+      "Salamence",
+      "Chimchar",
+      "Monferno",
+      "Infernape",
+      "Mienfoo",
+      "Mienshao",
+      "Deino",
+      "Zweilous",
+      "Hydreigon"
     ],
     "stats": {
       "speed": 20,
-      "defense": -10,
-      "attack": -10
+      "defense": -5,
+      "attack": -5
     }
   },
   {
     "id": "relaxed",
     "name": "Plácido",
-    "description": "Defensa +15. Rango -15.",
+    "description": "Defensa +20. Velocidad -10.",
     "image": "assets/benefits/relaxed.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Bronzong",
-      "Bronzor",
-      "Durant",
-      "Ferroseed",
-      "Ferrothorn",
-      "Floatzel",
-      "Forretress",
-      "Mew",
-      "Pikachu",
-      "Pineco",
-      "Regice",
-      "Roggenrola",
-      "Slowbro",
       "Slowpoke",
-      "Tropius"
+      "Slowbro",
+      "Slowking",
+      "Mudkip",
+      "Marshtomp",
+      "Swampert",
+      "Bronzor",
+      "Bronzong",
+      "Ferroseed",
+      "Ferrothorn"
     ],
     "stats": {
-      "defense": 15,
-      "range": -15
+      "defense": 20,
+      "speed": -10
     }
   },
   {
@@ -1228,25 +1390,13 @@
     "rules": {},
     "active": false,
     "pokemon": [
-      "Barboach",
-      "Beheeyem",
-      "Charmeleon",
-      "Conkeldurr",
-      "Escavalier",
-      "Fraxure",
-      "Froslass",
+      "Breloom",
+      "Deerling",
+      "Timburr",
       "Gurdurr",
-      "Hariyama",
+      "Conkeldurr",
       "Karrablast",
-      "Makuhita",
-      "Metagross",
-      "Munchlax",
-      "Rhydon",
-      "Rhyhorn",
-      "Rhyperior",
-      "Samurott",
-      "Snorlax",
-      "Timburr"
+      "Escavalier"
     ],
     "stats": {
       "attack": 20,
@@ -1256,31 +1406,24 @@
   {
     "id": "lonely",
     "name": "Huraño",
-    "description": "Ataque +20. Defensa -20.",
+    "description": "Ataque +20. Defensa -10.",
     "image": "assets/benefits/lonely.png",
     "rules": {},
     "active": false,
     "pokemon": [
-      "Absol",
-      "Bayleef",
-      "Carvanha",
-      "Electabuzz",
-      "Electivire",
-      "Elekid",
-      "Geodude",
-      "Golett",
-      "Honchkrow",
-      "Krookodile",
-      "Murkrow",
-      "Nidoking",
-      "Nosepass",
-      "Sharpedo",
-      "Shuckle",
-      "Staryu"
+      "Treecko",
+      "Grovyle",
+      "Sceptile",
+      "Gible",
+      "Gabite",
+      "Garchomp",
+      "Axew",
+      "Fraxure",
+      "Haxorus"
     ],
     "stats": {
       "attack": 20,
-      "defense": -20
+      "defense": -10
     }
   },
   {
@@ -1291,13 +1434,13 @@
     "rules": {},
     "active": false,
     "pokemon": [
-      "Golduck",
-      "Magcargo",
-      "Nidoqueen",
-      "Pawniard",
-      "Pignite",
-      "Servine",
-      "Staravia"
+      "Ledyba",
+      "Ledian",
+      "Flareon",
+      "Hoothoot",
+      "Noctowl",
+      "Patrat",
+      "Watchog"
     ],
     "stats": {
       "range": 30,
@@ -1314,15 +1457,12 @@
     },
     "active": false,
     "pokemon": [
-      "Cranidos",
-      "Lileep",
+      "Feebas",
+      "Milotic",
+      "Exeggcute",
+      "Lotad",
       "Lombre",
-      "Maractus",
-      "Misdreavus",
-      "Prinplup",
-      "Seaking",
-      "Venusaur",
-      "Vibrava"
+      "Basculin"
     ],
     "stats": {},
     "affinity": {
@@ -1341,26 +1481,35 @@
     },
     "active": false,
     "pokemon": [
-      "Bisharp",
-      "Chandelure",
-      "Corsola",
-      "Cyndaquil",
-      "Garchomp",
-      "Magmar",
-      "Registeel",
-      "Swanna",
-      "Zorua"
+      "Grimer",
+      "Muk",
+      "Onix",
+      "Steelix",
+      "Munchlax",
+      "Snorlax",
+      "Wailmer",
+      "Wailord",
+      "Jirachi",
+      "Bonsly"
     ],
     "stats": {}
   },
   {
     "id": "toxic",
-    "name": "Toxic",
+    "name": "Tóxico",
     "description": "Tus ataques básicos son de veneno. Al recoger una baya, cada enemigo a 2×Rango recibe tanto daño como HP recuperes.",
     "image": "assets/benefits/toxic.png",
     "active": false,
     "pokemon": [
-      "Venomoth"
+      "Zubat",
+      "Golbat",
+      "Crobat",
+      "Venonat",
+      "Venomoth",
+      "Tentacool",
+      "Tentacruel",
+      "Croagunk",
+      "Shroomish"
     ],
     "stats": {},
     "rules": {
@@ -1375,7 +1524,14 @@
     "image": "assets/benefits/levitating.png",
     "active": false,
     "pokemon": [
-      "Claydol"
+      "Hoppip",
+      "Skiploom",
+      "Jumpluff",
+      "Latias",
+      "Latios",
+      "Tynamo",
+      "Eelektrik",
+      "Eelektross"
     ],
     "stats": {},
     "rules": {
@@ -1389,12 +1545,216 @@
     "image": "assets/benefits/undead.png",
     "active": false,
     "pokemon": [
-      "Duskull"
+      "Gastly",
+      "Haunter",
+      "Gengar",
+      "Misdreavus",
+      "Mismagius",
+      "Shuppet",
+      "Banette",
+      "Duskull",
+      "Dusclops",
+      "Dusknoir",
+      "Spiritomb"
     ],
     "stats": {},
     "rules": {
       "phaseEnemies": 1,
       "reviveChance": 0.15
     }
+  },
+  {
+    "id": "igneous",
+    "name": "Ígneo",
+    "image": "assets/benefits/igneous.png",
+    "description": "Tu daño base es de tipo Fuego. Ataque +25 mientras tus HP estén por debajo del 25%.",
+    "active": false,
+    "amount": 0,
+    "element": "fire",
+    "lowHPAttack": 25,
+    "pokemon": [
+      "Charmander",
+      "Charmeleon",
+      "Charizard",
+      "Cyndaquil",
+      "Quilava",
+      "Typhlosion",
+      "Tepig",
+      "Pignite",
+      "Emboar"
+    ]
+  },
+  {
+    "id": "sylvan",
+    "name": "Silvestre",
+    "image": "assets/benefits/sylvan.png",
+    "description": "Tu daño base es de tipo Planta. Ataque +25 mientras tus HP estén por debajo del 25%.",
+    "active": false,
+    "amount": 0,
+    "element": "grass",
+    "lowHPAttack": 25,
+    "pokemon": [
+      "Bulbasaur",
+      "Ivysaur",
+      "Venusaur",
+      "Chikorita",
+      "Bayleef",
+      "Meganium",
+      "Snivy",
+      "Servine",
+      "Serperior"
+    ]
+  },
+  {
+    "id": "torrent",
+    "name": "Torrencial",
+    "image": "assets/benefits/torrent.png",
+    "description": "Tu daño base es de tipo Agua. Ataque +25 mientras tus HP estén por debajo del 25%.",
+    "active": false,
+    "amount": 0,
+    "element": "water",
+    "lowHPAttack": 25,
+    "pokemon": [
+      "Squirtle",
+      "Wartortle",
+      "Blastoise",
+      "Totodile",
+      "Croconaw",
+      "Feraligatr",
+      "Oshawott",
+      "Dewott",
+      "Samurott"
+    ]
+  },
+  {
+    "id": "ofidio",
+    "name": "Ofidio",
+    "image": "assets/benefits/ofidio.png",
+    "description": "Ataque +15. Velocidad de ataque −10. Muerdes frente a ti.",
+    "active": false,
+    "amount": 0,
+    "stats": {
+      "attack": 15,
+      "attackSpeed": -10
+    },
+    "weapon": "bite",
+    "pokemon": [
+      "Ekans",
+      "Arbok",
+      "Mawile",
+      "Seviper"
+    ]
+  },
+  {
+    "id": "static",
+    "name": "Estático",
+    "image": "assets/benefits/static.png",
+    "description": "Al recibir un ataque crítico, paralizas al atacante durante 1 s.",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Elekid",
+      "Electabuzz",
+      "Electivire",
+      "Pichu",
+      "Pikachu",
+      "Raichu",
+      "Plusle",
+      "Minun",
+      "Pachirisu",
+      "Emolga"
+    ]
+  },
+  {
+    "id": "impregnable",
+    "name": "Inexpugnable",
+    "image": "assets/benefits/impregnable.png",
+    "description": "Los aumentos de Crítico y Evasión también aumentan tu Bloqueo crítico. Los aumentos de Tamaño también aumentan tus HP máximos.",
+    "active": false,
+    "amount": 0,
+    "pokemon": [
+      "Bastiodon",
+      "Wynaut",
+      "Wobbuffet",
+      "Cryogonal"
+    ]
+  },
+  {
+    "id": "forgotten_bone",
+    "name": "Hueso de Marowak",
+    "image": "assets/benefits/forgotten_bone.png",
+    "description": "Lanzas un hueso de Tierra al doble de rango. Atraviesa enemigos y golpea una vez a la ida y otra a la vuelta. Puedes volver a atacar cuando lo recuperas.",
+    "active": false,
+    "amount": 0,
+    "weapon": "bone_throw",
+    "pokemon": [
+      "Cubone",
+      "Marowak"
+    ]
+  },
+  {
+    "id": "magnet",
+    "name": "Imantado",
+    "image": "assets/benefits/magnet.png",
+    "description": "Reduce a la mitad las mejoras de velocidad de ataque. Lanzas una bomba de Acero al doble de rango.",
+    "active": false,
+    "amount": 0,
+    "weapon": "iron_bomb",
+    "halve": "attackSpeed",
+    "pokemon": [
+      "Magnemite",
+      "Magneton",
+      "Magnezone",
+      "Nosepass",
+      "Probopass"
+    ]
+  },
+  {
+    "id": "occult_powder",
+    "name": "Umbrío",
+    "image": "assets/benefits/occult_powder.png",
+    "description": "Reduce a la mitad las mejoras de rango. Crítico +10%. Cargas un tajo Fantasma.",
+    "active": false,
+    "amount": 0,
+    "weapon": "dark_cut",
+    "halve": "range",
+    "stats": {
+      "critical": 10
+    },
+    "pokemon": [
+      "Sneasel",
+      "Weavile",
+      "Poochyena",
+      "Mightyena",
+      "Zangoose",
+      "Giratina",
+      "Zorua",
+      "Zoroark"
+    ]
+  },
+  {
+    "id": "sharp_beak",
+    "name": "Pico afilado",
+    "image": "assets/benefits/sharp_beak.png",
+    "description": "Reduce a la mitad las mejoras de rango. Crítico +10%. Cargas un picotazo Volador.",
+    "active": false,
+    "amount": 0,
+    "weapon": "peck",
+    "halve": "range",
+    "stats": {
+      "critical": 10
+    },
+    "pokemon": [
+      "Pidgeotto",
+      "Pidgeot",
+      "Fearow",
+      "Archeops",
+      "Mandibuzz",
+      "Swellow",
+      "Staravia",
+      "Staraptor",
+      "Swanna",
+      "Braviary"
+    ]
   }
 ]

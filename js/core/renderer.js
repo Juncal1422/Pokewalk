@@ -175,6 +175,7 @@ export function draw() {
       drawingContext.filter=attackTint('poison');
     const hasWeapon = entity.relicWeapon || usesWeaponEffect ||
       ['ancient','acuatic','rock_thrower'].some(id => (entity.isPlayer ? game.held : entity.benefits)?.has(id));
+    if(entity.shockUntil>now)drawingContext.filter='sepia(1) saturate(8) brightness(1.25)';
     if (element && !hasWeapon) drawingContext.filter=attackTint(element);
     drawingContext.drawImage(
       animation.img,

@@ -233,11 +233,15 @@ function collectionMenu(back) {
       const benefit=game.benefits.get(id);
       const donors=[...game.pokemon.values()].filter(row=>benefit?.pokemon.includes(row.name));
       const combinations=benefitSynergies(id).map(text=>()=>element('p',text));
-      listPage(benefit?.name??id,[...combinations,...donors.map(row=>()=>{const entry=element('p',row.name);entry.prepend(portrait(row));return entry})],0,()=>open('Beneficios'));
+      const owned=data.starterBenefits.includes(id), active=data.starterBenefit===id;
+      const select=()=>button(owned?(active?'Desactivar beneficio inicial':'Activar como beneficio inicial'):'Desbloquear en la tienda del Gremio',()=>{
+        if(!owned)return shop(()=>open('Beneficios'));
+        data.starterBenefit=active?null:id;saveCollection();open('Beneficios');
+      });
+      listPage(benefit?.name??id,[select,...combinations,...donors.map(row=>()=>{const entry=element('p',row.name);entry.prepend(portrait(row));return entry})],0,()=>open('Beneficios'));
     })),
     Reliquias:Object.keys(relics).filter(id=>!relics[id].biome || isUnlocked('relics',id)).map(id=>()=>{const enabled=data.enabled.includes(id);const control=button((enabled?'Activa · ':'Inactiva · ')+(relics[id]?.name??id),()=>{
-      if(relics[id].purchasable && !data.relics.includes(id))return shop(again);
-      if(!data.relics.includes(id))data.relics.push(id);
+      if(!data.relics.includes(id))return;
       if(enabled)data.enabled=data.enabled.filter(key=>key!==id);else equipRelic(id);saveCollection();open('Reliquias')});control.title=relics[id].description;control.setAttribute('aria-pressed',enabled);control.prepend(icon(relics[id].image??'relics/'+id+'.png'));return control})
   };
   // Reconstruye la página para reflejar inmediatamente la activación de reliquias.
@@ -252,23 +256,16 @@ function collectionMenu(back) {
 
 // Compra y saldo se escriben juntos. Las reliquias nuevas quedan activadas.
 function shop(back) {
-  const entries=Object.entries(relics).filter(([id,r])=>!r.biome || isUnlocked('relics',id)).map(([id,relic])=>()=>{
-    const card=button(relic.name,()=>{
-      if(!game.collection.relics.includes(id)){
-        if(relic.purchasable){
-          if(game.collection.emblems<relic.price)return;
-          game.collection.emblems-=relic.price;
-        }
-        game.collection.relics.push(id);
-      }
-      equipRelic(id);
-      saveCollection();shop(back);
+  const data=game.collection;
+  const entries=[...game.benefits].map(([id,benefit])=>()=>{
+    const owned=data.starterBenefits.includes(id);
+    const card=catalogCard(id,benefit,()=>{
+      if(data.starterBenefits.includes(id) || data.emblems<1)return;
+      data.emblems--;data.starterBenefits.push(id);saveCollection();shop(back);
     });
-    const buying=relic.purchasable && !game.collection.relics.includes(id);
-    card.setAttribute('aria-disabled',String(!!buying && game.collection.emblems<relic.price));
-    card.append(buying?' · 1 emblema':'');
-    card.title=relic.description+' · '+(buying?'1 emblema · Saldo '+game.collection.emblems:game.collection.enabled.includes(id)?'Activa':'Activar');
-    card.append(icon(relic.image??'relics/'+id+'.png'));return card;
+    card.title=benefit.description+' · '+(owned?'Desbloqueado':'1 emblema')+' · Saldo '+data.emblems;
+    card.setAttribute('aria-disabled',String(owned || data.emblems<1));
+    return card;
   });
   listPage('Tienda del Gremio',entries,0,back);
 }
@@ -313,7 +310,7 @@ export function selectMission(offers) {
     const dialog=screen('Tablón de misiones'),grid=element('section');grid.className='mission-offer-grid';grid.style.setProperty('--mission-offer-count',offers.length);
     for(const mission of offers){
       const card=button('',()=>{dialog.close();resolve(mission)},'mission');card.className='mission-offer-card';
-      if(mission.red){card.classList.add('red-mission-offer');card.append(element('small','Papel rojo · +15 niveles'))}
+      if(mission.red){card.classList.add('red-mission-offer');card.append(element('small','Papel rojo · +10 niveles'))}
       card.append(element('strong',mission.name),element('span',mission.biome.name+' · '+mission.floors+' pisos'));
       const portraits=element('div');
       if(mission.type!=='leader')for(const id of mission.pool)portraits.append(portrait(game.pokemon.get(id)));

@@ -3,13 +3,24 @@ import json
 import re
 import sys
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageChops
 
 ROOT = Path(__file__).resolve().parents[1]
 EFFECTS = ROOT / 'assets/effects'
 INDEX = ROOT / 'js/data/effect-atlas.js'
 aliases = {'battery_burst': 'battery', 'purple_smite': 'purple',
            'bone_throw/impact': 'bone_impact', 'heal_aura/pieces': 'heal_pieces'}
+
+
+def transparent_source(path):
+    with Image.open(path) as original:
+        image = original.convert('RGBA')
+    red, green, blue, alpha = image.split()
+    white = ImageChops.darker(ImageChops.darker(red, green), blue).point(lambda v: 255 if v == 255 else 0)
+    if ImageChops.multiply(white, alpha).getbbox():
+        image.paste((0, 0, 0, 0), mask=white)
+        image.save(path)
+    return image
 
 
 def frame_files(folder):
@@ -20,7 +31,7 @@ def frame_files(folder):
 def join(rows):
     if len({len(row) for row in rows}) != 1:
         raise ValueError(f'Número desigual de fotogramas en {rows[0][0].parent}')
-    images = [[Image.open(p).convert('RGBA') for p in row] for row in rows]
+    images = [[transparent_source(p) for p in row] for row in rows]
     w = max(im.width for row in images for im in row)
     h = max(im.height for row in images for im in row)
     sheet = Image.new('RGBA', (w * len(rows[0]), h * len(rows)))
@@ -31,6 +42,8 @@ def join(rows):
 
 
 def build():
+    for icon in (ROOT / 'assets/benefits').glob('*.png'):
+        transparent_source(icon)
     source = INDEX.read_text()
     entries = {}
     comments = {}
@@ -51,7 +64,7 @@ def build():
             sheet, w, h = join(rows)
             sheet.save(sheet_path)
         else:
-            sheet = Image.open(sheet_path).convert('RGBA')
+            sheet = transparent_source(sheet_path)
             w, h = (entry['width'], entry['height']) if key in entries else (32, 32)
         if sheet.width % w or sheet.height % h:
             raise ValueError(f'Dimensiones incompatibles en {path}')

@@ -43,7 +43,7 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     const sheet = effectSheets[visualEffect.kind];
     const progress = Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
     const count=visualEffect.frameCount??sheet.columns;
-    const frame=(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor(progress*count));
+    const frame=(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor((visualEffect.reverse?1-progress:progress)*count));
     const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX;
     const actor = visualEffect.follow ?? visualEffect.owner ?? visualEffect.visualOwner ?? visualEffect.chain?.owner;
     const lift = actor ? actorRule(actor,'floatHeight') : 0;
@@ -62,7 +62,8 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     if(visualEffect.kind==='rock_throw' && visualEffect.owner.isPlayer && synergyActive('goldRock'))drawingContext.filter=goldFilter;
     if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
-    if (poison || visualEffect.attackTint) drawingContext.filter=attackTint(poison?'poison':visualEffect.attackTint);
+    if (poison || visualEffect.attackTint) drawingContext.filter=attackTint(visualEffect.attackTint??'poison');
+    if(visualEffect.filter)drawingContext.filter=visualEffect.filter;
     const base = sheet.base ?? sheet.height / 2;
     const row = sheet.rows === 8 ? visualEffect.dir : 0;
     drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
@@ -104,20 +105,30 @@ function landing(owner, roomOnly) {
   return sites[Math.floor(Math.random()*sites.length)];
 }
 
-// VIP y Engranaje buscan una casilla contigua transitable a la salida actual.
-function exitNeighbor(owner){
-  const portal=game.portal;
-  if(!portal || !['stairs','portal'].includes(portal.kind))return null;
-  for(const [dx,dy] of DIR_VEC){
-    const x=(portal.x+dx+.5)*TILE,y=(portal.y+dy+.5)*TILE;
-    if(game.grid[portal.y+dy]?.[portal.x+dx]===0 && canMove(owner,x,y))return {x,y};
+function machinerySite(owner){
+  let anchors=[...game.drops.filter(drop=>drop.id),...game.entities.filter(e=>e.hp && !e.ally && e.isPlayer!==owner.isPlayer)];
+  if(owner.isPlayer && synergyActive('vipWarp') && ['stairs','portal'].includes(game.portal?.kind)){
+    anchors=[{x:(game.portal.x+.5)*TILE,y:(game.portal.y+.5)*TILE}];
   }
-  return null;
+  const sites=[];
+  for(const anchor of anchors)for(const [dx,dy] of DIR_VEC){
+    const col=Math.floor(anchor.x/TILE)+dx,row=Math.floor(anchor.y/TILE)+dy;
+    const x=(col+.5)*TILE,y=(row+.5)*TILE;
+    if(game.grid[row]?.[col]===0 && canMove(owner,x,y))sites.push({x,y});
+  }
+  return sites[Math.floor(Math.random()*sites.length)];
 }
 
+export function paralyze(target,ms){
+  target.shockUntil=gameTime()+ms;
+  target.paralyzedUntil=Math.max(target.paralyzedUntil??0,target.shockUntil);
+  target.impactPending=false;target.abilityCast=null;target.rockUntil=0;
+  if(target.isPlayer)game.cast=null;
+  setState(target,'Charge');
+}
 // Ejecuta las activas sin proyectil mediante el mismo comportamiento para ambas IAs y Ditto.
-function utilityCast(id,owner) {
-  if(id==='transparent'){owner.evasionUntil=gameTime()+5000;return;}
+function utilityCast(id,owner,destination) {
+  if(id==='transparent'){owner.evasionUntil=gameTime()+7000;return;}
   if(id==='royalty'){
     for(const target of game.entities){
       if(!target.hp || target.ally || target.isPlayer===owner.isPlayer)continue;
@@ -126,8 +137,18 @@ function utilityCast(id,owner) {
     }
     return;
   }
-  const site=id==='machinery' && actorRule(owner,'exitRange')?exitNeighbor(owner):landing(owner,id==='spoink_pearl');
-  if(site){effect('purple',owner.x,owner.y,624).visualOwner=owner;Object.assign(owner,site);effect('purple',owner.x,owner.y,624).visualOwner=owner;}
+  const site=id==='machinery'?destination:landing(owner,true);
+  if(!site)return;
+  for(const position of [owner,site]){
+    const fx=effect('purple',position.x,position.y,624);
+    fx.visualOwner=owner;
+    if(id==='machinery')fx.filter='grayscale(1)';
+  }
+  Object.assign(owner,site);
+  if(id==='machinery')for(const enemy of game.entities){
+    if(enemy.hp && !enemy.ally && enemy.isPlayer!==owner.isPlayer &&
+        Math.hypot(enemy.x-owner.x,enemy.y-owner.y)<=attackReach(owner.stats))paralyze(enemy,1000);
+  }
 }
 const utilities=new Set(['machinery','spoink_pearl','transparent','royalty']);
 
@@ -210,7 +231,8 @@ export function useActive(slot) {
   if (!benefitId || !player.hp || game.changingLevel || game.cast || !['Idle','Walk'].includes(player.state)) return;
   const benefit=game.benefits.get(benefitId);
   if ((game.cooldowns[benefitId]??0)>cooldownTime()) return showToast('Recarga: '+Math.ceil((game.cooldowns[benefitId]-cooldownTime())/1000)+' s');
-  if(benefitId==='machinery' && actorRule(player,'exitRange') && !exitNeighbor(player))return showToast('La salida aún no está disponible.');
+  const destination=benefitId==='machinery'?machinerySite(player):null;
+  if(benefitId==='machinery' && !destination)return showToast('No hay un destino disponible.');
   if(!payEssences(player,benefitId))return showToast('PV completos o esencias insuficientes');
   if (benefitId==='seer') {
     if (player.hp <= 1) return showToast('Necesitas más de 1 PV');
@@ -220,7 +242,7 @@ export function useActive(slot) {
   const duration = cooldownDuration(benefit.amount);
   game.cooldownDurations[benefitId]=duration;
   game.cooldowns[benefitId]=cooldownTime()+duration;
-  game.cast={id: benefitId,start:simulationTime,dir:player.dir,hit:new Set()};
+  game.cast={id: benefitId,destination,start:simulationTime,dir:player.dir,hit:new Set()};
   setState(player,['dealer','mamoswine_fang'].includes(benefitId)?'Spin':'Charge');
 
   if (benefitId==='mamoswine_fang') effect('fangaround',player.x,player.y,560).follow=player;
@@ -241,6 +263,7 @@ export function elementalHit(owner,target,power,element,ownerAbility=true,critic
   const chart={
     fire:{grass:2,ice:2,bug:2,steel:2,fire:.5,water:.5,rock:.5,dragon:.5},
     water:{fire:2,ground:2,rock:2,water:.5,grass:.5,dragon:.5},
+    grass:{water:2,ground:2,rock:2,fire:.5,grass:.5,poison:.5,flying:.5,bug:.5,dragon:.5,steel:.5},
     rock:{fire:2,ice:2,flying:2,bug:2,fighting:.5,ground:.5,steel:.5},
     poison:{grass:2,fairy:2,poison:.5,ground:.5,rock:.5,ghost:.5,steel:.5},
     psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:.5},
@@ -267,11 +290,18 @@ export function elementalHit(owner,target,power,element,ownerAbility=true,critic
 
 // El ataque elemental se comparte entre contacto, proyectiles y habilidades.
 export function attackElement(owner){
+  const held=owner.isPlayer?game.held:owner.benefits;
+  for(const id of [...(held??[])].reverse()){
+    const element=game.benefits.get(id)?.element;
+    if(element)return element;
+  }
   if(actorRule(owner,'poisonAttack'))return 'poison';
   if(actorRule(owner,'fireAttack'))return 'fire';
   if(actorRule(owner,'psychicAttack'))return 'psychic';
 }
 export function attackTint(element) {
+  if(element==='water')return 'sepia(1) saturate(6) hue-rotate(165deg)';
+  if(element==='grass')return 'sepia(1) saturate(6) hue-rotate(67deg)';
   return element === 'poison' ? game.canvasTheme.poisonFilter : element === 'fire' ? game.canvasTheme.fireFilter :
     element === 'psychic' ? game.canvasTheme.psychicFilter : null;
 }
@@ -323,7 +353,38 @@ export function launchWeapon(owner,kind){
   const relicShot=['bone_throw','iron_bomb'].includes(kind);
   Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:attackReach(owner.stats)*(relicShot?2:1),
     element:({watergun:'water',rock_throw:'rock',bone_throw:'ground',iron_bomb:'steel'})[kind],weapon:true,relicShot});
+  if(kind==='bone_throw'){
+    owner.boneInFlight=projectile;
+    projectile.hit=new Set();
+  }
   if(kind==='iron_bomb')projectile.frameCount=9;
+}
+
+// Cada tramo tiene su propio registro de impactos. El regreso persigue al lanzador.
+function advanceBone(fx,fraction,now){
+  const owner=fx.owner;
+  if(!owner.hp){owner.boneInFlight=null;return false;}
+  const [dx,dy]=DIR_VEC[fx.dir],scale=fx.reach/Math.hypot(dx,dy);
+  let destX=fx.returning?owner.x:fx.originX+dx*scale*fraction;
+  let destY=fx.returning?owner.y:fx.originY+dy*scale*fraction;
+  const wall=!fx.returning && !hasSight(fx,{x:destX,y:destY});
+  if(wall){destX=fx.x;destY=fx.y;}
+  const vx=destX-fx.x,vy=destY-fx.y,length=Math.hypot(vx,vy);
+  const step=fx.returning?Math.min(length,fx.reach*(now-fx.lastStep)/fx.ms):length;
+  for(const target of game.entities){
+    if(target.isPlayer===owner.isPlayer || target.ally || !target.hp || fx.hit.has(target))continue;
+    const along=length?Math.max(0,Math.min(step,((target.x-fx.x)*vx+(target.y-fx.y)*vy)/length)):0;
+    if(Math.hypot(target.x-fx.x-vx*along/(length||1),target.y-fx.y-vy*along/(length||1))>bodyRadius(target)+5 || !hasSight(fx,target))continue;
+    fx.hit.add(target);
+    if(Math.random()<dodgeChance(target))continue;
+    const crit=criticalHit(owner,target);
+    elementalHit(owner,target,damageFor(owner,target,crit)*(1+actorRule(owner,'projectileBonus')),'ground',false,crit,true);
+    projectileImpact(fx,target.x,target.y);
+  }
+  fx.x+=vx*step/(length||1);fx.y+=vy*step/(length||1);fx.lastStep=now;
+  if(fx.returning && step>=length){owner.boneInFlight=null;return false;}
+  if(!fx.returning && (fraction>=1 || wall)){fx.returning=true;fx.hit.clear();fx.start=now;}
+  return true;
 }
 
 // Impacto terminal de un proyectil. La bomba reserva los fotogramas 10–12 para la explosión.
@@ -340,17 +401,11 @@ export function featherStun(owner){
   effect('featherfall',owner.x,owner.y,450).follow=owner;
   const now=gameTime();
   for(const target of game.entities){
-    if(!target.hp||target.ally||target.isPlayer===owner.isPlayer||Math.hypot(target.x-owner.x,target.y-owner.y)>2*attackReach(owner.stats))continue;
-    target.interruptedAt=now;target.rockUntil=0;target.paralyzedUntil=now+1000;target.impactPending=false;target.abilityCast=null;target.aimSince=null;
-    target.nextAttackAt=now+2000;
-    if(target.activeBenefit)target.abilityReadyAt=now+game.benefits.get(target.activeBenefit).amount*500;
-    if(target.isPlayer){
-      game.cast=null;
-      for(const id of game.held)if(game.benefits.get(id).active){
-        const duration=game.cooldownDurations[id]??game.benefits.get(id).amount*1000;
-        game.cooldownDurations[id]=duration;game.cooldowns[id]=cooldownTime()+duration;
-      }
-    }
+    if(!target.hp||target.ally||target.isPlayer===owner.isPlayer||Math.hypot(target.x-owner.x,target.y-owner.y)>attackReach(owner.stats))continue;
+    target.interruptedAt=now;target.rockUntil=0;target.paralyzedUntil=Math.max(target.paralyzedUntil??0,now+300);
+    target.impactPending=false;target.abilityCast=null;target.aimSince=null;
+    target.nextAttackAt=Math.max(target.nextAttackAt??0,now+300);
+    if(target.isPlayer)game.cast=null;
     for(const fx of game.effects)if(fx.owner===target||fx.follow===target)fx.cancelled=true;
     setState(target,'Idle');
   }
@@ -359,7 +414,8 @@ export function featherStun(owner){
 // Los costes se validan completos antes de descontar una sola unidad.
 function payEssences(owner,id){
   const balances=owner.isPlayer?game.essences:(owner.essences??={bug:20});
-  const cost=game.benefits.get(id)?.rules?.lootCost;
+  const rules=game.benefits.get(id)?.rules;
+  const cost=rules?.essenceCost??rules?.lootCost;
   if(cost){
     if(Object.values(balances).reduce((sum,n)=>sum+n,0)<cost)return false;
     for(let i=0;i<cost;i++){
@@ -396,7 +452,11 @@ function releaseSpecial(owner,id){
     }
     if (owner.isPlayer) refreshEssenceAttack();
     playSound('dealer');
-  }else if(config.lootCost)dropNewItem(owner);
+  }else if(config.lootCost){
+    const [dx,dy]=DIR_VEC[owner.dir],step=TILE/Math.hypot(dx,dy);
+    const fx=effect('cover',owner.x+dx*step,owner.y+dy*step,350,owner.dir);
+    fx.reverse=true;fx.dropOnFinish=true;
+  }
   else if(config.burstRange){
     const radius=config.burstRange*attackReach(owner.stats);
     Object.assign(effect('water_burst',owner.x,owner.y,350),{visualOwner:owner,diameter:radius*2});
@@ -451,10 +511,12 @@ export function updateWildAbility(wild) {
     if ((benefitId==='seer' && wild.hp<=1) || wild.bossResponse || wild.sidestep || simulationTime < (wild.abilityReadyAt ?? 0) || (distance > range || !hasSight(wild,player))) return false;
 
     wild.dir = (Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
+    const destination=benefitId==='machinery'?machinerySite(wild):null;
+    if(benefitId==='machinery' && !destination)return false;
     if(!payEssences(wild,benefitId))return false;
     playSound('charge');
     console.debug('[IA] Preparar habilidad',{dex:wild.dex,benefitId,x:wild.x,y:wild.y,distance,range});
-    wild.abilityCast = {start:simulationTime,dir:wild.dir,hit:new Set()};
+    wild.abilityCast = {destination,start:simulationTime,dir:wild.dir,hit:new Set()};
     wild.path = [];
     setState(wild,'Charge');
     return true;
@@ -480,7 +542,7 @@ export function updateWildAbility(wild) {
       for (const key of ['attack','speed','attackSpeed']) wild.stats[key]+=50;
       wild.buffUntil=simulationTime+10000;
     } else if(specials.has(benefitId))releaseSpecial(wild,benefitId);
-    else if (utilities.has(benefitId)) utilityCast(benefitId,wild);
+    else if (utilities.has(benefitId)) utilityCast(benefitId,wild,activeCast.destination);
   }
   if (wild.state==='Spin') {
     spin(wild,activeCast,simulationTime-activeCast.spinStart);
@@ -515,7 +577,7 @@ export function tickAbilities() {
         effect('death_chant',player.x,player.y,600).follow=player;
         for(const enemy of wildEnemies())inflictDamage(player,enemy,enemy.hp,false,false,true);
       }else if(specials.has(activeCast.id))releaseSpecial(player,activeCast.id);
-      else if (utilities.has(activeCast.id)) utilityCast(activeCast.id,player);
+      else if (utilities.has(activeCast.id)) utilityCast(activeCast.id,player,activeCast.destination);
       else if (activeCast.id==='seer') {
         game.amuletUntil=simulationTime+10000;
         player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
@@ -533,7 +595,12 @@ export function tickAbilities() {
     const lifetimeFraction=Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
     // Tras un impacto o interrupción, termina la secuencia visual sin volver a aplicar daño.
     if (visualEffect.finishedImpact || visualEffect.cancelled ||
-        (visualEffect.owner??visualEffect.follow)?.interruptedAt>=visualEffect.start) return lifetimeFraction<1;
+        (visualEffect.owner??visualEffect.follow)?.interruptedAt>=visualEffect.start) {
+      if(visualEffect.kind==='bone_throw' && visualEffect.owner.boneInFlight===visualEffect)visualEffect.owner.boneInFlight=null;
+      return lifetimeFraction<1;
+    }
+    if(visualEffect.dropOnFinish && lifetimeFraction>=1){dropNewItem(visualEffect);return false;}
+    if(visualEffect.kind==='bone_throw')return advanceBone(visualEffect,lifetimeFraction,simulationTime);
     if(visualEffect.chain && !visualEffect.chained && lifetimeFraction>=1/effectSheets.erupt.columns){
       visualEffect.chained=true;
       const chain=visualEffect.chain,[dx,dy]=DIR_VEC[chain.dir],length=Math.hypot(dx,dy);

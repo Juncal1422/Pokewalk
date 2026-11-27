@@ -1,13 +1,12 @@
 import {criticalBlock,criticalHit,actorRule,combatChance,rule} from './modifiers.js';
 import {playSound} from './audio.js';
 import { gameTime } from './clock.js';
-import { knockback,updateWildAbility, releaseSpines, effect, attackElement, elementalHit, launchWeapon, featherStun } from './abilities.js';
-import {relics} from './collection.js';
-import { settleStats,applyBenefitStats, amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
+import { paralyze, knockback,updateWildAbility, releaseSpines, effect, attackElement, elementalHit, launchWeapon, featherStun } from './abilities.js';
+import { bindHealthAttack,settleStats,applyBenefitStats, amount, combatBenefits, playerStats, synergyActive } from './benefits.js';
 import { attackMotion } from './attack-motion.js';
 import { updateEnemy, fleeRescue, trySidestep } from './enemy-ai.js';
 import { encounters, onDefeat } from './missions.js';
-import { collectItems, dropItem, spawnFloorItems } from './items.js';
+import { collectItems, dropItem, randomBerry, spawnFloorItems } from './items.js';
 import {
   ANIM_SPEED,
   BODY_RADIUS,
@@ -122,14 +121,15 @@ export function canMove(entity, x, y) {
 export function triggerAttack(attacker) {
   if (!['Idle','Walk'].includes(attacker.state)) return;
   if (attacker.dash?.until > gameTime() || attacker.frozenUntil>gameTime() || attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
+  if(attacker.boneInFlight)return;
   attacker.impactPending = true;
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
-  attacker.relicWeapon=attacker.isPlayer && [...(game.runRelics??[])].map(id=>relics[id]?.weapon).find(Boolean);
+  attacker.relicWeapon=[...(combatBenefits(attacker)??[])].map(id=>game.benefits.get(id)?.weapon).find(Boolean);
   attacker.fangStrike = !attacker.relicWeapon && !['acuatic','rock_thrower','ancient'].some(id=>combatBenefits(attacker)?.has(id)) && (combatBenefits(attacker)?.has('rhyhorn_horn') || combatBenefits(attacker)?.has('spiky'));
   attacker.doubleStrike = attacker.fangStrike && attacker.isPlayer && synergyActive('doubleStrike');
   // Fija una sola hoja para que los fotogramas de impacto y el render usen el mismo reloj.
   const weapon = [...(combatBenefits(attacker) ?? [])].map(id => game.benefits.get(id)).find(benefit => benefit?.spriteanimations);
-  attacker.attackAnimation = attacker.relicWeapon ? (['slash','dark_cut'].includes(attacker.relicWeapon)?attacker.anims.Charge:attacker.anims.Shoot) ?? attacker.anims.Attack : weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
+  attacker.attackAnimation = attacker.relicWeapon ? (['peck','dark_cut'].includes(attacker.relicWeapon)?attacker.anims.Charge:attacker.relicWeapon==='bite'?attacker.anims.Attack:attacker.anims.Shoot) ?? attacker.anims.Attack : weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
   attacker.strikesDone = 0;
   setState(attacker, 'Attack');
 }
@@ -155,7 +155,7 @@ function resolveImpact(attacker) {
 
   const weapons=combatBenefits(attacker);
   const replacement=attacker.relicWeapon;
-  const cut=replacement==='slash' || replacement==='dark_cut';
+  const cut=['peck','dark_cut','bite'].includes(replacement);
   if(replacement && !cut){launchWeapon(attacker,replacement);return;}
   if(cut){
     effect(replacement,attacker.x+directionX*reach*.65,attacker.y+directionY*reach*.65,200,attacker.dir,attacker).diameter=2*reach;
@@ -180,7 +180,7 @@ function resolveImpact(attacker) {
       continue;
     }
     const critical = criticalHit(attacker,target);
-    const power=damageFor(attacker,target,critical),element=cut?(replacement==='slash'?'flying':'ghost'):attackElement(attacker);
+    const power=damageFor(attacker,target,critical),element=replacement==='peck'?'flying':replacement==='dark_cut'?'ghost':attackElement(attacker);
     if(!(element ? elementalHit(attacker,target,power,element,false,critical) : inflictDamage(attacker,target,power,critical)))continue;
     if (target.hp && (target.abilityCast || (target.boss && (target.bossResponse || target.state==='Attack')))) continue;
     if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
@@ -231,7 +231,7 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
   target.hitNumbers=(target.hitNumbers??[]).filter(hit=>simulationTime-hit.time<750);
   target.hitNumbers.push({damage:previousHP-target.hp,critical,time:simulationTime});
   if(critical){
-    if(Math.random()<actorRule(target,'criticalBerry'))dropItem('berry_oran',target);
+    if(Math.random()<actorRule(target,'criticalBerry'))dropItem(randomBerry(),target);
     if(actorRule(target,'reflectCritical'))for(const enemy of game.entities){
       if(enemy.hp && !enemy.ally && enemy.isPlayer!==target.isPlayer)inflictDamage(target,enemy,damage,false,false,true);
     }
@@ -242,7 +242,8 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
     else target.stats.attack+=10;
     target.championFlash=simulationTime;
   }
-  if(defendingBenefits.has('feathered'))featherStun(target);
+  if(critical && defendingBenefits.has('static') && attacker!==target)paralyze(attacker,1000);
+  if(critical && defendingBenefits.has('feathered'))featherStun(target);
   if(target.isPlayer && !target.hp && game.inventory.delete('revive')){
     game.reviveSpent=true;
     target.hp=Math.max(1,Math.ceil(target.stats.hpMax*.2));
@@ -328,10 +329,10 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
     enemy.stats = statsFor(species, enemyDifficulty, {}, enemy.boss, true);
     enemy.ally=mission.type==='rescue' && floor===mission.floors && index===opponents.length-1;
     if(mission.red || enemy.ally){
-      const level=enemy.ally ? (mission.red?player.level:Math.min(100,player.level+5)) : Math.min(100,enemy.level+15);
+      const level=enemy.ally ? (mission.red?player.level:Math.min(100,player.level+5)) : Math.min(100,enemy.level+10);
       enemy.level=enemy.ally && mission.red ? player.level : levelFor(species,level);
       // Los límites del líder progresan con el encargo rojo, además del nivel efectivo.
-      enemy.stats=statsFor(species,enemyDifficulty+(mission.red?15:0),{},enemy.boss,true,enemy.level);
+      enemy.stats=statsFor(species,enemyDifficulty+(mission.red?10:0),{},enemy.boss,true,enemy.level);
     }
     if(enemy.ally)game.rescueAlly=enemy;
     else if(Math.random() < (game.inventory.has('shiny_elixir') ? .05 : .001)) applyShinyAppearance(enemy);
@@ -346,6 +347,7 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
       if(enemy.provoked || rule('exitRange'))enemy.lastSeen={x:player.x,y:player.y};
     }
     enemy.hp = enemy.stats.hpMax;
+    bindHealthAttack(enemy.stats,enemy.benefits,()=>enemy.hp);
     game.entities.push(enemy);
   });
   spawnFloorItems();
@@ -404,7 +406,14 @@ export function updateEntity(entity) {
   if(entity.frozenUntil>gameTime())return;
   if(entity.hp && entity.rockUntil>gameTime()){setState(entity,'Charge');entity.frame=(Math.floor(gameTime()/90)%(entity.anims.Charge??entity.anims.Idle).frames);return;}
   if(entity.state==='Charge' && !entity.finishingSpecial && !entity.abilityCast && !(entity.isPlayer && game.cast) && !(entity.rockUntil>gameTime())) entity.finishingSpecial=true;
-  if(entity.hp && entity.paralyzedUntil>gameTime() && !entity.abilityCast)return;
+  if(entity.hp && entity.paralyzedUntil>gameTime()){
+    if(entity.shockUntil>gameTime()){
+      setState(entity,'Charge');
+      entity.frame=Math.floor(gameTime()/90)%(entity.anims.Charge??entity.anims.Idle).frames;
+    }
+    return;
+  }
+  if(entity.shockUntil){entity.shockUntil=0;setState(entity,'Idle');}
   if (entity.isPlayer) {
     if (entity.hp > 0 && entity.state === 'Hurt' && entity.animationCompleted && !(entity.reviveUntil>gameTime()) && gameTime() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
     const [deltaX,deltaY] = inputDirection();

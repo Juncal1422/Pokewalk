@@ -119,7 +119,6 @@ export function missionOffers(number, level, held=game.held) {
     const pick=index===0 && forceLeader && leader>=0?leader:Math.floor(Math.random()*types.length);
     const type=types.splice(pick,1)[0];
     const mission=newMission(number,biome,level,type,!!redReward || index===redIndex);
-    mission.reward*=redReward||1;
     offers.push(mission);
   }
   return offers;
@@ -239,7 +238,7 @@ export function rewardOptions(
   }
   if (mission.redLeader) {
     const leader = game.pokemon.get(mission.redLeader);
-    add(leader, leader.essences[0], leader.root === current.root);
+    add(leader, leader.essences[0], leader.dex === current.dex);
   }
   // Una rama pagable tiene prioridad incluso al completar una misión sin bajas.
   for (const option of evolutions
@@ -251,7 +250,7 @@ export function rewardOptions(
     )
     .filter((option) => !offeredDexNumbers.has(option.row.dex))
     .slice(0, 3 - choices.length)) {
-    add(option.row, option.payment.type, true, option.payment);
+    add(option.row, option.payment.type, game.donors.get(option.row.name)?.id === game.donors.get(current.name)?.id, option.payment);
   }
   for (const { type } of balances) {
     if (choices.length === 3) break;

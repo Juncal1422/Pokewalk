@@ -53,7 +53,18 @@ export function playerStats(
     stats.attack += Math.floor(Math.max(0,stats.defense-cap)/2);
     stats.defense=Math.min(stats.defense,cap);
   }
+  bindHealthAttack(stats,heldBenefits,()=>game.player?.hp);
   return stats;
+}
+
+// El HUD, los ataques y las curaciones consultan los mismos HP en tiempo real.
+export function bindHealthAttack(stats,held,health){
+  const bonus=Math.max(0,...[...held].map(id=>game.benefits.get(id)?.lowHPAttack??0));
+  if(!bonus)return;
+  let base=stats.attack;
+  const boost=()=>health()<stats.hpMax/4?bonus:0;
+  Object.defineProperty(stats,'attack',{enumerable:true,configurable:true,
+    get:()=>base+boost(),set:value=>{base=value-boost();}});
 }
 
 // Se comparte entre salvajes, jugador y la comparación previa a elegir carta.
@@ -75,6 +86,7 @@ export function applyBenefitStats(stats,held,naturalSize,equipment=false,raw){
   stats.defense+=(naturalSize-stats.size)*rule('sizeDefense',held,equipment);
   if(rule('noDodge',held,equipment))stats.evasion=0;
   if(equipment && game.runRelics?.has('cranium'))stats.block=stats.critical=0;
+  if(held.has('aviodant'))stats.critical=0;
   if(raw)Object.assign(raw,stats);
   for(const key of Object.keys(stats))stats[key]=limitStat(key,Math.round(stats[key]));
   return stats;
@@ -84,7 +96,7 @@ export function applyBenefitStats(stats,held,naturalSize,equipment=false,raw){
 export function settleStats(species,level,bonuses,previous,held=game.held,balances=game.essences){
   const raw={};
   const after=playerStats(species,level,bonuses,held,balances,raw);
-  const halves=new Set([...(game.runRelics??[])].map(id=>relics[id]?.halve));
+  const halves=new Set([...held].map(id=>game.benefits.get(id)?.halve));
   let speedGain=0;
   for(const key of Object.keys(raw)){
     const minimum=limitStat(key,-Infinity);
@@ -94,6 +106,10 @@ export function settleStats(species,level,bonuses,previous,held=game.held,balanc
     const gain=Math.max(0,after[key]-previous[key]);
     const discount=halves.has(key)?gain/2:0;
     if(discount)bonuses[key]=(bonuses[key]??0)-discount;
+    if(held.has('impregnable') && gain>0){
+      if(key==='critical' || key==='evasion')bonuses.block=(bonuses.block??0)+gain;
+      if(key==='size')bonuses.hpMax=(bonuses.hpMax??0)+gain;
+    }
     if(key!=='speed')speedGain+=gain-discount;
   }
   if(game.runRelics?.has('bike_ticket'))bonuses.speed=(bonuses.speed??0)+speedGain;
@@ -102,7 +118,7 @@ export function settleStats(species,level,bonuses,previous,held=game.held,balanc
 
 // Cuerno y Punzante comparten el ataque direccional. Los otros tres lo sustituyen entero.
 const directionalWeapons = new Set(['spiky', 'rhyhorn_horn']);
-const exclusiveWeapons = new Set(['acuatic', 'ancient', 'rock_thrower']);
+const exclusiveWeapons = new Set(['acuatic', 'ancient', 'rock_thrower','ofidio','forgotten_bone','magnet','occult_powder','sharp_beak']);
 function weaponConflict(owned, incoming) {
   if (exclusiveWeapons.has(incoming)) return directionalWeapons.has(owned) || exclusiveWeapons.has(owned);
   return directionalWeapons.has(incoming) && exclusiveWeapons.has(owned);

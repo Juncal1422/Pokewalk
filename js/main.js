@@ -492,6 +492,7 @@ export async function startGame({
     battleResources ??= Promise.all([preparePortal(),loadHud(),loadTerrain(),loadEffects(),loadItemImages(items)])
       .then(() => null, error => error);
     await visit;
+    game.held=new Set([game.collection.starterBenefit].filter(id=>game.benefits.has(id)));
     const firstMission = await selectMission(missionOffers(1, 5));
     game.runRelics = new Set(game.collection.enabled);
     // Asignar el saldo inicial también hace idempotente un reintento de carga desde el gremio.
