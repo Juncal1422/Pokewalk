@@ -47,6 +47,7 @@ const EMBEDDED_APP = `
 function mountApp(root) {
   if (root.querySelector('#dungeon-canvas')) return;
   root.innerHTML = EMBEDDED_APP;
+  root.querySelector('#poke-walk-app').addEventListener('contextmenu', event => event.preventDefault());
 }
 
 // El portal sustituye un suelo común y nunca se genera bajo el jugador.

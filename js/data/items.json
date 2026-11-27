@@ -1,4 +1,11 @@
 {
+  "fast_silk": {
+    "name": "Sedarrápida",
+    "description": "Reduce de 1 s a 0,5 s la recuperación del dash.",
+    "image": "assets/items/fast_silk.png",
+    "stats": {},
+    "rules": {"dashRecovery": 1}
+  },
   "berry_oran": {
     "name": "Baya Aranja",
     "description": "Regenera el 10 por ciento de los PV máximos.",

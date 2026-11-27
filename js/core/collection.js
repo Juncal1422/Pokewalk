@@ -8,6 +8,7 @@ export function isUnlocked(key,id) {
 }
 export const relics = {
   ...Object.fromEntries([
+    ['weighted_tail','Cola pesada','Desactiva el dash. Todos los Pokémon recuperan el ritmo anterior de marcha y ataque.'],
     ['bike_ticket','Ticket bici','Las mejoras de otros atributos también aumentan la velocidad.'],
     ['cranium','Cráneo','Los ataques por la espalda son críticos y bloqueas los impactos frontales.'],
     ['death_flute','Flauta mortal','R · Consume 50 esencias. Tras cargar 4 s vence a los salvajes del piso. Recarga 3 min.',{slot:'r',cooldown:180,cost:50,charge:4000}],

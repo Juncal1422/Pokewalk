@@ -1,5 +1,5 @@
 import { useActive } from './abilities.js';
-import { setState, triggerAttack } from './entities.js';
+import { setState, triggerAttack, startDash } from './entities.js';
 import { game } from './state.js';
 
 // Vincula teclado, puntero y pérdida de foco al canvas y devuelve el controlador de los eventos.
@@ -16,7 +16,7 @@ export function attachInput() {
     game.keys = Object.create(null);
     const player = game.player;
     // Soltar movimiento detiene la marcha sin interrumpir un impacto o un ataque en curso.
-    if (player?.state === 'Walk') setState(player, 'Idle');
+    if (!player?.dash && player?.state === 'Walk') setState(player, 'Idle');
   }
   // Inicia el ataque del jugador si el piso está activo y el jugador sigue vivo.
   function attack() {
@@ -34,7 +34,7 @@ export function attachInput() {
     event.preventDefault();
     if (event.repeat || game.changingLevel) return;
     if (['q','e','r'].includes(key)) useActive(key);
-    else if (key === ' ') attack();
+    else if (key === ' ') startDash(game.player);
     else game.keys[key] = true;
   });
   // El puntero usa coordenadas del búfer; el HUD las convierte a su escala al dibujar.

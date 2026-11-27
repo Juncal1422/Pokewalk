@@ -1,3 +1,4 @@
+import { game } from './state.js';
 import { ATTACK_RANGE } from './constants.js';
 
 export const chanceBases = {evasion:5,block:0,critical:10};
@@ -34,12 +35,13 @@ export const enemyProgress = (progressionLevel) => 5 + Math.round((progressionLe
 // Combina alcance y tamaño para obtener la distancia real de ataque.
 export const attackReach = (stats) => (stats.range * stats.size) / 100;
 // Convierte velocidad en un multiplicador de movimiento y animación.
-export const movementRate = (speed) => 0.85 + speed / 150;
+const adventureTempo = () => game.runRelics?.has('weighted_tail') ? 1 : 1.2;
+export const movementRate = (speed) => adventureTempo() * (0.85 + speed / 150);
 
 // A 5, la hoja avanza a un cuarto de su cadencia. A 200 alcanza 2,5 veces la cadencia.
 export function attackRate(score) {
   const progress=(limitStat('attackSpeed',score)-5)/195;
-  return .25+2.25*progress*(2-progress);
+  return adventureTempo() * (.25+2.25*progress*(2-progress));
 }
 
 // Calcula un atributo de la especie antes de equipo, beneficios o ajustes del líder.

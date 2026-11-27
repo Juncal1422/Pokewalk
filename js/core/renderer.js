@@ -3,7 +3,7 @@ import { assetUrl } from './asset-url.js';
 import { drawWorldNotices } from './world-notices.js';
 import { synergyActive } from './benefits.js';
 import { gameTime } from './clock.js';
-import { drawEffects, drawFang } from './abilities.js';
+import { drawEffects, drawFang, attackElement, attackTint } from './abilities.js';
 import { attackMotion } from './attack-motion.js';
 import { drawItems } from './items.js';
 import { drawHud } from './hud.js';
@@ -157,7 +157,6 @@ export function draw() {
     const filters = entity.isPlayer ? [...game.inventory].map(id=>game.items[id]?.spriteFilter).filter(Boolean) : [];
     if (entity.shiny && !entity.shinySheet) filters.push('hue-rotate(100deg) saturate(1.45)');
     if (filters.length) drawingContext.filter=[drawingContext.filter==='none'?'':drawingContext.filter,...filters].join(' ').trim();
-    if (entity.state==='Attack' && actorRule(entity,'fireAttack')) drawingContext.filter=theme.fireFilter;
     if(entity.shellUntil>now)drawingContext.filter=theme.shellFilter;
     if (entity.isPlayer && game.amuletUntil > now) drawingContext.filter = theme.amuletFilter;
     if (entity.evasionUntil > now) drawingContext.filter = theme.evasionFilter;
@@ -170,6 +169,10 @@ export function draw() {
         game.held.has('golden')?theme.goldenFilter:''].filter(Boolean).join(' ');
       drawingContext.filter=tint || 'none';
     }
+    const element = entity.state === 'Attack' ? attackElement(entity) : null;
+    const hasWeapon = entity.relicWeapon || usesWeaponEffect ||
+      ['ancient','acuatic','rock_thrower'].some(id => (entity.isPlayer ? game.held : entity.benefits)?.has(id));
+    if (element && !hasWeapon) drawingContext.filter=attackTint(element);
     drawingContext.drawImage(
       animation.img,
       entity.frame * animation.fw,
@@ -187,7 +190,7 @@ export function draw() {
       const horn = entity.doubleStrike ? offset.secondWeapon : (entity.isPlayer?game.held:entity.benefits).has('rhyhorn_horn');
       const gold = entity.isPlayer && synergyActive(horn?'goldHorn':'goldSpike');
       drawFang(drawingContext,entity.dir,screenX+offset.x*ZOOM,screenY+offset.y*ZOOM,
-        ZOOM,offset.opacity,actorRule(entity,'fireAttack')?'fire_spike':horn?'fang':'spine',gold?theme.goldenWeaponFilter:'none');
+        ZOOM,offset.opacity,actorRule(entity,'fireAttack')?'fire_spike':horn?'fang':'spine',attackTint(element) ?? (gold?theme.goldenWeaponFilter:'none'));
     }
     if (!entity.isPlayer && gameTime() - entity.lastHit < 3000) {
       const fraction = entity.hp / entity.stats.hpMax;

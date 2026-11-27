@@ -19,6 +19,8 @@ export async function loadEncountersCatalog() {
         !Number.isInteger(speciesDefinition.maxLevel) || speciesDefinition.maxLevel < 1 || !statKeys.every(statKey => (statKey === 'range' && speciesDefinition.stats[statKey] === undefined) || (Number.isInteger(speciesDefinition.stats[statKey]) && speciesDefinition.stats[statKey] > 0))) {
       throw new Error('Ficha Pokémon inválida: ' + speciesDefinition.dex);
     }
+    // Ajuste de base común a todas las formas salvo el Ditto inicial.
+    if (speciesDefinition.dex !== 132) speciesDefinition.stats.attackSpeed += 20;
     pokemon.set(speciesDefinition.dex, speciesDefinition);
   }
   console.debug('[Encuentros] Catálogo validado', pokemon.size);

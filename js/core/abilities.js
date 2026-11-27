@@ -21,12 +21,13 @@ export async function loadEffects() {
   await effectAtlas.decode();
 }
 // Registra en el piso un efecto con origen, orientación, duración y hora de inicio.
-export function effect(kind,x,y,durationMs,directionIndex=0) {
+export function effect(kind,x,y,durationMs,directionIndex=0, basicOwner=null) {
   const sprite = { kind,x,y,ms: kind==='rock_aura'?1000:durationMs*2,dir: directionIndex,start:gameTime() };
   console.debug('[Animación de efecto]', {kind,x,y,directionIndex,durationMs:sprite.ms,
     frames:effectSheets[kind].columns,framesPerSecond:1000*effectSheets[kind].columns/sprite.ms,start:sprite.start});
   game.effects.push(sprite);
-  playSound(({fangaround:'spin',purple:'machinery'})[kind]??kind);
+  if (basicOwner) sprite.attackTint = attackElement(basicOwner);
+  else playSound(({fangaround:'spin',purple:'machinery'})[kind]??kind);
   return sprite;
 }
 
@@ -57,6 +58,7 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     if(visualEffect.kind==='rock_throw' && visualEffect.owner.isPlayer && synergyActive('goldRock'))drawingContext.filter=goldFilter;
     if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
+    if (visualEffect.attackTint) drawingContext.filter=attackTint(visualEffect.attackTint);
     const base = sheet.base ?? sheet.height / 2;
     const row = sheet.rows === 8 ? visualEffect.dir : 0;
     drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
@@ -186,7 +188,7 @@ function activateRelic(id,owner){
 // Valida la tecla, el estado del jugador y el coste antes de iniciar el lanzamiento y su recarga.
 export function useActive(slot) {
   const player=game.player, simulationTime=gameTime();
-  if(player.frozenUntil>simulationTime || player.paralyzedUntil>simulationTime || player.rockUntil>simulationTime)return;
+  if(player.dash?.until>simulationTime || player.frozenUntil>simulationTime || player.paralyzedUntil>simulationTime || player.rockUntil>simulationTime)return;
   if(slot==='r'){
     const id=[...(game.runRelics??[])].find(key=>relics[key]?.slot==='r');
     if(id && id!=='depleted_battery')return activateRelic(id,player);
@@ -263,6 +265,10 @@ export function attackElement(owner){
   if(actorRule(owner,'fireAttack'))return 'fire';
   if(actorRule(owner,'psychicAttack'))return 'psychic';
 }
+export function attackTint(element) {
+  return element === 'fire' ? game.canvasTheme.fireFilter :
+    element === 'psychic' ? game.canvasTheme.psychicFilter : null;
+}
 // Crea ocho proyectiles equidistantes cuyo daño depende de la defensa al recibir el crítico.
 export function releaseSpines(owner) {
   for (let directionIndex=0;directionIndex<8;directionIndex++) {
@@ -306,7 +312,7 @@ export function knockback(owner,target,steps) {
 
 // Un ataque a distancia sustituye al contacto. El primer cuerpo absorbe el proyectil.
 export function launchWeapon(owner,kind){
-  const projectile=effect(kind,owner.x,owner.y,260,owner.dir);
+  const projectile=effect(kind,owner.x,owner.y,260,owner.dir,owner);
   projectile.ms/=1+actorRule(owner,'projectileBonus');
   const relicShot=['bone_throw','iron_bomb'].includes(kind);
   Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:attackReach(owner.stats)*(relicShot?2:1),
@@ -316,11 +322,10 @@ export function launchWeapon(owner,kind){
 
 // Impacto terminal de un proyectil. La bomba reserva los fotogramas 10–12 para la explosión.
 function projectileImpact(projectile,x,y){
-  if(projectile.kind==='bone_throw')effect('bone_impact',x,y,130);
+  if(projectile.kind==='bone_throw')effect('bone_impact',x,y,130,0,projectile.owner);
   if(projectile.kind==='iron_bomb'){
-    const blast=effect('iron_bomb',x,y,140);
+    const blast=effect('iron_bomb',x,y,140,0,projectile.owner);
     blast.firstFrame=9;blast.frameCount=3;
-    playSound('bombImpact');
   }
 }
 
@@ -577,9 +582,8 @@ export function tickAbilities() {
         }
         const critical=visualEffect.weapon && criticalHit(visualEffect.owner,closestTarget);
         const power=(visualEffect.weapon?damageFor(visualEffect.owner,closestTarget,critical):visualEffect.damage)*(1+actorRule(visualEffect.owner,'projectileBonus'));
-        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical,visualEffect.relicShot) && visualEffect.weapon){
+        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical) && visualEffect.weapon){
           knockback(visualEffect.owner,closestTarget,visualEffect.kind==='rock_throw'?20:10);
-          if(visualEffect.kind==='rock_throw')playSound('rockImpact');
         }
         visualEffect.finishedImpact=true;
         return !visualEffect.relicShot && lifetimeFraction<1;

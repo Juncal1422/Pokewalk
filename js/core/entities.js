@@ -110,7 +110,7 @@ export function canMove(entity, x, y) {
 // Prepara un solo impacto pendiente y selecciona la animación para el arma equipada.
 export function triggerAttack(attacker) {
   if (!['Idle','Walk'].includes(attacker.state)) return;
-  if (attacker.frozenUntil>gameTime() || attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
+  if (attacker.dash?.until > gameTime() || attacker.frozenUntil>gameTime() || attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
   attacker.impactPending = true;
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
   attacker.relicWeapon=attacker.isPlayer && [...(game.runRelics??[])].map(id=>relics[id]?.weapon).find(Boolean);
@@ -147,12 +147,12 @@ function resolveImpact(attacker) {
   const cut=replacement==='slash' || replacement==='dark_cut';
   if(replacement && !cut){launchWeapon(attacker,replacement);return;}
   if(cut){
-    effect(replacement,attacker.x+directionX*reach*.65,attacker.y+directionY*reach*.65,200,attacker.dir).diameter=2*reach;
+    effect(replacement,attacker.x+directionX*reach*.65,attacker.y+directionY*reach*.65,200,attacker.dir,attacker).diameter=2*reach;
   }
   if(!replacement && (weapons?.has('acuatic')||weapons?.has('rock_thrower'))){
     launchWeapon(attacker,weapons.has('rock_thrower')?'rock_throw':'watergun');return;
   }
-  if(!replacement && weapons?.has('ancient'))effect('iron_hit',attacker.x+directionX*reach,attacker.y+directionY*reach,230,attacker.dir);
+  if(!replacement && weapons?.has('ancient'))effect('iron_hit',attacker.x+directionX*reach,attacker.y+directionY*reach,230,attacker.dir,attacker);
   for (const target of game.entities) {
     if (!target.hp || target===attacker || (attacker.isPlayer ? target.ally : target!==(attacker.prey??game.player))) continue;
     if (!hasSight(attacker,target)) continue;
@@ -170,7 +170,7 @@ function resolveImpact(attacker) {
     }
     const critical = criticalHit(attacker,target);
     const power=damageFor(attacker,target,critical),element=cut?(replacement==='slash'?'flying':'ghost'):attackElement(attacker);
-    if(!(element ? elementalHit(attacker,target,power,element,false,critical,!!cut) : inflictDamage(attacker,target,power,critical)))continue;
+    if(!(element ? elementalHit(attacker,target,power,element,false,critical) : inflictDamage(attacker,target,power,critical)))continue;
     if (target.hp && (target.abilityCast || (target.boss && (target.bossResponse || target.state==='Attack')))) continue;
     if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
     // El retroceso se detiene en el primer obstáculo del recorrido.
@@ -191,6 +191,7 @@ export function dodgeChance(target){
 export function inflictDamage(attacker,target,incomingDamage,critical=false,ability=false,exact=false) {
   if (!target.hp) return;
   const simulationTime = gameTime();
+  if(target.dash?.until > simulationTime)return;
   if(!exact && target.invulnerableUntil>simulationTime)return;
   if (!exact && ability && !critical && attacker.isPlayer && game.runRelics?.has('cranium') && criticalHit(attacker,target)) {
     critical=true; incomingDamage*=1.5;
@@ -290,7 +291,7 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
   const enemyDifficulty = 4 + mission.number;
   const player = createEntity(playerData, game.rooms[0], true);
   player.bonuses = bonuses;
-  if(previousPlayer) for(const timer of ['shellUntil','evasionUntil','invulnerableUntil','paralyzedUntil']) player[timer]=previousPlayer[timer];
+  if(previousPlayer) for(const timer of ['shellUntil','evasionUntil','invulnerableUntil','paralyzedUntil','nextDashAt']) player[timer]=previousPlayer[timer];
   player.stats = playerStats(game.pokemon.get(pokedexNumber), game.progress, bonuses);
   if (!previousPlayer) game.initialHP = player.stats.hpMax;
   player.hp = previousPlayer ? Math.min(player.stats.hpMax, previousPlayer.hp) : player.stats.hpMax;
@@ -341,11 +342,11 @@ export async function loadLevel(pokedexNumber, mission, floor, bonuses = game.pl
 }
 
 // Normaliza la dirección y avanza en subpasos para comprobar incluso las esquinas estrechas.
-function moveEntity(entity, deltaX, deltaY) {
+function moveEntity(entity, deltaX, deltaY, multiplier=1) {
   if (deltaX === 0 && deltaY === 0) return;
   entity.dir = DIR_MAP[[Math.sign(deltaX),Math.sign(deltaY)]] ?? entity.dir;
   const length = Math.hypot(deltaX, deltaY);
-  const speed = entity.isPlayer ? entity.speed * movementRate(entity.stats.speed) : Math.min(length, entity.speed * movementRate(entity.stats.speed));
+  const speed = entity.isPlayer ? multiplier * entity.speed * movementRate(entity.stats.speed) : Math.min(length, entity.speed * movementRate(entity.stats.speed));
   const movementX = (deltaX / length) * speed, movementY = (deltaY / length) * speed;
   // Primero probamos la diagonal real: separar siempre los ejes bloqueaba
   // cuerpos pequeños justo en el punto más estrecho entre dos esquinas.
@@ -357,6 +358,26 @@ function moveEntity(entity, deltaX, deltaY) {
     else if (movementY && canMove(entity, entity.x, y)) entity.y = y;
     else break;
   }
+}
+
+function inputDirection() {
+  const keys = game.keys;
+  return [Number(!!(keys.d || keys.arrowright))-Number(!!(keys.a || keys.arrowleft)),
+    Number(!!(keys.s || keys.arrowdown))-Number(!!(keys.w || keys.arrowup))];
+}
+
+export function startDash(player) {
+  const now = gameTime();
+  if (!player?.hp || game.changingLevel || game.cast || game.runRelics?.has('weighted_tail') ||
+      player.nextDashAt > now || player.frozenUntil > now || player.rockUntil > now ||
+      player.paralyzedUntil > now || player.windPush || !['Walk','Idle'].includes(player.state)) return;
+  const [dx,dy] = inputDirection();
+  const dir = DIR_MAP[[dx,dy]] ?? player.dir;
+  player.dir = dir;
+  player.dash = {dir, until:now+150};
+  player.nextDashAt = now+1000/(1+rule('dashRecovery'));
+  setState(player,'Walk');
+  console.debug('[Dash]',{x:player.x,y:player.y,dir,speed:4*player.speed*movementRate(player.stats.speed),durationMs:150,nextDashAt:player.nextDashAt});
 }
 
 // Procesa controles o IA y avanza la animación hasta el impacto y el final de la acción.
@@ -375,13 +396,11 @@ export function updateEntity(entity) {
   if(entity.hp && entity.paralyzedUntil>gameTime() && !entity.abilityCast)return;
   if (entity.isPlayer) {
     if (entity.hp > 0 && entity.state === 'Hurt' && entity.animationCompleted && !(entity.reviveUntil>gameTime()) && gameTime() - entity.lastHit >= PLAYER_STAGGER_MS) setState(entity, 'Idle');
-    let deltaX = 0,
-      deltaY = 0;
-    if (game.keys.w || game.keys.arrowup) deltaY--;
-    if (game.keys.s || game.keys.arrowdown) deltaY++;
-    if (game.keys.a || game.keys.arrowleft) deltaX--;
-    if (game.keys.d || game.keys.arrowright) deltaX++;
-    if (!game.cast && ['Idle','Walk'].includes(entity.state)) {
+    const [deltaX,deltaY] = inputDirection();
+    if (entity.dash?.until > gameTime()) {
+      moveEntity(entity,...DIR_VEC[entity.dash.dir],4);
+    } else if (!game.cast && ['Idle','Walk'].includes(entity.state)) {
+      entity.dash=null;
       if (deltaX || deltaY) {
         setState(entity, 'Walk');
         moveEntity(entity, deltaX, deltaY);
@@ -395,7 +414,7 @@ export function updateEntity(entity) {
   }
 
   const animation = entity.state === 'Attack' ? entity.attackAnimation ?? entity.anims.Attack : entity.anims[entity.state] || entity.anims.Idle;
-  const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed) :
+  const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed)*(entity.dash?.until>gameTime()?4:1) :
     entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) * (entity.isPlayer ? 1 : 0.48) : 1;
   const isHurt = entity.state === 'Hurt';
   const frameTime = animation.durs[entity.frame] || 8;
