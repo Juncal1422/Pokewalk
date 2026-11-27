@@ -7,7 +7,8 @@ import {playSound} from './audio.js';
 import { levelUp } from './experience.js';
 import { effect, pickupEffect } from './abilities.js';
 import { gameTime } from './clock.js';
-import { canMove } from './entities.js';
+import { attackReach } from './stats.js';
+import { canMove, inflictDamage } from './entities.js';
 import { essenceIcon,essenceNames } from './hud.js';
 import { TILE } from './constants.js';
 import { game } from './state.js';
@@ -73,9 +74,15 @@ export function spawnFloorItems() {
     const berry = synergyActive('sitrusBerries') ? 'berry_sitrus' : berries[Math.floor(Math.random()*berries.length)];
     place(revive ? 'revive' : berry);
   }
+  const extraRevive = rule('reviveChance');
+  if (extraRevive && sites.length && !game.reviveSpent && !game.inventory.has('revive') &&
+      !game.drops.some(drop=>drop.id==='revive') && mission.itemsPlaced < 3 && Math.random()<extraRevive) {
+    place('revive');
+    mission.itemsPlaced++;
+  }
   const available = Object.keys(game.items).filter(itemId => {
     const item=game.items[itemId];
-    return !(itemId==='revive' && game.reviveSpent) && (item.consumable || game.inventory.size < 75) && !item.berry && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
+    return !(itemId==='revive' && (game.reviveSpent || game.drops.some(drop=>drop.id==='revive'))) && (item.consumable || game.inventory.size < 75) && !item.berry && !item.objective && !game.inventory.has(itemId) && !(item.oncePerMission && mission.candyPlaced);
   });
   if (sites.length && available.length && mission.itemsPlaced < 3 && Math.random() < (.10 + amount('scaled') + rule('itemChance'))*(game.runRelics?.has('debugger')?1.5:1)) {
     const itemId=available[Math.floor(Math.random() * available.length)];
@@ -102,7 +109,7 @@ function collectEssence(player,drop,type,units){
     player.stats=settleStats(game.pokemon.get(player.dex),game.progress,player.bonuses,player.stats);
   }
   if(type==='water' && game.held.has('blooming')){
-    effect('grow',drop.x,drop.y,350);
+    effect('grow',drop.x,drop.y,350).visualOwner=player;
     const healed=Math.min(quantity,player.stats.hpMax-player.hp);
     player.hp+=healed; quantity-=healed;
     if(healed)showWorldNotice(player,healed,'HP');
@@ -115,7 +122,9 @@ function collectEssence(player,drop,type,units){
 // Resuelve las recogidas por contacto o alcance y aplica sus efectos antes de retirar el objeto.
 export function collectItems(player, strike = null) {
   if (!player.hp) return;
-  game.drops = game.drops.filter(drop => {
+  if (!game.drops.length) return;
+  const initialCount = game.drops.length;
+  const remaining = game.drops.filter(drop => {
     if (strike) {
       if (game.grid[Math.floor(drop.y / TILE)][Math.floor(drop.x / TILE)] === 0 || !strike(drop)) return true;
     } else if (Math.hypot(drop.x - player.x, drop.y - player.y) > 12) return true;
@@ -177,6 +186,12 @@ export function collectItems(player, strike = null) {
     pickupEffect(player,item.berry || item.essence?'heal':'boost');
     console.info('[Objeto] Recogido', item.name);
     player.hp = Math.min(player.stats.hpMax, player.hp + Math.ceil(player.stats.hpMax * (item.healFraction || 0) * (1 + (item.healFraction?amount('minty'):0))));
+    const healed = player.hp - previous.hp;
+    const pulseRadius = item.berry && healed > 0 && rule('berryPulseRange') * attackReach(player.stats);
+    if (pulseRadius) for (const enemy of game.entities) {
+      if (!enemy.isPlayer && !enemy.ally && enemy.hp && Math.hypot(enemy.x-player.x,enemy.y-player.y)<=pulseRadius)
+        inflictDamage(player,enemy,healed,false,false,true);
+    }
     // Usamos la diferencia después del límite de PV para mostrar solo la curación efectiva.
     discover('items',drop.id);checkpoint();playSound(item.berry?'berry':'item');
     if (item.healFraction || item.essence) showWorldNotice(player, player.hp - previous.hp, 'HP');
@@ -187,6 +202,7 @@ export function collectItems(player, strike = null) {
     }
     return false;
   });
+  game.drops = game.drops.length > initialCount ? remaining.concat(game.drops.slice(initialCount)) : remaining;
 }
 
 // Proyecta las posiciones de los objetos y las esencias del suelo respecto de la cámara.

@@ -95,7 +95,7 @@ function terrainFree(entity, x, y) {
   const radius = bodyRadius(entity);
   const species = game.pokemon.get(entity.dex);
   const canCrossTerrain = !entity.ally && !game.bossArena && ['water','void','lava'].includes(game.currentBiome.terrain) && game.currentBiome.canCross.some(skill => species[skill]);
-  return groundFree(x, y, radius, canCrossTerrain);
+  return groundFree(x, y, radius, canCrossTerrain || !!combatBenefits(entity)?.has('levitating'));
 }
 
 // Comprueba la posición contra los muros y los cuerpos vivos del piso.
@@ -103,8 +103,19 @@ export function canMove(entity, x, y) {
   if (!terrainFree(entity, x, y)) return false;
   const radius = bodyRadius(entity);
   // Movimiento y retroceso comparten el mismo cuerpo circular.
-  return !game.entities.some(other => other !== entity && other.hp > 0 &&
-    Math.hypot(other.x - x, other.y - y) < radius + bodyRadius(other));
+  return !game.entities.some(other => {
+    if (other === entity || !other.hp) return false;
+    const separation = Math.hypot(other.x-x,other.y-y);
+    if (separation >= radius+bodyRadius(other)) return false;
+    if (entity.isPlayer !== other.isPlayer && !entity.ally && !other.ally) {
+      const player = entity.isPlayer ? entity : other;
+      const wild = entity.isPlayer ? other : entity;
+      if (player.nextDashAt > gameTime() || actorRule(player,'phaseEnemies') || actorRule(wild,'phaseEnemies')) return false;
+      // Si la recarga termina con dos cuerpos solapados, deja que se separen.
+      if (separation > Math.hypot(other.x-entity.x,other.y-entity.y)) return false;
+    }
+    return true;
+  });
 }
 
 // Prepara un solo impacto pendiente y selecciona la animación para el arma equipada.
@@ -375,7 +386,7 @@ export function startDash(player) {
   const dir = DIR_MAP[[dx,dy]] ?? player.dir;
   player.dir = dir;
   player.dash = {dir, until:now+150};
-  player.nextDashAt = now+1000/(1+rule('dashRecovery'));
+  player.nextDashAt = now+1500/(1+rule('dashRecovery'));
   setState(player,'Walk');
   console.debug('[Dash]',{x:player.x,y:player.y,dir,speed:4*player.speed*movementRate(player.stats.speed),durationMs:150,nextDashAt:player.nextDashAt});
 }

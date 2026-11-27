@@ -26,7 +26,7 @@ export function effect(kind,x,y,durationMs,directionIndex=0, basicOwner=null) {
   console.debug('[Animación de efecto]', {kind,x,y,directionIndex,durationMs:sprite.ms,
     frames:effectSheets[kind].columns,framesPerSecond:1000*effectSheets[kind].columns/sprite.ms,start:sprite.start});
   game.effects.push(sprite);
-  if (basicOwner) sprite.attackTint = attackElement(basicOwner);
+  if (basicOwner) {sprite.visualOwner=basicOwner; sprite.attackTint=attackElement(basicOwner);}
   else playSound(({fangaround:'spin',purple:'machinery'})[kind]??kind);
   return sprite;
 }
@@ -45,11 +45,15 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     const count=visualEffect.frameCount??sheet.columns;
     const frame=(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor(progress*count));
     const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX;
-    const y = (visualEffect.follow?.y ?? visualEffect.y)*renderZoom-cameraY;
+    const actor = visualEffect.follow ?? visualEffect.owner ?? visualEffect.visualOwner ?? visualEffect.chain?.owner;
+    const lift = actor ? actorRule(actor,'floatHeight') : 0;
+    const y = ((visualEffect.follow?.y ?? visualEffect.y)-lift)*renderZoom-cameraY;
+    const poison = actor && actorRule(actor,'poisonAttack') &&
+      !['heal','grow','boost','revive','frozen','webshield','purple'].includes(visualEffect.kind);
     const scale = renderZoom*(visualEffect.follow?.stats.size ?? 100)/100*(visualEffect.kind==='mine'?2.4:1);
     if (visualEffect.kind === 'spine') {
       const fiery=visualEffect.owner && actorRule(visualEffect.owner,'fireAttack');
-      drawFang(drawingContext,visualEffect.dir,x,y,scale,1-progress,fiery?'fire_spike':'spine',fiery?'none':'sepia(1) saturate(6) hue-rotate(65deg)');
+      drawFang(drawingContext,visualEffect.dir,x,y,scale,1-progress,fiery?'fire_spike':'spine',poison?attackTint('poison'):fiery?'none':'sepia(1) saturate(6) hue-rotate(65deg)');
       continue;
     }
     const width = visualEffect.diameter ? visualEffect.diameter*renderZoom : sheet.width*scale, height = visualEffect.diameter ? width : sheet.height*scale;
@@ -58,7 +62,7 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     if(visualEffect.kind==='rock_throw' && visualEffect.owner.isPlayer && synergyActive('goldRock'))drawingContext.filter=goldFilter;
     if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
       drawingContext.filter = goldFilter;
-    if (visualEffect.attackTint) drawingContext.filter=attackTint(visualEffect.attackTint);
+    if (poison || visualEffect.attackTint) drawingContext.filter=attackTint(poison?'poison':visualEffect.attackTint);
     const base = sheet.base ?? sheet.height / 2;
     const row = sheet.rows === 8 ? visualEffect.dir : 0;
     drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
@@ -123,7 +127,7 @@ function utilityCast(id,owner) {
     return;
   }
   const site=id==='machinery' && actorRule(owner,'exitRange')?exitNeighbor(owner):landing(owner,id==='spoink_pearl');
-  if(site){effect('purple',owner.x,owner.y,624);Object.assign(owner,site);effect('purple',owner.x,owner.y,624);}
+  if(site){effect('purple',owner.x,owner.y,624).visualOwner=owner;Object.assign(owner,site);effect('purple',owner.x,owner.y,624).visualOwner=owner;}
 }
 const utilities=new Set(['machinery','spoink_pearl','transparent','royalty']);
 
@@ -197,7 +201,7 @@ export function useActive(slot) {
     if(game.batteryEnergy<4)return showToast('Batería · '+game.batteryEnergy+'/4 esencias eléctricas');
     game.batteryEnergy-=4;
     const radius=attackReach(player.stats)*3;
-    effect('battery',player.x,player.y,650).diameter=radius*2;
+    Object.assign(effect('battery',player.x,player.y,650),{visualOwner:player,diameter:radius*2});
     for(const enemy of game.entities) if(!enemy.isPlayer&&!enemy.ally&&enemy.hp&&Math.hypot(enemy.x-player.x,enemy.y-player.y)<=radius+bodyRadius(enemy))
       elementalHit(player,enemy,4*player.stats.attack,'electric');
     return;
@@ -238,6 +242,7 @@ export function elementalHit(owner,target,power,element,ownerAbility=true,critic
     fire:{grass:2,ice:2,bug:2,steel:2,fire:.5,water:.5,rock:.5,dragon:.5},
     water:{fire:2,ground:2,rock:2,water:.5,grass:.5,dragon:.5},
     rock:{fire:2,ice:2,flying:2,bug:2,fighting:.5,ground:.5,steel:.5},
+    poison:{grass:2,fairy:2,poison:.5,ground:.5,rock:.5,ghost:.5,steel:.5},
     psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:.5},
     ground:{electric:2,fire:2,rock:2,steel:2,poison:2,grass:.5,bug:.5,flying:.5},
     steel:{rock:2,ice:2,steel:.5,fire:.5,water:.5,electric:.5},
@@ -262,11 +267,12 @@ export function elementalHit(owner,target,power,element,ownerAbility=true,critic
 
 // El ataque elemental se comparte entre contacto, proyectiles y habilidades.
 export function attackElement(owner){
+  if(actorRule(owner,'poisonAttack'))return 'poison';
   if(actorRule(owner,'fireAttack'))return 'fire';
   if(actorRule(owner,'psychicAttack'))return 'psychic';
 }
 export function attackTint(element) {
-  return element === 'fire' ? game.canvasTheme.fireFilter :
+  return element === 'poison' ? game.canvasTheme.poisonFilter : element === 'fire' ? game.canvasTheme.fireFilter :
     element === 'psychic' ? game.canvasTheme.psychicFilter : null;
 }
 // Crea ocho proyectiles equidistantes cuyo daño depende de la defensa al recibir el crítico.
@@ -393,7 +399,7 @@ function releaseSpecial(owner,id){
   }else if(config.lootCost)dropNewItem(owner);
   else if(config.burstRange){
     const radius=config.burstRange*attackReach(owner.stats);
-    effect('water_burst',owner.x,owner.y,350).diameter=radius*2;
+    Object.assign(effect('water_burst',owner.x,owner.y,350),{visualOwner:owner,diameter:radius*2});
     for(const target of game.entities){
       if(!target.hp || target.ally || target.isPlayer===owner.isPlayer || Math.hypot(target.x-owner.x,target.y-owner.y)>radius+bodyRadius(target))continue;
       if(elementalHit(owner,target,owner.stats.attack,'water'))knockback(owner,target,config.push);

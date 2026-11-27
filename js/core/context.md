@@ -414,6 +414,8 @@ Tras actualizar assets/effects, ejecutar python tools/build_effects.py con Pillo
 
 ### Dash, ritmo global y ataques elementales
 
-startDash fija la dirección de movimiento (o la orientación en reposo), usa Walk acelerada y comprueba colisiones en subpasos durante 150 ms de simulación. El dash protege frente al daño y su recarga se mide entre activaciones. Sedarrápida aporta dashRecovery=1 para pasar de 1000 a 500 ms. Cola pesada cuesta un emblema e impide el dash durante la aventura.
+startDash fija la dirección de movimiento (o la orientación en reposo), usa Walk acelerada y comprueba colisiones en subpasos durante 150 ms de simulación. El dash protege frente al daño y su recarga se mide entre activaciones. Sedarrápida aporta dashRecovery=1 para pasar de 1500 a 750 ms. Cola pesada cuesta un emblema e impide el dash durante la aventura.
 
 loadEncountersCatalog suma 20 a la velocidad de ataque base de cada especie salvo Ditto. movementRate y attackRate aplican ×1,2 al ritmo de todos los combatientes. Con Cola pesada usan ×1 y conservan el +20. El tinte de Ardiente y Sibila se aplica al cuerpo durante el golpe normal o al efecto que lo sustituye. Los efectos de sustituciones básicas, incluidos sus impactos terminales, se reproducen en silencio.
+
+Durante la recuperación del dash los cuerpos del jugador y de los salvajes pueden atravesarse. La inmunidad al daño sigue limitada a los 150 ms de desplazamiento. Insepulto permite el paso permanente y añade una tirada del 15 % para Revivir por piso, dentro del cupo de objetos. Levitante conserva la posición física en el suelo al dibujar la sombra y eleva el sprite y sus efectos siete píxeles. Toxic convierte el ataque básico en veneno y usa los HP efectivamente curados por cada baya para dañar a todos los enemigos a 2×Rango. Los botines generados por este daño se conservan para la siguiente recogida.

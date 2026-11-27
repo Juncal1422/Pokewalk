@@ -860,7 +860,6 @@
     },
     "active": false,
     "pokemon": [
-      "Claydol",
       "Glalie",
       "Kingler",
       "Mawile",
@@ -1062,7 +1061,6 @@
       "Starmie",
       "Tyranitar",
       "Venipede",
-      "Venomoth",
       "Victreebel",
       "Vileplume"
     ],
@@ -1266,7 +1264,6 @@
       "Absol",
       "Bayleef",
       "Carvanha",
-      "Duskull",
       "Electabuzz",
       "Electivire",
       "Elekid",
@@ -1355,5 +1352,49 @@
       "Zorua"
     ],
     "stats": {}
+  },
+  {
+    "id": "toxic",
+    "name": "Toxic",
+    "description": "Tus ataques básicos son de veneno. Al recoger una baya, cada enemigo a 2×Rango recibe tanto daño como HP recuperes.",
+    "image": "assets/benefits/toxic.png",
+    "active": false,
+    "pokemon": [
+      "Venomoth"
+    ],
+    "stats": {},
+    "rules": {
+      "poisonAttack": 1,
+      "berryPulseRange": 2
+    }
+  },
+  {
+    "id": "levitating",
+    "name": "Levitante",
+    "description": "Flotas sobre agua, lava y abismos, incluso después de cambiar de forma.",
+    "image": "assets/benefits/levitating.png",
+    "active": false,
+    "pokemon": [
+      "Claydol"
+    ],
+    "stats": {},
+    "rules": {
+      "floatHeight": 7
+    }
+  },
+  {
+    "id": "undead",
+    "name": "Insepulto",
+    "description": "Puedes atravesar Pokémon salvajes. Tienes un 15% adicional de encontrar Revivir en cada piso.",
+    "image": "assets/benefits/undead.png",
+    "active": false,
+    "pokemon": [
+      "Duskull"
+    ],
+    "stats": {},
+    "rules": {
+      "phaseEnemies": 1,
+      "reviveChance": 0.15
+    }
   }
 ]
