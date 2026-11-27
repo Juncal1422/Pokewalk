@@ -247,7 +247,8 @@ export function elementalHit(owner,target,power,element,ownerAbility=true,critic
   if (!ownerAbility && !fixedElement) element=attackElement(owner)??element;
   const factor=affinity(element,target)*game.pokemon.get(target.dex).types.reduce((value,type)=>value*(chart[element]?.[type]??1),1);
   const damage = inflictDamage(owner,target,power*factor,critical,ownerAbility);
-  const scorched = damage && target.isPlayer && [...game.inventory].find(id=>game.items[id]?.burnsOn===element);
+  const scorched = damage > 0 && target.isPlayer && element === 'fire' &&
+    [...game.inventory].find(id => game.items[id]?.burnsOn === element);
   if (scorched) {
     game.inventory.delete(scorched);
     target.stats=playerStats(game.pokemon.get(target.dex),game.progress,target.bonuses);

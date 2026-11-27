@@ -135,7 +135,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const fleeing = enemy.retreatTicks > 0;
   if (fleeing) enemy.retreatTicks--;
-  const inRange = seesPlayer && hasSight(enemy,player) && !fleeing && !returnToLand && distance <= reach + 5;
+  const inRange = seesPlayer && !fleeing && !returnToLand && distance <= reach + 5 && (!player.ally || hasSight(enemy,player));
   const simulationTime = gameTime();
   if (!inRange) enemy.aimSince = null;
   if (fleeing && onLand && distance >= reach * 2) {
@@ -171,13 +171,17 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
 
   // Mientras cruza conserva el camino completo hasta la siguiente orilla.
   enemy.aiTimer--;
-  if (!enemy.path?.length || enemy.bossResponse || enemy.playerOnLand !== playerOnLand || (!returnToLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
+  const targetCell=pursuing ? cell(enemy.lastSeen.y)*game.grid[0].length+cell(enemy.lastSeen.x) : -1;
+  const retryEmpty=!enemy.path?.length && (simulationTime>=(enemy.retryPathAt??0) || enemy.routeTarget!==targetCell || enemy.avoidBodies);
+  if (retryEmpty || enemy.bossResponse || enemy.playerOnLand !== playerOnLand || (!returnToLand && (enemy.aiTimer <= 0 || pursuing !== enemy.tracking || fleeing !== enemy.fleeing))) {
     const goalTileX = pursuing ? cell(enemy.lastSeen.x) : cell(enemy.x) + Math.floor(Math.random() * 9) - 4;
     const goalTileY = pursuing ? cell(enemy.lastSeen.y) : cell(enemy.y) + Math.floor(Math.random() * 9) - 4;
     // Tras un bloqueo buscamos otro camino a pie teniendo en cuenta los cuerpos.
     const passable = enemy.avoidBodies ? canMove : terrainFree;
     console.debug('[IA] Buscar ruta',{dex:enemy.dex,goalTileX,goalTileY,fleeing,pursuing,returnToLand,seesPlayer});
     enemy.path = route(enemy, goalTileX, goalTileY, passable, returnToLand, playerOnLand, fleeing ? Math.ceil(2 * reach / TILE) + 1 : 0);
+    enemy.retryPathAt=enemy.path.length ? 0 : simulationTime+200;
+    enemy.routeTarget=targetCell;
     enemy.avoidBodies = false;
     enemy.playerOnLand = playerOnLand;
     enemy.fleeing = fleeing;
@@ -186,7 +190,7 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
   }
   const nextWaypoint = enemy.path[0];
   if (!nextWaypoint) {
-    console.debug('[IA] Esperar sin ruta',{dex:enemy.dex,x:enemy.x,y:enemy.y});
+    if(retryEmpty)console.debug('[IA] Esperar sin ruta',{dex:enemy.dex,x:enemy.x,y:enemy.y});
     setState(enemy, 'Idle');
     return;
   }

@@ -16,6 +16,10 @@ let tilesetRequestNumber = 0;
 // Activa el atlas solicitado y descarta respuestas de peticiones anteriores.
 export async function changeBiome(biome) {
   const request = ++tilesetRequestNumber;
+  if(game.tileSheet && game.currentBiome?.tileset===biome.tileset){
+    game.currentBiome=biome;
+    return;
+  }
   try {
     const sheet = await loadTileset(biome);
     if (tilesetRequestNumber !== request) return;
@@ -45,6 +49,8 @@ export function preparePortal() {
   return Promise.all([portalImage, stairsImage, objectiveImage, missImage].map(image => image.decode()));
 }
 
+const terrainView={};
+
 // Proyecta el piso, ordena combatientes por profundidad y compone efectos, avisos y HUD.
 export function draw() {
   const { player, tileSheet, ctx: drawingContext, canvas } = game;
@@ -67,19 +73,32 @@ export function draw() {
     MAP_H - 1,
     Math.ceil((cameraY + canvas.height) / RTILE),
   );
-  const palettePhase = Math.floor(gameTime() * .8 / (game.currentBiome.paletteStepMs ?? 133));
-  const sparklePhase = Math.floor(gameTime() * .8 / (game.currentBiome.sparkleStepMs ?? game.currentBiome.paletteStepMs ?? 133));
-  for (let y = rowStart; y <= rowEnd; y++) {
-    for (let x = colStart; x <= colEnd; x++) {
-      const terrain = game.grid[y][x];
-      const material = terrain === 0 ? 'floor' : terrain === 1 ? (game.currentBiome.wallMaterial ?? 'wall') : game.currentBiome.terrain;
-      drawTerrainTile(drawingContext,tileSheet,game.autotileGrid[y][x].mask,material,
-        game.variantGrid[y][x],palettePhase,x*RTILE-cameraX,y*RTILE-cameraY,RTILE,sparklePhase);
-      if (game.portal?.x === x && game.portal.y === y) {
-        const icon = { stairs: stairsImage, objective: objectiveImage, portal: portalImage }[game.portal.kind];
-        drawingContext.drawImage(icon, x * RTILE - cameraX, y * RTILE - cameraY, RTILE, RTILE);
-      }
+  const paletteTime=tileSheet.animated ? gameTime()*.8 : 0;
+  const palettePhase = Math.floor(paletteTime / (game.currentBiome.paletteStepMs ?? 133));
+  const sparklePhase = Math.floor(paletteTime / (game.currentBiome.sparkleStepMs ?? game.currentBiome.paletteStepMs ?? 133));
+  // Conserva el terreno visible mientras cambian los sprites o la cámara se mueve dentro de la casilla.
+  const cache=terrainView;
+  const w=colEnd-colStart+1,h=rowEnd-rowStart+1;
+  if (!cache.image)cache.image=document.createElement('canvas');
+  if(cache.grid!==game.grid || cache.biome!==game.currentBiome || cache.tiles!==tileSheet || cache.left!==colStart || cache.top!==rowStart ||
+      cache.w!==w || cache.h!==h || cache.phase!==palettePhase || cache.sparkle!==sparklePhase){
+    if(cache.image.width!==w*RTILE)cache.image.width=w*RTILE;
+    if(cache.image.height!==h*RTILE)cache.image.height=h*RTILE;
+    const ctx=cache.image.getContext('2d');
+    ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,cache.image.width,cache.image.height);
+    for(let y=rowStart;y<=rowEnd;y++)for(let x=colStart;x<=colEnd;x++){
+      const terrain=game.grid[y][x];
+      const material=terrain===0?'floor':terrain===1?(game.currentBiome.wallMaterial??'wall'):game.currentBiome.terrain;
+      drawTerrainTile(ctx,tileSheet,game.autotileGrid[y][x].mask,material,game.variantGrid[y][x],
+        palettePhase,(x-colStart)*RTILE,(y-rowStart)*RTILE,RTILE,sparklePhase);
     }
+    Object.assign(cache,{grid:game.grid,biome:game.currentBiome,tiles:tileSheet,left:colStart,top:rowStart,w,h,phase:palettePhase,sparkle:sparklePhase});
+  }
+  drawingContext.drawImage(cache.image,colStart*RTILE-cameraX,rowStart*RTILE-cameraY);
+  if(game.portal){
+    const icon={stairs:stairsImage,objective:objectiveImage,portal:portalImage}[game.portal.kind];
+    drawingContext.drawImage(icon,game.portal.x*RTILE-cameraX,game.portal.y*RTILE-cameraY,RTILE,RTILE);
   }
 
   drawItems(drawingContext, ZOOM, cameraX, cameraY);
