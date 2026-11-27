@@ -117,6 +117,7 @@
   --other-pokemon-shadow: rgb(0 0 0 / 42%);
   --player-grace-opacity: .2;
   --shell-filter: sepia(1) saturate(4) hue-rotate(135deg);
+  --poison-attack-filter: sepia(1) saturate(6) hue-rotate(235deg);
   --psychic-attack-filter: sepia(1) saturate(5) hue-rotate(260deg);
   --fire-attack-filter: sepia(1) saturate(5) hue-rotate(330deg);
   --tropical-filter: saturate(2);

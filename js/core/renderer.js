@@ -124,12 +124,13 @@ export function draw() {
     drawingContext.save();
     if (entity.hp === 0) drawingContext.globalAlpha = Math.max(0, 1 - (gameTime() - entity.deathAt) / FADE_MS);
     const screenX = Math.floor(entity.x * ZOOM - cameraX),
-      screenY = Math.floor(entity.y * ZOOM - cameraY);
+      groundY = Math.floor(entity.y * ZOOM - cameraY),
+      screenY = groundY - actorRule(entity,'floatHeight')*ZOOM;
     drawingContext.fillStyle = entity.isPlayer
       ? theme.playerShadow
       : theme.otherPokemonShadow;
     drawingContext.beginPath();
-    drawingContext.ellipse(screenX, screenY + 7, 15, 7, 0, 0, Math.PI * 2);
+    drawingContext.ellipse(screenX, groundY + 7, 15, 7, 0, 0, Math.PI * 2);
     drawingContext.fill();
 
     const usesWeaponEffect = entity.state === 'Attack' && entity.fangStrike;
@@ -170,6 +171,8 @@ export function draw() {
       drawingContext.filter=tint || 'none';
     }
     const element = entity.state === 'Attack' ? attackElement(entity) : null;
+    if ((entity.state==='Spin' || entity.state==='Charge') && actorRule(entity,'poisonAttack'))
+      drawingContext.filter=attackTint('poison');
     const hasWeapon = entity.relicWeapon || usesWeaponEffect ||
       ['ancient','acuatic','rock_thrower'].some(id => (entity.isPlayer ? game.held : entity.benefits)?.has(id));
     if (element && !hasWeapon) drawingContext.filter=attackTint(element);

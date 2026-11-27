@@ -58,6 +58,7 @@ export function readCanvasTheme(app) {
     otherPokemonShadow: get('other-pokemon-shadow'),
     graceOpacity: number('player-grace-opacity'),
     shellFilter:get('shell-filter'),
+    poisonFilter:get('poison-attack-filter'),
     psychicFilter:get('psychic-attack-filter'),
     fireFilter:get('fire-attack-filter'),
     tropicalFilter:get('tropical-filter'),
