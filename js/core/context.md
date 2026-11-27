@@ -378,7 +378,7 @@ Los campos stats de los catálogos son puntos planos. Evasión, bloqueo y ataque
 
 Las activas especifican slot y amount (segundos de recarga). Crupier y Botín carecen de recarga adicional: los limitan su animación y el coste que corresponda. dropItem reproduce Item Gift al colocar el objeto. dropNewItem escoge equipo disponible y usa Zidra como respaldo. El atlas visual compartido es assets/effects/effects.png. El mapa de celdas, direcciones y desplazamientos editables está en js/data/effect-atlas.js.
 
-Las asignaciones fijas incluyen los ancestros evolutivos. Rotom-Lavadora usa el identificador de forma 10009 y la ruta gráfica 0479/0002. Osado se asigna a la forma de agua independientemente de Rotom base. La lista de especies sin encuentros se encuentra en [sin-encuentro.md](../data/sin-encuentro.md).
+Las asignaciones fijas incluyen los ancestros evolutivos. La lista de especies sin encuentros se encuentra en [sin-encuentro.md](../data/sin-encuentro.md).
 
 ### Combate, equipo y aventuras de 50 misiones
 

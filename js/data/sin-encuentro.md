@@ -230,5 +230,3 @@
 - 644 · Zekrom
 - 645 · Landorus
 - 646 · Kyurem
-- 648 · Meloetta
-- 10009 · Rotom-Lavadora

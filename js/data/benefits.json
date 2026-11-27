@@ -6,9 +6,7 @@
     "image": "assets/benefits/heritage_earth.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Quagsire"
-    ],
+    "pokemon": ["Quagsire"],
     "stats": {
       "defense": 10
     }
@@ -85,17 +83,11 @@
     "image": "assets/benefits/rhyhorn_horn.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Porygon",
-      "Porygon2",
-      "Sunkern"
-    ],
+    "pokemon": ["Porygon", "Porygon2", "Sunkern"],
     "stats": {
       "attack": 10
     },
-    "spriteanimations": [
-      "Charge"
-    ]
+    "spriteanimations": ["Charge"]
   },
   {
     "id": "machinery",
@@ -104,9 +96,7 @@
     "image": "assets/benefits/machinery.png",
     "active": true,
     "amount": 15,
-    "pokemon": [
-      "Pichu"
-    ],
+    "pokemon": ["Pichu"],
     "slot": "q",
     "stats": {}
   },
@@ -141,12 +131,7 @@
     "image": "assets/benefits/scaled.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Burmy",
-      "Druddigon",
-      "Sewaddle",
-      "Silcoon"
-    ],
+    "pokemon": ["Burmy", "Druddigon", "Sewaddle", "Silcoon"],
     "stats": {
       "defense": 5
     }
@@ -175,10 +160,7 @@
     "image": "assets/benefits/golden.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Cubone",
-      "Rampardos"
-    ],
+    "pokemon": ["Cubone", "Rampardos"],
     "stats": {
       "attack": 10,
       "range": 10
@@ -191,10 +173,7 @@
     "image": "assets/benefits/spiked.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Dustox",
-      "Hoppip"
-    ],
+    "pokemon": ["Dustox", "Hoppip"],
     "stats": {}
   },
   {
@@ -204,9 +183,7 @@
     "image": "assets/benefits/protected.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Klink"
-    ],
+    "pokemon": ["Klink"],
     "stats": {
       "block": 10
     }
@@ -218,13 +195,7 @@
     "image": "assets/benefits/heartbreaker.png",
     "active": false,
     "amount": 0.25,
-    "pokemon": [
-      "Drowzee",
-      "Gothorita",
-      "Porygon_Z",
-      "Wobbuffet",
-      "Wynaut"
-    ],
+    "pokemon": ["Drowzee", "Gothorita", "Porygon_Z", "Wobbuffet", "Wynaut"],
     "stats": {}
   },
   {
@@ -234,11 +205,7 @@
     "image": "assets/benefits/mamoswine_fang.png",
     "active": true,
     "amount": 30,
-    "pokemon": [
-      "Articuno",
-      "Jynx",
-      "Spheal"
-    ],
+    "pokemon": ["Articuno", "Jynx", "Spheal"],
     "slot": "e",
     "stats": {}
   },
@@ -249,13 +216,7 @@
     "image": "assets/benefits/minty.png",
     "active": false,
     "amount": 0.5,
-    "pokemon": [
-      "Cascoon",
-      "Kricketot",
-      "Skiploom",
-      "Skorupi",
-      "Treecko"
-    ],
+    "pokemon": ["Cascoon", "Kricketot", "Skiploom", "Skorupi", "Treecko"],
     "stats": {}
   },
   {
@@ -287,12 +248,7 @@
     "image": "assets/benefits/hooh_brooch.png",
     "active": true,
     "amount": 30,
-    "pokemon": [
-      "Cottonee",
-      "Croagunk",
-      "Hitmonchan",
-      "Tyrogue"
-    ],
+    "pokemon": ["Cottonee", "Croagunk", "Hitmonchan", "Tyrogue"],
     "slot": "e",
     "stats": {}
   },
@@ -303,17 +259,12 @@
     "amount": 0.1,
     "active": false,
     "slot": null,
-    "pokemon": [
-      "Taillow",
-      "Togetic"
-    ],
+    "pokemon": ["Taillow", "Togetic"],
     "image": "assets/benefits/spiky.png",
     "stats": {
       "range": 10
     },
-    "spriteanimations": [
-      "Charge"
-    ]
+    "spriteanimations": ["Charge"]
   },
   {
     "id": "seer",
@@ -322,10 +273,7 @@
     "amount": 90,
     "active": true,
     "slot": "q",
-    "pokemon": [
-      "Electrode",
-      "Shieldon"
-    ],
+    "pokemon": ["Electrode", "Shieldon"],
     "image": "assets/benefits/seer.png",
     "stats": {}
   },
@@ -336,11 +284,7 @@
     "amount": 60,
     "active": true,
     "slot": "e",
-    "pokemon": [
-      "Budew",
-      "Hitmonlee",
-      "Hitmontop"
-    ],
+    "pokemon": ["Budew", "Hitmonlee", "Hitmontop"],
     "image": "assets/benefits/gunpowder_core.png",
     "stats": {}
   },
@@ -351,10 +295,7 @@
     "image": "assets/benefits/blooming.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Bulbasaur",
-      "Cherubi"
-    ],
+    "pokemon": ["Bulbasaur", "Cherubi"],
     "stats": {}
   },
   {
@@ -364,9 +305,7 @@
     "image": "assets/benefits/royalty.png",
     "active": true,
     "amount": 30,
-    "pokemon": [
-      "Surskit"
-    ],
+    "pokemon": ["Surskit"],
     "stats": {},
     "slot": "q"
   },
@@ -377,9 +316,7 @@
     "image": "assets/benefits/spoink_pearl.png",
     "active": true,
     "amount": 10,
-    "pokemon": [
-      "Spoink"
-    ],
+    "pokemon": ["Spoink"],
     "stats": {},
     "slot": "q"
   },
@@ -390,10 +327,7 @@
     "image": "assets/benefits/tailed.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Buizel",
-      "Paras"
-    ],
+    "pokemon": ["Buizel", "Paras"],
     "stats": {
       "defense": -15,
       "speed": 25,
@@ -407,9 +341,7 @@
     "image": "assets/benefits/transparent.png",
     "active": true,
     "amount": 300,
-    "pokemon": [
-      "Petilil"
-    ],
+    "pokemon": ["Petilil"],
     "stats": {},
     "slot": "q"
   },
@@ -420,9 +352,7 @@
     "image": "assets/benefits/champion.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Spinarak"
-    ],
+    "pokemon": ["Spinarak"],
     "stats": {}
   },
   {
@@ -432,9 +362,7 @@
     "image": "assets/benefits/feathered.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Chingling"
-    ],
+    "pokemon": ["Chingling"],
     "stats": {}
   },
   {
@@ -444,9 +372,7 @@
     "image": "assets/benefits/silken.png",
     "active": true,
     "amount": 20,
-    "pokemon": [
-      "Munna"
-    ],
+    "pokemon": ["Munna"],
     "stats": {},
     "slot": "q"
   },
@@ -457,17 +383,11 @@
     "image": "assets/benefits/ancient.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Meditite"
-    ],
+    "pokemon": ["Meditite"],
     "stats": {
       "range": -10
     },
-    "spriteanimations": [
-      "Strike",
-      "Swing",
-      "Charge"
-    ]
+    "spriteanimations": ["Strike", "Swing", "Charge"]
   },
   {
     "id": "rock_core",
@@ -476,10 +396,7 @@
     "image": "assets/benefits/rock_core.png",
     "active": true,
     "amount": 120,
-    "pokemon": [
-      "Lotad",
-      "Woobat"
-    ],
+    "pokemon": ["Lotad", "Woobat"],
     "stats": {},
     "slot": "e"
   },
@@ -490,9 +407,7 @@
     "image": "assets/benefits/regenerative.png",
     "active": true,
     "amount": 20,
-    "pokemon": [
-      "Baltoy"
-    ],
+    "pokemon": ["Baltoy"],
     "stats": {},
     "slot": "q"
   },
@@ -503,17 +418,12 @@
     "image": "assets/benefits/acuatic.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Horsea"
-    ],
+    "pokemon": ["Horsea"],
     "stats": {
       "attack": -10,
       "range": 20
     },
-    "spriteanimations": [
-      "Shoot",
-      "Charge"
-    ]
+    "spriteanimations": ["Shoot", "Charge"]
   },
   {
     "id": "rock_thrower",
@@ -522,18 +432,13 @@
     "image": "assets/benefits/rock_thrower.png",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Vanillite"
-    ],
+    "pokemon": ["Vanillite"],
     "stats": {
       "range": 100,
       "speed": -60,
       "attackSpeed": -60
     },
-    "spriteanimations": [
-      "Shoot",
-      "Charge"
-    ]
+    "spriteanimations": ["Shoot", "Charge"]
   },
   {
     "id": "shelders_shell",
@@ -1054,10 +959,7 @@
       "Moltres"
     ],
     "stats": {},
-    "excludes": [
-      "acuatic",
-      "wooden"
-    ],
+    "excludes": ["acuatic", "wooden"],
     "affinity": {
       "fire": 0.5
     }
@@ -1187,7 +1089,6 @@
       "Hippopotas",
       "Hippowdon",
       "Houndour",
-      "Keldeo",
       "Magnemite",
       "Roselia",
       "Skarmory",
@@ -1246,7 +1147,6 @@
       "Happiny",
       "Luxio",
       "Octillery",
-      "Rotom-Lavadora",
       "Shuppet",
       "Snover",
       "Suicune",
