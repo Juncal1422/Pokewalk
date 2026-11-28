@@ -433,3 +433,5 @@ biomes.json se ordena por nivel. _probabilidadPorOferta contiene los pesos porce
 randomBerry reparte la probabilidad de piso entre Aranja, Safre, Meloc, Atania y Zidra (15, 10, 10, 10 y 5 %). Un cambio de probabilidad total reparte la diferencia a partes iguales entre las cinco. Cosecha de Zidra se aplica después de decidir que aparece una baya.
 
 js/core/descriptions.js contiene las plantillas compartidas de objetos, beneficios y reliquias. basicAttack controla la redacción común de armas y tipos de ataque básico. Las fichas declaran sus parámetros y los marcadores de stats, slot y cooldown usan los valores del propio catálogo.
+
+La progresión de encuentros sigue los cinco bloques de BST de la clasificación. Los intervalos son <300, 300–365, 366–478, 479–514 y ≥515. Las evoluciones de menos de 300 BST pasan al segundo bloque. Los legendarios y míticos ordinarios ocupan plazas de líder del último bloque. Los seis líderes de reliquia siguen su requisito propio. En cada bioma los líderes ordinarios se eligen entre los más fuertes del tramo.
