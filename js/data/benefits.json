@@ -782,10 +782,10 @@
   {
     "id": "spell_weaver",
     "name": "Hechicero",
-    "description": "Velocidad y daño de proyectiles ×1,5.",
+    "description": "Velocidad y daño de proyectiles ×2.",
     "image": "assets/benefits/spell_weaver.png",
     "rules": {
-      "projectileBonus": 0.5
+      "projectileBonus": 1
     },
     "active": false,
     "pokemon": [
@@ -1727,7 +1727,7 @@
     "description": "{basicAttack} {stats} {halfGain}",
     "active": false,
     "amount": 0,
-    "weapon": "dark_cut",
+    "weapon": "shadow_tag",
     "halve": "range",
     "stats": {
       "critical": 10

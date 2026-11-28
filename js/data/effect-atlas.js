@@ -24,7 +24,7 @@ export const effectSheets = {
   // Hoja de cover
   cover: {"offsetX": 0, "offsetY": 0, "x": 0, "y": 432, "width": 56, "height": 40, "columns": 21, "rows": 1},
   // Hoja de dark_cut
-  dark_cut: {"x": 1176, "y": 432, "width": 32, "height": 32, "columns": 4, "rows": 8, "offsetX": 0, "offsetY": 0},
+  dark_cut: {"x": 1176, "y": 432, "width": 32, "height": 32, "columns": 3, "rows": 8, "offsetX": 0, "offsetY": 0},
   // Hoja de death_chant
   death_chant: {"x": 0, "y": 688, "width": 64, "height": 64, "columns": 35, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de doubleorb
@@ -51,50 +51,48 @@ export const effectSheets = {
   heal: {"x": 2144, "y": 944, "width": 52, "height": 48, "columns": 13, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de heal_aura
   heal_aura: {"x": 0, "y": 992, "width": 72, "height": 64, "columns": 35, "rows": 1, "offsetX": 0, "offsetY": 0},
-  // Hoja de heal_aura/pieces
-  heal_pieces: {"offsetX": 0, "offsetY": 0, "x": 2520, "y": 992, "width": 32, "height": 32, "columns": 15, "rows": 1},
   // Hoja de iron_bomb
-  iron_bomb: {"x": 0, "y": 1056, "width": 32, "height": 32, "columns": 13, "rows": 1, "offsetX": 0, "offsetY": 0},
+  iron_bomb: {"x": 2520, "y": 992, "width": 32, "height": 32, "columns": 13, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Impacto de Ancestral.
-  iron_hit: {"x": 416, "y": 1056, "width": 72, "height": 56, "columns": 9, "rows": 8, "offsetX": 0, "offsetY": 6},
+  iron_hit: {"x": 0, "y": 1056, "width": 72, "height": 56, "columns": 9, "rows": 8, "offsetX": 0, "offsetY": 6},
   // Hoja de leaf
-  leaf: {"x": 1064, "y": 1056, "width": 24, "height": 16, "columns": 20, "rows": 1, "offsetX": 0, "offsetY": 0},
+  leaf: {"x": 648, "y": 1056, "width": 24, "height": 16, "columns": 20, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de magnet_bombing
-  magnet_bombing: {"x": 0, "y": 1504, "width": 64, "height": 72, "columns": 30, "rows": 1, "offsetX": 0, "offsetY": 0},
+  magnet_bombing: {"x": 1128, "y": 1056, "width": 64, "height": 72, "columns": 30, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de meteorfall
-  meteorfall: {"x": 1920, "y": 1504, "width": 48, "height": 56, "columns": 20, "rows": 1, "offsetX": 0, "offsetY": 0},
+  meteorfall: {"x": 0, "y": 1504, "width": 48, "height": 56, "columns": 20, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Explosión del núcleo.
-  mine: {"x": 0, "y": 1576, "width": 48, "height": 56, "columns": 9, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 48},
+  mine: {"x": 960, "y": 1504, "width": 48, "height": 56, "columns": 9, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 48},
   // Hoja de peck
-  peck: {"offsetX": 0, "offsetY": 0, "x": 432, "y": 1576, "width": 64, "height": 56, "columns": 10, "rows": 8},
+  peck: {"offsetX": 0, "offsetY": 0, "x": 1392, "y": 1504, "width": 64, "height": 56, "columns": 10, "rows": 8},
   // Salida y llegada de un teletransporte.
-  purple: {"x": 1072, "y": 1576, "width": 32, "height": 240, "columns": 38, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 228},
+  purple: {"x": 0, "y": 1952, "width": 32, "height": 240, "columns": 38, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 228},
   // Activación de Revivir.
-  revive: {"x": 0, "y": 2024, "width": 32, "height": 32, "columns": 39, "rows": 1, "offsetX": 0, "offsetY": 0},
+  revive: {"x": 1216, "y": 1952, "width": 32, "height": 32, "columns": 39, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Área persistente del núcleo de roca.
-  rock_aura: {"x": 1248, "y": 2024, "width": 80, "height": 56, "columns": 14, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 30},
+  rock_aura: {"x": 0, "y": 2192, "width": 80, "height": 56, "columns": 14, "rows": 1, "offsetX": 0, "offsetY": 0, "base": 30},
   // Ataque a distancia con roca.
-  rock_throw: {"x": 2368, "y": 2024, "width": 24, "height": 16, "columns": 18, "rows": 1, "offsetX": 0, "offsetY": 0},
+  rock_throw: {"x": 1120, "y": 2192, "width": 24, "height": 16, "columns": 18, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de shadow_tag
-  shadow_tag: {"offsetX": 0, "offsetY": 0, "x": 0, "y": 2080, "width": 152, "height": 72, "columns": 13, "rows": 8},
+  shadow_tag: {"offsetX": 0, "offsetY": 0, "x": 0, "y": 2248, "width": 152, "height": 72, "columns": 13, "rows": 8},
   // Hoja de slash
-  slash: {"x": 1976, "y": 2080, "width": 32, "height": 32, "columns": 4, "rows": 1, "offsetX": 0, "offsetY": 0},
+  slash: {"x": 1976, "y": 2248, "width": 32, "height": 32, "columns": 4, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de small_explosion
-  small_explosion: {"x": 2104, "y": 2080, "width": 32, "height": 32, "columns": 4, "rows": 1, "offsetX": 0, "offsetY": 0},
+  small_explosion: {"x": 2104, "y": 2248, "width": 32, "height": 32, "columns": 4, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Espiga direccional y descarga de espinas.
-  spine: {"x": 2232, "y": 2080, "width": 16, "height": 16, "columns": 2, "rows": 4, "offsetX": 0, "offsetY": 0},
+  spine: {"x": 2232, "y": 2248, "width": 16, "height": 16, "columns": 2, "rows": 4, "offsetX": 0, "offsetY": 0},
   // Hoja de star_aura
-  star_aura: {"x": 0, "y": 2656, "width": 56, "height": 56, "columns": 48, "rows": 1, "offsetX": 0, "offsetY": 0},
+  star_aura: {"x": 0, "y": 2824, "width": 56, "height": 56, "columns": 48, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de tornado
-  tornado: {"x": 0, "y": 2712, "width": 56, "height": 80, "columns": 52, "rows": 1, "offsetX": 0, "offsetY": 0},
+  tornado: {"x": 0, "y": 2880, "width": 56, "height": 80, "columns": 52, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de truelight
-  truelight: {"x": 0, "y": 2792, "width": 64, "height": 64, "columns": 20, "rows": 1, "offsetX": 0, "offsetY": 0},
+  truelight: {"x": 0, "y": 2960, "width": 64, "height": 64, "columns": 20, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Hoja de void_zone
-  void_zone: {"x": 1280, "y": 2792, "width": 80, "height": 72, "columns": 13, "rows": 1, "offsetX": 0, "offsetY": 0},
+  void_zone: {"x": 1280, "y": 2960, "width": 80, "height": 72, "columns": 13, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Área y empuje de la escama de Kingdra.
-  water_burst: {"x": 2320, "y": 2792, "width": 56, "height": 56, "columns": 8, "rows": 1, "offsetX": 0, "offsetY": 0},
+  water_burst: {"x": 2320, "y": 2960, "width": 56, "height": 56, "columns": 8, "rows": 1, "offsetX": 0, "offsetY": 0},
   // Ataque a distancia de Acuático.
-  watergun: {"x": 2768, "y": 2792, "width": 32, "height": 24, "columns": 2, "rows": 8, "offsetX": 0, "offsetY": 0},
+  watergun: {"x": 2768, "y": 2960, "width": 32, "height": 24, "columns": 2, "rows": 8, "offsetX": 0, "offsetY": 0},
   // Defensa de Sedal.
-  webshield: {"x": 0, "y": 2984, "width": 32, "height": 40, "columns": 11, "rows": 1, "offsetX": 0, "offsetY": 0},
+  webshield: {"x": 0, "y": 3152, "width": 32, "height": 40, "columns": 11, "rows": 1, "offsetX": 0, "offsetY": 0},
 };

@@ -129,7 +129,7 @@ export function triggerAttack(attacker) {
   attacker.doubleStrike = attacker.fangStrike && attacker.isPlayer && synergyActive('doubleStrike');
   // Fija una sola hoja para que los fotogramas de impacto y el render usen el mismo reloj.
   const weapon = [...(combatBenefits(attacker) ?? [])].map(id => game.benefits.get(id)).find(benefit => benefit?.spriteanimations);
-  attacker.attackAnimation = attacker.relicWeapon ? (['peck','dark_cut'].includes(attacker.relicWeapon)?attacker.anims.Charge:attacker.relicWeapon==='bite'?attacker.anims.Attack:attacker.anims.Shoot) ?? attacker.anims.Attack : weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
+  attacker.attackAnimation = attacker.relicWeapon ? (['peck','shadow_tag'].includes(attacker.relicWeapon)?attacker.anims.Charge:attacker.relicWeapon==='bite'?attacker.anims.Attack:attacker.anims.Shoot) ?? attacker.anims.Attack : weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
   attacker.strikesDone = 0;
   setState(attacker, 'Attack');
 }
@@ -155,9 +155,14 @@ function resolveImpact(attacker) {
 
   const weapons=combatBenefits(attacker);
   const replacement=attacker.relicWeapon;
-  const cut=['peck','dark_cut','bite'].includes(replacement);
+  if(replacement==='peck' && (weapons.has('igneous') || weapons.has('flaming'))){
+    launchWeapon(attacker,'fire_spike');return;
+  }
+  const cut=['peck','shadow_tag','bite'].includes(replacement);
   if(replacement && !cut){launchWeapon(attacker,replacement);return;}
-  if(cut){
+  if(replacement==='shadow_tag'){
+    effect(replacement,attacker.x,attacker.y,200,attacker.dir,attacker).shadowReach=reach;
+  }else if(cut){
     effect(replacement,attacker.x+directionX*reach*.65,attacker.y+directionY*reach*.65,200,attacker.dir,attacker).diameter=2*reach;
   }
   if(!replacement && (weapons?.has('acuatic')||weapons?.has('rock_thrower'))){
@@ -167,7 +172,7 @@ function resolveImpact(attacker) {
   for (const target of game.entities) {
     if (!target.hp || target===attacker || (attacker.isPlayer ? target.ally : target!==(attacker.prey??game.player))) continue;
     if (!hasSight(attacker,target)) continue;
-    if (cut ? ((target.x-attacker.x)*directionX+(target.y-attacker.y)*directionY<=0 ||
+    if (cut && replacement!=='shadow_tag' ? ((target.x-attacker.x)*directionX+(target.y-attacker.y)*directionY<=0 ||
         Math.hypot(target.x-attacker.x-directionX*reach*.65,target.y-attacker.y-directionY*reach*.65)>reach+bodyRadius(target))
         : !inStrike(target.x,target.y,strikeRadius+bodyRadius(target))) continue;
     const simulationTime = gameTime();
@@ -180,7 +185,7 @@ function resolveImpact(attacker) {
       continue;
     }
     const critical = criticalHit(attacker,target);
-    const power=damageFor(attacker,target,critical),element=replacement==='peck'?'flying':replacement==='dark_cut'?'ghost':attackElement(attacker);
+    const power=damageFor(attacker,target,critical),element=replacement==='peck'?'flying':replacement==='shadow_tag'?'ghost':attackElement(attacker);
     if(!(element ? elementalHit(attacker,target,power,element,false,critical) : inflictDamage(attacker,target,power,critical)))continue;
     if (target.hp && (target.abilityCast || (target.boss && (target.bossResponse || target.state==='Attack')))) continue;
     if (attacker.impactPending || (attacker.boss && target.isPlayer)) continue;
@@ -215,6 +220,7 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
     if (attacker !== target && species.essences.some(type => targetSpecies.essences.includes(type))) incomingDamage *= 1 - amount('heartbreaker',defendingBenefits);
     blocked = attacker !== target && criticalBlock(attacker,target);
     if (blocked) {
+      if(defendingBenefits.has('impregnable'))effect('gem_aura',target.x,target.y,400).follow=target;
       incomingDamage *= .5;
       if(target.shellUntil>simulationTime){
         const duration=actorRule(target,'freezeMs');
@@ -242,7 +248,9 @@ export function inflictDamage(attacker,target,incomingDamage,critical=false,abil
     else target.stats.attack+=10;
     target.championFlash=simulationTime;
   }
-  if(critical && defendingBenefits.has('static') && attacker!==target)paralyze(attacker,1000);
+  if(critical && defendingBenefits.has('static') && attacker!==target){
+    paralyze(attacker,1000);effect('battery',target.x,target.y,350).follow=target;
+  }
   if(critical && defendingBenefits.has('feathered'))featherStun(target);
   if(target.isPlayer && !target.hp && game.inventory.delete('revive')){
     game.reviveSpent=true;

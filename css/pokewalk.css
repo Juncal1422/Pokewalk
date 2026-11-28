@@ -162,7 +162,8 @@
 #dungeon-notice { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
 #nearby-loot-panel { --textbox-frame: var(--textbox-blue); --frame-width: 17px; }
 #equipment-tooltip { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
-#floor-pokemon-panel li { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
+#floor-pokemon-panel li {
+  direction: ltr; --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
 #mission-upgrade-dialog button { --textbox-frame: var(--textbox-blue); --frame-width: 11px; }
 
 :where(
@@ -273,7 +274,7 @@
 #emblem-reward-notice img { width: 24px; vertical-align: middle; }
 
 /* Colección y crónicas. El tablero de catálogo usa su propio atlas de 144 × 144. */
-.guild-record-list { display: grid; gap: 4px; max-width: min(94vw, 800px); }
+.guild-record-list { width:min(94vw, 1120px); max-height:70dvh; overflow:auto; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); display: grid; gap: 4px; max-width: min(94vw, 1120px); }
 #guild-screen .guild-record-list p { padding: 6px; }
 .collection-menu-grid {
   display: grid;
@@ -290,11 +291,11 @@
 }
 #guild-screen .collection-menu-grid img { width: clamp(26px, 7vmin, 70px); }
 .catalog-item-board {
-  width: min(100%, 59dvh);
-  aspect-ratio: 1;
+  width: min(96%, 104dvh);
+  aspect-ratio: 1.5;
   box-sizing: border-box;
   display: grid;
-  grid-template: repeat(8, minmax(0, 1fr)) / repeat(8, minmax(0, 1fr));
+  grid-template: repeat(8, minmax(0, 1fr)) / repeat(12, minmax(0, 1fr));
   border: min(7.8vw, 5.9dvh) solid transparent;
   border-image: var(--catalog-art) 48 stretch;
 }
@@ -362,10 +363,12 @@
   list-style: none;
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(3, auto);
+  direction: rtl;
+  grid-template-rows: repeat(6, auto);
   gap: 3px;
 }
 #floor-pokemon-panel li {
+  direction: ltr;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 1px 5px;
@@ -387,7 +390,8 @@
 #floor-pokemon-panel nav button { background: transparent; border: 0; }
 @media (max-width: 680px) {
   #floor-pokemon-panel ul { grid-template-rows: repeat(5, auto); }
-  #floor-pokemon-panel li { gap: 0; --frame-width: 4px; }
+  #floor-pokemon-panel li {
+  direction: ltr; gap: 0; --frame-width: 4px; }
 }
 @media (max-width: 579px) {
   #floor-pokemon-panel { top: 110px; }

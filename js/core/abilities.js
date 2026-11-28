@@ -43,7 +43,7 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     const sheet = effectSheets[visualEffect.kind];
     const progress = Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
     const count=visualEffect.frameCount??sheet.columns;
-    const frame=(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor((visualEffect.reverse?1-progress:progress)*count));
+    const frame=visualEffect.kind==='bone_throw'?Math.floor((simulationTime-visualEffect.spinStart)/45)%count:(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor((visualEffect.reverse?1-progress:progress)*count));
     const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX;
     const actor = visualEffect.follow ?? visualEffect.owner ?? visualEffect.visualOwner ?? visualEffect.chain?.owner;
     const lift = actor ? actorRule(actor,'floatHeight') : 0;
@@ -65,7 +65,16 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
     if (poison || visualEffect.attackTint) drawingContext.filter=attackTint(visualEffect.attackTint??'poison');
     if(visualEffect.filter)drawingContext.filter=visualEffect.filter;
     const base = sheet.base ?? sheet.height / 2;
-    const row = sheet.rows === 8 ? visualEffect.dir : 0;
+    const row = sheet.rows === 8 ? (visualEffect.kind==='peck'?(visualEffect.dir+2)%8:visualEffect.dir) : 0;
+    if(visualEffect.shadowReach){
+      const dir=visualEffect.dir,[dx,dy]=DIR_VEC[dir], diagonal=dx && dy;
+      const reach=visualEffect.shadowReach*renderZoom*(diagonal?Math.SQRT1_2:1);
+      const originY=[8,9,34,62,64,62,34,9][dir];
+      const sx=reach/(diagonal?64:60),sy=reach/(diagonal?57:60);
+      drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
+        x-76*sx,y+2*renderZoom-originY*sy,sheet.width*sx,sheet.height*sy);
+      drawingContext.restore();continue;
+    }
     drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
       x-width/2+sheet.offsetX*scale,y-height*base/sheet.height+sheet.offsetY*scale,width,height);
     drawingContext.restore();
@@ -251,7 +260,7 @@ export function useActive(slot) {
 // Fija el origen, alcance y daño del proyectil en el instante del disparo.
 function launchFlare(owner, directionIndex) {
   const projectile = effect('flare',owner.x,owner.y,750,directionIndex);
-  projectile.ms/=1+actorRule(owner,'projectileBonus');
+  projectile.ms/=1.5*(1+actorRule(owner,'projectileBonus'));
   const fiery = game.pokemon.get(owner.dex).types.includes('fire');
   Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:4*attackReach(owner.stats),
     element:'fire',damage:Math.round(owner.stats.attack*(fiery?1.5:1))});
@@ -309,7 +318,7 @@ export function attackTint(element) {
 export function releaseSpines(owner) {
   for (let directionIndex=0;directionIndex<8;directionIndex++) {
     const projectile=effect('spine',owner.x,owner.y,680,directionIndex);
-    projectile.ms/=1+actorRule(owner,'projectileBonus');
+    projectile.ms/=1.5*(1+actorRule(owner,'projectileBonus'));
     Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:32,damage:Math.max(1,Math.round(owner.stats.defense*.1))});
   }
 }
@@ -349,14 +358,15 @@ export function knockback(owner,target,steps) {
 // Un ataque a distancia sustituye al contacto. El primer cuerpo absorbe el proyectil.
 export function launchWeapon(owner,kind){
   const projectile=effect(kind,owner.x,owner.y,260,owner.dir,owner);
-  projectile.ms/=1+actorRule(owner,'projectileBonus');
+  projectile.ms/=1.5*(1+actorRule(owner,'projectileBonus'));
   const relicShot=['bone_throw','iron_bomb'].includes(kind);
   Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:attackReach(owner.stats)*(relicShot?2:1),
-    element:({watergun:'water',rock_throw:'rock',bone_throw:'ground',iron_bomb:'steel'})[kind],weapon:true,relicShot});
+    element:({fire_spike:'fire',watergun:'water',rock_throw:'rock',bone_throw:'ground',iron_bomb:'steel'})[kind],weapon:true,relicShot});
   if(kind==='bone_throw'){
-    owner.boneInFlight=projectile;
+    projectile.spinStart=projectile.start;owner.boneInFlight=projectile;
     projectile.hit=new Set();
   }
+  if(kind==='fire_spike'){projectile.hit=new Set();projectile.attackTint=null;}
   if(kind==='iron_bomb')projectile.frameCount=9;
 }
 
@@ -631,7 +641,7 @@ export function tickAbilities() {
       // Colisión continua del proyectil aunque un fotograma tarde en llegar.
       let closestTarget, nearestDistance=Infinity;
       for (const enemy of game.entities) {
-        if (enemy.ally || enemy.isPlayer === visualEffect.owner.isPlayer || !enemy.hp) continue;
+        if (visualEffect.hit?.has(enemy) || enemy.ally || enemy.isPlayer === visualEffect.owner.isPlayer || !enemy.hp) continue;
         const x=enemy.x-visualEffect.originX,y=enemy.y-visualEffect.originY,along=(x*deltaX+y*deltaY)/directionLength;
         if(along<0 || along>visualEffect.reach+bodyRadius(enemy))continue;
         const closestDistance=Math.max(previousDistance,Math.min(travel,along));
@@ -649,15 +659,17 @@ export function tickAbilities() {
         return lifetimeFraction<1;
       }
       if (closestTarget) {
+        visualEffect.hit?.add(closestTarget);visualEffect.travel=travel;
         if(visualEffect.relicShot)projectileImpact(visualEffect,closestTarget.x,closestTarget.y);
         if(visualEffect.weapon && Math.random()<dodgeChance(closestTarget)){
-          closestTarget.missUntil=simulationTime+750;playSound('miss');visualEffect.finishedImpact=true;return !visualEffect.relicShot && lifetimeFraction<1;
+          closestTarget.missUntil=simulationTime+750;playSound('miss');if(visualEffect.kind==='fire_spike')return lifetimeFraction<1;visualEffect.finishedImpact=true;return !visualEffect.relicShot && lifetimeFraction<1;
         }
         const critical=visualEffect.weapon && criticalHit(visualEffect.owner,closestTarget);
         const power=(visualEffect.weapon?damageFor(visualEffect.owner,closestTarget,critical):visualEffect.damage)*(1+actorRule(visualEffect.owner,'projectileBonus'));
-        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical) && visualEffect.weapon){
+        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical,visualEffect.kind==='fire_spike') && visualEffect.weapon){
           knockback(visualEffect.owner,closestTarget,visualEffect.kind==='rock_throw'?20:10);
         }
+        if(visualEffect.kind==='fire_spike')return lifetimeFraction<1;
         visualEffect.finishedImpact=true;
         return !visualEffect.relicShot && lifetimeFraction<1;
       }

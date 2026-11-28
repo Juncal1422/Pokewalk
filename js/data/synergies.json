@@ -129,5 +129,17 @@
       "spiky"
     ],
     "description": "El cuerno o la espiga adoptan su animación de fuego."
+  },
+  {
+    "effect": "firePeck",
+    "name": "Pico ígneo",
+    "requires": [
+      "sharp_beak"
+    ],
+    "anyOf": [
+      "flaming",
+      "igneous"
+    ],
+    "description": "Lanza una espina de fuego hasta el límite de tu rango."
   }
 ]

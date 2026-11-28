@@ -105,7 +105,7 @@ async function introduction() {
 function listPage(title,entries,page,back) {
   const dialog=screen(title), tiled=Object.hasOwn(sectionArt,title);
 
-  const pageSize=tiled?64:(innerHeight<460?2:4);
+  const pageSize=tiled?96:(innerHeight<460?8:18);
   const pages=Math.max(1,Math.ceil(entries.length/pageSize));
   page=Math.min(page,pages-1);
   const body=element('section');body.className=tiled?'catalog-item-board':'guild-record-list';
@@ -121,7 +121,7 @@ function listPage(title,entries,page,back) {
       cell.onpointermove=event=>positionTooltip(tip,event,cell);
       cell.onpointerenter=cell.onfocus=show;cell.onpointerleave=cell.onblur=()=>{tip.hidden=true;};
     }
-    while(body.children.length<64)body.append(element('span'));
+    while(body.children.length<pageSize)body.append(element('span'));
     dialog.append(tip);
   }
   if(!tiled && !entries.length)body.append(element('p','Todavía no hay registros.'));
