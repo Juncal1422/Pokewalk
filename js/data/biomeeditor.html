@@ -23,10 +23,12 @@ function commit(){
   if(!row.name||!row.tileset||!Number.isInteger(row.level)||row.level<1||row.level>10)throw Error('Comprueba el nombre, nivel y tileset.');
   for(const key of ['wild','leaders']){
     const names=[...new Set(field(key).value.split(/[\n,]/).map(n=>n.trim()).filter(Boolean))];
-    if(!names.length||names.some(n=>species&&!species.has(n)))throw Error('Lista vacía o especie desconocida.');
+    const index=bands.indexOf(band);
+    const count=row.level>5 && index<3?0:(key==='wild'?[7,6,6,5,5]:[4,4,3,3,2])[index];
+    if(names.length!==count)throw Error('Se necesitan '+count+' especies en '+key+'.');
+    if(names.some(n=>species&&!species.has(n)))throw Error('Lista vacía o especie desconocida.');
     row[key][band]=names;
   }
-  if(new Set(Object.values(row.wild).flat()).size>10)throw Error('El máximo es de diez especies salvajes distintas por bioma.');
   catalog[index]=row;
 }
 // Pinta el bioma y la franja seleccionados después de validar el borrador anterior.

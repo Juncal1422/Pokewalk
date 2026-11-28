@@ -4,11 +4,13 @@
     "description": "Reduce de 1,5 s a 0,75 s la recuperación del dash.",
     "image": "assets/items/fast_silk.png",
     "stats": {},
-    "rules": {"dashRecovery": 1}
+    "rules": {
+      "dashRecovery": 1
+    }
   },
   "berry_oran": {
     "name": "Baya Aranja",
-    "description": "Regenera el 10 por ciento de los PV máximos.",
+    "description": "{heal}",
     "image": "assets/items/berry_oran.png",
     "stats": {},
     "healFraction": 0.1,
@@ -17,7 +19,7 @@
   },
   "berry_sitrus": {
     "name": "Baya Zidra",
-    "description": "Regenera el 40 por ciento de los PV máximos.",
+    "description": "{heal}",
     "image": "assets/items/berry_sitrus.png",
     "stats": {},
     "healFraction": 0.4,
@@ -26,7 +28,7 @@
   },
   "boost_calcium": {
     "name": "Calcio",
-    "description": "+5 rango.",
+    "description": "{stats}",
     "image": "assets/items/boost_calcium.png",
     "stats": {
       "range": 5
@@ -34,7 +36,7 @@
   },
   "boost_carbos": {
     "name": "Carburante",
-    "description": "+5 velocidad.",
+    "description": "{stats}",
     "image": "assets/items/boost_carbos.png",
     "stats": {
       "speed": 5
@@ -42,7 +44,7 @@
   },
   "boost_hpplus": {
     "name": "Más HP",
-    "description": "+5 PV máximos.",
+    "description": "{stats}",
     "image": "assets/items/boost_hpplus.png",
     "stats": {
       "hpMax": 5
@@ -50,7 +52,7 @@
   },
   "boost_ipecac": {
     "name": "Ipecac",
-    "description": "-8 tamaño, -2 ataque, -2 defensa, +4 velocidad.",
+    "description": "{stats}",
     "image": "assets/items/boost_ipecac.png",
     "stats": {
       "size": -8,
@@ -61,7 +63,7 @@
   },
   "boost_iron": {
     "name": "Hierro",
-    "description": "+5 defensa.",
+    "description": "{stats}",
     "image": "assets/items/boost_iron.png",
     "stats": {
       "defense": 5
@@ -69,7 +71,7 @@
   },
   "boost_protein": {
     "name": "Proteína",
-    "description": "+5 ataque.",
+    "description": "{stats}",
     "image": "assets/items/boost_protein.png",
     "stats": {
       "attack": 5
@@ -77,7 +79,7 @@
   },
   "boost_vitamins": {
     "name": "Vitaminas",
-    "description": "+8 tamaño, +4 ataque, +4 defensa, -4 velocidad.",
+    "description": "{stats}",
     "image": "assets/items/boost_vitamins.png",
     "stats": {
       "size": 8,
@@ -88,7 +90,7 @@
   },
   "boost_zinc": {
     "name": "Zinc",
-    "description": "+5 velocidad de ataque.",
+    "description": "{stats}",
     "image": "assets/items/boost_zinc.png",
     "stats": {
       "attackSpeed": 5
@@ -119,119 +121,119 @@
   },
   "candy_electric": {
     "name": "Grajea Eléctrica",
-    "description": "Recoges el doble de esencias de tipo Eléctrico. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_electric.png",
     "stats": {},
     "essence": "electric"
   },
   "candy_dragon": {
     "name": "Grajea Dragón",
-    "description": "Recoges el doble de esencias de tipo Dragón. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_dragon.png",
     "stats": {},
     "essence": "dragon"
   },
   "candy_water": {
     "name": "Grajea Agua",
-    "description": "Recoges el doble de esencias de tipo Agua. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_water.png",
     "stats": {},
     "essence": "water"
   },
   "candy_normal": {
     "name": "Grajea Común",
-    "description": "Recoges el doble de esencias de tipo Normal. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_normal.png",
     "stats": {},
     "essence": "normal"
   },
   "candy_flying": {
     "name": "Grajea Pluma",
-    "description": "Recoges el doble de esencias de tipo Volador. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_flying.png",
     "stats": {},
     "essence": "flying"
   },
   "candy_rock": {
     "name": "Grajea Roca",
-    "description": "Recoges el doble de esencias de tipo Roca. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_rock.png",
     "stats": {},
     "essence": "rock"
   },
   "candy_ice": {
     "name": "Grajea Helada",
-    "description": "Recoges el doble de esencias de tipo Hielo. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_ice.png",
     "stats": {},
     "essence": "ice"
   },
   "candy_ground": {
     "name": "Grajea Tierra",
-    "description": "Recoges el doble de esencias de tipo Tierra. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_ground.png",
     "stats": {},
     "essence": "ground"
   },
   "candy_ghost": {
     "name": "Grajea Fantasma",
-    "description": "Recoges el doble de esencias de tipo Fantasma. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_ghost.png",
     "stats": {},
     "essence": "ghost"
   },
   "candy_fight": {
     "name": "Grajea Lucha",
-    "description": "Recoges el doble de esencias de tipo Lucha. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_fight.png",
     "stats": {},
     "essence": "fighting"
   },
   "candy_dark": {
     "name": "Grajea Oscura",
-    "description": "Recoges el doble de esencias de tipo Siniestro. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_dark.png",
     "stats": {},
     "essence": "dark"
   },
   "candy_psychic": {
     "name": "Grajea Psíquica",
-    "description": "Recoges el doble de esencias de tipo Psíquico. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_psychic.png",
     "stats": {},
     "essence": "psychic"
   },
   "candy_grass": {
     "name": "Grajea Planta",
-    "description": "Recoges el doble de esencias de tipo Planta. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_grass.png",
     "stats": {},
     "essence": "grass"
   },
   "candy_steel": {
     "name": "Grajea Metálica",
-    "description": "Recoges el doble de esencias de tipo Acero. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_steel.png",
     "stats": {},
     "essence": "steel"
   },
   "candy_fire": {
     "name": "Grajea Picante",
-    "description": "Recoges el doble de esencias de tipo Fuego. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_fire.png",
     "stats": {},
     "essence": "fire"
   },
   "candy_poison": {
     "name": "Grajea Venenosa",
-    "description": "Recoges el doble de esencias de tipo Veneno. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_poison.png",
     "stats": {},
     "essence": "poison"
   },
   "candy_bug": {
     "name": "Grajea Bicho",
-    "description": "Recoges el doble de esencias de tipo Bicho. Al recoger la grajea, recuperas tantos HP como esencias de ese tipo tengas.",
+    "description": "{essenceCandy}",
     "image": "assets/items/candy_bug.png",
     "stats": {},
     "essence": "bug"
@@ -264,7 +266,7 @@
   },
   "drill": {
     "name": "Taladro",
-    "description": "+5 ataque y rango.",
+    "description": "{stats}",
     "image": "assets/items/drill.png",
     "stats": {
       "attack": 5,
@@ -279,7 +281,7 @@
   },
   "kings_rock": {
     "name": "Roca del Rey",
-    "description": "+2 ataque, defensa, velocidad, velocidad de ataque y rango.",
+    "description": "{stats}",
     "image": "assets/items/kings_rock.png",
     "stats": {
       "attack": 2,
@@ -305,7 +307,7 @@
   },
   "ribbon": {
     "name": "Cinta",
-    "description": "+3 velocidad y velocidad de ataque.",
+    "description": "{stats}",
     "image": "assets/items/ribbon.png",
     "stats": {
       "speed": 3,
@@ -314,7 +316,7 @@
   },
   "seed": {
     "name": "Semilla",
-    "description": "+10 tamaño, +4 velocidad y ataque.",
+    "description": "{stats}",
     "image": "assets/items/seed.png",
     "stats": {
       "size": 10,
@@ -330,7 +332,7 @@
   },
   "apricorn_black": {
     "name": "Bonguri Negro",
-    "description": "+5 Tamaño, +5 Ataque. Tiñe los marcos azules de color negro durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color negro durante la aventura.",
     "image": "assets/items/apricorn_black.png",
     "stats": {
       "size": 5,
@@ -340,7 +342,7 @@
   },
   "apricorn_blue": {
     "name": "Bonguri Azul",
-    "description": "+5 Tamaño, +5 Defensa. Tiñe los marcos azules de color azul durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color azul durante la aventura.",
     "image": "assets/items/apricorn_blue.png",
     "stats": {
       "size": 5,
@@ -350,7 +352,7 @@
   },
   "apricorn_green": {
     "name": "Bonguri Verde",
-    "description": "+5 Tamaño, +10 HP máximos. Tiñe los marcos azules de color verde durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color verde durante la aventura.",
     "image": "assets/items/apricorn_green.png",
     "stats": {
       "size": 5,
@@ -360,7 +362,7 @@
   },
   "apricorn_pink": {
     "name": "Bonguri Rosa",
-    "description": "+5 Tamaño, +5 Rango. Tiñe los marcos azules de color rosa durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color rosa durante la aventura.",
     "image": "assets/items/apricorn_pink.png",
     "stats": {
       "size": 5,
@@ -370,7 +372,7 @@
   },
   "apricorn_red": {
     "name": "Bonguri Rojo",
-    "description": "+5 Tamaño, +5% Ataque crítico. Tiñe los marcos azules de color rojo durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color rojo durante la aventura.",
     "image": "assets/items/apricorn_red.png",
     "stats": {
       "size": 5,
@@ -380,7 +382,7 @@
   },
   "apricorn_yellow": {
     "name": "Bonguri Amarillo",
-    "description": "+5 Tamaño, +5 Velocidad. Tiñe los marcos azules de color amarillo durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color amarillo durante la aventura.",
     "image": "assets/items/apricorn_yellow.png",
     "stats": {
       "size": 5,
@@ -390,7 +392,7 @@
   },
   "apricorn_white": {
     "name": "Bonguri Blanco",
-    "description": "+5 Tamaño, +5 Velocidad de ataque. Tiñe los marcos azules de color blanco durante la aventura.",
+    "description": "{stats} Tiñe los marcos azules de color blanco durante la aventura.",
     "image": "assets/items/apricorn_white.png",
     "stats": {
       "size": 5,
@@ -424,7 +426,7 @@
   },
   "snowbag": {
     "name": "Bolsanieve",
-    "description": "+10 Rango. Ganar la aventura desbloquea la Criorreliquia.",
+    "description": "{stats} Ganar la aventura desbloquea la Criorreliquia.",
     "image": "assets/items/snowbag.png",
     "stats": {
       "range": 10
@@ -433,7 +435,7 @@
   },
   "scripture": {
     "name": "Escritura",
-    "description": "+10 Ataque. Ganar la aventura desbloquea la Petrorreliquia.",
+    "description": "{stats} Ganar la aventura desbloquea la Petrorreliquia.",
     "image": "assets/items/scripture.png",
     "stats": {
       "attack": 10
@@ -442,7 +444,7 @@
   },
   "iron_ingot": {
     "name": "Lingote de hierro",
-    "description": "+10 Defensa. Ganar la aventura desbloquea la Siderorreliquia.",
+    "description": "{stats} Ganar la aventura desbloquea la Siderorreliquia.",
     "image": "assets/items/iron_ingot.png",
     "stats": {
       "defense": 10
@@ -451,7 +453,7 @@
   },
   "berry_safre": {
     "name": "Baya Safre",
-    "description": "+5 Rango si está por debajo de 40. En otro caso, +1.",
+    "description": "{threshold}",
     "image": "assets/items/berry_safre.png",
     "stats": {},
     "consumable": true,
@@ -464,7 +466,7 @@
   },
   "berry_meloc": {
     "name": "Baya Meloc",
-    "description": "-5 Tamaño si está por encima de 160. En otro caso, -1.",
+    "description": "{threshold}",
     "image": "assets/items/berry_meloc.png",
     "stats": {},
     "consumable": true,
@@ -477,7 +479,7 @@
   },
   "berry_atania": {
     "name": "Baya Atania",
-    "description": "+5 Velocidad si está por debajo de 70. En otro caso, +1.",
+    "description": "{threshold}",
     "image": "assets/items/berry_atania.png",
     "stats": {},
     "consumable": true,
@@ -501,7 +503,7 @@
   },
   "fast_claw": {
     "name": "Garra rápida",
-    "description": "+20 Velocidad de ataque.",
+    "description": "{stats}",
     "image": "assets/items/fast_claw.png",
     "stats": {
       "attackSpeed": 20
@@ -509,7 +511,7 @@
   },
   "dark_key": {
     "name": "Llave oscura",
-    "description": "+5 Velocidad. Ganar la aventura desbloquea Torre Maldita.",
+    "description": "{stats} Ganar la aventura desbloquea Torre Maldita.",
     "image": "assets/items/dark_key.png",
     "stats": {
       "speed": 5
@@ -530,7 +532,7 @@
   },
   "scope_lens": {
     "name": "Lentes de aumento",
-    "description": "+10 Tamaño y Rango, −5 Velocidad y −5% Ataque crítico.",
+    "description": "{stats}",
     "image": "assets/items/scope_lens.png",
     "stats": {
       "size": 10,
@@ -565,7 +567,7 @@
   },
   "metalizer": {
     "name": "Metalizador",
-    "description": "−30 Defensa y +50% Bloqueo crítico.",
+    "description": "{stats}",
     "image": "assets/items/metalizer.png",
     "stats": {
       "defense": -30,

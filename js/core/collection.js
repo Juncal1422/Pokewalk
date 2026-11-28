@@ -1,3 +1,4 @@
+import {formatDescription} from './descriptions.js';
 import { game } from './state.js';
 
 const storageKey = 'pokewalk.pommedew.collection.v1';
@@ -11,15 +12,15 @@ export const relics = {
     ['weighted_tail','Cola pesada','Desactiva el dash. Todos los Pokémon recuperan el ritmo anterior de marcha y ataque.'],
     ['bike_ticket','Ticket bici','Las mejoras de otros atributos también aumentan la velocidad.'],
     ['cranium','Cráneo','Los ataques por la espalda son críticos y bloqueas los impactos frontales.'],
-    ['death_flute','Flauta mortal','R · Consume 50 esencias. Tras cargar 4 s vence a los salvajes del piso. Recarga 3 min.',{slot:'r',cooldown:180,cost:50,charge:4000}],
-    ['eject_button','Botón eyector','R · Falla la misión y abre un teletransportador cercano. Recarga 10 min.',{slot:'r',cooldown:600}],
+    ['death_flute','Flauta mortal','{slot} Consume 50 esencias. Tras cargar 4 s vence a los salvajes del piso. {cooldown}',{slot:'r',cooldown:180,cost:50,charge:4000}],
+    ['eject_button','Botón eyector','{slot} Falla la misión y abre un teletransportador cercano. {cooldown}',{slot:'r',cooldown:600}],
     ['exp_share','Comparte experiencia','Duplica la experiencia obtenida al vencer enemigos.'],
     ['guild_ring','Anillo del Gremio','Añade tres Pokémon salvajes a cada piso.'],
     ['jade_pearl','Perla de jade','Tiñe al jugador de verde jade.'],
     ['leftovers','Restos','Recuperas 1 HP al subir unas escaleras.'],
     ['misterious_wallet','Cartera misteriosa','Cada esencia recogida se convierte en una de otro tipo.'],
-    ['pressure_pill','Píldora de presión','R · Consume 5 esencias de Volador. El tornado empuja 10 veces tu rango. Recarga 30 s.',{slot:'r',cooldown:30,cost:5,essence:'flying'}],
-    ['void_orb','Orbe vacío','R · Consume 10 esencias. Una onda siniestra de triple rango daña y empuja. Recarga 1 min.',{slot:'r',cooldown:60,cost:10}],
+    ['pressure_pill','Píldora de presión','{slot} Consume 5 esencias de Volador. El tornado empuja 10 veces tu rango. {cooldown}',{slot:'r',cooldown:30,cost:5,essence:'flying'}],
+    ['void_orb','Orbe vacío','{slot} Consume 10 esencias. Una onda siniestra de triple rango daña y empuja. {cooldown}',{slot:'r',cooldown:60,cost:10}],
   ].map(([id,name,description,config])=>[id,{name,description,...config}])),
   ...Object.fromEntries([
     ['egg_articuno','Huevo de Articuno','mt.-freeze','Monte Helado',144,'Articuno','items/gem_articuno.png'],
@@ -35,7 +36,7 @@ export const relics = {
     stats: {attack:300,defense:300,speed:200,attackSpeed:100,range:100,hpMax:100},
     price: 0,
     image: 'relics/debugger.png',
-    description: 'Empieza con 100 esencias de cada tipo. Ataque y defensa +300, velocidad +200, PV, rango y velocidad de ataque +100 y esencias recogidas ×4. Probabilidad de objetos ×1,5.',
+    description: 'Empieza con 100 esencias de cada tipo. {stats} Esencias recogidas ×4. Probabilidad de objetos ×1,5.',
   },
   black_sash: {
     name: 'Cinta Negra',
@@ -47,9 +48,11 @@ export const relics = {
     name: 'Batería agotada',slot:'r',
     price: 18,
     description:
-      'R · Cada 4 esencias eléctricas almacena una descarga de ataque ×4 y alcance ×3.',
+      '{slot} Cada 4 esencias eléctricas almacena una descarga de ataque ×4 y alcance ×3.',
   },
 };
+
+for(const relic of Object.values(relics))relic.description=formatDescription(relic);
 
 export function biomeRequirement(biome) {
   return Object.values(game.items ?? {}).find(item => item.unlockBiome === biome.id);

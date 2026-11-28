@@ -29,14 +29,13 @@ const enemyCaps = {
 // Sortea una cantidad entera entre los dos límites incluidos.
 const between = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 
+const encounterBand = number => number <= 8 ? '1-8' : number <= 16 ? '9-16' : number <= 25 ? '17-25' : number <= 36 ? '26-36' : '37-50';
+
 // Pondera cada bioma por la distancia entre su nivel y la dificultad preferida de la misión.
 export function chooseBiome(biomes, missionNumber) {
-  biomes = biomes.filter(b => b.level >= 5 ? missionNumber >= 24 : missionNumber < 25);
-  biomes = biomes.filter(biomeAvailable);
-  const preferred = missionNumber < 24 ? 1 + (missionNumber-1)/8 : 5 + (missionNumber-24)/5;
-  const weights = biomes.map((candidateBiome) =>
-    Math.exp(-Math.abs(candidateBiome.level - preferred) / 1.5),
-  );
+  const band = encounterBand(missionNumber);
+  biomes = biomes.filter(b => b.wild[band].length && biomeAvailable(b));
+  const weights = biomes.map(b => parseFloat(b._probabilidadPorOferta[band]));
   // Restar pesos de una tirada única elige el bioma según su proximidad a la dificultad objetivo.
   let roll = Math.random() * weights.reduce((sum, weight) => sum + weight, 0);
   return biomes.find((_, i) => (roll -= weights[i]) < 0) ?? biomes.at(-1);
@@ -57,7 +56,7 @@ export function newMission(
     type === 'leader'
       ? 1
       : between(biome.level, floorCaps[capType][biome.level - 1]);
-  const levelBand = number <= 8 ? '1-8' : number <= 16 ? '9-16' : number <= 25 ? '17-25' : number <= 36 ? '26-36' : '37-50';
+  const levelBand = encounterBand(number);
   const leaders = type === 'leader' ? biomeLeaderList(biome) : [];
   const specialLeaders = leaders.filter(entry => entry.relicId && entry.available &&
     number >= 25 && game.runRelics?.has(entry.relicId));

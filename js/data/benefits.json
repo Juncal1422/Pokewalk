@@ -2,7 +2,7 @@
   {
     "id": "heritage_earth",
     "name": "Herencia de Tierra",
-    "description": "Defensa +10.",
+    "description": "{stats}",
     "image": "assets/benefits/heritage_earth.png",
     "active": false,
     "amount": 0.1,
@@ -22,7 +22,7 @@
   {
     "id": "heritage_air",
     "name": "Herencia de Aire",
-    "description": "Velocidad y velocidad de ataque +10.",
+    "description": "{stats}",
     "image": "assets/benefits/heritage_air.png",
     "active": false,
     "amount": 0.1,
@@ -42,11 +42,17 @@
   {
     "id": "heritage_fire",
     "name": "Herencia de Fuego",
-    "description": "Ataque +10.",
+    "description": "{stats}",
     "image": "assets/benefits/heritage_fire.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Litwick", "Magby", "Ponyta", "Darumaka", "Larvesta"],
+    "pokemon": [
+      "Litwick",
+      "Magby",
+      "Ponyta",
+      "Darumaka",
+      "Larvesta"
+    ],
     "stats": {
       "attack": 10
     }
@@ -54,7 +60,7 @@
   {
     "id": "heritage_water",
     "name": "Herencia de Agua",
-    "description": "Rango +10. Reduce un 10 por ciento la recarga de ambas activas.",
+    "description": "{stats} Reduce un 10 por ciento la recarga de ambas activas.",
     "image": "assets/benefits/heritage_water.png",
     "active": false,
     "amount": 0.1,
@@ -75,7 +81,7 @@
   {
     "id": "rhyhorn_horn",
     "name": "Cuerno de Rhyhorn",
-    "description": "Ataque +10. Proyecta un cuerno en la dirección del golpe.",
+    "description": "{basicAttack} {stats}",
     "image": "assets/benefits/rhyhorn_horn.png",
     "active": false,
     "amount": 0.1,
@@ -95,27 +101,42 @@
     "stats": {
       "attack": 10
     },
-    "spriteanimations": ["Charge"]
+    "spriteanimations": [
+      "Charge"
+    ],
+    "basicAttack": "un cuerno frontal"
   },
   {
     "id": "machinery",
     "name": "Maquinaria",
-    "description": "Q · Te teletransportas junto a un objeto o enemigo del piso y paralizas durante 1 s a los enemigos en tu rango. Recarga de 20 s.",
+    "description": "{slot} Te teletransportas junto a un objeto o enemigo del piso y paralizas durante 1 s a los enemigos en tu rango. {cooldown}",
     "image": "assets/benefits/machinery.png",
     "active": true,
     "amount": 20,
-    "pokemon": ["Baltoy", "Claydol", "Klink", "Klang", "Klinklang"],
+    "pokemon": [
+      "Baltoy",
+      "Claydol",
+      "Klink",
+      "Klang",
+      "Klinklang"
+    ],
     "slot": "q",
     "stats": {}
   },
   {
     "id": "reinforced",
     "name": "Reforzado",
-    "description": "Defensa +25. Bloqueo crítico +25%.",
+    "description": "{stats}",
     "image": "assets/benefits/reinforced.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": ["Sudowoodo", "Pineco", "Forretress", "Relicanth", "Durant"],
+    "pokemon": [
+      "Sudowoodo",
+      "Pineco",
+      "Forretress",
+      "Relicanth",
+      "Durant"
+    ],
     "stats": {
       "defense": 25,
       "block": 25
@@ -124,7 +145,7 @@
   {
     "id": "scaled",
     "name": "Escamado",
-    "description": "Defensa +10. Velocidad +10. Velocidad de ataque +10. Se pierde Emplumado.",
+    "description": "{stats} Se pierde Emplumado.",
     "image": "assets/benefits/scaled.png",
     "active": false,
     "amount": 0,
@@ -134,7 +155,9 @@
       "speed": 10,
       "attackSpeed": 10
     },
-    "excludes": ["feathered"]
+    "excludes": [
+      "feathered"
+    ]
   },
   {
     "id": "facechanger",
@@ -158,7 +181,7 @@
   {
     "id": "golden",
     "name": "Dorado",
-    "description": "Ataque y rango +10. Tiñe de oro al jugador.",
+    "description": "{stats} Tiñe de oro al jugador.",
     "image": "assets/benefits/golden.png",
     "active": false,
     "amount": 0.1,
@@ -197,7 +220,7 @@
   {
     "id": "protected",
     "name": "Protegido",
-    "description": "Bloqueo crítico +10%.",
+    "description": "{stats}",
     "image": "assets/benefits/protected.png",
     "active": false,
     "amount": 0.1,
@@ -241,7 +264,7 @@
   {
     "id": "mamoswine_fang",
     "name": "Colmillo de Mamoswine",
-    "description": "E · Gira dos vueltas y golpea a los enemigos a tu alrededor. Recarga en 30 s.",
+    "description": "{slot} Gira dos vueltas y golpea a los enemigos a tu alrededor. {cooldown}",
     "image": "assets/benefits/mamoswine_fang.png",
     "active": true,
     "amount": 30,
@@ -279,7 +302,7 @@
   {
     "id": "swift",
     "name": "Ágil",
-    "description": "Evasión +5%.",
+    "description": "{stats}",
     "image": "assets/benefits/swift.png",
     "active": false,
     "amount": 0.05,
@@ -300,18 +323,24 @@
   {
     "id": "hooh_brooch",
     "name": "Broche de Ho-oh",
-    "description": "E · Carga 0,2 s y lanza una llamarada hasta 4 veces tu rango. Inflige tu Ataque o el 150 por ciento en forma Fuego. Recarga en 30 s.",
+    "description": "{slot} Carga 0,2 s y lanza una llamarada hasta 4 veces tu rango. Inflige tu Ataque o el 150 por ciento en forma Fuego. {cooldown}",
     "image": "assets/benefits/hooh_brooch.png",
     "active": true,
     "amount": 30,
-    "pokemon": ["Lampent", "Chandelure", "Magmar", "Magmortar", "Ho_Oh"],
+    "pokemon": [
+      "Lampent",
+      "Chandelure",
+      "Magmar",
+      "Magmortar",
+      "Ho_Oh"
+    ],
     "slot": "e",
     "stats": {}
   },
   {
     "id": "spiky",
     "name": "Punzante",
-    "description": "Rango +10. Proyecta una espina en la dirección del golpe.",
+    "description": "{basicAttack} {stats}",
     "amount": 0.1,
     "active": false,
     "slot": null,
@@ -332,23 +361,32 @@
     "stats": {
       "range": 10
     },
-    "spriteanimations": ["Charge"]
+    "spriteanimations": [
+      "Charge"
+    ],
+    "basicAttack": "una espina frontal"
   },
   {
     "id": "seer",
     "name": "Oráculo",
-    "description": "Q · Consume 1 PV. Tras 0,5 s, ganas +50 de ataque, velocidad de ataque y velocidad durante 10 s. Recarga: 90 s.",
+    "description": "{slot} Consume 1 PV. Tras 0,5 s, ganas +50 de ataque, velocidad de ataque y velocidad durante 10 s. {cooldown}",
     "amount": 90,
     "active": true,
     "slot": "q",
-    "pokemon": ["Abra", "Kadabra", "Alakazam", "Natu", "Xatu"],
+    "pokemon": [
+      "Abra",
+      "Kadabra",
+      "Alakazam",
+      "Natu",
+      "Xatu"
+    ],
     "image": "assets/benefits/seer.png",
     "stats": {}
   },
   {
     "id": "gunpowder_core",
     "name": "Núcleo de pólvora",
-    "description": "E · Carga 0,35 s y explota en un radio de 72, dañándote también. Recarga: 60 s.",
+    "description": "{slot} Carga 0,35 s y explota en un radio de 72, dañándote también. {cooldown}",
     "amount": 60,
     "active": true,
     "slot": "e",
@@ -390,7 +428,7 @@
   {
     "id": "royalty",
     "name": "Realeza",
-    "description": "Q · Paraliza durante 1,5 s a los enemigos cercanos. Recarga: 30 s.",
+    "description": "{slot} Paraliza durante 1,5 s a los enemigos cercanos. {cooldown}",
     "image": "assets/benefits/royalty.png",
     "active": true,
     "amount": 30,
@@ -415,7 +453,7 @@
   {
     "id": "spoink_pearl",
     "name": "Perla de Spoink",
-    "description": "Q · Salta a un punto de suelo de la habitación. Recarga: 10 s.",
+    "description": "{slot} Salta a un punto de suelo de la habitación. {cooldown}",
     "image": "assets/benefits/spoink_pearl.png",
     "active": true,
     "amount": 10,
@@ -434,7 +472,7 @@
   {
     "id": "tailed",
     "name": "Caudato",
-    "description": "Defensa −15. Velocidad y velocidad de ataque +25.",
+    "description": "{stats}",
     "image": "assets/benefits/tailed.png",
     "active": false,
     "amount": 0,
@@ -462,11 +500,17 @@
   {
     "id": "transparent",
     "name": "Transparente",
-    "description": "Q · Evasión +25% durante 7 s. Recarga de 2 min.",
+    "description": "{slot} Evasión +25% durante 7 s. {cooldown}",
     "image": "assets/benefits/transparent.png",
     "active": true,
     "amount": 120,
-    "pokemon": ["Porygon", "Porygon2", "Sableye", "Drifloon", "Drifblim"],
+    "pokemon": [
+      "Porygon",
+      "Porygon2",
+      "Sableye",
+      "Drifloon",
+      "Drifblim"
+    ],
     "stats": {},
     "slot": "q"
   },
@@ -512,7 +556,7 @@
   {
     "id": "silken",
     "name": "Sedal",
-    "description": "Q · Consume 10 esencias Bicho para ganar 3 defensa. Recarga: 20 s.",
+    "description": "{slot} Consume 10 esencias Bicho para ganar 3 defensa. {cooldown}",
     "image": "assets/benefits/silken.png",
     "active": true,
     "amount": 20,
@@ -531,7 +575,7 @@
   {
     "id": "ancient",
     "name": "Ancestral",
-    "description": "Rango −10. Golpe de hierro con empuje ×1,6.",
+    "description": "{basicAttack} {stats}",
     "image": "assets/benefits/ancient.png",
     "active": false,
     "amount": 0,
@@ -548,12 +592,17 @@
     "stats": {
       "range": -10
     },
-    "spriteanimations": ["Strike", "Swing", "Charge"]
+    "spriteanimations": [
+      "Strike",
+      "Swing",
+      "Charge"
+    ],
+    "basicAttack": "un golpe de hierro con empuje ×1,6"
   },
   {
     "id": "rock_core",
     "name": "Núcleo de roca",
-    "description": "E · Carga 0,5 s y libera un aura durante 1 s. Daño y radio triples. Recarga: 120 s.",
+    "description": "{slot} Carga 0,5 s y libera un aura durante 1 s. Daño y radio triples. {cooldown}",
     "image": "assets/benefits/rock_core.png",
     "active": true,
     "amount": 120,
@@ -573,7 +622,7 @@
   {
     "id": "regenerative",
     "name": "Regenerativo",
-    "description": "Q · Consume 20 esencias aleatorias y recupera un 30 por ciento de los PV máximos. Recarga: 20 s.",
+    "description": "{slot} Consume 20 esencias aleatorias y recupera un 30 por ciento de los PV máximos. {cooldown}",
     "image": "assets/benefits/regenerative.png",
     "active": true,
     "amount": 20,
@@ -590,7 +639,7 @@
   {
     "id": "acuatic",
     "name": "Acuático",
-    "description": "Dispara agua. Ataque −10 y rango +20.",
+    "description": "{basicAttack} {stats}",
     "image": "assets/benefits/acuatic.png",
     "active": false,
     "amount": 0,
@@ -609,12 +658,16 @@
       "attack": -10,
       "range": 20
     },
-    "spriteanimations": ["Shoot", "Charge"]
+    "spriteanimations": [
+      "Shoot",
+      "Charge"
+    ],
+    "basicAttack": "un proyectil de Agua"
   },
   {
     "id": "rock_thrower",
     "name": "Tirarrocas",
-    "description": "Dispara una roca con alcance y empuje dobles. Velocidad y velocidad de ataque −60.",
+    "description": "{basicAttack} {stats}",
     "image": "assets/benefits/rock_thrower.png",
     "active": false,
     "amount": 0,
@@ -635,12 +688,16 @@
       "speed": -60,
       "attackSpeed": -60
     },
-    "spriteanimations": ["Shoot", "Charge"]
+    "spriteanimations": [
+      "Shoot",
+      "Charge"
+    ],
+    "basicAttack": "una roca con alcance y empuje dobles"
   },
   {
     "id": "shelders_shell",
     "name": "Concha de Shellder",
-    "description": "Q · Bloqueo crítico +50% durante 5 s. Bloquear congela al atacante 1 s. Recarga de 60 s.",
+    "description": "{slot} Bloqueo crítico +50% durante 5 s. Bloquear congela al atacante 1 s. {cooldown}",
     "image": "assets/benefits/shelders_shell.png",
     "rules": {
       "shellMs": 5000,
@@ -648,14 +705,20 @@
       "freezeMs": 1000
     },
     "active": true,
-    "pokemon": ["Lapras", "Glaceon", "Vanillite", "Vanillish", "Vanilluxe"],
+    "pokemon": [
+      "Lapras",
+      "Glaceon",
+      "Vanillite",
+      "Vanillish",
+      "Vanilluxe"
+    ],
     "slot": "q",
     "amount": 60
   },
   {
     "id": "groudons_scale",
     "name": "Escama de Groudon",
-    "description": "E · Consume 10 esencias aleatorias para liberar una línea de erupciones de Fuego. Daño igual al triple de tu Ataque. Recarga de 120 s.",
+    "description": "{slot} Consume 10 esencias aleatorias para liberar una línea de erupciones de Fuego. Daño igual al triple de tu Ataque. {cooldown}",
     "image": "assets/benefits/groudons_scale.png",
     "rules": {
       "eruptionStep": 16,
@@ -663,14 +726,19 @@
       "essenceCost": 10
     },
     "active": true,
-    "pokemon": ["Druddigon", "Groudon", "Heatmor", "Torkoal"],
+    "pokemon": [
+      "Druddigon",
+      "Groudon",
+      "Heatmor",
+      "Torkoal"
+    ],
     "slot": "e",
     "amount": 120
   },
   {
     "id": "dealer",
     "name": "Crupier",
-    "description": "Q · Gira durante dos segundos y redistribuye todas tus esencias.",
+    "description": "{slot} Gira durante dos segundos y redistribuye todas tus esencias.",
     "image": "assets/benefits/dealer.png",
     "rules": {
       "shuffleMs": 2000
@@ -737,24 +805,37 @@
   {
     "id": "linoone_loot",
     "name": "Botín de Linoone",
-    "description": "Q · Cambia 40 esencias por un objeto nuevo o una Zidra con el equipo completo.",
+    "description": "{slot} Cambia 40 esencias por un objeto nuevo o una Zidra con el equipo completo.",
     "image": "assets/benefits/linoone_loot.png",
     "rules": {
       "lootCost": 40
     },
     "active": true,
-    "pokemon": ["Skitty", "Delcatty", "Buneary", "Lopunny", "Aipom", "Ambipom"],
+    "pokemon": [
+      "Skitty",
+      "Delcatty",
+      "Buneary",
+      "Lopunny",
+      "Aipom",
+      "Ambipom"
+    ],
     "slot": "q",
     "amount": 0
   },
   {
     "id": "nobility",
     "name": "Nobleza",
-    "description": "Tamaño +20. Ataque +20. Defensa +20. Rango -15. Velocidad de ataque -15.",
+    "description": "{stats}",
     "image": "assets/benefits/nobility.png",
     "rules": {},
     "active": false,
-    "pokemon": ["Mantyke", "Mantine", "Tornadus", "Thundurus", "Landorus"],
+    "pokemon": [
+      "Mantyke",
+      "Mantine",
+      "Tornadus",
+      "Thundurus",
+      "Landorus"
+    ],
     "stats": {
       "size": 20,
       "attack": 20,
@@ -766,7 +847,7 @@
   {
     "id": "cool",
     "name": "Molón",
-    "description": "Acerca tu tamaño a 100. Velocidad +15.",
+    "description": "{stats} Acerca tu tamaño a 100.",
     "image": "assets/benefits/cool.png",
     "rules": {
       "normalizeSmall": 10,
@@ -793,13 +874,18 @@
   {
     "id": "guild_leyend",
     "name": "Leyenda del Gremio",
-    "description": "Todos los encargos son rojos y su pago se triplica. Ataque +30. Defensa +30. Velocidad +20.",
+    "description": "{stats} Todos los encargos son rojos y su pago se triplica.",
     "image": "assets/benefits/guild_leyend.png",
     "rules": {
       "redReward": 3
     },
     "active": false,
-    "pokemon": ["Riolu", "Lucario", "Celebi", "Rayquaza"],
+    "pokemon": [
+      "Riolu",
+      "Lucario",
+      "Celebi",
+      "Rayquaza"
+    ],
     "stats": {
       "attack": 30,
       "defense": 30,
@@ -809,7 +895,7 @@
   {
     "id": "shelled",
     "name": "Bivalvo",
-    "description": "Bloqueo crítico +10%. Defensa +10.",
+    "description": "{stats}",
     "image": "assets/benefits/shelled.png",
     "rules": {},
     "active": false,
@@ -831,7 +917,7 @@
   {
     "id": "aviodant",
     "name": "Evasivo",
-    "description": "Evasión +15%. Defensa -5. Crítico fijo al 0%. Elimina Luchador.",
+    "description": "{stats} Crítico fijo al 0%. Elimina Luchador.",
     "image": "assets/benefits/aviodant.png",
     "rules": {},
     "active": false,
@@ -849,12 +935,14 @@
       "evasion": 15,
       "defense": -5
     },
-    "excludes": ["fighter"]
+    "excludes": [
+      "fighter"
+    ]
   },
   {
     "id": "fighter",
     "name": "Luchador",
-    "description": "Crítico +15%. Ataque +5. Evasión fija al 0%. Elimina Evasivo.",
+    "description": "{stats} Evasión fija al 0%. Elimina Evasivo.",
     "image": "assets/benefits/fighter.png",
     "rules": {
       "noDodge": 1
@@ -876,7 +964,9 @@
       "critical": 15,
       "attack": 5
     },
-    "excludes": ["aviodant"]
+    "excludes": [
+      "aviodant"
+    ]
   },
   {
     "id": "wooden",
@@ -905,7 +995,7 @@
   {
     "id": "music",
     "name": "Musical",
-    "description": "Los enemigos te priorizan en Rescate. Evasión +5%.",
+    "description": "{stats} Los enemigos te priorizan en Rescate.",
     "image": "assets/benefits/music.png",
     "rules": {
       "rescueAggro": 1
@@ -1006,7 +1096,11 @@
       "criticalBerry": 0.1
     },
     "active": false,
-    "pokemon": ["Tropius", "Cherubi", "Cherrim"],
+    "pokemon": [
+      "Tropius",
+      "Cherubi",
+      "Cherrim"
+    ],
     "stats": {}
   },
   {
@@ -1018,7 +1112,12 @@
       "bossLoot": 1
     },
     "active": false,
-    "pokemon": ["Girafarig", "Delibird", "Wingull", "Pelipper"],
+    "pokemon": [
+      "Girafarig",
+      "Delibird",
+      "Wingull",
+      "Pelipper"
+    ],
     "stats": {}
   },
   {
@@ -1030,27 +1129,37 @@
       "reflectCritical": 1
     },
     "active": false,
-    "pokemon": ["Houndour", "Houndoom", "Gothita", "Gothorita", "Gothitelle"],
+    "pokemon": [
+      "Houndour",
+      "Houndoom",
+      "Gothita",
+      "Gothorita",
+      "Gothitelle"
+    ],
     "stats": {}
   },
   {
     "id": "kingdra_scale",
     "name": "Escama de Kingdra",
-    "description": "E · Estallido de agua en tres veces el rango. Inflige tu ataque y empuja. Recarga de 45 s.",
+    "description": "{slot} Estallido de agua en tres veces el rango. Inflige tu ataque y empuja. {cooldown}",
     "image": "assets/benefits/kingdra_scale.png",
     "rules": {
       "burstRange": 3,
       "push": 40
     },
     "active": true,
-    "pokemon": ["Kingdra", "Lugia", "Kyogre"],
+    "pokemon": [
+      "Kingdra",
+      "Lugia",
+      "Kyogre"
+    ],
     "slot": "e",
     "amount": 45
   },
   {
     "id": "flaming",
     "name": "Ardiente",
-    "description": "Resiste Fuego e inflige daño de fuego.",
+    "description": "{attackType} Resistes el daño de Fuego.",
     "image": "assets/benefits/flaming.png",
     "rules": {
       "fireAttack": 1
@@ -1067,23 +1176,34 @@
       "Magcargo"
     ],
     "stats": {},
-    "excludes": ["acuatic", "wooden"],
+    "excludes": [
+      "acuatic",
+      "wooden"
+    ],
     "affinity": {
       "fire": 0.5
-    }
+    },
+    "attackType": "fire"
   },
   {
     "id": "sibyl",
     "name": "Sibila",
-    "description": "Ataques psíquicos y recarga ×0,75.",
+    "description": "{attackType} Recarga de habilidades −25%.",
     "image": "assets/benefits/sibyl.png",
     "rules": {
       "psychicAttack": 1,
       "cooldownReduction": 0.25
     },
     "active": false,
-    "pokemon": ["Golduck", "Smoochum", "Jynx", "Espeon", "Sigilyph"],
-    "stats": {}
+    "pokemon": [
+      "Golduck",
+      "Smoochum",
+      "Jynx",
+      "Espeon",
+      "Sigilyph"
+    ],
+    "stats": {},
+    "attackType": "psychic"
   },
   {
     "id": "skeptic",
@@ -1092,7 +1212,13 @@
     "image": "assets/benefits/skeptic.png",
     "rules": {},
     "active": false,
-    "pokemon": ["Elgyem", "Beheeyem", "Darkrai", "Umbreon", "Mewtwo"],
+    "pokemon": [
+      "Elgyem",
+      "Beheeyem",
+      "Darkrai",
+      "Umbreon",
+      "Mewtwo"
+    ],
     "stats": {},
     "affinity": {
       "psychic": 0.5,
@@ -1110,13 +1236,19 @@
       "reviveBerry": 0.15
     },
     "active": false,
-    "pokemon": ["Murkrow", "Honchkrow", "Absol", "Staryu", "Starmie"],
+    "pokemon": [
+      "Murkrow",
+      "Honchkrow",
+      "Absol",
+      "Staryu",
+      "Starmie"
+    ],
     "stats": {}
   },
   {
     "id": "adamant",
     "name": "Firme",
-    "description": "Ataque +20. Rango -10.",
+    "description": "{stats}",
     "image": "assets/benefits/adamant.png",
     "rules": {},
     "active": false,
@@ -1141,7 +1273,7 @@
   {
     "id": "impish",
     "name": "Agitado",
-    "description": "Defensa +20. Rango -10.",
+    "description": "{stats}",
     "image": "assets/benefits/impish.png",
     "rules": {},
     "active": false,
@@ -1166,7 +1298,7 @@
   {
     "id": "lax",
     "name": "Flojo",
-    "description": "Defensa +20. Velocidad de ataque -10.",
+    "description": "{stats}",
     "image": "assets/benefits/lax.png",
     "rules": {},
     "active": false,
@@ -1187,7 +1319,7 @@
   {
     "id": "bold",
     "name": "Osado",
-    "description": "Defensa +20. Ataque -10.",
+    "description": "{stats}",
     "image": "assets/benefits/bold.png",
     "rules": {},
     "active": false,
@@ -1209,7 +1341,7 @@
   {
     "id": "naughty",
     "name": "Pícaro",
-    "description": "Velocidad +20. Defensa -5. Ataque -5.",
+    "description": "{stats}",
     "image": "assets/benefits/naughty.png",
     "rules": {},
     "active": false,
@@ -1236,7 +1368,7 @@
   {
     "id": "relaxed",
     "name": "Plácido",
-    "description": "Defensa +20. Velocidad -10.",
+    "description": "{stats}",
     "image": "assets/benefits/relaxed.png",
     "rules": {},
     "active": false,
@@ -1260,7 +1392,7 @@
   {
     "id": "brave",
     "name": "Audaz",
-    "description": "Ataque +20. Velocidad -10.",
+    "description": "{stats}",
     "image": "assets/benefits/brave.png",
     "rules": {},
     "active": false,
@@ -1281,7 +1413,7 @@
   {
     "id": "lonely",
     "name": "Huraño",
-    "description": "Ataque +20. Defensa -10.",
+    "description": "{stats}",
     "image": "assets/benefits/lonely.png",
     "rules": {},
     "active": false,
@@ -1304,7 +1436,7 @@
   {
     "id": "good_vision",
     "name": "Buena visión",
-    "description": "Rango +30. Velocidad de ataque -15.",
+    "description": "{stats}",
     "image": "assets/benefits/good_vision.png",
     "rules": {},
     "active": false,
@@ -1372,7 +1504,7 @@
   {
     "id": "toxic",
     "name": "Tóxico",
-    "description": "Tus ataques básicos son de veneno. Al recoger una baya, cada enemigo a 2×Rango recibe tanto daño como HP recuperes.",
+    "description": "{attackType} Al recoger una baya, cada enemigo a 2×Rango recibe tanto daño como HP recuperes.",
     "image": "assets/benefits/toxic.png",
     "active": false,
     "pokemon": [
@@ -1390,7 +1522,8 @@
     "rules": {
       "poisonAttack": 1,
       "berryPulseRange": 2
-    }
+    },
+    "attackType": "poison"
   },
   {
     "id": "levitating",
@@ -1442,7 +1575,7 @@
     "id": "igneous",
     "name": "Ígneo",
     "image": "assets/benefits/igneous.png",
-    "description": "Tu daño base es de tipo Fuego. Ataque +25 mientras tus HP estén por debajo del 25%.",
+    "description": "{attackType} Ataque +{lowHPAttack} mientras tus HP estén por debajo del 25%.",
     "active": false,
     "amount": 0,
     "element": "fire",
@@ -1463,7 +1596,7 @@
     "id": "sylvan",
     "name": "Silvestre",
     "image": "assets/benefits/sylvan.png",
-    "description": "Tu daño base es de tipo Planta. Ataque +25 mientras tus HP estén por debajo del 25%.",
+    "description": "{attackType} Ataque +{lowHPAttack} mientras tus HP estén por debajo del 25%.",
     "active": false,
     "amount": 0,
     "element": "grass",
@@ -1484,7 +1617,7 @@
     "id": "torrent",
     "name": "Torrencial",
     "image": "assets/benefits/torrent.png",
-    "description": "Tu daño base es de tipo Agua. Ataque +25 mientras tus HP estén por debajo del 25%.",
+    "description": "{attackType} Ataque +{lowHPAttack} mientras tus HP estén por debajo del 25%.",
     "active": false,
     "amount": 0,
     "element": "water",
@@ -1505,7 +1638,7 @@
     "id": "ofidio",
     "name": "Ofidio",
     "image": "assets/benefits/ofidio.png",
-    "description": "Ataque +15. Velocidad de ataque −10. Muerdes frente a ti.",
+    "description": "{basicAttack} {stats}",
     "active": false,
     "amount": 0,
     "stats": {
@@ -1513,7 +1646,13 @@
       "attackSpeed": -10
     },
     "weapon": "bite",
-    "pokemon": ["Ekans", "Arbok", "Mawile", "Seviper"]
+    "pokemon": [
+      "Ekans",
+      "Arbok",
+      "Mawile",
+      "Seviper"
+    ],
+    "basicAttack": "un mordisco frontal"
   },
   {
     "id": "static",
@@ -1542,34 +1681,50 @@
     "description": "Los aumentos de Crítico y Evasión también aumentan tu Bloqueo crítico. Los aumentos de Tamaño también aumentan tus HP máximos.",
     "active": false,
     "amount": 0,
-    "pokemon": ["Bastiodon", "Wynaut", "Wobbuffet", "Cryogonal"]
+    "pokemon": [
+      "Bastiodon",
+      "Wynaut",
+      "Wobbuffet",
+      "Cryogonal"
+    ]
   },
   {
     "id": "forgotten_bone",
     "name": "Hueso de Marowak",
-    "image": "assets/benefits/forgotten_bone.png",
-    "description": "Lanzas un hueso de Tierra al doble de rango. Atraviesa enemigos y golpea una vez a la ida y otra a la vuelta. Puedes volver a atacar cuando lo recuperas.",
+    "image": "assets/benefits/marowak_bone.png",
+    "description": "{basicAttack} Puedes volver a atacar cuando recuperas el hueso.",
     "active": false,
     "amount": 0,
     "weapon": "bone_throw",
-    "pokemon": ["Cubone", "Marowak"]
+    "pokemon": [
+      "Cubone",
+      "Marowak"
+    ],
+    "basicAttack": "un hueso de Tierra que atraviesa enemigos al doble de rango y golpea a la ida y a la vuelta"
   },
   {
     "id": "magnet",
     "name": "Imantado",
-    "image": "assets/benefits/magnet.png",
-    "description": "Reduce a la mitad las mejoras de velocidad de ataque. Lanzas una bomba de Acero al doble de rango.",
+    "image": "assets/benefits/magnetized.png",
+    "description": "{basicAttack} {halfGain}",
     "active": false,
     "amount": 0,
     "weapon": "iron_bomb",
     "halve": "attackSpeed",
-    "pokemon": ["Magnemite", "Magneton", "Magnezone", "Nosepass", "Probopass"]
+    "pokemon": [
+      "Magnemite",
+      "Magneton",
+      "Magnezone",
+      "Nosepass",
+      "Probopass"
+    ],
+    "basicAttack": "una bomba de Acero al doble de rango"
   },
   {
     "id": "occult_powder",
     "name": "Umbrío",
-    "image": "assets/benefits/occult_powder.png",
-    "description": "Reduce a la mitad las mejoras de rango. Crítico +10%. Cargas un tajo Fantasma.",
+    "image": "assets/benefits/shadowy.png",
+    "description": "{basicAttack} {stats} {halfGain}",
     "active": false,
     "amount": 0,
     "weapon": "dark_cut",
@@ -1586,13 +1741,14 @@
       "Giratina",
       "Zorua",
       "Zoroark"
-    ]
+    ],
+    "basicAttack": "un tajo cargado de tipo Fantasma"
   },
   {
     "id": "sharp_beak",
     "name": "Pico afilado",
     "image": "assets/benefits/sharp_beak.png",
-    "description": "Reduce a la mitad las mejoras de rango. Crítico +10%. Cargas un picotazo Volador.",
+    "description": "{basicAttack} {stats} {halfGain}",
     "active": false,
     "amount": 0,
     "weapon": "peck",
@@ -1611,6 +1767,7 @@
       "Staraptor",
       "Swanna",
       "Braviary"
-    ]
+    ],
+    "basicAttack": "un picotazo cargado de tipo Volador"
   }
 ]

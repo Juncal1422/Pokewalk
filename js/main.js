@@ -1,3 +1,4 @@
+import {formatDescription} from './core/descriptions.js';
 import { loadInterfaceStylesheet, readCanvasTheme } from './core/interface-theme.js';
 import { assetUrl } from './core/asset-url.js';
 import { warmGuildBackgrounds, visitGuild, selectMission, guildMessage } from './core/guild.js';
@@ -458,6 +459,7 @@ export async function startGame({
 
   ]);
   game.synergies = new Map(synergies.map((rule) => [rule.effect, rule]));
+  for(const benefit of benefits)benefit.description=formatDescription(benefit);
   game.benefits = new Map(benefits.map((benefit) => [benefit.id, benefit]));
   game.donors = new Map();
   for (const benefit of benefits)

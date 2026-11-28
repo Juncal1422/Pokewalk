@@ -54,10 +54,16 @@ export async function loadItemImages(items) {
   }));
 }
 
-export function randomBerry(){
+const berryRates={berry_oran:.15,berry_safre:.10,berry_meloc:.10,berry_atania:.10,berry_sitrus:.05};
+export function randomBerry(totalChance=.5){
   if(synergyActive('sitrusBerries'))return 'berry_sitrus';
-  const berries=Object.keys(game.items).filter(id=>game.items[id].berry);
-  return berries[Math.floor(Math.random()*berries.length)];
+  const adjustment=(totalChance-.5)/5;
+  let roll=Math.random()*totalChance;
+  for(const [id,base] of Object.entries(berryRates)){
+    roll-=base+adjustment;
+    if(roll<0)return id;
+  }
+  return 'berry_sitrus';
 }
 
 // Las bayas tienen una tirada independiente. El cupo cuenta apariciones,
@@ -74,9 +80,10 @@ export function spawnFloorItems() {
     const [site] = sites.splice(Math.floor(Math.random() * sites.length), 1);
     dropItem(itemId,site);
   }
-  if (sites.length && Math.random()<.5+rule('berryChance')){
+  const berryChance=.5+rule('berryChance');
+  if (sites.length && Math.random()<berryChance){
     const revive=!game.reviveSpent && !game.inventory.has('revive') && Math.random()<rule('reviveBerry');
-    place(revive ? 'revive' : randomBerry());
+    place(revive ? 'revive' : randomBerry(berryChance));
   }
   const extraRevive = rule('reviveChance');
   if (extraRevive && sites.length && !game.reviveSpent && !game.inventory.has('revive') &&

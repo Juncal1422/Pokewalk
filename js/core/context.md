@@ -327,7 +327,7 @@ Los objetos y beneficios aportan bonos planos. Ditto parte de tamaño 100. Coron
 
 La tienda, objetos, beneficios, reliquias y Pokédex muestran el catálogo de pruebas en páginas de 8 × 8. Cada tabla recorta la pieza central del atlas en cada celda y conserva su marco exterior de nueve piezas. El historial sigue registrando descubrimientos reales. Debugger está disponible desde el inicio y se equipa voluntariamente. Multiplica por cuatro los atributos finales y las esencias brutas y por 1,5 la probabilidad de objetos de equipo.
 
-Cada bioma distribuye un máximo de diez especies salvajes distintas entre las cinco franjas. Todos los beneficios cuentan con un donante en encuentros de nivel 1–16. Las hojas direccionales ordenan las direcciones por fila y los fotogramas por columna. Los efectos se reproducen a media velocidad, salvo la duración expresa de un segundo del aura de roca. Los impactos aceptados guardan un aviso por golpe con la diferencia real de PV. El HUD lee esos mismos PV en cada dibujo.
+Las cinco franjas contienen 7/6/6/5/5 salvajes y 4/4/3/3/2 líderes. La cobertura se revisa en sin-encuentro.md. Las hojas direccionales ordenan las direcciones por fila y los fotogramas por columna. Los efectos se reproducen a media velocidad, salvo la duración expresa de un segundo del aura de roca. Los impactos aceptados guardan un aviso por golpe con la diferencia real de PV. El HUD lee esos mismos PV en cada dibujo.
 
 - `launchWeapon` crea el proyectil que sustituye el ataque normal.
 - `knockback` comprueba la colisión a cada paso de empuje.
@@ -382,7 +382,7 @@ Las asignaciones fijas incluyen los ancestros evolutivos. La lista de especies s
 
 ### Combate, equipo y aventuras de 50 misiones
 
-La dificultad del tablón y de los enemigos es uno más que el número de éxitos. En la misión 24 coinciden ambos grupos de biomas. Desde la 25 sólo se ofrecen niveles 5–10. El papel rojo eleva el nivel de combate sin cambiar la franja de encuentros. Las reliquias equipadas sustituyen el líder de su bioma desde la misión 25. Cada gema y llave declara su desbloqueo de victoria. isUnlocked consulta la colección cuando se desactiva testingUnlocks.
+La dificultad del tablón y de los enemigos es uno más que el número de éxitos. Hasta la misión 25 se ofrecen biomas de nivel 1–5. Desde la 26 todos los niveles disponibles tienen probabilidad positiva. El papel rojo eleva el nivel de combate sin cambiar la franja de encuentros. Las reliquias equipadas sustituyen el líder de su bioma desde la misión 25. Cada gema y llave declara su desbloqueo de victoria. isUnlocked consulta la colección cuando se desactiva testingUnlocks.
 
 damageFor aplica Ataque × 100 / (100 + Defensa) antes de afinidades y bloqueo. Las subidas por EXP suman 3 de tamaño. Los porcentajes dependen de equipo y beneficios. La velocidad llega a 200. Un salvaje shiny siempre deja equipo como recompensa de combate. El cupo de tres limita los objetos aleatorios de exploración de la misión.
 
@@ -425,3 +425,11 @@ Durante la recuperación del dash los cuerpos del jugador y de los salvajes pued
 Las 622 especies de PokeWalk.txt tienen un único donante en benefits.json. starterBenefits guarda las compras y starterBenefit la selección. parseCollection migra las cuatro armas antiguas a beneficios iniciales y conserva las demás reliquias equipadas. Una oferta roja paga el triple del importe normal, también con Leyenda del Gremio.
 
 bindHealthAttack calcula el Ataque efectivo al consultar los HP, incluido el umbral estricto de un cuarto. attackElement y attackTint resuelven Fuego, Planta y Agua. paralyze interrumpe la acción y mantiene Charge durante el filtro amarillo. advanceBone comprueba impactos por tramo y bloquea un nuevo ataque hasta el regreso al lanzador. machinerySite busca suelo junto a objetos o enemigos. Botín de Linoone coloca el objeto al terminar la secuencia invertida de cover. build_effects.py elimina el blanco RGB exacto de los iconos y fuentes de efectos y recompone hojas y atlas.
+
+### Catálogo de encuentros y descripciones
+
+biomes.json se ordena por nivel. _probabilidadPorOferta contiene los pesos porcentuales para el primer encargo de cada bloque con todos los biomas disponibles. chooseBiome renormaliza entre las opciones restantes al construir el tablón. Los niveles 6–10 tienen franjas iniciales vacías. Se mantienen seis líderes exclusivos de reliquia. El bloque inicial admite únicamente especies de primera etapa.
+
+randomBerry reparte la probabilidad de piso entre Aranja, Safre, Meloc, Atania y Zidra (15, 10, 10, 10 y 5 %). Un cambio de probabilidad total reparte la diferencia a partes iguales entre las cinco. Cosecha de Zidra se aplica después de decidir que aparece una baya.
+
+js/core/descriptions.js contiene las plantillas compartidas de objetos, beneficios y reliquias. basicAttack controla la redacción común de armas y tipos de ataque básico. Las fichas declaran sus parámetros y los marcadores de stats, slot y cooldown usan los valores del propio catálogo.

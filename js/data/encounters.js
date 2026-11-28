@@ -1,3 +1,4 @@
+import {formatDescription} from '../core/descriptions.js';
 import { assetUrl } from '../core/asset-url.js';
 import { labels, chanceBases } from '../core/stats.js';
 
@@ -11,6 +12,7 @@ async function readData(filename) {
 // Las especies, sus recompensas y los objetos de piso se editan en JSON.
 export async function loadEncountersCatalog() {
   const [speciesDefinitions, items] = await Promise.all([readData('pokemon.json'), readData('items.json')]);
+  for(const item of Object.values(items))item.description=formatDescription(item);
   const pokemon = new Map();
   // El rango ausente hereda el alcance estándar; los demás atributos deben ser positivos.
   const statKeys = Object.keys(labels).filter(key=>!(key in chanceBases));
