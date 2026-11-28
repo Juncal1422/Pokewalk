@@ -13,18 +13,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Seedot", "Burmy", "Spinarak", "Patrat", "Venipede", "Cherubi", "Budew"],
-      "9-16": ["Cascoon", "Shedinja", "Bellsprout", "Sewaddle", "Bulbasaur", "Chikorita"],
-      "17-25": ["Swadloon", "Lickitung", "Weepinbell", "Yanma", "Ivysaur", "Dunsparce"],
-      "26-36": ["Lilligant", "Scolipede", "Ferrothorn", "Kangaskhan", "Vileplume"],
-      "37-50": ["Roserade", "Yanmega", "Leafeon", "Venusaur", "Porygon_Z"]
+      "1-8": ["Weedle", "Wurmple", "Seedot", "Spinarak", "Pidgey", "Venipede", "Nincada"],
+      "9-16": ["Cascoon", "Shedinja", "Venonat", "Sewaddle", "Bulbasaur", "Turtwig"],
+      "17-25": ["Swadloon", "Dustox", "Beautifly", "Grotle", "Grovyle", "Ivysaur"],
+      "26-36": ["Pidgeot", "Shiftry", "Ambipom", "Raichu", "Scolipede"],
+      "37-50": ["Roserade", "Leafeon", "Torterra", "Venusaur", "Serperior"]
     },
     "leaders": {
-      "1-8": ["Cottonee", "Petilil", "Paras", "Pineco"],
-      "9-16": ["Turtwig", "Nuzleaf", "Lileep", "Whirlipede"],
-      "17-25": ["Illumise", "Tangela", "Cherrim"],
-      "26-36": ["Leavanny", "Pinsir", "Scyther"],
-      "37-50": ["Blissey", "Volcarona"]
+      "1-8": ["Cherubi", "Slakoth", "Pineco", "Shroomish"],
+      "9-16": ["Nuzleaf", "Pidgeotto", "Aipom", "Whirlipede"],
+      "17-25": ["Parasect", "Cherrim", "Venomoth"],
+      "26-36": ["Pinsir", "Scizor", "Scyther"],
+      "37-50": ["Celebi", "Shaymin"]
     },
     "paletteStepMs": 200,
     "sparkleStepMs": 100,
@@ -51,18 +51,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Sunkern", "Kricketot", "Caterpie", "Weedle", "Seedot", "Burmy", "Togepi"],
-      "9-16": ["Cascoon", "Venonat", "Sewaddle", "Karrablast", "Bulbasaur", "Turtwig"],
-      "17-25": ["Swadloon", "Ledian", "Ariados", "Parasect", "Sunflora", "Cherrim"],
-      "26-36": ["Lilligant", "Shiftry", "Whimsicott", "Clefable", "Exploud"],
-      "37-50": ["Lickilicky", "Yanmega", "Leafeon", "Meganium", "Venusaur"]
+      "1-8": ["Sunkern", "Kricketot", "Starly", "Patrat", "Shinx", "Ledyba", "Lillipup"],
+      "9-16": ["Jigglypuff", "Minccino", "Snubbull", "Doduo", "Eevee", "Staravia"],
+      "17-25": ["Kricketune", "Ledian", "Munchlax", "Ponyta", "Furret", "Watchog"],
+      "26-36": ["Kangaskhan", "Miltank", "Tauros", "Rapidash", "Stoutland"],
+      "37-50": ["Luxray", "Jolteon", "Blaziken", "Blissey", "Snorlax"]
     },
     "leaders": {
-      "1-8": ["Cherubi", "Cottonee", "Petilil", "Paras"],
-      "9-16": ["Skorupi", "Snover", "Cacnea", "Buneary"],
-      "17-25": ["Granbull", "Venomoth", "Tropius"],
-      "26-36": ["Victreebel", "Pinsir", "Scyther"],
-      "37-50": ["Tangrowth", "Slaking"]
+      "1-8": ["Nidoran_F", "Mareep", "Meowth", "Electrike"],
+      "9-16": ["Buneary", "Spinda", "Luxio", "Nidorino"],
+      "17-25": ["Girafarig", "Cinccino", "Dodrio"],
+      "26-36": ["Nidoking", "Nidoqueen", "Ampharos"],
+      "37-50": ["Virizion", "Landorus"]
     },
     "_probabilidadPorOferta": {
       "1-8": "10.907%",
@@ -87,18 +87,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Sunkern", "Wurmple", "Seedot", "Burmy", "Zigzagoon", "Venipede", "Cherubi"],
-      "9-16": ["Shedinja", "Venonat", "Bulbasaur", "Oddish", "Exeggcute", "Cacnea"],
-      "17-25": ["Weepinbell", "Beautifly", "Grotle", "Parasect", "Mothim", "Wormadam"],
-      "26-36": ["Whimsicott", "Bellossom", "Victreebel", "Abomasnow", "Cradily"],
-      "37-50": ["Roserade", "Leafeon", "Venusaur", "Sceptile", "Tangrowth"]
+      "1-8": ["Sunkern", "Sentret", "Zigzagoon", "Combee", "Togepi", "Hoppip", "Cherubi"],
+      "9-16": ["Cascoon", "Snubbull", "Snivy", "Doduo", "Bulbasaur", "Chikorita"],
+      "17-25": ["Gloom", "Roselia", "Bayleef", "Ivysaur", "Sunflora", "Illumise"],
+      "26-36": ["Lilligant", "Lopunny", "Whimsicott", "Bellossom", "Vileplume"],
+      "37-50": ["Roserade", "Meganium", "Venusaur", "Snorlax", "Togekiss"]
     },
     "leaders": {
-      "1-8": ["Cottonee", "Petilil", "Paras", "Shroomish"],
-      "9-16": ["Deerling", "Lombre", "Nuzleaf", "Whirlipede"],
-      "17-25": ["Kecleon", "Tropius", "Galvantula"],
-      "26-36": ["Heracross", "Leavanny", "Stoutland"],
-      "37-50": ["Snorlax", "Slaking"]
+      "1-8": ["Budew", "Cottonee", "Petilil", "Electrike"],
+      "9-16": ["Oddish", "Teddiursa", "Skiploom", "Buneary"],
+      "17-25": ["Volbeat", "Cherrim", "Jumpluff"],
+      "26-36": ["Heracross", "Stoutland", "Nidoqueen"],
+      "37-50": ["Landorus", "Shaymin"]
     },
     "_probabilidadPorOferta": {
       "1-8": "5.600%",
@@ -123,18 +123,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Wurmple", "Sentret", "Seedot", "Venipede", "Ledyba", "Cherubi", "Budew"],
-      "9-16": ["Metapod", "Silcoon", "Treecko", "Karrablast", "Oddish", "Exeggcute"],
-      "17-25": ["Gloom", "Porygon", "Bayleef", "Grotle", "Grovyle", "Zangoose"],
-      "26-36": ["Lilligant", "Ludicolo", "Whimsicott", "Ambipom", "Scolipede"],
-      "37-50": ["Roserade", "Meganium", "Torterra", "Venusaur", "Sceptile"]
+      "1-8": ["Caterpie", "Wurmple", "Pichu", "Seedot", "Burmy", "Spinarak", "Hoothoot"],
+      "9-16": ["Metapod", "Shedinja", "Treecko", "Karrablast", "Chikorita", "Oddish"],
+      "17-25": ["Dustox", "Gloom", "Mothim", "Wormadam", "Ninjask", "Breloom"],
+      "26-36": ["Pidgeot", "Shiftry", "Raichu", "Escavalier", "Pinsir"],
+      "37-50": ["Roserade", "Leafeon", "Meganium", "Venusaur", "Serperior"]
     },
     "leaders": {
-      "1-8": ["Cottonee", "Petilil", "Paras", "Shroomish"],
-      "9-16": ["Snover", "Deerling", "Nuzleaf", "Whirlipede"],
-      "17-25": ["Breloom", "Jumpluff", "Tropius"],
-      "26-36": ["Exploud", "Miltank", "Victreebel"],
-      "37-50": ["Snorlax", "Celebi"]
+      "1-8": ["Cherubi", "Slakoth", "Paras", "Pineco"],
+      "9-16": ["Teddiursa", "Deerling", "Nuzleaf", "Whirlipede"],
+      "17-25": ["Forretress", "Stantler", "Sawsbuck"],
+      "26-36": ["Scizor", "Scyther", "Ursaring"],
+      "37-50": ["Sceptile", "Celebi"]
     },
     "_probabilidadPorOferta": {
       "1-8": "5.600%",
@@ -159,17 +159,17 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Wooper", "Lotad", "Combee", "Hoppip", "Hoothoot"],
-      "9-16": ["Remoraid", "Shellder", "Oshawott", "Totodile", "Krabby", "Seel"],
-      "17-25": ["Croconaw", "Bibarel", "Azumarill", "Pelipper", "Seadra", "Swellow"],
-      "26-36": ["Ludicolo", "Huntail", "Mantine", "Relicanth", "Golduck"],
-      "37-50": ["Vaporeon", "Samurott", "Blastoise", "Feraligatr", "Gyarados"]
+      "1-8": ["Feebas", "Magikarp", "Wooper", "Lotad", "Bidoof", "Surskit", "Wingull"],
+      "9-16": ["Marill", "Dratini", "Ducklett", "Shellder", "Krabby", "Seel"],
+      "17-25": ["Palpitoad", "Sealeo", "Azumarill", "Pelipper", "Seadra", "Swanna"],
+      "26-36": ["Huntail", "Mantine", "Relicanth", "Floatzel", "Golduck"],
+      "37-50": ["Cloyster", "Vaporeon", "Empoleon", "Walrein", "Gyarados"]
     },
     "leaders": {
-      "1-8": ["Surskit", "Wingull", "Tympole", "Horsea"],
+      "1-8": ["Barboach", "Spheal", "Tympole", "Horsea"],
       "9-16": ["Shellos", "Buizel", "Staryu", "Mantyke"],
-      "17-25": ["Crawdaunt", "Swanna", "Kingler"],
-      "26-36": ["Politoed", "Wailord", "Poliwrath"],
+      "17-25": ["Dewgong", "Gastrodon", "Kingler"],
+      "26-36": ["Politoed", "Wailord", "Seismitoad"],
       "37-50": ["Kingdra", "Milotic"]
     },
     "_probabilidadPorOferta": {
@@ -195,18 +195,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Kricketot", "Wurmple", "Seedot", "Whismur", "Spinarak", "Venipede", "Cherubi"],
-      "9-16": ["Cascoon", "Kakuna", "Silcoon", "Shedinja", "Treecko", "Oddish"],
-      "17-25": ["Herdier", "Beedrill", "Butterfree", "Gloom", "Parasect", "Servine"],
-      "26-36": ["Shiftry", "Whimsicott", "Bellossom", "Tauros", "Victreebel"],
-      "37-50": ["Roserade", "Meganium", "Serperior", "Sceptile", "Porygon_Z"]
+      "1-8": ["Sunkern", "Kricketot", "Igglybuff", "Sentret", "Zigzagoon", "Starly", "Rattata"],
+      "9-16": ["Jigglypuff", "Minccino", "Snubbull", "Torchic", "Eevee", "Skiploom"],
+      "17-25": ["Herdier", "Lickitung", "Delcatty", "Combusken", "Ponyta", "Linoone"],
+      "26-36": ["Lopunny", "Staraptor", "Kangaskhan", "Miltank", "Tauros"],
+      "37-50": ["Lickilicky", "Luxray", "Jolteon", "Blaziken", "Snorlax"]
     },
     "leaders": {
-      "1-8": ["Budew", "Petilil", "Pineco", "Shroomish"],
-      "9-16": ["Cacnea", "Deerling", "Skiploom", "Lileep"],
-      "17-25": ["Tangela", "Chansey", "Maractus"],
-      "26-36": ["Vileplume", "Heracross", "Leavanny"],
-      "37-50": ["Tangrowth", "Blissey"]
+      "1-8": ["Skitty", "Nidoran_M", "Lillipup", "Mareep"],
+      "9-16": ["Buneary", "Flaaffy", "Nidorina", "Nidorino"],
+      "17-25": ["Granbull", "Zangoose", "Manectric"],
+      "26-36": ["Stoutland", "Nidoking", "Nidoqueen"],
+      "37-50": ["Virizion", "Landorus"]
     },
     "_probabilidadPorOferta": {
       "1-8": "5.600%",
@@ -231,18 +231,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Sunkern", "Caterpie", "Wurmple", "Igglybuff", "Seedot", "Spinarak", "Ledyba"],
-      "9-16": ["Kakuna", "Silcoon", "Jigglypuff", "Snivy", "Treecko", "Cacnea"],
-      "17-25": ["Swadloon", "Delcatty", "Grovyle", "Sunflora", "Venomoth", "Masquerain"],
-      "26-36": ["Lopunny", "Ambipom", "Clefable", "Miltank", "Victreebel"],
-      "37-50": ["Lickilicky", "Porygon2", "Roserade", "Meganium", "Serperior"]
+      "1-8": ["Weedle", "Wurmple", "Seedot", "Burmy", "Spinarak", "Pidgey", "Hoothoot"],
+      "9-16": ["Kakuna", "Silcoon", "Venonat", "Snivy", "Turtwig", "Oddish"],
+      "17-25": ["Ariados", "Parasect", "Misdreavus", "Venomoth", "Noctowl", "Ninjask"],
+      "26-36": ["Lopunny", "Scolipede", "Vileplume", "Escavalier", "Mismagius"],
+      "37-50": ["Leafeon", "Meganium", "Torterra", "Umbreon", "Sceptile"]
     },
     "leaders": {
-      "1-8": ["Cherubi", "Budew", "Paras", "Pineco"],
-      "9-16": ["Deerling", "Lombre", "Rufflet", "Loudred"],
-      "17-25": ["Ninjask", "Breloom", "Maractus"],
-      "26-36": ["Vileplume", "Cradily", "Ursaring"],
-      "37-50": ["Exeggutor", "Tangrowth"]
+      "1-8": ["Nincada", "Paras", "Pineco", "Shroomish"],
+      "9-16": ["Pikachu", "Deerling", "Nuzleaf", "Pidgeotto"],
+      "17-25": ["Breloom", "Forretress", "Stantler"],
+      "26-36": ["Heracross", "Scizor", "Scyther"],
+      "37-50": ["Slaking", "Celebi"]
     },
     "_probabilidadPorOferta": {
       "1-8": "2.875%",
@@ -267,18 +267,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Caterpie", "Wurmple", "Burmy", "Combee", "Bidoof", "Spinarak", "Cherubi"],
-      "9-16": ["Metapod", "Snivy", "Sewaddle", "Karrablast", "Clefairy", "Exeggcute"],
-      "17-25": ["Kricketune", "Beedrill", "Ariados", "Ivysaur", "Persian", "Cherrim"],
-      "26-36": ["Scolipede", "Ferrothorn", "Bellossom", "Exploud", "Miltank"],
-      "37-50": ["Porygon2", "Yanmega", "Meganium", "Serperior", "Sceptile"]
+      "1-8": ["Caterpie", "Weedle", "Pichu", "Seedot", "Spinarak", "Venipede", "Cherubi"],
+      "9-16": ["Kakuna", "Metapod", "Silcoon", "Shedinja", "Sewaddle", "Treecko"],
+      "17-25": ["Swadloon", "Beedrill", "Butterfree", "Ariados", "Grovyle", "Servine"],
+      "26-36": ["Lopunny", "Shiftry", "Ambipom", "Bellossom", "Vileplume"],
+      "37-50": ["Leafeon", "Torterra", "Serperior", "Sceptile", "Slaking"]
     },
     "leaders": {
-      "1-8": ["Lillipup", "Budew", "Pineco", "Shroomish"],
-      "9-16": ["Skiploom", "Buneary", "Lileep", "Loudred"],
-      "17-25": ["Carnivine", "Cinccino", "Sawsbuck"],
-      "26-36": ["Tauros", "Vileplume", "Cradily"],
-      "37-50": ["Snorlax", "Volcarona"]
+      "1-8": ["Slakoth", "Paras", "Pineco", "Shroomish"],
+      "9-16": ["Karrablast", "Pikachu", "Aipom", "Whirlipede"],
+      "17-25": ["Vigoroth", "Cherrim", "Sawsbuck"],
+      "26-36": ["Leavanny", "Scyther", "Ursaring"],
+      "37-50": ["Celebi", "Landorus"]
     },
     "_probabilidadPorOferta": {
       "1-8": "2.875%",
@@ -303,18 +303,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Whismur", "Wynaut", "Litwick", "Meditite", "Chingling", "Gothita"],
-      "9-16": ["Kirlia", "Bronzor", "Smoochum", "Abra", "Natu", "Woobat"],
-      "17-25": ["Duosion", "Wobbuffet", "Swoobat", "Girafarig", "Jynx", "Mr_Mime"],
-      "26-36": ["Cofagrigus", "Musharna", "Gothitelle", "Reuniclus", "Sigilyph"],
-      "37-50": ["Gallade", "Starmie", "Espeon", "Empoleon", "Magnezone"]
+      "1-8": ["Ralts", "Igglybuff", "Cleffa", "Happiny", "Togepi", "Smeargle", "Skitty"],
+      "9-16": ["Jigglypuff", "Klink", "Yamask", "Timburr", "Glameow", "Mime_Jr_"],
+      "17-25": ["Delcatty", "Gurdurr", "Wigglytuff", "Rotom", "Audino", "Chansey"],
+      "26-36": ["Clefable", "Electrode", "Tauros", "Alakazam", "Muk"],
+      "37-50": ["Gardevoir", "Klinklang", "Espeon", "Lucario", "Porygon_Z"]
     },
     "leaders": {
-      "1-8": ["Solosis", "Munna", "Duskull", "Shuppet"],
-      "9-16": ["Drowzee", "Spoink", "Elgyem", "Unown"],
-      "17-25": ["Solrock", "Grumpig", "Xatu"],
-      "26-36": ["Mismagius", "Alakazam", "Claydol"],
-      "37-50": ["Metagross", "Uxie"]
+      "1-8": ["Wynaut", "Ditto", "Meowth", "Solosis"],
+      "9-16": ["Clefairy", "Grimer", "Trubbish", "Voltorb"],
+      "17-25": ["Purugly", "Swalot", "Garbodor"],
+      "26-36": ["Rapidash", "Stoutland", "Conkeldurr"],
+      "37-50": ["Blissey", "Victini"]
     },
     "paletteStepMs": 200,
     "sparkleStepMs": 100,
@@ -341,18 +341,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Lotad", "Combee", "Zubat", "Hoppip", "Hoothoot", "Wingull"],
-      "9-16": ["Poliwag", "Ducklett", "Shellder", "Corphish", "Piplup", "Krabby"],
-      "17-25": ["Prinplup", "Wartortle", "Chatot", "Quagsire", "Pelipper", "Basculin"],
-      "26-36": ["Octillery", "Huntail", "Mantine", "Kabutops", "Golduck"],
-      "37-50": ["Blastoise", "Feraligatr", "Walrein", "Gyarados", "Kingdra"]
+      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Lotad", "Bidoof", "Surskit"],
+      "9-16": ["Marill", "Poliwag", "Corphish", "Oshawott", "Mudkip", "Squirtle"],
+      "17-25": ["Farfetch_d", "Yanma", "Wartortle", "Bibarel", "Dewott", "Quagsire"],
+      "26-36": ["Ludicolo", "Slowbro", "Slowking", "Toxicroak", "Golduck"],
+      "37-50": ["Yanmega", "Samurott", "Blastoise", "Feraligatr", "Gyarados"]
     },
     "leaders": {
-      "1-8": ["Barboach", "Spheal", "Tympole", "Horsea"],
-      "9-16": ["Finneon", "Luvdisc", "Tentacool", "Clamperl"],
-      "17-25": ["Lumineon", "Sharpedo", "Alomomola"],
-      "26-36": ["Politoed", "Wailord", "Seismitoad"],
-      "37-50": ["Milotic", "Manaphy"]
+      "1-8": ["Wingull", "Barboach", "Tympole", "Horsea"],
+      "9-16": ["Totodile", "Goldeen", "Psyduck", "Buizel"],
+      "17-25": ["Seaking", "Carnivine", "Whiscash"],
+      "26-36": ["Politoed", "Seismitoad", "Poliwrath"],
+      "37-50": ["Mesprit", "Suicune"]
     },
     "_probabilidadPorOferta": {
       "1-8": "2.875%",
@@ -377,18 +377,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Azurill", "Pichu", "Sentret", "Zigzagoon", "Bidoof", "Shinx", "Lillipup"],
-      "9-16": ["Glameow", "Joltik", "Pikachu", "Chinchou", "Teddiursa", "Voltorb"],
-      "17-25": ["Eelektrik", "Minun", "Pachirisu", "Plusle", "Linoone", "Emolga"],
-      "26-36": ["Clefable", "Raichu", "Electabuzz", "Electrode", "Kangaskhan"],
-      "37-50": ["Eelektross", "Luxray", "Jolteon", "Electivire", "Togekiss"]
+      "1-8": ["Kricketot", "Pichu", "Sentret", "Combee", "Hoppip", "Skitty", "Shinx"],
+      "9-16": ["Doduo", "Joltik", "Pikachu", "Eevee", "Magnemite", "Voltorb"],
+      "17-25": ["Minun", "Pachirisu", "Plusle", "Emolga", "Granbull", "Swellow"],
+      "26-36": ["Raichu", "Electabuzz", "Electrode", "Kangaskhan", "Miltank"],
+      "37-50": ["Luxray", "Jolteon", "Magnezone", "Electivire", "Snorlax"]
     },
     "leaders": {
-      "1-8": ["Tynamo", "Mareep", "Meowth", "Electrike"],
-      "9-16": ["Aipom", "Elekid", "Luxio", "Flaaffy"],
-      "17-25": ["Rotom", "Galvantula", "Manectric"],
-      "26-36": ["Tauros", "Stoutland", "Ampharos"],
-      "37-50": ["Raikou", "Arceus"]
+      "1-8": ["Mareep", "Ekans", "Meowth", "Electrike"],
+      "9-16": ["Elekid", "Luxio", "Flaaffy", "Nidorina"],
+      "17-25": ["Magneton", "Galvantula", "Manectric"],
+      "26-36": ["Nidoking", "Nidoqueen", "Ampharos"],
+      "37-50": ["Raikou", "Thundurus"]
     },
     "paletteStepMs": 200,
     "sparkleStepMs": 100,
@@ -415,17 +415,17 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Lotad", "Zubat", "Hoppip", "Hoothoot", "Ledyba"],
-      "9-16": ["Carvanha", "Corphish", "Oshawott", "Piplup", "Squirtle", "Finneon"],
-      "17-25": ["Poliwhirl", "Qwilfish", "Seaking", "Lanturn", "Lumineon", "Whiscash"],
-      "26-36": ["Gorebyss", "Mantine", "Kabutops", "Omastar", "Golduck"],
-      "37-50": ["Tentacruel", "Samurott", "Blastoise", "Feraligatr", "Lapras"]
+      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Bidoof", "Surskit", "Wingull"],
+      "9-16": ["Remoraid", "Ducklett", "Shellder", "Corphish", "Piplup", "Krabby"],
+      "17-25": ["Prinplup", "Sealeo", "Pelipper", "Seadra", "Masquerain", "Swanna"],
+      "26-36": ["Octillery", "Gorebyss", "Mantine", "Floatzel", "Kabutops"],
+      "37-50": ["Cloyster", "Vaporeon", "Empoleon", "Walrein", "Gyarados"]
     },
     "leaders": {
-      "1-8": ["Surskit", "Taillow", "Wingull", "Spheal"],
-      "9-16": ["Luvdisc", "Tentacool", "Staryu", "Mantyke"],
-      "17-25": ["Alomomola", "Dewgong", "Gastrodon"],
-      "26-36": ["Wailord", "Seismitoad", "Poliwrath"],
+      "1-8": ["Barboach", "Spheal", "Tympole", "Horsea"],
+      "9-16": ["Seel", "Shellos", "Buizel", "Mantyke"],
+      "17-25": ["Dewgong", "Gastrodon", "Kingler"],
+      "26-36": ["Omastar", "Golduck", "Seismitoad"],
       "37-50": ["Kingdra", "Milotic"]
     },
     "_probabilidadPorOferta": {
@@ -451,18 +451,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Azurill", "Combee", "Starly", "Zubat", "Hoppip", "Pidgey", "Rattata"],
-      "9-16": ["Bagon", "Dratini", "Minccino", "Swablu", "Axew", "Clefairy"],
-      "17-25": ["Farfetch_d", "Munchlax", "Togetic", "Shelgon", "Emolga", "Fearow"],
-      "26-36": ["Pidgeot", "Druddigon", "Staraptor", "Altaria", "Scyther"],
-      "37-50": ["Charizard", "Togekiss", "Archeops", "Dragonite", "Salamence"]
+      "1-8": ["Zigzagoon", "Combee", "Starly", "Togepi", "Hoppip", "Pidgey", "Hoothoot"],
+      "9-16": ["Bagon", "Dratini", "Minccino", "Swablu", "Natu", "Skiploom"],
+      "17-25": ["Ledian", "Chatot", "Castform", "Dragonair", "Emolga", "Swellow"],
+      "26-36": ["Pidgeot", "Whimsicott", "Staraptor", "Altaria", "Miltank"],
+      "37-50": ["Aerodactyl", "Yanmega", "Togekiss", "Dragonite", "Salamence"]
     },
     "leaders": {
-      "1-8": ["Hoothoot", "Spearow", "Ledyba", "Taillow"],
-      "9-16": ["Staravia", "Pidgeotto", "Rufflet", "Aipom"],
-      "17-25": ["Noctowl", "Golbat", "Jumpluff"],
-      "26-36": ["Honchkrow", "Braviary", "Mandibuzz"],
-      "37-50": ["Thundurus", "Rayquaza"]
+      "1-8": ["Shinx", "Ledyba", "Taillow", "Cottonee"],
+      "9-16": ["Staravia", "Drifloon", "Pidgeotto", "Rufflet"],
+      "17-25": ["Jumpluff", "Xatu", "Vespiquen"],
+      "26-36": ["Drifblim", "Ampharos", "Braviary"],
+      "37-50": ["Thundurus", "Ho_Oh"]
     },
     "_probabilidadPorOferta": {
       "1-8": "2.875%",
@@ -487,18 +487,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Sunkern", "Kricketot", "Weedle", "Happiny", "Burmy", "Venipede", "Cherubi"],
-      "9-16": ["Kakuna", "Bellsprout", "Venonat", "Snivy", "Chikorita", "Turtwig"],
-      "17-25": ["Dustox", "Weepinbell", "Roselia", "Bayleef", "Mothim", "Wormadam"],
-      "26-36": ["Lopunny", "Scolipede", "Ferrothorn", "Bellossom", "Vileplume"],
-      "37-50": ["Porygon2", "Yanmega", "Leafeon", "Venusaur", "Serperior"]
+      "1-8": ["Caterpie", "Wurmple", "Poochyena", "Burmy", "Pidgey", "Venipede", "Hoothoot"],
+      "9-16": ["Silcoon", "Venonat", "Snivy", "Karrablast", "Chikorita", "Turtwig"],
+      "17-25": ["Beautifly", "Butterfree", "Bayleef", "Murkrow", "Pachirisu", "Servine"],
+      "26-36": ["Skuntank", "Scolipede", "Bellossom", "Vileplume", "Heracross"],
+      "37-50": ["Meganium", "Torterra", "Umbreon", "Venusaur", "Serperior"]
     },
     "leaders": {
-      "1-8": ["Slakoth", "Paras", "Pineco", "Shroomish"],
-      "9-16": ["Joltik", "Skorupi", "Lombre", "Skiploom"],
-      "17-25": ["Volbeat", "Stantler", "Vespiquen"],
-      "26-36": ["Abomasnow", "Cradily", "Leavanny"],
-      "37-50": ["Volcarona", "Virizion"]
+      "1-8": ["Nincada", "Cherubi", "Paras", "Pineco"],
+      "9-16": ["Stunky", "Zorua", "Buneary", "Aipom"],
+      "17-25": ["Mightyena", "Venomoth", "Noctowl"],
+      "26-36": ["Leavanny", "Honchkrow", "Zoroark"],
+      "37-50": ["Slaking", "Celebi"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -523,18 +523,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Slugma", "Swinub", "Diglett", "Nincada", "Litwick", "Tynamo", "Mareep"],
-      "9-16": ["Numel", "Tepig", "Chimchar", "Cyndaquil", "Torchic", "Darumaka"],
-      "17-25": ["Lampent", "Charmeleon", "Monferno", "Quilava", "Ponyta", "Pignite"],
-      "26-36": ["Darmanitan", "Heatmor", "Druddigon", "Magmar", "Donphan"],
-      "37-50": ["Flareon", "Emboar", "Infernape", "Typhlosion", "Magmortar"]
+      "1-8": ["Tyrogue", "Slugma", "Spearow", "Diglett", "Litwick", "Meditite", "Roggenrola"],
+      "9-16": ["Numel", "Tepig", "Charmander", "Cyndaquil", "Darumaka", "Houndour"],
+      "17-25": ["Lampent", "Quilava", "Pignite", "Dugtrio", "Magcargo", "Hitmonchan"],
+      "26-36": ["Darmanitan", "Heatmor", "Weezing", "Golem", "Magmar"],
+      "37-50": ["Flareon", "Emboar", "Charizard", "Typhlosion", "Magmortar"]
     },
     "leaders": {
-      "1-8": ["Barboach", "Trapinch", "Sandile", "Vulpix"],
-      "9-16": ["Houndour", "Growlithe", "Larvesta", "Magby"],
-      "17-25": ["Magcargo", "Camerupt", "Torkoal"],
-      "26-36": ["Houndoom", "Rapidash", "Ninetales"],
-      "37-50": ["Arcanine", "Entei"]
+      "1-8": ["Chingling", "Riolu", "Bonsly", "Vulpix"],
+      "9-16": ["Spoink", "Koffing", "Larvesta", "Magby"],
+      "17-25": ["Camerupt", "Grumpig", "Torkoal"],
+      "26-36": ["Houndoom", "Machamp", "Ninetales"],
+      "37-50": ["Entei", "Groudon"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -559,18 +559,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Whismur", "Zigzagoon", "Bidoof", "Swinub", "Patrat", "Hoothoot", "Nincada"],
-      "9-16": ["Baltoy", "Gible", "Sandshrew", "Cubone", "Drilbur", "Hippopotas"],
-      "17-25": ["Lickitung", "Onix", "Marshtomp", "Gabite", "Watchog", "Marowak"],
-      "26-36": ["Ambipom", "Golurk", "Rhydon", "Bastiodon", "Golem"],
-      "37-50": ["Aerodactyl", "Krookodile", "Flygon", "Torterra", "Mamoswine"]
+      "1-8": ["Tyrogue", "Makuhita", "Whismur", "Zubat", "Rattata", "Diglett", "Meditite"],
+      "9-16": ["Deino", "Geodude", "Gible", "Larvitar", "Ferroseed", "Cubone"],
+      "17-25": ["Nosepass", "Onix", "Fraxure", "Gabite", "Pupitar", "Zweilous"],
+      "26-36": ["Durant", "Ferrothorn", "Exploud", "Bastiodon", "Golem"],
+      "37-50": ["Probopass", "Aggron", "Crobat", "Garchomp", "Hydreigon"]
     },
     "leaders": {
-      "1-8": ["Slakoth", "Bonsly", "Trapinch", "Sandile"],
-      "9-16": ["Phanpy", "Rhyhorn", "Mienfoo", "Kabuto"],
-      "17-25": ["Piloswine", "Primeape", "Hariyama"],
-      "26-36": ["Nidoqueen", "Excadrill", "Gliscor"],
-      "37-50": ["Swampert", "Garchomp"]
+      "1-8": ["Roggenrola", "Riolu", "Bonsly", "Sandile"],
+      "9-16": ["Drilbur", "Cranidos", "Mienfoo", "Loudred"],
+      "17-25": ["Marowak", "Chimecho", "Absol"],
+      "26-36": ["Rampardos", "Shuckle", "Excadrill"],
+      "37-50": ["Tyranitar", "Terrakion"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -595,18 +595,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Wooper", "Makuhita", "Wynaut", "Shinx", "Nincada", "Meditite", "Roggenrola"],
-      "9-16": ["Beldum", "Bronzor", "Klink", "Ferroseed", "Magnemite", "Aron"],
-      "17-25": ["Nosepass", "Mawile", "Corsola", "Metang", "Lairon", "Klang"],
-      "26-36": ["Durant", "Relicanth", "Bisharp", "Bastiodon", "Escavalier"],
-      "37-50": ["Aerodactyl", "Klinklang", "Lucario", "Probopass", "Aggron"]
+      "1-8": ["Cleffa", "Makuhita", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo"],
+      "9-16": ["Beldum", "Bronzor", "Klink", "Ferroseed", "Axew", "Magnemite"],
+      "17-25": ["Mawile", "Fraxure", "Gabite", "Dunsparce", "Metang", "Lairon"],
+      "26-36": ["Durant", "Ferrothorn", "Bisharp", "Electrode", "Bastiodon"],
+      "37-50": ["Klinklang", "Aggron", "Magnezone", "Metagross", "Tyranitar"]
     },
     "leaders": {
-      "1-8": ["Riolu", "Bonsly", "Gothita", "Electrike"],
-      "9-16": ["Pawniard", "Cranidos", "Shieldon", "Omanyte"],
-      "17-25": ["Forretress", "Magneton", "Skarmory"],
-      "26-36": ["Scizor", "Excadrill", "Steelix"],
-      "37-50": ["Magnezone", "Dialga"]
+      "1-8": ["Meditite", "Roggenrola", "Chingling", "Bonsly"],
+      "9-16": ["Aron", "Pawniard", "Cranidos", "Shieldon"],
+      "17-25": ["Klang", "Golbat", "Magneton"],
+      "26-36": ["Rampardos", "Bronzong", "Steelix"],
+      "37-50": ["Cobalion", "Terrakion"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -631,18 +631,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Igglybuff", "Togepi", "Smeargle", "Swinub", "Rattata", "Patrat", "Skitty"],
-      "9-16": ["Larvitar", "Sandshrew", "Golett", "Machop", "Cubone", "Drilbur"],
-      "17-25": ["Onix", "Gurdurr", "Marowak", "Vigoroth", "Piloswine", "Hitmonlee"],
-      "26-36": ["Golurk", "Rhydon", "Armaldo", "Golem", "Machamp"],
-      "37-50": ["Gigalith", "Flygon", "Hippowdon", "Mamoswine", "Rhyperior"]
+      "1-8": ["Tyrogue", "Makuhita", "Whismur", "Zubat", "Rattata", "Diglett", "Meditite"],
+      "9-16": ["Beldum", "Deino", "Larvitar", "Axew", "Cubone", "Woobat"],
+      "17-25": ["Sableye", "Gabite", "Metang", "Zweilous", "Marowak", "Swoobat"],
+      "26-36": ["Durant", "Druddigon", "Ferrothorn", "Bastiodon", "Rampardos"],
+      "37-50": ["Gigalith", "Probopass", "Aggron", "Rhyperior", "Haxorus"]
     },
     "leaders": {
-      "1-8": ["Slakoth", "Barboach", "Meowth", "Sandile"],
-      "9-16": ["Phanpy", "Rhyhorn", "Anorith", "Spinda"],
-      "17-25": ["Zangoose", "Solrock", "Gastrodon"],
-      "26-36": ["Nidoqueen", "Shuckle", "Excadrill"],
-      "37-50": ["Garchomp", "Groudon"]
+      "1-8": ["Roggenrola", "Chingling", "Riolu", "Sandile"],
+      "9-16": ["Drilbur", "Aron", "Rhyhorn", "Loudred"],
+      "17-25": ["Lairon", "Fearow", "Skarmory"],
+      "26-36": ["Machamp", "Shuckle", "Excadrill"],
+      "37-50": ["Tyranitar", "Terrakion"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -667,18 +667,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Tyrogue", "Wooper", "Makuhita", "Slugma", "Diglett", "Nincada", "Litwick"],
-      "9-16": ["Tepig", "Charmander", "Chimchar", "Cyndaquil", "Torchic", "Darumaka"],
-      "17-25": ["Lampent", "Combusken", "Monferno", "Quilava", "Ponyta", "Pignite"],
-      "26-36": ["Darmanitan", "Heatmor", "Magmar", "Claydol", "Houndoom"],
-      "37-50": ["Flareon", "Emboar", "Blaziken", "Infernape", "Volcarona"]
+      "1-8": ["Makuhita", "Slugma", "Diglett", "Litwick", "Meditite", "Roggenrola", "Chingling"],
+      "9-16": ["Bagon", "Numel", "Tepig", "Charmander", "Cyndaquil", "Darumaka"],
+      "17-25": ["Lampent", "Boldore", "Graveler", "Charmeleon", "Quilava", "Pignite"],
+      "26-36": ["Darmanitan", "Heatmor", "Weezing", "Magmar", "Houndoom"],
+      "37-50": ["Chandelure", "Flareon", "Emboar", "Charizard", "Volcarona"]
     },
     "leaders": {
-      "1-8": ["Roggenrola", "Barboach", "Sandile", "Vulpix"],
-      "9-16": ["Houndour", "Growlithe", "Larvesta", "Magby"],
-      "17-25": ["Magcargo", "Camerupt", "Torkoal"],
-      "26-36": ["Rapidash", "Ninetales", "Gliscor"],
-      "37-50": ["Arcanine", "Victini"]
+      "1-8": ["Riolu", "Bonsly", "Trapinch", "Vulpix"],
+      "9-16": ["Houndour", "Koffing", "Larvesta", "Magby"],
+      "17-25": ["Camerupt", "Solrock", "Torkoal"],
+      "26-36": ["Rapidash", "Ninetales", "Mienshao"],
+      "37-50": ["Entei", "Groudon"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -703,18 +703,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Weedle", "Poochyena", "Spinarak", "Nidoran_M", "Litwick", "Nidoran_F", "Purrloin"],
-      "9-16": ["Deino", "Yamask", "Carvanha", "Gastly", "Stunky", "Zorua"],
-      "17-25": ["Vullaby", "Sableye", "Haunter", "Murkrow", "Zweilous", "Rotom"],
-      "26-36": ["Skuntank", "Shiftry", "Spiritomb", "Scrafty", "Drapion"],
-      "37-50": ["Tentacruel", "Chandelure", "Dusknoir", "Umbreon", "Crobat"]
+      "1-8": ["Ralts", "Poochyena", "Rattata", "Wynaut", "Litwick", "Purrloin", "Chingling"],
+      "9-16": ["Kirlia", "Deino", "Abra", "Gastly", "Drilbur", "Drowzee"],
+      "17-25": ["Gothorita", "Kadabra", "Haunter", "Murkrow", "Swoobat", "Sneasel"],
+      "26-36": ["Skuntank", "Spiritomb", "Gothitelle", "Mismagius", "Drifblim"],
+      "37-50": ["Gallade", "Gardevoir", "Dusknoir", "Espeon", "Umbreon"]
     },
     "leaders": {
-      "1-8": ["Ekans", "Sandile", "Duskull", "Shuppet"],
-      "9-16": ["Koffing", "Scraggy", "Nidorina", "Nidorino"],
-      "17-25": ["Banette", "Swalot", "Garbodor"],
-      "26-36": ["Muk", "Mandibuzz", "Weavile"],
-      "37-50": ["Hydreigon", "Tyranitar"]
+      "1-8": ["Gothita", "Munna", "Duskull", "Shuppet"],
+      "9-16": ["Stunky", "Houndour", "Zorua", "Drifloon"],
+      "17-25": ["Liepard", "Banette", "Dusclops"],
+      "26-36": ["Gengar", "Honchkrow", "Weavile"],
+      "37-50": ["Darkrai", "Giratina"]
     },
     "wallMaterial": "void",
     "_probabilidadPorOferta": {
@@ -740,18 +740,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Sunkern", "Kricketot", "Caterpie", "Weedle", "Wurmple", "Cherubi", "Cottonee"],
-      "9-16": ["Metapod", "Bellsprout", "Minccino", "Snubbull", "Sewaddle", "Chikorita"],
-      "17-25": ["Dustox", "Yanma", "Roselia", "Servine", "Carnivine", "Ninjask"],
-      "26-36": ["Lilligant", "Lopunny", "Victreebel", "Heracross", "Leavanny"],
-      "37-50": ["Lickilicky", "Porygon2", "Serperior", "Sceptile", "Porygon_Z"]
+      "1-8": ["Caterpie", "Weedle", "Pichu", "Venipede", "Nincada", "Cherubi", "Budew"],
+      "9-16": ["Cascoon", "Metapod", "Bellsprout", "Gulpin", "Mankey", "Sewaddle"],
+      "17-25": ["Weepinbell", "Chatot", "Tangela", "Kecleon", "Vigoroth", "Carnivine"],
+      "26-36": ["Lilligant", "Lopunny", "Ambipom", "Raichu", "Victreebel"],
+      "37-50": ["Lickilicky", "Exeggutor", "Sceptile", "Tangrowth", "Slaking"]
     },
     "leaders": {
-      "1-8": ["Paras", "Meowth", "Pineco", "Shroomish"],
-      "9-16": ["Joltik", "Exeggcute", "Snover", "Lombre"],
-      "17-25": ["Jumpluff", "Cacturne", "Sawsbuck"],
-      "26-36": ["Pinsir", "Stoutland", "Ursaring"],
-      "37-50": ["Togekiss", "Shaymin"]
+      "1-8": ["Petilil", "Slakoth", "Ekans", "Shroomish"],
+      "9-16": ["Treecko", "Exeggcute", "Deerling", "Aipom"],
+      "17-25": ["Primeape", "Seviper", "Tropius"],
+      "26-36": ["Escavalier", "Leavanny", "Pinsir"],
+      "37-50": ["Mew", "Shaymin"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -776,18 +776,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Lotad", "Zubat", "Ledyba", "Surskit", "Taillow"],
-      "9-16": ["Marill", "Poliwag", "Ducklett", "Shellder", "Corphish", "Squirtle"],
-      "17-25": ["Poliwhirl", "Dewott", "Azumarill", "Pelipper", "Qwilfish", "Golbat"],
-      "26-36": ["Gorebyss", "Huntail", "Mantine", "Floatzel", "Omastar"],
-      "37-50": ["Vaporeon", "Samurott", "Walrein", "Lapras", "Gyarados"]
+      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Lotad", "Bidoof", "Surskit"],
+      "9-16": ["Marill", "Croagunk", "Dratini", "Poliwag", "Oshawott", "Squirtle"],
+      "17-25": ["Poliwhirl", "Yanma", "Croconaw", "Marshtomp", "Bibarel", "Dewott"],
+      "26-36": ["Ludicolo", "Slowbro", "Slowking", "Toxicroak", "Floatzel"],
+      "37-50": ["Samurott", "Blastoise", "Feraligatr", "Swampert", "Milotic"]
     },
     "leaders": {
-      "1-8": ["Wingull", "Spheal", "Tympole", "Horsea"],
-      "9-16": ["Psyduck", "Krabby", "Seel", "Tentacool"],
-      "17-25": ["Lanturn", "Swanna", "Dewgong"],
+      "1-8": ["Wingull", "Tynamo", "Barboach", "Tympole"],
+      "9-16": ["Slowpoke", "Goldeen", "Psyduck", "Lombre"],
+      "17-25": ["Quagsire", "Basculin", "Crawdaunt"],
       "26-36": ["Golduck", "Politoed", "Poliwrath"],
-      "37-50": ["Kingdra", "Phione"]
+      "37-50": ["Azelf", "Uxie"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -812,18 +812,18 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Lotad", "Zubat", "Pidgey", "Surskit", "Wingull"],
-      "9-16": ["Marill", "Remoraid", "Ducklett", "Mudkip", "Totodile", "Goldeen"],
-      "17-25": ["Croconaw", "Marshtomp", "Prinplup", "Wartortle", "Bibarel", "Sealeo"],
-      "26-36": ["Ludicolo", "Octillery", "Huntail", "Mantine", "Floatzel"],
-      "37-50": ["Cloyster", "Feraligatr", "Lapras", "Gyarados", "Kingdra"]
+      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Lotad", "Venipede", "Surskit"],
+      "9-16": ["Croagunk", "Carvanha", "Corphish", "Mudkip", "Totodile", "Krabby"],
+      "17-25": ["Palpitoad", "Yanma", "Croconaw", "Marshtomp", "Quagsire", "Carnivine"],
+      "26-36": ["Ludicolo", "Slowbro", "Slowking", "Toxicroak", "Cradily"],
+      "37-50": ["Lickilicky", "Tentacruel", "Yanmega", "Vaporeon", "Feraligatr"]
     },
     "leaders": {
-      "1-8": ["Barboach", "Spheal", "Tympole", "Horsea"],
-      "9-16": ["Psyduck", "Seel", "Finneon", "Clamperl"],
-      "17-25": ["Pelipper", "Seadra", "Sharpedo"],
-      "26-36": ["Omastar", "Golduck", "Politoed"],
-      "37-50": ["Milotic", "Palkia"]
+      "1-8": ["Barboach", "Ekans", "Tympole", "Horsea"],
+      "9-16": ["Shellos", "Tentacool", "Lombre", "Lileep"],
+      "17-25": ["Sharpedo", "Crawdaunt", "Whiscash"],
+      "26-36": ["Muk", "Seismitoad", "Poliwrath"],
+      "37-50": ["Swampert", "Kingdra"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -848,18 +848,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Lotad", "Hoppip", "Pidgey", "Spearow", "Surskit"],
-      "9-16": ["Poliwag", "Remoraid", "Piplup", "Totodile", "Goldeen", "Shellos"],
-      "17-25": ["Palpitoad", "Wailmer", "Marshtomp", "Togetic", "Sealeo", "Dewott"],
-      "26-36": ["Pidgeot", "Ludicolo", "Octillery", "Gorebyss", "Mantine"],
-      "37-50": ["Vaporeon", "Samurott", "Blastoise", "Lapras", "Kingdra"]
+      "1-8": ["Feebas", "Tynamo", "Spheal", "Horsea", "Remoraid", "Shellder", "Piplup"],
+      "9-16": ["Remoraid", "Chinchou", "Finneon", "Luvdisc", "Staryu", "Clamperl"],
+      "17-25": ["Wailmer", "Corsola", "Sealeo", "Qwilfish", "Seadra", "Lanturn"],
+      "26-36": ["Octillery", "Gorebyss", "Mantine", "Relicanth", "Armaldo"],
+      "37-50": ["Tentacruel", "Starmie", "Cloyster", "Lapras", "Kingdra"]
     },
     "leaders": {
-      "1-8": ["Wingull", "Spheal", "Tympole", "Horsea"],
-      "9-16": ["Buizel", "Chinchou", "Mantyke", "Kabuto"],
-      "17-25": ["Seaking", "Basculin", "Kingler"],
-      "26-36": ["Floatzel", "Kabutops", "Politoed"],
-      "37-50": ["Salamence", "Suicune"]
+      "1-8": ["Squirtle", "Krabby", "Seel", "Chinchou"],
+      "9-16": ["Anorith", "Kabuto", "Lileep", "Omanyte"],
+      "17-25": ["Lumineon", "Alomomola", "Dewgong"],
+      "26-36": ["Cradily", "Kabutops", "Wailord"],
+      "37-50": ["Phione", "Manaphy"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -884,18 +884,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Pichu", "Cleffa", "Starly", "Hoppip", "Pidgey", "Skitty", "Hoothoot"],
-      "9-16": ["Dratini", "Snubbull", "Doduo", "Swablu", "Axew", "Woobat"],
-      "17-25": ["Farfetch_d", "Ledian", "Murkrow", "Chatot", "Dragonair", "Noctowl"],
-      "26-36": ["Pidgeot", "Druddigon", "Staraptor", "Altaria", "Electabuzz"],
-      "37-50": ["Aerodactyl", "Eelektross", "Crobat", "Haxorus", "Dragonite"]
+      "1-8": ["Tyrogue", "Starly", "Togepi", "Hoppip", "Spearow", "Ledyba", "Taillow"],
+      "9-16": ["Bagon", "Machop", "Chimchar", "Swablu", "Phanpy", "Spoink"],
+      "17-25": ["Monferno", "Medicham", "Sudowoodo", "Shelgon", "Fearow", "Hitmonchan"],
+      "26-36": ["Whimsicott", "Altaria", "Donphan", "Machamp", "Braviary"],
+      "37-50": ["Lucario", "Infernape", "Arcanine", "Archeops", "Salamence"]
     },
     "leaders": {
-      "1-8": ["Spearow", "Ledyba", "Taillow", "Wingull"],
-      "9-16": ["Delibird", "Staravia", "Drifloon", "Pidgeotto"],
-      "17-25": ["Masquerain", "Tropius", "Dodrio"],
-      "26-36": ["Drifblim", "Scyther", "Braviary"],
-      "37-50": ["Lugia", "Zekrom"]
+      "1-8": ["Cottonee", "Meditite", "Chingling", "Riolu"],
+      "9-16": ["Staravia", "Growlithe", "Mienfoo", "Rufflet"],
+      "17-25": ["Hitmonlee", "Skarmory", "Hariyama"],
+      "26-36": ["Gliscor", "Mandibuzz", "Mienshao"],
+      "37-50": ["Tornadus", "Rayquaza"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -920,18 +920,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Lotad", "Poochyena", "Surskit", "Wingull", "Purrloin"],
-      "9-16": ["Snorunt", "Cubchoo", "Smoochum", "Vanillite", "Mudkip", "Squirtle"],
-      "17-25": ["Vanillish", "Wailmer", "Sealeo", "Sneasel", "Jynx", "Basculin"],
-      "26-36": ["Froslass", "Glalie", "Relicanth", "Abomasnow", "Kabutops"],
-      "37-50": ["Cryogonal", "Cloyster", "Glaceon", "Vaporeon", "Walrein"]
+      "1-8": ["Swinub", "Meditite", "Riolu", "Spheal", "Snorunt", "Cubchoo", "Smoochum"],
+      "9-16": ["Snorunt", "Cubchoo", "Smoochum", "Vanillite", "Piplup", "Clefairy"],
+      "17-25": ["Vanillish", "Prinplup", "Sealeo", "Sneasel", "Piloswine", "Jynx"],
+      "26-36": ["Froslass", "Glalie", "Altaria", "Abomasnow", "Golem"],
+      "37-50": ["Cryogonal", "Glaceon", "Empoleon", "Mamoswine", "Walrein"]
     },
     "leaders": {
-      "1-8": ["Spheal", "Tympole", "Electrike", "Horsea"],
-      "9-16": ["Slowpoke", "Delibird", "Staryu", "Omanyte"],
-      "17-25": ["Sharpedo", "Crawdaunt", "Dewgong"],
-      "26-36": ["Beartic", "Poliwrath", "Weavile"],
-      "37-50": ["Lapras", "Vanilluxe"]
+      "1-8": ["Vanillite", "Piplup", "Seel", "Delibird"],
+      "9-16": ["Seel", "Delibird", "Teddiursa", "Snover"],
+      "17-25": ["Lunatone", "Absol", "Dewgong"],
+      "26-36": ["Ursaring", "Beartic", "Weavile"],
+      "37-50": ["Vanilluxe", "Kyurem"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -956,18 +956,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Wynaut", "Litwick", "Meditite", "Chingling", "Ditto", "Gothita"],
-      "9-16": ["Kirlia", "Smoochum", "Abra", "Mime_Jr_", "Slowpoke", "Natu"],
-      "17-25": ["Duosion", "Gothorita", "Kadabra", "Wobbuffet", "Chimecho", "Girafarig"],
-      "26-36": ["Cofagrigus", "Beheeyem", "Musharna", "Gothitelle", "Reuniclus"],
-      "37-50": ["Gallade", "Gardevoir", "Starmie", "Dusknoir", "Espeon"]
+      "1-8": ["Ralts", "Togepi", "Wynaut", "Litwick", "Chingling", "Ditto", "Gothita"],
+      "9-16": ["Kirlia", "Baltoy", "Bronzor", "Golett", "Yamask", "Abra"],
+      "17-25": ["Duosion", "Porygon", "Kadabra", "Togetic", "Wobbuffet", "Rotom"],
+      "26-36": ["Cofagrigus", "Golurk", "Beheeyem", "Gothitelle", "Sigilyph"],
+      "37-50": ["Porygon2", "Gallade", "Gardevoir", "Espeon", "Lucario"]
     },
     "leaders": {
       "1-8": ["Solosis", "Munna", "Duskull", "Shuppet"],
-      "9-16": ["Drowzee", "Spoink", "Elgyem", "Unown"],
-      "17-25": ["Jynx", "Lunatone", "Grumpig"],
-      "26-36": ["Slowbro", "Bronzong", "Claydol"],
-      "37-50": ["Magnezone", "Mew"]
+      "9-16": ["Natu", "Drowzee", "Elgyem", "Unown"],
+      "17-25": ["Hitmontop", "Lunatone", "Xatu"],
+      "26-36": ["Alakazam", "Bronzong", "Claydol"],
+      "37-50": ["Genesect", "Dialga"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -992,18 +992,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Igglybuff", "Tyrogue", "Wooper", "Zigzagoon", "Togepi", "Smeargle", "Diglett"],
-      "9-16": ["Baltoy", "Larvitar", "Sandshrew", "Golett", "Mankey", "Cubone"],
-      "17-25": ["Nosepass", "Palpitoad", "Boldore", "Graveler", "Castform", "Granbull"],
-      "26-36": ["Rhydon", "Kangaskhan", "Claydol", "Donphan", "Machamp"],
-      "37-50": ["Aerodactyl", "Krookodile", "Torterra", "Aggron", "Rhyperior"]
+      "1-8": ["Tyrogue", "Poochyena", "Patrat", "Nidoran_M", "Nidoran_F", "Meditite", "Riolu"],
+      "9-16": ["Baltoy", "Sandshrew", "Cubone", "Hippopotas", "Skorupi", "Cacnea"],
+      "17-25": ["Vullaby", "Machoke", "Watchog", "Marowak", "Gligar", "Arbok"],
+      "26-36": ["Scrafty", "Kangaskhan", "Sigilyph", "Claydol", "Donphan"],
+      "37-50": ["Krookodile", "Flygon", "Hippowdon", "Probopass", "Aggron"]
     },
     "leaders": {
-      "1-8": ["Nincada", "Riolu", "Ditto", "Meowth"],
-      "9-16": ["Eevee", "Teddiursa", "Vibrava", "Rhyhorn"],
-      "17-25": ["Sandslash", "Hitmonchan", "Hitmontop"],
-      "26-36": ["Nidoking", "Mienshao", "Steelix"],
-      "37-50": ["Archeops", "Terrakion"]
+      "1-8": ["Ekans", "Bonsly", "Trapinch", "Sandile"],
+      "9-16": ["Vibrava", "Scraggy", "Krokorok", "Nidorina"],
+      "17-25": ["Sandslash", "Maractus", "Cacturne"],
+      "26-36": ["Drapion", "Gliscor", "Mandibuzz"],
+      "37-50": ["Rhyperior", "Archeops"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -1028,18 +1028,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Ralts", "Skitty", "Wynaut", "Litwick", "Meditite", "Chingling", "Gothita"],
-      "9-16": ["Kirlia", "Abra", "Mime_Jr_", "Slowpoke", "Natu", "Woobat"],
-      "17-25": ["Gothorita", "Kadabra", "Medicham", "Swoobat", "Misdreavus", "Chimecho"],
-      "26-36": ["Cofagrigus", "Spiritomb", "Musharna", "Gothitelle", "Sigilyph"],
-      "37-50": ["Gardevoir", "Chandelure", "Starmie", "Espeon", "Magnezone"]
+      "1-8": ["Ralts", "Igglybuff", "Happiny", "Smeargle", "Skitty", "Wynaut", "Lillipup"],
+      "9-16": ["Gulpin", "Golett", "Timburr", "Glameow", "Mime_Jr_", "Clefairy"],
+      "17-25": ["Porygon", "Gurdurr", "Togetic", "Wobbuffet", "Persian", "Audino"],
+      "26-36": ["Clefable", "Electrode", "Kangaskhan", "Miltank", "Alakazam"],
+      "37-50": ["Gardevoir", "Klinklang", "Porygon_Z", "Blissey", "Togekiss"]
     },
     "leaders": {
-      "1-8": ["Solosis", "Munna", "Duskull", "Shuppet"],
-      "9-16": ["Drowzee", "Spoink", "Elgyem", "Unown"],
-      "17-25": ["Girafarig", "Mr_Mime", "Xatu"],
-      "26-36": ["Slowking", "Alakazam", "Bronzong"],
-      "37-50": ["Metagross", "Giratina"]
+      "1-8": ["Ditto", "Meowth", "Solosis", "Electrike"],
+      "9-16": ["Grimer", "Trubbish", "Voltorb", "Unown"],
+      "17-25": ["Chansey", "Mr_Mime", "Garbodor"],
+      "26-36": ["Muk", "Rapidash", "Conkeldurr"],
+      "37-50": ["Victini", "Mewtwo"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -1064,18 +1064,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Happiny", "Makuhita", "Bidoof", "Smeargle", "Patrat", "Diglett"],
-      "9-16": ["Baltoy", "Croagunk", "Geodude", "Larvitar", "Golett", "Numel"],
-      "17-25": ["Onix", "Graveler", "Machoke", "Pupitar", "Marowak", "Wigglytuff"],
-      "26-36": ["Golurk", "Rhydon", "Toxicroak", "Bastiodon", "Rampardos"],
-      "37-50": ["Gigalith", "Hippowdon", "Torterra", "Aggron", "Mamoswine"]
+      "1-8": ["Tyrogue", "Poochyena", "Makuhita", "Whismur", "Patrat", "Nidoran_M", "Nidoran_F"],
+      "9-16": ["Baltoy", "Sandshrew", "Cubone", "Hippopotas", "Phanpy", "Skorupi"],
+      "17-25": ["Vullaby", "Machoke", "Watchog", "Marowak", "Gligar", "Arbok"],
+      "26-36": ["Rhydon", "Scrafty", "Sigilyph", "Claydol", "Donphan"],
+      "37-50": ["Krookodile", "Flygon", "Hippowdon", "Probopass", "Rhyperior"]
     },
     "leaders": {
-      "1-8": ["Nincada", "Lillipup", "Meowth", "Trapinch"],
-      "9-16": ["Timburr", "Cubone", "Vibrava", "Krokorok"],
-      "17-25": ["Piloswine", "Hitmontop", "Gastrodon"],
-      "26-36": ["Donphan", "Seismitoad", "Mienshao"],
-      "37-50": ["Rhyperior", "Swampert"]
+      "1-8": ["Ekans", "Bonsly", "Trapinch", "Sandile"],
+      "9-16": ["Cacnea", "Vibrava", "Rhyhorn", "Krokorok"],
+      "17-25": ["Sandslash", "Maractus", "Cacturne"],
+      "26-36": ["Drapion", "Gliscor", "Mandibuzz"],
+      "37-50": ["Archeops", "Salamence"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -1100,18 +1100,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Pichu", "Tyrogue", "Wooper", "Tynamo", "Mareep", "Meditite", "Roggenrola"],
-      "9-16": ["Beldum", "Bronzor", "Klink", "Ferroseed", "Magnemite", "Aron"],
-      "17-25": ["Mawile", "Sudowoodo", "Metang", "Lairon", "Klang", "Solrock"],
-      "26-36": ["Durant", "Ferrothorn", "Bisharp", "Bastiodon", "Cradily"],
-      "37-50": ["Klinklang", "Lucario", "Probopass", "Aggron", "Empoleon"]
+      "1-8": ["Tyrogue", "Cleffa", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo"],
+      "9-16": ["Beldum", "Bronzor", "Geodude", "Klink", "Ferroseed", "Cubone"],
+      "17-25": ["Nosepass", "Pupitar", "Dunsparce", "Metang", "Dugtrio", "Lairon"],
+      "26-36": ["Durant", "Ferrothorn", "Bisharp", "Exploud", "Bastiodon"],
+      "37-50": ["Aerodactyl", "Eelektross", "Klinklang", "Aggron", "Magnezone"]
     },
     "leaders": {
-      "1-8": ["Riolu", "Ekans", "Bonsly", "Munna"],
-      "9-16": ["Pawniard", "Cranidos", "Shieldon", "Kabuto"],
-      "17-25": ["Forretress", "Magneton", "Skarmory"],
-      "26-36": ["Escavalier", "Scizor", "Steelix"],
-      "37-50": ["Magnezone", "Heatran"]
+      "1-8": ["Roggenrola", "Riolu", "Bonsly", "Trapinch"],
+      "9-16": ["Magnemite", "Drilbur", "Aron", "Pawniard"],
+      "17-25": ["Klang", "Magneton", "Galvantula"],
+      "26-36": ["Bronzong", "Excadrill", "Steelix"],
+      "37-50": ["Metagross", "Genesect"]
     },
     "_probabilidadPorOferta": {
       "1-8": "1.476%",
@@ -1136,18 +1136,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Igglybuff", "Sentret", "Cleffa", "Happiny", "Starly", "Togepi", "Nincada"],
-      "9-16": ["Baltoy", "Croagunk", "Gible", "Cubone", "Eevee", "Phanpy"],
-      "17-25": ["Onix", "Pupitar", "Sudowoodo", "Dugtrio", "Gligar", "Quagsire"],
-      "26-36": ["Golurk", "Toxicroak", "Armaldo", "Rampardos", "Nidoking"],
-      "37-50": ["Lickilicky", "Flygon", "Lucario", "Mamoswine", "Rhyperior"]
+      "1-8": ["Makuhita", "Whismur", "Zubat", "Rattata", "Spearow", "Diglett", "Roggenrola"],
+      "9-16": ["Deino", "Gible", "Larvitar", "Ferroseed", "Cubone", "Woobat"],
+      "17-25": ["Nosepass", "Mawile", "Onix", "Pupitar", "Raticate", "Dunsparce"],
+      "26-36": ["Durant", "Rhydon", "Ferrothorn", "Bastiodon", "Rampardos"],
+      "37-50": ["Aerodactyl", "Probopass", "Aggron", "Crobat", "Haxorus"]
     },
     "leaders": {
-      "1-8": ["Riolu", "Ditto", "Meowth", "Trapinch"],
-      "9-16": ["Vibrava", "Rhyhorn", "Krokorok", "Spinda"],
-      "17-25": ["Sandslash", "Hitmonlee", "Primeape"],
-      "26-36": ["Nidoqueen", "Excadrill", "Gliscor"],
-      "37-50": ["Swampert", "Garchomp"]
+      "1-8": ["Riolu", "Bonsly", "Trapinch", "Sandile"],
+      "9-16": ["Aron", "Rhyhorn", "Shieldon", "Loudred"],
+      "17-25": ["Metang", "Dugtrio", "Golbat"],
+      "26-36": ["Shuckle", "Excadrill", "Steelix"],
+      "37-50": ["Garchomp", "Terrakion"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1172,18 +1172,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Makuhita", "Slugma", "Swinub", "Wynaut", "Diglett", "Litwick", "Tynamo"],
-      "9-16": ["Tepig", "Charmander", "Chimchar", "Cyndaquil", "Torchic", "Darumaka"],
-      "17-25": ["Lampent", "Charmeleon", "Combusken", "Ponyta", "Pignite", "Magcargo"],
-      "26-36": ["Darmanitan", "Heatmor", "Magmar", "Donphan", "Houndoom"],
-      "37-50": ["Flareon", "Emboar", "Blaziken", "Typhlosion", "Magmortar"]
+      "1-8": ["Zubat", "Slugma", "Litwick", "Roggenrola", "Vulpix", "Geodude", "Numel"],
+      "9-16": ["Numel", "Tepig", "Charmander", "Cyndaquil", "Torchic", "Darumaka"],
+      "17-25": ["Lampent", "Charmeleon", "Combusken", "Quilava", "Pignite", "Magcargo"],
+      "26-36": ["Darmanitan", "Durant", "Heatmor", "Weezing", "Magmar"],
+      "37-50": ["Flareon", "Blaziken", "Typhlosion", "Magmortar", "Volcarona"]
     },
     "leaders": {
-      "1-8": ["Riolu", "Barboach", "Ekans", "Vulpix"],
+      "1-8": ["Charmander", "Cyndaquil", "Drilbur", "Aron"],
       "9-16": ["Houndour", "Growlithe", "Larvesta", "Magby"],
-      "17-25": ["Sandslash", "Camerupt", "Torkoal"],
-      "26-36": ["Rapidash", "Nidoqueen", "Ninetales"],
-      "37-50": ["Arcanine", "Ho_Oh"]
+      "17-25": ["Camerupt", "Torkoal", "Hariyama"],
+      "26-36": ["Houndoom", "Ninetales", "Excadrill"],
+      "37-50": ["Heatran", "Groudon"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1208,18 +1208,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Pichu", "Tyrogue", "Swinub", "Shinx", "Mareep", "Meditite"],
-      "9-16": ["Beldum", "Bronzor", "Klink", "Ferroseed", "Machop", "Magnemite"],
-      "17-25": ["Mawile", "Corsola", "Metang", "Lairon", "Klang", "Lunatone"],
-      "26-36": ["Durant", "Ferrothorn", "Bisharp", "Armaldo", "Bastiodon"],
-      "37-50": ["Klinklang", "Lucario", "Probopass", "Aggron", "Empoleon"]
+      "1-8": ["Cleffa", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo", "Roggenrola"],
+      "9-16": ["Beldum", "Geodude", "Gible", "Klink", "Larvitar", "Joltik"],
+      "17-25": ["Nosepass", "Mawile", "Sableye", "Onix", "Boldore", "Graveler"],
+      "26-36": ["Durant", "Bisharp", "Electrode", "Exploud", "Bastiodon"],
+      "37-50": ["Aerodactyl", "Eelektross", "Gigalith", "Klinklang", "Probopass"]
     },
     "leaders": {
-      "1-8": ["Roggenrola", "Riolu", "Bonsly", "Sandile"],
-      "9-16": ["Aron", "Pawniard", "Shieldon", "Anorith"],
-      "17-25": ["Forretress", "Magneton", "Skarmory"],
-      "26-36": ["Escavalier", "Scizor", "Steelix"],
-      "37-50": ["Magnezone", "Cobalion"]
+      "1-8": ["Chingling", "Riolu", "Bonsly", "Trapinch"],
+      "9-16": ["Magnemite", "Drilbur", "Cranidos", "Loudred"],
+      "17-25": ["Eelektrik", "Marowak", "Klang"],
+      "26-36": ["Golem", "Shuckle", "Steelix"],
+      "37-50": ["Magnezone", "Genesect"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1244,18 +1244,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Poochyena", "Slugma", "Venipede", "Nidoran_M", "Litwick", "Nidoran_F", "Purrloin"],
-      "9-16": ["Gulpin", "Yamask", "Carvanha", "Gastly", "Grimer", "Stunky"],
-      "17-25": ["Vullaby", "Sableye", "Haunter", "Murkrow", "Mightyena", "Liepard"],
-      "26-36": ["Skuntank", "Shiftry", "Scrafty", "Drapion", "Gengar"],
-      "37-50": ["Chandelure", "Dusknoir", "Umbreon", "Crobat", "Magmortar"]
+      "1-8": ["Ralts", "Poochyena", "Zubat", "Rattata", "Wynaut", "Litwick", "Purrloin"],
+      "9-16": ["Kirlia", "Deino", "Abra", "Gastly", "Woobat", "Drowzee"],
+      "17-25": ["Lampent", "Gothorita", "Haunter", "Murkrow", "Mightyena", "Misdreavus"],
+      "26-36": ["Skuntank", "Hypno", "Gothitelle", "Mismagius", "Gengar"],
+      "37-50": ["Gallade", "Gardevoir", "Chandelure", "Dusknoir", "Umbreon"]
     },
     "leaders": {
-      "1-8": ["Ekans", "Duskull", "Shuppet", "Vulpix"],
-      "9-16": ["Trubbish", "Houndour", "Zorua", "Nidorino"],
-      "17-25": ["Arbok", "Seviper", "Absol"],
-      "26-36": ["Houndoom", "Muk", "Zoroark"],
-      "37-50": ["Hydreigon", "Tyranitar"]
+      "1-8": ["Gothita", "Munna", "Duskull", "Shuppet"],
+      "9-16": ["Stunky", "Houndour", "Zorua", "Drifloon"],
+      "17-25": ["Liepard", "Banette", "Golbat"],
+      "26-36": ["Houndoom", "Honchkrow", "Zoroark"],
+      "37-50": ["Darkrai", "Giratina"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1280,18 +1280,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Makuhita", "Nincada", "Roggenrola", "Riolu", "Barboach", "Bonsly"],
-      "9-16": ["Beldum", "Klink", "Ferroseed", "Magnemite", "Aron", "Pawniard"],
-      "17-25": ["Mawile", "Archen", "Corsola", "Metang", "Lairon", "Klang"],
-      "26-36": ["Durant", "Bisharp", "Bastiodon", "Escavalier", "Rampardos"],
-      "37-50": ["Klinklang", "Lucario", "Probopass", "Aggron", "Empoleon"]
+      "1-8": ["Tyrogue", "Cleffa", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo"],
+      "9-16": ["Geodude", "Gible", "Klink", "Joltik", "Axew", "Cubone"],
+      "17-25": ["Nosepass", "Mawile", "Sableye", "Onix", "Boldore", "Graveler"],
+      "26-36": ["Rhydon", "Bisharp", "Bastiodon", "Golem", "Rampardos"],
+      "37-50": ["Eelektross", "Gigalith", "Klinklang", "Probopass", "Magnezone"]
     },
     "leaders": {
-      "1-8": ["Gothita", "Solosis", "Sandile", "Electrike"],
-      "9-16": ["Shieldon", "Kabuto", "Lileep", "Omanyte"],
-      "17-25": ["Forretress", "Magneton", "Skarmory"],
-      "26-36": ["Scizor", "Excadrill", "Steelix"],
-      "37-50": ["Magnezone", "Genesect"]
+      "1-8": ["Roggenrola", "Chingling", "Riolu", "Trapinch"],
+      "9-16": ["Magnemite", "Rhyhorn", "Shieldon", "Loudred"],
+      "17-25": ["Zweilous", "Klang", "Magneton"],
+      "26-36": ["Shuckle", "Mienshao", "Steelix"],
+      "37-50": ["Hydreigon", "Cobalion"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1316,18 +1316,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Azurill", "Igglybuff", "Wooper", "Happiny", "Togepi", "Smeargle", "Swinub"],
-      "9-16": ["Baltoy", "Geodude", "Gible", "Larvitar", "Machop", "Cubone"],
-      "17-25": ["Palpitoad", "Boldore", "Machoke", "Raticate", "Marowak", "Quagsire"],
-      "26-36": ["Miltank", "Armaldo", "Golem", "Conkeldurr", "Nidoking"],
-      "37-50": ["Gigalith", "Lickilicky", "Krookodile", "Flygon", "Hippowdon"]
+      "1-8": ["Tyrogue", "Whismur", "Zubat", "Rattata", "Spearow", "Diglett", "Meditite"],
+      "9-16": ["Beldum", "Gible", "Larvitar", "Machop", "Axew", "Cubone"],
+      "17-25": ["Sableye", "Boldore", "Graveler", "Fraxure", "Gabite", "Raticate"],
+      "26-36": ["Durant", "Rhydon", "Ferrothorn", "Exploud", "Bastiodon"],
+      "37-50": ["Gigalith", "Probopass", "Crobat", "Haxorus", "Garchomp"]
     },
     "leaders": {
-      "1-8": ["Rattata", "Skitty", "Riolu", "Ditto"],
-      "9-16": ["Hippopotas", "Cranidos", "Mienfoo", "Krokorok"],
-      "17-25": ["Kecleon", "Piloswine", "Whiscash"],
-      "26-36": ["Shuckle", "Mienshao", "Steelix"],
-      "37-50": ["Mamoswine", "Archeops"]
+      "1-8": ["Roggenrola", "Riolu", "Trapinch", "Sandile"],
+      "9-16": ["Aron", "Rhyhorn", "Cranidos", "Shieldon"],
+      "17-25": ["Shelgon", "Lairon", "Golbat"],
+      "26-36": ["Rampardos", "Excadrill", "Mienshao"],
+      "37-50": ["Hydreigon", "Tyranitar"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1352,18 +1352,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Weedle", "Poochyena", "Spinarak", "Venipede", "Nidoran_M", "Nidoran_F", "Budew"],
-      "9-16": ["Deino", "Gulpin", "Grimer", "Stunky", "Trubbish", "Zorua"],
-      "17-25": ["Sableye", "Mightyena", "Zweilous", "Sneasel", "Liepard", "Banette"],
-      "26-36": ["Skuntank", "Spiritomb", "Scrafty", "Weezing", "Muk"],
-      "37-50": ["Tentacruel", "Krookodile", "Chandelure", "Umbreon", "Crobat"]
+      "1-8": ["Ralts", "Poochyena", "Zubat", "Rattata", "Wynaut", "Litwick", "Purrloin"],
+      "9-16": ["Kirlia", "Gible", "Abra", "Gastly", "Woobat", "Drowzee"],
+      "17-25": ["Gothorita", "Kadabra", "Haunter", "Mightyena", "Sneasel", "Misdreavus"],
+      "26-36": ["Skuntank", "Spiritomb", "Musharna", "Gothitelle", "Mismagius"],
+      "37-50": ["Gallade", "Gardevoir", "Dusknoir", "Umbreon", "Crobat"]
     },
     "leaders": {
-      "1-8": ["Purrloin", "Ekans", "Duskull", "Shuppet"],
-      "9-16": ["Koffing", "Drifloon", "Scraggy", "Nidorina"],
-      "17-25": ["Dusclops", "Absol", "Cacturne"],
-      "26-36": ["Honchkrow", "Weavile", "Zoroark"],
-      "37-50": ["Hydreigon", "Tyranitar"]
+      "1-8": ["Gothita", "Munna", "Duskull", "Shuppet"],
+      "9-16": ["Stunky", "Houndour", "Zorua", "Drifloon"],
+      "17-25": ["Liepard", "Banette", "Dusclops"],
+      "26-36": ["Drifblim", "Gengar", "Honchkrow"],
+      "37-50": ["Darkrai", "Giratina"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1388,18 +1388,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Azurill", "Caterpie", "Wooper", "Cleffa", "Starly", "Smeargle", "Rattata"],
-      "9-16": ["Croagunk", "Geodude", "Gible", "Golett", "Numel", "Timburr"],
-      "17-25": ["Delcatty", "Pupitar", "Dugtrio", "Marowak", "Audino", "Hitmonchan"],
-      "26-36": ["Golurk", "Scrafty", "Golem", "Claydol", "Ursaring"],
-      "37-50": ["Gigalith", "Hippowdon", "Mamoswine", "Porygon_Z", "Swampert"]
+      "1-8": ["Tyrogue", "Makuhita", "Whismur", "Zubat", "Rattata", "Diglett", "Meditite"],
+      "9-16": ["Beldum", "Deino", "Geodude", "Larvitar", "Ferroseed", "Axew"],
+      "17-25": ["Mawile", "Sableye", "Fraxure", "Pupitar", "Dunsparce", "Metang"],
+      "26-36": ["Durant", "Ferrothorn", "Exploud", "Bastiodon", "Golem"],
+      "37-50": ["Gigalith", "Aggron", "Crobat", "Haxorus", "Hydreigon"]
     },
     "leaders": {
-      "1-8": ["Diglett", "Lillipup", "Ditto", "Sandile"],
-      "9-16": ["Cubone", "Phanpy", "Vibrava", "Scraggy"],
-      "17-25": ["Lunatone", "Whiscash", "Hariyama"],
-      "26-36": ["Shuckle", "Seismitoad", "Gliscor"],
-      "37-50": ["Archeops", "Garchomp"]
+      "1-8": ["Roggenrola", "Chingling", "Riolu", "Sandile"],
+      "9-16": ["Cubone", "Aron", "Cranidos", "Shieldon"],
+      "17-25": ["Zweilous", "Dugtrio", "Absol"],
+      "26-36": ["Rampardos", "Shuckle", "Steelix"],
+      "37-50": ["Tyranitar", "Terrakion"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1424,18 +1424,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Wooper", "Slugma", "Diglett", "Nincada", "Litwick", "Roggenrola", "Chingling"],
-      "9-16": ["Numel", "Tepig", "Charmander", "Cyndaquil", "Torchic", "Darumaka"],
-      "17-25": ["Lampent", "Charmeleon", "Combusken", "Monferno", "Quilava", "Ponyta"],
-      "26-36": ["Darmanitan", "Heatmor", "Toxicroak", "Magmar", "Houndoom"],
-      "37-50": ["Flareon", "Blaziken", "Charizard", "Typhlosion", "Magmortar"]
+      "1-8": ["Zubat", "Slugma", "Diglett", "Litwick", "Vulpix", "Geodude", "Numel"],
+      "9-16": ["Numel", "Tepig", "Charmander", "Chimchar", "Cyndaquil", "Darumaka"],
+      "17-25": ["Lampent", "Charmeleon", "Quilava", "Sudowoodo", "Pignite", "Magcargo"],
+      "26-36": ["Darmanitan", "Heatmor", "Weezing", "Magmar", "Houndoom"],
+      "37-50": ["Flareon", "Charizard", "Typhlosion", "Magmortar", "Volcarona"]
     },
     "leaders": {
-      "1-8": ["Riolu", "Bonsly", "Trapinch", "Vulpix"],
-      "9-16": ["Houndour", "Growlithe", "Larvesta", "Magby"],
-      "17-25": ["Magcargo", "Camerupt", "Torkoal"],
-      "26-36": ["Rapidash", "Conkeldurr", "Ninetales"],
-      "37-50": ["Volcarona", "Reshiram"]
+      "1-8": ["Charmander", "Cyndaquil", "Drilbur", "Aron"],
+      "9-16": ["Houndour", "Koffing", "Larvesta", "Magby"],
+      "17-25": ["Camerupt", "Solrock", "Torkoal"],
+      "26-36": ["Ninetales", "Shuckle", "Steelix"],
+      "37-50": ["Heatran", "Reshiram"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1460,18 +1460,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Cleffa", "Makuhita", "Whismur", "Bidoof", "Swinub", "Pidgey", "Patrat"],
-      "9-16": ["Geodude", "Snubbull", "Mankey", "Timburr", "Drilbur", "Hippopotas"],
-      "17-25": ["Archen", "Gurdurr", "Gabite", "Pupitar", "Dugtrio", "Gligar"],
-      "26-36": ["Toxicroak", "Bastiodon", "Golem", "Omastar", "Conkeldurr"],
-      "37-50": ["Aerodactyl", "Porygon2", "Hippowdon", "Probopass", "Rhyperior"]
+      "1-8": ["Poochyena", "Makuhita", "Whismur", "Patrat", "Spearow", "Nidoran_M", "Nidoran_F"],
+      "9-16": ["Baltoy", "Sandshrew", "Hippopotas", "Phanpy", "Skorupi", "Cacnea"],
+      "17-25": ["Vullaby", "Archen", "Medicham", "Marowak", "Gligar", "Arbok"],
+      "26-36": ["Scrafty", "Sigilyph", "Claydol", "Donphan", "Drapion"],
+      "37-50": ["Krookodile", "Flygon", "Hippowdon", "Lucario", "Crobat"]
     },
     "leaders": {
-      "1-8": ["Skitty", "Spearow", "Lillipup", "Slakoth"],
-      "9-16": ["Buneary", "Krokorok", "Anorith", "Omanyte"],
-      "17-25": ["Persian", "Sandslash", "Purugly"],
-      "26-36": ["Shuckle", "Seismitoad", "Gliscor"],
-      "37-50": ["Swampert", "Landorus"]
+      "1-8": ["Riolu", "Ekans", "Trapinch", "Sandile"],
+      "9-16": ["Vibrava", "Scraggy", "Krokorok", "Nidorino"],
+      "17-25": ["Sandslash", "Maractus", "Cacturne"],
+      "26-36": ["Nidoking", "Gliscor", "Mandibuzz"],
+      "37-50": ["Rhyperior", "Salamence"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1496,18 +1496,18 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Sentret", "Cleffa", "Happiny", "Whismur", "Togepi", "Swinub", "Patrat"],
-      "9-16": ["Jigglypuff", "Larvitar", "Sandshrew", "Mankey", "Cubone", "Drilbur"],
-      "17-25": ["Nosepass", "Graveler", "Porygon", "Gabite", "Medicham", "Sudowoodo"],
-      "26-36": ["Relicanth", "Rhydon", "Rampardos", "Claydol", "Conkeldurr"],
-      "37-50": ["Flygon", "Probopass", "Torterra", "Snorlax", "Archeops"]
+      "1-8": ["Poochyena", "Makuhita", "Patrat", "Spearow", "Nidoran_M", "Nidoran_F", "Riolu"],
+      "9-16": ["Baltoy", "Sandshrew", "Cubone", "Hippopotas", "Skorupi", "Cacnea"],
+      "17-25": ["Vullaby", "Archen", "Sudowoodo", "Marowak", "Gligar", "Arbok"],
+      "26-36": ["Scrafty", "Claydol", "Drapion", "Machamp", "Nidoking"],
+      "37-50": ["Aerodactyl", "Krookodile", "Flygon", "Hippowdon", "Rhyperior"]
     },
     "leaders": {
-      "1-8": ["Skitty", "Spearow", "Diglett", "Trapinch"],
-      "9-16": ["Hippopotas", "Cranidos", "Anorith", "Spinda"],
-      "17-25": ["Watchog", "Marowak", "Gligar"],
-      "26-36": ["Machamp", "Nidoking", "Shuckle"],
-      "37-50": ["Garchomp", "Slaking"]
+      "1-8": ["Ekans", "Bonsly", "Trapinch", "Sandile"],
+      "9-16": ["Vibrava", "Scraggy", "Rufflet", "Krokorok"],
+      "17-25": ["Sandslash", "Maractus", "Cacturne"],
+      "26-36": ["Braviary", "Gliscor", "Mandibuzz"],
+      "37-50": ["Archeops", "Salamence"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1532,18 +1532,18 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Combee", "Starly", "Zubat", "Hoppip", "Pidgey", "Hoothoot", "Spearow"],
-      "9-16": ["Bagon", "Doduo", "Glameow", "Swablu", "Natu", "Delibird"],
-      "17-25": ["Farfetch_d", "Beautifly", "Butterfree", "Fraxure", "Furret", "Fearow"],
-      "26-36": ["Ambipom", "Druddigon", "Staraptor", "Altaria", "Electrode"],
-      "37-50": ["Luxray", "Charizard", "Haxorus", "Togekiss", "Dragonite"]
+      "1-8": ["Makuhita", "Combee", "Togepi", "Hoppip", "Pidgey", "Hoothoot", "Ledyba"],
+      "9-16": ["Bagon", "Sandshrew", "Machop", "Chimchar", "Natu", "Phanpy"],
+      "17-25": ["Archen", "Machoke", "Medicham", "Sudowoodo", "Chimecho", "Hitmonlee"],
+      "26-36": ["Staraptor", "Drifblim", "Donphan", "Machamp", "Braviary"],
+      "37-50": ["Lucario", "Emboar", "Infernape", "Arcanine", "Archeops"]
     },
     "leaders": {
-      "1-8": ["Ledyba", "Taillow", "Wingull", "Ditto"],
-      "9-16": ["Staravia", "Mantyke", "Drifloon", "Pidgeotto"],
-      "17-25": ["Swellow", "Dodrio", "Vespiquen"],
-      "26-36": ["Scyther", "Honchkrow", "Braviary"],
-      "37-50": ["Salamence", "Regigigas"]
+      "1-8": ["Taillow", "Cottonee", "Meditite", "Bonsly"],
+      "9-16": ["Spoink", "Growlithe", "Mienfoo", "Rufflet"],
+      "17-25": ["Hitmontop", "Skarmory", "Grumpig"],
+      "26-36": ["Gliscor", "Mandibuzz", "Mienshao"],
+      "37-50": ["Latios", "Ho_Oh"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.758%",
@@ -1571,15 +1571,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Darmanitan", "Heatmor", "Magmar", "Donphan", "Houndoom"],
-      "37-50": ["Emboar", "Blaziken", "Charizard", "Infernape", "Typhlosion"]
+      "26-36": ["Darmanitan", "Heatmor", "Rhydon", "Weezing", "Magmar"],
+      "37-50": ["Flareon", "Charizard", "Infernape", "Typhlosion", "Magmortar"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Rapidash", "Nidoqueen", "Ninetales"],
-      "37-50": ["Magmortar", "Arcanine"]
+      "26-36": ["Houndoom", "Ninetales", "Steelix"],
+      "37-50": ["Volcarona", "Heatran"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1607,15 +1607,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Skuntank", "Spiritomb", "Weezing", "Drapion", "Houndoom"],
-      "37-50": ["Tentacruel", "Krookodile", "Chandelure", "Umbreon", "Hydreigon"]
+      "26-36": ["Skuntank", "Hypno", "Spiritomb", "Drifblim", "Gengar"],
+      "37-50": ["Chandelure", "Dusknoir", "Espeon", "Umbreon", "Hydreigon"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Honchkrow", "Mandibuzz", "Zoroark"],
-      "37-50": ["Tyranitar", "Darkrai"]
+      "26-36": ["Honchkrow", "Weavile", "Zoroark"],
+      "37-50": ["Darkrai", "Giratina"]
     },
     "wallMaterial": "void",
     "_probabilidadPorOferta": {
@@ -1644,15 +1644,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Froslass", "Glalie", "Octillery", "Gorebyss", "Abomasnow"],
-      "37-50": ["Cryogonal", "Cloyster", "Glaceon", "Walrein", "Lapras"]
+      "26-36": ["Froslass", "Glalie", "Altaria", "Abomasnow", "Ursaring"],
+      "37-50": ["Cryogonal", "Glaceon", "Empoleon", "Mamoswine", "Walrein"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Kabutops", "Beartic", "Weavile"],
-      "37-50": ["Vanilluxe", "Milotic"]
+      "26-36": ["Beartic", "Braviary", "Weavile"],
+      "37-50": ["Vanilluxe", "Kyurem"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1680,15 +1680,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Pidgeot", "Lopunny", "Druddigon", "Staraptor", "Altaria"],
-      "37-50": ["Yanmega", "Electivire", "Haxorus", "Togekiss", "Dragonite"]
+      "26-36": ["Pidgeot", "Whimsicott", "Staraptor", "Altaria", "Tauros"],
+      "37-50": ["Yanmega", "Luxray", "Snorlax", "Togekiss", "Dragonite"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Kangaskhan", "Ampharos", "Braviary"],
-      "37-50": ["Salamence", "Tornadus"]
+      "26-36": ["Drifblim", "Ampharos", "Braviary"],
+      "37-50": ["Tornadus", "Rayquaza"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1716,15 +1716,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Ludicolo", "Octillery", "Mantine", "Relicanth", "Floatzel"],
-      "37-50": ["Starmie", "Cloyster", "Vaporeon", "Feraligatr", "Kingdra"]
+      "26-36": ["Octillery", "Gorebyss", "Huntail", "Relicanth", "Armaldo"],
+      "37-50": ["Tentacruel", "Starmie", "Cloyster", "Lapras", "Kingdra"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Golduck", "Wailord", "Poliwrath"],
-      "37-50": ["Milotic", "Kyogre"]
+      "26-36": ["Cradily", "Omastar", "Wailord"],
+      "37-50": ["Kyogre", "Lugia"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1752,15 +1752,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Beheeyem", "Musharna", "Sigilyph", "Slowbro", "Slowking"],
-      "37-50": ["Gardevoir", "Starmie", "Jolteon", "Lucario", "Exeggutor"]
+      "26-36": ["Cofagrigus", "Golurk", "Beheeyem", "Gothitelle", "Sigilyph"],
+      "37-50": ["Porygon2", "Espeon", "Lucario", "Porygon_Z", "Togekiss"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Mismagius", "Alakazam", "Bronzong"],
-      "37-50": ["Metagross", "Deoxys"]
+      "26-36": ["Alakazam", "Bronzong", "Claydol"],
+      "37-50": ["Latias", "Dialga"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1788,15 +1788,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Cofagrigus", "Hypno", "Beheeyem", "Reuniclus", "Slowbro"],
-      "37-50": ["Chandelure", "Klinklang", "Starmie", "Espeon", "Exeggutor"]
+      "26-36": ["Clefable", "Cofagrigus", "Golurk", "Beheeyem", "Musharna"],
+      "37-50": ["Porygon2", "Chandelure", "Porygon_Z", "Togekiss", "Metagross"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Slowking", "Alakazam", "Bronzong"],
-      "37-50": ["Metagross", "Jirachi"]
+      "26-36": ["Reuniclus", "Sigilyph", "Alakazam"],
+      "37-50": ["Palkia", "Zekrom"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1824,15 +1824,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Darmanitan", "Heatmor", "Armaldo", "Magmar", "Rapidash"],
-      "37-50": ["Chandelure", "Flareon", "Emboar", "Blaziken", "Infernape"]
+      "26-36": ["Clefable", "Heatmor", "Beheeyem", "Rhydon", "Exploud"],
+      "37-50": ["Aerodactyl", "Gigalith", "Garchomp", "Metagross", "Tyranitar"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Nidoking", "Ninetales", "Mienshao"],
-      "37-50": ["Magmortar", "Arcanine"]
+      "26-36": ["Golem", "Shuckle", "Excadrill"],
+      "37-50": ["Deoxys", "Jirachi"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1860,15 +1860,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Froslass", "Hypno", "Gothitelle", "Sigilyph", "Slowbro"],
-      "37-50": ["Gallade", "Gardevoir", "Klinklang", "Espeon", "Lucario"]
+      "26-36": ["Cofagrigus", "Hypno", "Beheeyem", "Musharna", "Gothitelle"],
+      "37-50": ["Gallade", "Chandelure", "Espeon", "Lucario", "Porygon_Z"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Mismagius", "Drifblim", "Gengar"],
-      "37-50": ["Exeggutor", "Mesprit"]
+      "26-36": ["Reuniclus", "Sigilyph", "Alakazam"],
+      "37-50": ["Jirachi", "Mewtwo"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1896,15 +1896,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Froslass", "Glalie", "Relicanth", "Abomasnow", "Omastar"],
-      "37-50": ["Cryogonal", "Cloyster", "Glaceon", "Walrein", "Lapras"]
+      "26-36": ["Froslass", "Glalie", "Clefable", "Altaria", "Abomasnow"],
+      "37-50": ["Cryogonal", "Glaceon", "Mamoswine", "Walrein", "Vanilluxe"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Wailord", "Beartic", "Weavile"],
-      "37-50": ["Vanilluxe", "Kyurem"]
+      "26-36": ["Ursaring", "Beartic", "Weavile"],
+      "37-50": ["Dragonite", "Kyurem"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1932,15 +1932,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Beheeyem", "Gothitelle", "Sigilyph", "Slowking", "Mismagius"],
-      "37-50": ["Gallade", "Gardevoir", "Starmie", "Dusknoir", "Exeggutor"]
+      "26-36": ["Ambipom", "Druddigon", "Scolipede", "Armaldo", "Cradily"],
+      "37-50": ["Aerodactyl", "Haxorus", "Dragonite", "Garchomp", "Hydreigon"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Drifblim", "Gengar", "Scizor"],
-      "37-50": ["Latios", "Mewtwo"]
+      "26-36": ["Escavalier", "Kabutops", "Omastar"],
+      "37-50": ["Mew", "Regigigas"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -1968,15 +1968,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Skuntank", "Shiftry", "Spiritomb", "Weezing", "Drapion"],
-      "37-50": ["Tentacruel", "Krookodile", "Chandelure", "Umbreon", "Crobat"]
+      "26-36": ["Darmanitan", "Heatmor", "Spiritomb", "Magmar", "Houndoom"],
+      "37-50": ["Emboar", "Charizard", "Typhlosion", "Magmortar", "Volcarona"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Honchkrow", "Mandibuzz", "Zoroark"],
-      "37-50": ["Hydreigon", "Tyranitar"]
+      "26-36": ["Honchkrow", "Ninetales", "Zoroark"],
+      "37-50": ["Heatran", "Groudon"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -2004,15 +2004,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Cofagrigus", "Hypno", "Beheeyem", "Sigilyph", "Slowking"],
-      "37-50": ["Gallade", "Gardevoir", "Starmie", "Espeon", "Exeggutor"]
+      "26-36": ["Clefable", "Cofagrigus", "Hypno", "Beheeyem", "Musharna"],
+      "37-50": ["Porygon2", "Gallade", "Chandelure", "Porygon_Z", "Metagross"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Drifblim", "Alakazam", "Bronzong"],
-      "37-50": ["Metagross", "Azelf"]
+      "26-36": ["Reuniclus", "Alakazam", "Bronzong"],
+      "37-50": ["Deoxys", "Arceus"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -2040,15 +2040,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Hypno", "Beheeyem", "Musharna", "Reuniclus", "Sigilyph"],
-      "37-50": ["Gallade", "Dusknoir", "Espeon", "Empoleon", "Blissey"]
+      "26-36": ["Golurk", "Hypno", "Spiritomb", "Musharna", "Gothitelle"],
+      "37-50": ["Porygon2", "Chandelure", "Dusknoir", "Togekiss", "Metagross"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Drifblim", "Claydol", "Gengar"],
-      "37-50": ["Metagross", "Cresselia"]
+      "26-36": ["Reuniclus", "Claydol", "Gengar"],
+      "37-50": ["Cresselia", "Mew"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
@@ -2076,15 +2076,15 @@
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Hypno", "Durant", "Beheeyem", "Gothitelle", "Reuniclus"],
-      "37-50": ["Gardevoir", "Klinklang", "Espeon", "Probopass", "Exeggutor"]
+      "26-36": ["Cofagrigus", "Golurk", "Beheeyem", "Gothitelle", "Reuniclus"],
+      "37-50": ["Porygon2", "Espeon", "Lucario", "Togekiss", "Metagross"]
     },
     "leaders": {
       "1-8": [],
       "9-16": [],
       "17-25": [],
-      "26-36": ["Slowbro", "Drifblim", "Alakazam"],
-      "37-50": ["Metagross", "Latias"]
+      "26-36": ["Sigilyph", "Bronzong", "Claydol"],
+      "37-50": ["Dialga", "Mewtwo"]
     },
     "_probabilidadPorOferta": {
       "1-8": "0.000%",
