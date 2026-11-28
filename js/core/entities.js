@@ -61,6 +61,11 @@ export function createEntity(spriteData, room, isPlayer) {
   return entity;
 }
 
+// La hoja conserva el ritmo de 60; la cadencia sólo cambia la recuperación.
+function attackAnimationRate(entity) {
+  return attackRate(60) * (entity.isPlayer ? 1 : 0.48);
+}
+
 // Reinicia el fotograma y el temporizador únicamente al cambiar de acción.
 export function setState(entity, state) {
   if ((state==='Idle' || state==='Walk') && entity.pendingShinyAnims) {
@@ -71,7 +76,7 @@ export function setState(entity, state) {
   }
   if (entity.state !== state) {
     const sheet = state === 'Attack' ? entity.attackAnimation : entity.anims[state] ?? entity.anims.Idle;
-    const speed = state === 'Attack' ? attackRate(entity.stats.attackSpeed)*(entity.isPlayer?1:.48) :
+    const speed = state === 'Attack' ? attackAnimationRate(entity) :
       state === 'Walk' ? movementRate(entity.stats.speed) : 1;
     console.debug('[Animación]', {dex:entity.dex, state, sheet:Object.keys(entity.anims).find(key=>entity.anims[key]===sheet),
       x:entity.x,y:entity.y,direction:entity.dir,speed,frames:sheet?.frames,durations:sheet?.durs,time:gameTime()});
@@ -121,7 +126,7 @@ export function canMove(entity, x, y) {
 export function triggerAttack(attacker) {
   if (!['Idle','Walk'].includes(attacker.state)) return;
   if (attacker.dash?.until > gameTime() || attacker.frozenUntil>gameTime() || attacker.rockUntil>gameTime() || attacker.paralyzedUntil>gameTime() || attacker.hp === 0 || (attacker.isPlayer && game.cast)) return;
-  if(attacker.boneInFlight)return;
+  if(attacker.boneInFlight || gameTime() < (attacker.nextAttackAt ?? 0))return false;
   attacker.impactPending = true;
   // Sólo los modificadores direccionales usan la trayectoria del colmillo durante el golpe.
   attacker.relicWeapon=[...(combatBenefits(attacker)??[])].map(id=>game.benefits.get(id)?.weapon).find(Boolean);
@@ -131,7 +136,15 @@ export function triggerAttack(attacker) {
   const weapon = [...(combatBenefits(attacker) ?? [])].map(id => game.benefits.get(id)).find(benefit => benefit?.spriteanimations);
   attacker.attackAnimation = attacker.relicWeapon ? (['peck','shadow_tag'].includes(attacker.relicWeapon)?attacker.anims.Charge:attacker.relicWeapon==='bite'?attacker.anims.Attack:attacker.anims.Shoot) ?? attacker.anims.Attack : weapon?.spriteanimations.map(name => attacker.anims[name]).find(Boolean) ?? attacker.anims.Attack;
   attacker.strikesDone = 0;
+  const animation = attacker.attackAnimation;
+  const frames = Array.from({length: animation.frames}, (_, frame) => animation.durs[frame] || 8);
+  const animationMs = frames.reduce((total, duration) => total + duration, 0)
+    / (ANIM_SPEED * attackAnimationRate(attacker)) * (1000 / 60);
+  const recoveryMs = attacker.isPlayer ? 250 : attacker.boss ? 500 : 750;
+  attacker.nextAttackAt = gameTime() + animationMs
+    + recoveryMs * attackRate(60) / attackRate(attacker.stats.attackSpeed);
   setState(attacker, 'Attack');
+  return true;
 }
 
 // Consultamos las posiciones actuales en el impacto: el objetivo puede entrar o esquivar.
@@ -443,7 +456,7 @@ export function updateEntity(entity) {
 
   const animation = entity.state === 'Attack' ? entity.attackAnimation ?? entity.anims.Attack : entity.anims[entity.state] || entity.anims.Idle;
   const tempo = entity.state === 'Walk' ? movementRate(entity.stats.speed)*(entity.dash?.until>gameTime()?4:1) :
-    entity.state === 'Attack' ? attackRate(entity.stats.attackSpeed) * (entity.isPlayer ? 1 : 0.48) : 1;
+    entity.state === 'Attack' ? attackAnimationRate(entity) : 1;
   const isHurt = entity.state === 'Hurt';
   const frameTime = animation.durs[entity.frame] || 8;
   const duration = isHurt ? Math.ceil((frameTime + 2) / 0.55) : frameTime;

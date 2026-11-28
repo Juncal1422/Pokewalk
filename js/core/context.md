@@ -441,3 +441,5 @@ Los encuentros se restringen a familias compatibles con el hábitat concreto. La
 Pico afilado usa la fila (dirección + 2) módulo 8 de peck. Umbrío dibuja shadow_tag desde los pies del atacante hasta el extremo de su rango. Pico ígneo combina Pico afilado con Ardiente o Ígneo y lanza fire_spike de tipo Fuego. Los proyectiles recorren su alcance a velocidad ×1,5, y Hechicero duplica su velocidad y daño. El hueso mantiene un reloj de giro independiente de su regreso. Estático reproduce battery en el defensor e Inexpugnable reproduce gem_aura al bloquear.
 
 El juego dibuja las espinas desde effects.png. Tras editar spine.png, regenera el atlas con python tools/build_effects.py antes de publicar.
+
+Las animaciones de ataque usan siempre la cadencia visual de Velocidad de ataque 60 para cada tipo de combatiente. triggerAttack comparte el reloj de recuperación entre el jugador y la IA. El atributo modifica la pausa entre ataques, con 250 ms para el jugador, 500 ms para líderes y 750 ms para salvajes a 60.

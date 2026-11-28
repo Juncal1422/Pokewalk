@@ -156,15 +156,13 @@ export function updateEnemy(enemy, move, setState, attack, terrainFree, canMove)
     enemy.aimSince ??= simulationTime;
     const afterDodge = simulationTime < enemy.counterUntil;
     const ready = simulationTime - enemy.aimSince >= (afterDodge ? 180 : 600) &&
-      (afterDodge || simulationTime >= (enemy.nextAttackAt ?? 0));
-    if (enemy.bossResponse || ready) {
+      simulationTime >= (enemy.nextAttackAt ?? 0);
+    if ((enemy.bossResponse || ready) && attack(enemy)) {
       enemy.bossResponse = false;
       enemy.hitsWithoutAction = 0;
       console.debug('[IA] Atacar',{dex:enemy.dex,distance,reach});
-      attack(enemy);
       enemy.counterUntil = 0;
       enemy.aimSince = null;
-      enemy.nextAttackAt = simulationTime + (enemy.boss ? 1500 : 2000);
     }
     return;
   }
