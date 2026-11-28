@@ -1,39 +1,73 @@
-import {relics} from './collection.js';
+import { relics } from './collection.js';
 import { assetUrl } from './asset-url.js';
-import {playSound} from './audio.js';
-import { gameTime,cooldownTime } from './clock.js';
+import { playSound } from './audio.js';
+import { gameTime, cooldownTime } from './clock.js';
 import { game } from './state.js';
 import { DIR_VEC, TILE } from './constants.js';
 import { hasSight } from './terrain.js';
 import { settleStats, playerStats, synergyActive } from './benefits.js';
 import { attackReach, damageFor } from './stats.js';
-import { bodyRadius, canMove, dodgeChance, inflictDamage, setState, showToast } from './entities.js';
+import {
+  bodyRadius,
+  canMove,
+  dodgeChance,
+  inflictDamage,
+  setState,
+  showToast,
+} from './entities.js';
 
-import {effectSheets} from '../data/effect-atlas.js';
-import {criticalHit,actorRule,affinity} from './modifiers.js';
-import {dropNewItem,refreshEssenceAttack} from './items.js';
-import {essenceNames} from './hud.js';
+import { effectSheets } from '../data/effect-atlas.js';
+import { criticalHit, actorRule, affinity } from './modifiers.js';
+import { dropNewItem, refreshEssenceAttack } from './items.js';
+import { essenceNames } from './hud.js';
 
-const effectAtlas=new Image();
+const effectAtlas = new Image();
 // Todos los efectos comparten una textura; el catálogo localiza su celda y origen.
 export async function loadEffects() {
-  effectAtlas.src=assetUrl('../../assets/effects/effects.png',import.meta.url).href;
+  effectAtlas.src = assetUrl(
+    '../../assets/effects/effects.png',
+    import.meta.url,
+  ).href;
   await effectAtlas.decode();
 }
 // Registra en el piso un efecto con origen, orientación, duración y hora de inicio.
-export function effect(kind,x,y,durationMs,directionIndex=0, basicOwner=null) {
-  const sprite = { kind,x,y,ms: kind==='rock_aura'?1000:durationMs*2,dir: directionIndex,start:gameTime() };
-  console.debug('[Animación de efecto]', {kind,x,y,directionIndex,durationMs:sprite.ms,
-    frames:effectSheets[kind].columns,framesPerSecond:1000*effectSheets[kind].columns/sprite.ms,start:sprite.start});
+export function effect(
+  kind,
+  x,
+  y,
+  durationMs,
+  directionIndex = 0,
+  basicOwner = null,
+) {
+  const sprite = {
+    kind,
+    x,
+    y,
+    ms: kind === 'rock_aura' ? 1000 : durationMs * 2,
+    dir: directionIndex,
+    start: gameTime(),
+  };
+  console.debug('[Animación de efecto]', {
+    kind,
+    x,
+    y,
+    directionIndex,
+    durationMs: sprite.ms,
+    frames: effectSheets[kind].columns,
+    framesPerSecond: (1000 * effectSheets[kind].columns) / sprite.ms,
+    start: sprite.start,
+  });
   game.effects.push(sprite);
-  if (basicOwner) {sprite.visualOwner=basicOwner; sprite.attackTint=attackElement(basicOwner);}
-  else playSound(({fangaround:'spin',purple:'machinery'})[kind]??kind);
+  if (basicOwner) {
+    sprite.visualOwner = basicOwner;
+    sprite.attackTint = attackElement(basicOwner);
+  } else playSound({ fangaround: 'spin', purple: 'machinery' }[kind] ?? kind);
   return sprite;
 }
 
 // Vincula el efecto de recogida al cuerpo del jugador para acompañarlo mientras dura.
-export function pickupEffect(player,kind) {
-  effect(kind,player.x,player.y,650).follow = player;
+export function pickupEffect(player, kind) {
+  effect(kind, player.x, player.y, 650).follow = player;
 }
 
 // Selecciona el fotograma por tiempo de simulación y proyecta el efecto con su escala y filtro.
@@ -41,42 +75,132 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
   const simulationTime = gameTime();
   for (const visualEffect of game.effects) {
     const sheet = effectSheets[visualEffect.kind];
-    const progress = Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
-    const count=visualEffect.frameCount??sheet.columns;
-    const frame=visualEffect.kind==='bone_throw'?Math.floor((simulationTime-visualEffect.spinStart)/45)%count:(visualEffect.firstFrame??0)+Math.min(count-1,Math.floor((visualEffect.reverse?1-progress:progress)*count));
-    const x = (visualEffect.follow?.x ?? visualEffect.x)*renderZoom-cameraX;
-    const actor = visualEffect.follow ?? visualEffect.owner ?? visualEffect.visualOwner ?? visualEffect.chain?.owner;
-    const lift = actor ? actorRule(actor,'floatHeight') : 0;
-    const y = ((visualEffect.follow?.y ?? visualEffect.y)-lift)*renderZoom-cameraY;
-    const poison = actor && actorRule(actor,'poisonAttack') &&
-      !['heal','grow','boost','revive','frozen','webshield','purple'].includes(visualEffect.kind);
-    const scale = renderZoom*(visualEffect.follow?.stats.size ?? 100)/100*(visualEffect.kind==='mine'?2.4:1);
+    const progress = Math.max(
+      0,
+      Math.min(1, (simulationTime - visualEffect.start) / visualEffect.ms),
+    );
+    const count = visualEffect.frameCount ?? sheet.columns;
+    const frame =
+      visualEffect.kind === 'bone_throw'
+        ? Math.floor((simulationTime - visualEffect.spinStart) / 45) % count
+        : (visualEffect.firstFrame ?? 0) +
+          Math.min(
+            count - 1,
+            Math.floor(
+              (visualEffect.reverse ? 1 - progress : progress) * count,
+            ),
+          );
+    const x = (visualEffect.follow?.x ?? visualEffect.x) * renderZoom - cameraX;
+    const actor =
+      visualEffect.follow ??
+      visualEffect.owner ??
+      visualEffect.visualOwner ??
+      visualEffect.chain?.owner;
+    const lift = actor ? actorRule(actor, 'floatHeight') : 0;
+    const y =
+      ((visualEffect.follow?.y ?? visualEffect.y) - lift) * renderZoom -
+      cameraY;
+    const poison =
+      actor &&
+      actorRule(actor, 'poisonAttack') &&
+      ![
+        'heal',
+        'grow',
+        'boost',
+        'revive',
+        'frozen',
+        'webshield',
+        'purple',
+      ].includes(visualEffect.kind);
+    const scale =
+      ((renderZoom * (visualEffect.follow?.stats.size ?? 100)) / 100) *
+      (visualEffect.kind === 'mine' ? 2.4 : 1);
     if (visualEffect.kind === 'spine') {
-      const fiery=visualEffect.owner && actorRule(visualEffect.owner,'fireAttack');
-      drawFang(drawingContext,visualEffect.dir,x,y,scale,1-progress,fiery?'fire_spike':'spine',poison?attackTint('poison'):fiery?'none':'sepia(1) saturate(6) hue-rotate(65deg)');
+      const fiery =
+        visualEffect.owner && actorRule(visualEffect.owner, 'fireAttack');
+      drawFang(
+        drawingContext,
+        visualEffect.dir,
+        x,
+        y,
+        scale,
+        1 - progress,
+        fiery ? 'fire_spike' : 'spine',
+        poison
+          ? attackTint('poison')
+          : fiery
+            ? 'none'
+            : 'sepia(1) saturate(6) hue-rotate(65deg)',
+      );
       continue;
     }
-    const width = visualEffect.diameter ? visualEffect.diameter*renderZoom : sheet.width*scale, height = visualEffect.diameter ? width : sheet.height*scale;
+    const width = visualEffect.diameter
+        ? visualEffect.diameter * renderZoom
+        : sheet.width * scale,
+      height = visualEffect.diameter ? width : sheet.height * scale;
     drawingContext.save();
-    if(visualEffect.owner && actorRule(visualEffect.owner,'fireAttack') && (visualEffect.weapon || visualEffect.kind==='flare'))drawingContext.filter=game.canvasTheme.fireFilter;
-    if(visualEffect.kind==='rock_throw' && visualEffect.owner.isPlayer && synergyActive('goldRock'))drawingContext.filter=goldFilter;
-    if ((visualEffect.owner ?? visualEffect.follow)?.isPlayer && visualEffect.kind === 'fangaround' && synergyActive('goldSpin'))
+    if (
+      visualEffect.owner &&
+      actorRule(visualEffect.owner, 'fireAttack') &&
+      (visualEffect.weapon || visualEffect.kind === 'flare')
+    )
+      drawingContext.filter = game.canvasTheme.fireFilter;
+    if (
+      visualEffect.kind === 'rock_throw' &&
+      visualEffect.owner.isPlayer &&
+      synergyActive('goldRock')
+    )
       drawingContext.filter = goldFilter;
-    if (poison || visualEffect.attackTint) drawingContext.filter=attackTint(visualEffect.attackTint??'poison');
-    if(visualEffect.filter)drawingContext.filter=visualEffect.filter;
+    if (
+      (visualEffect.owner ?? visualEffect.follow)?.isPlayer &&
+      visualEffect.kind === 'fangaround' &&
+      synergyActive('goldSpin')
+    )
+      drawingContext.filter = goldFilter;
+    if (poison || visualEffect.attackTint)
+      drawingContext.filter = attackTint(visualEffect.attackTint ?? 'poison');
+    if (visualEffect.filter) drawingContext.filter = visualEffect.filter;
     const base = sheet.base ?? sheet.height / 2;
-    const row = sheet.rows === 8 ? (visualEffect.kind==='peck'?(visualEffect.dir+2)%8:visualEffect.dir) : 0;
-    if(visualEffect.shadowReach){
-      const dir=visualEffect.dir,[dx,dy]=DIR_VEC[dir], diagonal=dx && dy;
-      const reach=visualEffect.shadowReach*renderZoom*(diagonal?Math.SQRT1_2:1);
-      const originY=[8,9,34,62,64,62,34,9][dir];
-      const sx=reach/(diagonal?64:60),sy=reach/(diagonal?57:60);
-      drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
-        x-76*sx,y+2*renderZoom-originY*sy,sheet.width*sx,sheet.height*sy);
-      drawingContext.restore();continue;
+    const row =
+      sheet.rows === 8
+        ? visualEffect.kind === 'peck'
+          ? (visualEffect.dir + 2) % 8
+          : visualEffect.dir
+        : 0;
+    if (visualEffect.shadowReach) {
+      const dir = visualEffect.dir,
+        [dx, dy] = DIR_VEC[dir],
+        diagonal = dx && dy;
+      const reach =
+        visualEffect.shadowReach * renderZoom * (diagonal ? Math.SQRT1_2 : 1);
+      const originY = [8, 9, 34, 62, 64, 62, 34, 9][dir];
+      const sx = reach / (diagonal ? 64 : 60),
+        sy = reach / (diagonal ? 57 : 60);
+      drawingContext.drawImage(
+        effectAtlas,
+        sheet.x + frame * sheet.width,
+        sheet.y + row * sheet.height,
+        sheet.width,
+        sheet.height,
+        x - 76 * sx,
+        y + 2 * renderZoom - originY * sy,
+        sheet.width * sx,
+        sheet.height * sy,
+      );
+      drawingContext.restore();
+      continue;
     }
-    drawingContext.drawImage(effectAtlas,sheet.x+frame*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
-      x-width/2+sheet.offsetX*scale,y-height*base/sheet.height+sheet.offsetY*scale,width,height);
+    drawingContext.drawImage(
+      effectAtlas,
+      sheet.x + frame * sheet.width,
+      sheet.y + row * sheet.height,
+      sheet.width,
+      sheet.height,
+      x - width / 2 + sheet.offsetX * scale,
+      y - (height * base) / sheet.height + sheet.offsetY * scale,
+      width,
+      height,
+    );
     drawingContext.restore();
   }
 }
@@ -84,362 +208,775 @@ export function drawEffects(drawingContext, renderZoom, cameraX, cameraY) {
 // La hoja usa parejas abajo/arriba, izquierda/derecha y diagonales.
 const goldFilter = 'sepia(1) saturate(5)';
 // Recorta la dirección correspondiente en la hoja de armas y conserva el estado del canvas.
-export function drawFang(drawingContext,directionIndex,x,y,scale,opacity,kind='fang',filter='none') {
-  const directionCell = [0,5,3,7,1,6,2,4][directionIndex];
+export function drawFang(
+  drawingContext,
+  directionIndex,
+  x,
+  y,
+  scale,
+  opacity,
+  kind = 'fang',
+  filter = 'none',
+) {
+  const directionCell = [0, 5, 3, 7, 1, 6, 2, 4][directionIndex];
   drawingContext.save();
   drawingContext.globalAlpha *= opacity;
   drawingContext.filter = filter;
-  const sheet=effectSheets[kind];
-  const col=kind==='fire_spike'?Math.floor(gameTime()/60)%sheet.columns:directionCell%2;
-  const row=kind==='fire_spike'?directionIndex:Math.floor(directionCell/2);
-  drawingContext.drawImage(effectAtlas,sheet.x+col*sheet.width,sheet.y+row*sheet.height,sheet.width,sheet.height,
-    x+(sheet.offsetX-8)*scale,y+(sheet.offsetY-20)*scale,16*scale,16*scale);
+  const sheet = effectSheets[kind];
+  const col =
+    kind === 'fire_spike'
+      ? Math.floor(gameTime() / 60) % sheet.columns
+      : directionCell % 2;
+  const row =
+    kind === 'fire_spike' ? directionIndex : Math.floor(directionCell / 2);
+  drawingContext.drawImage(
+    effectAtlas,
+    sheet.x + col * sheet.width,
+    sheet.y + row * sheet.height,
+    sheet.width,
+    sheet.height,
+    x + (sheet.offsetX - 8) * scale,
+    y + (sheet.offsetY - 20) * scale,
+    16 * scale,
+    16 * scale,
+  );
   drawingContext.restore();
 }
 
 // Selecciona suelo libre del piso o de la sala que contiene al lanzador.
 // En un pasillo la perla toma como referencia la habitación más cercana.
 function landing(owner, roomOnly) {
-  const tileX=Math.floor(owner.x/TILE), tileY=Math.floor(owner.y/TILE);
-  const contains=(room,x,y)=>x>=room.x && x<room.x+room.w && y>=room.y && y<room.y+room.h;
-  const rooms=game.rooms.filter(room=>!room.isNode && room.w>1);
-  const room=roomOnly && rooms.length>0 && (rooms.find(room=>contains(room,tileX,tileY)) ??
-    rooms.reduce((best,next)=>Math.hypot(next.cx-tileX,next.cy-tileY)<Math.hypot(best.cx-tileX,best.cy-tileY)?next:best));
-  const sites=[];
-  game.grid.forEach((row,y)=>row.forEach((tile,x)=>{
-    if(tile || (x===tileX && y===tileY) || (room && !contains(room,x,y)))return;
-    const site={x:(x+.5)*TILE,y:(y+.5)*TILE};
-    if(canMove(owner,site.x,site.y))sites.push(site);
-  }));
-  return sites[Math.floor(Math.random()*sites.length)];
+  const tileX = Math.floor(owner.x / TILE),
+    tileY = Math.floor(owner.y / TILE);
+  const contains = (room, x, y) =>
+    x >= room.x && x < room.x + room.w && y >= room.y && y < room.y + room.h;
+  const rooms = game.rooms.filter((room) => !room.isNode && room.w > 1);
+  const room =
+    roomOnly &&
+    rooms.length > 0 &&
+    (rooms.find((room) => contains(room, tileX, tileY)) ??
+      rooms.reduce((best, next) =>
+        Math.hypot(next.cx - tileX, next.cy - tileY) <
+        Math.hypot(best.cx - tileX, best.cy - tileY)
+          ? next
+          : best,
+      ));
+  const sites = [];
+  game.grid.forEach((row, y) =>
+    row.forEach((tile, x) => {
+      if (
+        tile ||
+        (x === tileX && y === tileY) ||
+        (room && !contains(room, x, y))
+      )
+        return;
+      const site = { x: (x + 0.5) * TILE, y: (y + 0.5) * TILE };
+      if (canMove(owner, site.x, site.y)) sites.push(site);
+    }),
+  );
+  return sites[Math.floor(Math.random() * sites.length)];
 }
 
-function machinerySite(owner){
-  let anchors=[...game.drops.filter(drop=>drop.id),...game.entities.filter(e=>e.hp && !e.ally && e.isPlayer!==owner.isPlayer)];
-  if(owner.isPlayer && synergyActive('vipWarp') && ['stairs','portal'].includes(game.portal?.kind)){
-    anchors=[{x:(game.portal.x+.5)*TILE,y:(game.portal.y+.5)*TILE}];
+function machinerySite(owner) {
+  let anchors = [
+    ...game.drops.filter((drop) => drop.id),
+    ...game.entities.filter(
+      (e) => e.hp && !e.ally && e.isPlayer !== owner.isPlayer,
+    ),
+  ];
+  if (
+    owner.isPlayer &&
+    synergyActive('vipWarp') &&
+    ['stairs', 'portal'].includes(game.portal?.kind)
+  ) {
+    anchors = [
+      { x: (game.portal.x + 0.5) * TILE, y: (game.portal.y + 0.5) * TILE },
+    ];
   }
-  const sites=[];
-  for(const anchor of anchors)for(const [dx,dy] of DIR_VEC){
-    const col=Math.floor(anchor.x/TILE)+dx,row=Math.floor(anchor.y/TILE)+dy;
-    const x=(col+.5)*TILE,y=(row+.5)*TILE;
-    if(game.grid[row]?.[col]===0 && canMove(owner,x,y))sites.push({x,y});
-  }
-  return sites[Math.floor(Math.random()*sites.length)];
+  const sites = [];
+  for (const anchor of anchors)
+    for (const [dx, dy] of DIR_VEC) {
+      const col = Math.floor(anchor.x / TILE) + dx,
+        row = Math.floor(anchor.y / TILE) + dy;
+      const x = (col + 0.5) * TILE,
+        y = (row + 0.5) * TILE;
+      if (game.grid[row]?.[col] === 0 && canMove(owner, x, y))
+        sites.push({ x, y });
+    }
+  return sites[Math.floor(Math.random() * sites.length)];
 }
 
-export function paralyze(target,ms){
-  target.shockUntil=gameTime()+ms;
-  target.paralyzedUntil=Math.max(target.paralyzedUntil??0,target.shockUntil);
-  target.impactPending=false;target.abilityCast=null;target.rockUntil=0;
-  if(target.isPlayer)game.cast=null;
-  setState(target,'Charge');
+export function paralyze(target, ms) {
+  target.shockUntil = gameTime() + ms;
+  target.paralyzedUntil = Math.max(
+    target.paralyzedUntil ?? 0,
+    target.shockUntil,
+  );
+  target.impactPending = false;
+  target.abilityCast = null;
+  target.rockUntil = 0;
+  if (target.isPlayer) game.cast = null;
+  setState(target, 'Charge');
 }
 // Ejecuta las activas sin proyectil mediante el mismo comportamiento para ambas IAs y Ditto.
-function utilityCast(id,owner,destination) {
-  if(id==='transparent'){owner.evasionUntil=gameTime()+7000;return;}
-  if(id==='royalty'){
-    for(const target of game.entities){
-      if(!target.hp || target.ally || target.isPlayer===owner.isPlayer)continue;
-      if(Math.hypot(owner.x-target.x,owner.y-target.y)<=attackReach(owner.stats)+bodyRadius(target))
-        target.paralyzedUntil=gameTime()+1500;
+function utilityCast(id, owner, destination) {
+  if (id === 'transparent') {
+    owner.evasionUntil = gameTime() + 7000;
+    return;
+  }
+  if (id === 'royalty') {
+    for (const target of game.entities) {
+      if (!target.hp || target.ally || target.isPlayer === owner.isPlayer)
+        continue;
+      if (
+        Math.hypot(owner.x - target.x, owner.y - target.y) <=
+        attackReach(owner.stats) + bodyRadius(target)
+      )
+        target.paralyzedUntil = gameTime() + 1500;
     }
     return;
   }
-  const site=id==='machinery'?destination:landing(owner,true);
-  if(!site)return;
-  for(const position of [owner,site]){
-    const fx=effect('purple',position.x,position.y,624);
-    fx.visualOwner=owner;
-    if(id==='machinery')fx.filter='grayscale(1)';
+  const site = id === 'machinery' ? destination : landing(owner, true);
+  if (!site) return;
+  for (const position of [owner, site]) {
+    const fx = effect('purple', position.x, position.y, 624);
+    fx.visualOwner = owner;
+    if (id === 'machinery') fx.filter = 'grayscale(1)';
   }
-  Object.assign(owner,site);
-  if(id==='machinery')for(const enemy of game.entities){
-    if(enemy.hp && !enemy.ally && enemy.isPlayer!==owner.isPlayer &&
-        Math.hypot(enemy.x-owner.x,enemy.y-owner.y)<=attackReach(owner.stats))paralyze(enemy,1000);
-  }
+  Object.assign(owner, site);
+  if (id === 'machinery')
+    for (const enemy of game.entities) {
+      if (
+        enemy.hp &&
+        !enemy.ally &&
+        enemy.isPlayer !== owner.isPlayer &&
+        Math.hypot(enemy.x - owner.x, enemy.y - owner.y) <=
+          attackReach(owner.stats)
+      )
+        paralyze(enemy, 1000);
+    }
 }
-const utilities=new Set(['machinery','spoink_pearl','transparent','royalty']);
+const utilities = new Set([
+  'machinery',
+  'spoink_pearl',
+  'transparent',
+  'royalty',
+]);
 
 // La misma reducción de recarga se aplica a beneficios y reliquias.
-function cooldownDuration(seconds){
-  return seconds*1000*(1-actorRule(game.player,'cooldownReduction')) * (game.held.has('heritage_water')?.9:1)
-    * (game.inventory.has('boost_steroids')?.85:1) * (game.inventory.has('golden_disk')?.75:1) * (synergyActive('royalCrown')?.5:1);
+function cooldownDuration(seconds) {
+  return (
+    seconds *
+    1000 *
+    (1 - actorRule(game.player, 'cooldownReduction')) *
+    (game.held.has('heritage_water') ? 0.9 : 1) *
+    (game.inventory.has('boost_steroids') ? 0.85 : 1) *
+    (game.inventory.has('golden_disk') ? 0.75 : 1) *
+    (synergyActive('royalCrown') ? 0.5 : 1)
+  );
 }
 
-function wildEnemies(){
-  return game.entities.filter(e=>!e.isPlayer && !e.ally && e.hp>0);
+function wildEnemies() {
+  return game.entities.filter((e) => !e.isPlayer && !e.ally && e.hp > 0);
 }
 
 // Encuentra la primera casilla de suelo conectada al jugador y libre de enemigos.
-function ejectSite(owner){
-  const start={x:Math.floor(owner.x/TILE),y:Math.floor(owner.y/TILE)};
-  const seen=new Set([start.x+','+start.y]), queue=[start];
-  for(let i=0;i<queue.length;i++)for(const [dx,dy] of [[0,1],[1,0],[-1,0],[0,-1]]){
-    const x=queue[i].x+dx,y=queue[i].y+dy,key=x+','+y;
-    if(seen.has(key)||game.grid[y]?.[x]!==0)continue;
-    seen.add(key);queue.push({x,y});
-    if(!game.entities.some(e=>e.hp && Math.floor(e.x/TILE)===x && Math.floor(e.y/TILE)===y))return {x,y};
-  }
+function ejectSite(owner) {
+  const start = {
+    x: Math.floor(owner.x / TILE),
+    y: Math.floor(owner.y / TILE),
+  };
+  const seen = new Set([start.x + ',' + start.y]),
+    queue = [start];
+  for (let i = 0; i < queue.length; i++)
+    for (const [dx, dy] of [
+      [0, 1],
+      [1, 0],
+      [-1, 0],
+      [0, -1],
+    ]) {
+      const x = queue[i].x + dx,
+        y = queue[i].y + dy,
+        key = x + ',' + y;
+      if (seen.has(key) || game.grid[y]?.[x] !== 0) continue;
+      seen.add(key);
+      queue.push({ x, y });
+      if (
+        !game.entities.some(
+          (e) =>
+            e.hp &&
+            Math.floor(e.x / TILE) === x &&
+            Math.floor(e.y / TILE) === y,
+        )
+      )
+        return { x, y };
+    }
 }
 
-function activateRelic(id,owner){
-  if(!owner.hp || game.changingLevel || game.cast || !['Idle','Walk'].includes(owner.state))return;
-  const config=relics[id], now=cooldownTime(), remaining=(game.cooldowns[id]??0)-now;
-  if(remaining>0)return showToast('Recarga: '+Math.ceil(remaining/1000)+' s');
-  const site=id==='eject_button'?ejectSite(owner):null;
-  if(id==='eject_button' && !site)return showToast('No hay espacio para el teletransportador.');
-  const balances=game.essences;
-  if(config.cost){
-    const available=config.essence?(balances[config.essence]??0):Object.values(balances).reduce((a,b)=>a+b,0);
-    if(available<config.cost)return showToast('Esencias insuficientes');
-    for(let i=0;i<config.cost;i++){
-      const types=Object.keys(balances).filter(k=>balances[k]>0);
-      balances[config.essence??types[Math.floor(Math.random()*types.length)]]--;
+function activateRelic(id, owner) {
+  if (
+    !owner.hp ||
+    game.changingLevel ||
+    game.cast ||
+    !['Idle', 'Walk'].includes(owner.state)
+  )
+    return;
+  const config = relics[id],
+    now = cooldownTime(),
+    remaining = (game.cooldowns[id] ?? 0) - now;
+  if (remaining > 0)
+    return showToast('Recarga: ' + Math.ceil(remaining / 1000) + ' s');
+  const site = id === 'eject_button' ? ejectSite(owner) : null;
+  if (id === 'eject_button' && !site)
+    return showToast('No hay espacio para el teletransportador.');
+  const balances = game.essences;
+  if (config.cost) {
+    const available = config.essence
+      ? (balances[config.essence] ?? 0)
+      : Object.values(balances).reduce((a, b) => a + b, 0);
+    if (available < config.cost) return showToast('Esencias insuficientes');
+    for (let i = 0; i < config.cost; i++) {
+      const types = Object.keys(balances).filter((k) => balances[k] > 0);
+      balances[
+        config.essence ?? types[Math.floor(Math.random() * types.length)]
+      ]--;
     }
     refreshEssenceAttack();
   }
-  game.cooldownDurations[id]=cooldownDuration(config.cooldown);
-  game.cooldowns[id]=now+game.cooldownDurations[id];
-  const reach=attackReach(owner.stats);
-  if(id==='death_flute'){
-    game.cast={id,start:gameTime(),dir:owner.dir};setState(owner,'Charge');playSound('charge');
-  }else if(id==='eject_button'){
-    game.mission.failed=game.mission.ejected=true;
-    game.portal={...site,kind:'portal',entered:false};playSound('machinery');
-  }else if(id==='pressure_pill'){
-    effect('tornado',owner.x,owner.y,300).follow=owner;
-    for(const target of wildEnemies()){
-      target.windPush={x:owner.x,y:owner.y,remaining:10*reach,step:10*reach/30};
-      setState(target,'Hurt');
+  game.cooldownDurations[id] = cooldownDuration(config.cooldown);
+  game.cooldowns[id] = now + game.cooldownDurations[id];
+  const reach = attackReach(owner.stats);
+  if (id === 'death_flute') {
+    game.cast = { id, start: gameTime(), dir: owner.dir };
+    setState(owner, 'Charge');
+    playSound('charge');
+  } else if (id === 'eject_button') {
+    game.mission.failed = game.mission.ejected = true;
+    game.portal = { ...site, kind: 'portal', entered: false };
+    playSound('machinery');
+  } else if (id === 'pressure_pill') {
+    effect('tornado', owner.x, owner.y, 300).follow = owner;
+    for (const target of wildEnemies()) {
+      target.windPush = {
+        x: owner.x,
+        y: owner.y,
+        remaining: 10 * reach,
+        step: (10 * reach) / 30,
+      };
+      setState(target, 'Hurt');
     }
-  }else{
-    const wave=effect('void_zone',owner.x,owner.y,350);
-    Object.assign(wave,{owner,radius:3*reach,hit:new Set(),diameter:1});
+  } else {
+    const wave = effect('void_zone', owner.x, owner.y, 350);
+    Object.assign(wave, {
+      owner,
+      radius: 3 * reach,
+      hit: new Set(),
+      diameter: 1,
+    });
   }
 }
 
 // Valida la tecla, el estado del jugador y el coste antes de iniciar el lanzamiento y su recarga.
 export function useActive(slot) {
-  const player=game.player, simulationTime=gameTime();
-  if(player.dash?.until>simulationTime || player.frozenUntil>simulationTime || player.paralyzedUntil>simulationTime || player.rockUntil>simulationTime)return;
-  if(slot==='r'){
-    const id=[...(game.runRelics??[])].find(key=>relics[key]?.slot==='r');
-    if(id && id!=='depleted_battery')return activateRelic(id,player);
-    if(id!=='depleted_battery')return;
-    if(!player.hp||game.changingLevel||game.cast||!['Idle','Walk'].includes(player.state))return;
-    if(game.batteryEnergy<4)return showToast('Batería · '+game.batteryEnergy+'/4 esencias eléctricas');
-    game.batteryEnergy-=4;
-    const radius=attackReach(player.stats)*3;
-    Object.assign(effect('battery',player.x,player.y,650),{visualOwner:player,diameter:radius*2});
-    for(const enemy of game.entities) if(!enemy.isPlayer&&!enemy.ally&&enemy.hp&&Math.hypot(enemy.x-player.x,enemy.y-player.y)<=radius+bodyRadius(enemy))
-      elementalHit(player,enemy,4*player.stats.attack,'electric');
+  const player = game.player,
+    simulationTime = gameTime();
+  if (
+    player.dash?.until > simulationTime ||
+    player.frozenUntil > simulationTime ||
+    player.paralyzedUntil > simulationTime ||
+    player.rockUntil > simulationTime
+  )
+    return;
+  if (slot === 'r') {
+    const id = [...(game.runRelics ?? [])].find(
+      (key) => relics[key]?.slot === 'r',
+    );
+    if (id && id !== 'depleted_battery') return activateRelic(id, player);
+    if (id !== 'depleted_battery') return;
+    if (
+      !player.hp ||
+      game.changingLevel ||
+      game.cast ||
+      !['Idle', 'Walk'].includes(player.state)
+    )
+      return;
+    if (game.batteryEnergy < 4)
+      return showToast(
+        'Batería · ' + game.batteryEnergy + '/4 esencias eléctricas',
+      );
+    game.batteryEnergy -= 4;
+    const radius = attackReach(player.stats) * 3;
+    Object.assign(effect('battery', player.x, player.y, 650), {
+      visualOwner: player,
+      diameter: radius * 2,
+    });
+    for (const enemy of game.entities)
+      if (
+        !enemy.isPlayer &&
+        !enemy.ally &&
+        enemy.hp &&
+        Math.hypot(enemy.x - player.x, enemy.y - player.y) <=
+          radius + bodyRadius(enemy)
+      )
+        elementalHit(player, enemy, 4 * player.stats.attack, 'electric');
     return;
   }
-  const benefitId=[...game.held].find(key=>game.benefits.get(key).slot === slot);
-  if (!benefitId || !player.hp || game.changingLevel || game.cast || !['Idle','Walk'].includes(player.state)) return;
-  const benefit=game.benefits.get(benefitId);
-  if ((game.cooldowns[benefitId]??0)>cooldownTime()) return showToast('Recarga: '+Math.ceil((game.cooldowns[benefitId]-cooldownTime())/1000)+' s');
-  const destination=benefitId==='machinery'?machinerySite(player):null;
-  if(benefitId==='machinery' && !destination)return showToast('No hay un destino disponible.');
-  if(!payEssences(player,benefitId))return showToast('PV completos o esencias insuficientes');
-  if (benefitId==='seer') {
+  const benefitId = [...game.held].find(
+    (key) => game.benefits.get(key).slot === slot,
+  );
+  if (
+    !benefitId ||
+    !player.hp ||
+    game.changingLevel ||
+    game.cast ||
+    !['Idle', 'Walk'].includes(player.state)
+  )
+    return;
+  const benefit = game.benefits.get(benefitId);
+  if ((game.cooldowns[benefitId] ?? 0) > cooldownTime())
+    return showToast(
+      'Recarga: ' +
+        Math.ceil((game.cooldowns[benefitId] - cooldownTime()) / 1000) +
+        ' s',
+    );
+  const destination = benefitId === 'machinery' ? machinerySite(player) : null;
+  if (benefitId === 'machinery' && !destination)
+    return showToast('No hay un destino disponible.');
+  if (!payEssences(player, benefitId))
+    return showToast('PV completos o esencias insuficientes');
+  if (benefitId === 'seer') {
     if (player.hp <= 1) return showToast('Necesitas más de 1 PV');
     player.hp--;
   }
   // La reducción de cada fuente se multiplica una vez, al iniciar la recarga de esta tecla.
   const duration = cooldownDuration(benefit.amount);
-  game.cooldownDurations[benefitId]=duration;
-  game.cooldowns[benefitId]=cooldownTime()+duration;
-  game.cast={id: benefitId,destination,start:simulationTime,dir:player.dir,hit:new Set()};
-  setState(player,['dealer','mamoswine_fang'].includes(benefitId)?'Spin':'Charge');
+  game.cooldownDurations[benefitId] = duration;
+  game.cooldowns[benefitId] = cooldownTime() + duration;
+  game.cast = {
+    id: benefitId,
+    destination,
+    start: simulationTime,
+    dir: player.dir,
+    hit: new Set(),
+  };
+  setState(
+    player,
+    ['dealer', 'mamoswine_fang'].includes(benefitId) ? 'Spin' : 'Charge',
+  );
 
-  if (benefitId==='mamoswine_fang') effect('fangaround',player.x,player.y,560).follow=player;
+  if (benefitId === 'mamoswine_fang')
+    effect('fangaround', player.x, player.y, 560).follow = player;
 }
 
 // Fija el origen, alcance y daño del proyectil en el instante del disparo.
 function launchFlare(owner, directionIndex) {
-  const projectile = effect('flare',owner.x,owner.y,750,directionIndex);
-  projectile.ms/=1.5*(1+actorRule(owner,'projectileBonus'));
+  const projectile = effect('flare', owner.x, owner.y, 750, directionIndex);
+  projectile.ms /= 1.5 * (1 + actorRule(owner, 'projectileBonus'));
   const fiery = game.pokemon.get(owner.dex).types.includes('fire');
-  Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:4*attackReach(owner.stats),
-    element:'fire',damage:Math.round(owner.stats.attack*(fiery?1.5:1))});
+  Object.assign(projectile, {
+    owner,
+    originX: owner.x,
+    originY: owner.y,
+    reach: 4 * attackReach(owner.stats),
+    element: 'fire',
+    damage: Math.round(owner.stats.attack * (fiery ? 1.5 : 1)),
+  });
 }
 
 // Solo los efectos tipados consultan afinidades. Los dos tipos defensivos
 // se combinan multiplicando, con resistencia parcial de Tierra a Eléctrico.
-export function elementalHit(owner,target,power,element,ownerAbility=true,critical=false,fixedElement=false) {
-  const chart={
-    fire:{grass:2,ice:2,bug:2,steel:2,fire:.5,water:.5,rock:.5,dragon:.5},
-    water:{fire:2,ground:2,rock:2,water:.5,grass:.5,dragon:.5},
-    grass:{water:2,ground:2,rock:2,fire:.5,grass:.5,poison:.5,flying:.5,bug:.5,dragon:.5,steel:.5},
-    rock:{fire:2,ice:2,flying:2,bug:2,fighting:.5,ground:.5,steel:.5},
-    poison:{grass:2,fairy:2,poison:.5,ground:.5,rock:.5,ghost:.5,steel:.5},
-    psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:.5},
-    ground:{electric:2,fire:2,rock:2,steel:2,poison:2,grass:.5,bug:.5,flying:.5},
-    steel:{rock:2,ice:2,steel:.5,fire:.5,water:.5,electric:.5},
-    dark:{psychic:2,ghost:2,dark:.5,fighting:.5},
-    ghost:{ghost:2,psychic:2,dark:.5,normal:.5},
-    flying:{grass:2,fighting:2,bug:2,electric:.5,rock:.5,steel:.5},
-    electric:{water:2,flying:2,electric:.5,grass:.5,dragon:.5,ground:.5}
+export function elementalHit(
+  owner,
+  target,
+  power,
+  element,
+  ownerAbility = true,
+  critical = false,
+  fixedElement = false,
+) {
+  const chart = {
+    fire: {
+      grass: 2,
+      ice: 2,
+      bug: 2,
+      steel: 2,
+      fire: 0.5,
+      water: 0.5,
+      rock: 0.5,
+      dragon: 0.5,
+    },
+    water: { fire: 2, ground: 2, rock: 2, water: 0.5, grass: 0.5, dragon: 0.5 },
+    grass: {
+      water: 2,
+      ground: 2,
+      rock: 2,
+      fire: 0.5,
+      grass: 0.5,
+      poison: 0.5,
+      flying: 0.5,
+      bug: 0.5,
+      dragon: 0.5,
+      steel: 0.5,
+    },
+    rock: {
+      fire: 2,
+      ice: 2,
+      flying: 2,
+      bug: 2,
+      fighting: 0.5,
+      ground: 0.5,
+      steel: 0.5,
+    },
+    poison: {
+      grass: 2,
+      fairy: 2,
+      poison: 0.5,
+      ground: 0.5,
+      rock: 0.5,
+      ghost: 0.5,
+      steel: 0.5,
+    },
+    psychic: { fighting: 2, poison: 2, psychic: 0.5, steel: 0.5, dark: 0.5 },
+    ground: {
+      electric: 2,
+      fire: 2,
+      rock: 2,
+      steel: 2,
+      poison: 2,
+      grass: 0.5,
+      bug: 0.5,
+      flying: 0.5,
+    },
+    steel: {
+      rock: 2,
+      ice: 2,
+      steel: 0.5,
+      fire: 0.5,
+      water: 0.5,
+      electric: 0.5,
+    },
+    dark: { psychic: 2, ghost: 2, dark: 0.5, fighting: 0.5 },
+    ghost: { ghost: 2, psychic: 2, dark: 0.5, normal: 0.5 },
+    flying: {
+      grass: 2,
+      fighting: 2,
+      bug: 2,
+      electric: 0.5,
+      rock: 0.5,
+      steel: 0.5,
+    },
+    electric: {
+      water: 2,
+      flying: 2,
+      electric: 0.5,
+      grass: 0.5,
+      dragon: 0.5,
+      ground: 0.5,
+    },
   };
-  if (!ownerAbility && !fixedElement) element=attackElement(owner)??element;
-  const factor=affinity(element,target)*game.pokemon.get(target.dex).types.reduce((value,type)=>value*(chart[element]?.[type]??1),1);
-  const damage = inflictDamage(owner,target,power*factor,critical,ownerAbility);
-  const scorched = damage > 0 && target.isPlayer && element === 'fire' &&
-    [...game.inventory].find(id => game.items[id]?.burnsOn === element);
+  if (!ownerAbility && !fixedElement) element = attackElement(owner) ?? element;
+  const factor =
+    affinity(element, target) *
+    game.pokemon
+      .get(target.dex)
+      .types.reduce((value, type) => value * (chart[element]?.[type] ?? 1), 1);
+  const damage = inflictDamage(
+    owner,
+    target,
+    power * factor,
+    critical,
+    ownerAbility,
+  );
+  const scorched =
+    damage > 0 &&
+    target.isPlayer &&
+    element === 'fire' &&
+    [...game.inventory].find((id) => game.items[id]?.burnsOn === element);
   if (scorched) {
     game.inventory.delete(scorched);
-    target.stats=playerStats(game.pokemon.get(target.dex),game.progress,target.bonuses);
-    showToast('El fuego ha quemado '+game.items[scorched].name+'.');
+    target.stats = playerStats(
+      game.pokemon.get(target.dex),
+      game.progress,
+      target.bonuses,
+    );
+    showToast('El fuego ha quemado ' + game.items[scorched].name + '.');
     playSound('inflame');
   }
   return damage;
 }
 
 // El ataque elemental se comparte entre contacto, proyectiles y habilidades.
-export function attackElement(owner){
-  const held=owner.isPlayer?game.held:owner.benefits;
-  for(const id of [...(held??[])].reverse()){
-    const element=game.benefits.get(id)?.element;
-    if(element)return element;
+export function attackElement(owner) {
+  const held = owner.isPlayer ? game.held : owner.benefits;
+  for (const id of [...(held ?? [])].reverse()) {
+    const element = game.benefits.get(id)?.element;
+    if (element) return element;
   }
-  if(actorRule(owner,'poisonAttack'))return 'poison';
-  if(actorRule(owner,'fireAttack'))return 'fire';
-  if(actorRule(owner,'psychicAttack'))return 'psychic';
+  if (actorRule(owner, 'poisonAttack')) return 'poison';
+  if (actorRule(owner, 'fireAttack')) return 'fire';
+  if (actorRule(owner, 'psychicAttack')) return 'psychic';
 }
 export function attackTint(element) {
-  if(element==='water')return 'sepia(1) saturate(6) hue-rotate(165deg)';
-  if(element==='grass')return 'sepia(1) saturate(6) hue-rotate(67deg)';
-  return element === 'poison' ? game.canvasTheme.poisonFilter : element === 'fire' ? game.canvasTheme.fireFilter :
-    element === 'psychic' ? game.canvasTheme.psychicFilter : null;
+  if (element === 'water') return 'sepia(1) saturate(6) hue-rotate(165deg)';
+  if (element === 'grass') return 'sepia(1) saturate(6) hue-rotate(67deg)';
+  return element === 'poison'
+    ? game.canvasTheme.poisonFilter
+    : element === 'fire'
+      ? game.canvasTheme.fireFilter
+      : element === 'psychic'
+        ? game.canvasTheme.psychicFilter
+        : null;
 }
 // Crea ocho proyectiles equidistantes cuyo daño depende de la defensa al recibir el crítico.
 export function releaseSpines(owner) {
-  for (let directionIndex=0;directionIndex<8;directionIndex++) {
-    const projectile=effect('spine',owner.x,owner.y,680,directionIndex);
-    projectile.ms/=1.5*(1+actorRule(owner,'projectileBonus'));
-    Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:32,damage:Math.max(1,Math.round(owner.stats.defense*.1))});
+  for (let directionIndex = 0; directionIndex < 8; directionIndex++) {
+    const projectile = effect('spine', owner.x, owner.y, 680, directionIndex);
+    projectile.ms /= 1.5 * (1 + actorRule(owner, 'projectileBonus'));
+    Object.assign(projectile, {
+      owner,
+      originX: owner.x,
+      originY: owner.y,
+      reach: 32,
+      damage: Math.max(1, Math.round(owner.stats.defense * 0.1)),
+    });
   }
 }
 
 // Resuelve la explosión circular, incluido el daño que recibe su propietario.
 function blast(owner) {
-  effect('mine',owner.x,owner.y,1000).owner=owner;
+  effect('mine', owner.x, owner.y, 1000).owner = owner;
   for (const target of game.entities) {
-    if (target.ally || !target.hp || (target!==owner && owner.isPlayer===target.isPlayer)) continue;
-    if (Math.hypot(target.x-owner.x,target.y-owner.y)<=72+(target===owner?0:bodyRadius(target))) {
-      inflictDamage(owner,target,damageFor(owner,target,false),false,true);
+    if (
+      target.ally ||
+      !target.hp ||
+      (target !== owner && owner.isPlayer === target.isPlayer)
+    )
+      continue;
+    if (
+      Math.hypot(target.x - owner.x, target.y - owner.y) <=
+      72 + (target === owner ? 0 : bodyRadius(target))
+    ) {
+      inflictDamage(
+        owner,
+        target,
+        damageFor(owner, target, false),
+        false,
+        true,
+      );
     }
   }
 }
 
 // Gira al atacante y registra a quién ha alcanzado para evitar impactos repetidos durante las dos vueltas.
 function spin(owner, activeCast, elapsed) {
-  owner.dir = (activeCast.dir + Math.min(16,Math.floor(16*elapsed/560))) % 8;
+  owner.dir =
+    (activeCast.dir + Math.min(16, Math.floor((16 * elapsed) / 560))) % 8;
   for (const target of game.entities) {
-    if (target.ally || target.isPlayer === owner.isPlayer || !target.hp || activeCast.hit.has(target)) continue;
-    if (Math.hypot(target.x-owner.x,target.y-owner.y) > attackReach(owner.stats)+bodyRadius(target)) continue;
+    if (
+      target.ally ||
+      target.isPlayer === owner.isPlayer ||
+      !target.hp ||
+      activeCast.hit.has(target)
+    )
+      continue;
+    if (
+      Math.hypot(target.x - owner.x, target.y - owner.y) >
+      attackReach(owner.stats) + bodyRadius(target)
+    )
+      continue;
     activeCast.hit.add(target);
-    inflictDamage(owner,target,owner.stats.attack,false,true);
+    inflictDamage(owner, target, owner.stats.attack, false, true);
   }
 }
 
 // El retroceso recorre pasos cortos y se detiene ante paredes o cuerpos.
-export function knockback(owner,target,steps) {
-  const dx=target.x-owner.x,dy=target.y-owner.y,length=Math.hypot(dx,dy)||1;
-  for(let step=0;step<steps;step++){
-    const x=target.x+dx/length,y=target.y+dy/length;
-    if(!canMove(target,x,y))break;
-    target.x=x;target.y=y;
+export function knockback(owner, target, steps) {
+  const dx = target.x - owner.x,
+    dy = target.y - owner.y,
+    length = Math.hypot(dx, dy) || 1;
+  for (let step = 0; step < steps; step++) {
+    const x = target.x + dx / length,
+      y = target.y + dy / length;
+    if (!canMove(target, x, y)) break;
+    target.x = x;
+    target.y = y;
   }
 }
 
 // Un ataque a distancia sustituye al contacto. El primer cuerpo absorbe el proyectil.
-export function launchWeapon(owner,kind){
-  const projectile=effect(kind,owner.x,owner.y,260,owner.dir,owner);
-  projectile.ms/=1.5*(1+actorRule(owner,'projectileBonus'));
-  const relicShot=['bone_throw','iron_bomb'].includes(kind);
-  Object.assign(projectile,{owner,originX:owner.x,originY:owner.y,reach:attackReach(owner.stats)*(relicShot?2:1),
-    element:({fire_spike:'fire',watergun:'water',rock_throw:'rock',bone_throw:'ground',iron_bomb:'steel'})[kind],weapon:true,relicShot});
-  if(kind==='bone_throw'){
-    projectile.spinStart=projectile.start;owner.boneInFlight=projectile;
-    projectile.hit=new Set();
+export function launchWeapon(owner, kind) {
+  const projectile = effect(kind, owner.x, owner.y, 260, owner.dir, owner);
+  projectile.ms /= 1.5 * (1 + actorRule(owner, 'projectileBonus'));
+  const relicShot = ['bone_throw', 'iron_bomb'].includes(kind);
+  Object.assign(projectile, {
+    owner,
+    originX: owner.x,
+    originY: owner.y,
+    reach: attackReach(owner.stats) * (relicShot ? 2 : 1),
+    element: {
+      fire_spike: 'fire',
+      watergun: 'water',
+      rock_throw: 'rock',
+      bone_throw: 'ground',
+      iron_bomb: 'steel',
+    }[kind],
+    weapon: true,
+    relicShot,
+  });
+  if (kind === 'bone_throw') {
+    projectile.spinStart = projectile.start;
+    owner.boneInFlight = projectile;
+    projectile.hit = new Set();
   }
-  if(kind==='fire_spike'){projectile.hit=new Set();projectile.attackTint=null;}
-  if(kind==='iron_bomb')projectile.frameCount=9;
+  if (kind === 'fire_spike') {
+    projectile.hit = new Set();
+    projectile.attackTint = null;
+  }
+  if (kind === 'iron_bomb') projectile.frameCount = 9;
 }
 
 // Cada tramo tiene su propio registro de impactos. El regreso persigue al lanzador.
-function advanceBone(fx,fraction,now){
-  const owner=fx.owner;
-  if(!owner.hp){owner.boneInFlight=null;return false;}
-  const [dx,dy]=DIR_VEC[fx.dir],scale=fx.reach/Math.hypot(dx,dy);
-  let destX=fx.returning?owner.x:fx.originX+dx*scale*fraction;
-  let destY=fx.returning?owner.y:fx.originY+dy*scale*fraction;
-  const wall=!fx.returning && !hasSight(fx,{x:destX,y:destY});
-  if(wall){destX=fx.x;destY=fx.y;}
-  const vx=destX-fx.x,vy=destY-fx.y,length=Math.hypot(vx,vy);
-  const step=fx.returning?Math.min(length,fx.reach*(now-fx.lastStep)/fx.ms):length;
-  for(const target of game.entities){
-    if(target.isPlayer===owner.isPlayer || target.ally || !target.hp || fx.hit.has(target))continue;
-    const along=length?Math.max(0,Math.min(step,((target.x-fx.x)*vx+(target.y-fx.y)*vy)/length)):0;
-    if(Math.hypot(target.x-fx.x-vx*along/(length||1),target.y-fx.y-vy*along/(length||1))>bodyRadius(target)+5 || !hasSight(fx,target))continue;
-    fx.hit.add(target);
-    if(Math.random()<dodgeChance(target))continue;
-    const crit=criticalHit(owner,target);
-    elementalHit(owner,target,damageFor(owner,target,crit)*(1+actorRule(owner,'projectileBonus')),'ground',false,crit,true);
-    projectileImpact(fx,target.x,target.y);
+function advanceBone(fx, fraction, now) {
+  const owner = fx.owner;
+  if (!owner.hp) {
+    owner.boneInFlight = null;
+    return false;
   }
-  fx.x+=vx*step/(length||1);fx.y+=vy*step/(length||1);fx.lastStep=now;
-  if(fx.returning && step>=length){owner.boneInFlight=null;return false;}
-  if(!fx.returning && (fraction>=1 || wall)){fx.returning=true;fx.hit.clear();fx.start=now;}
+  const [dx, dy] = DIR_VEC[fx.dir],
+    scale = fx.reach / Math.hypot(dx, dy);
+  let destX = fx.returning ? owner.x : fx.originX + dx * scale * fraction;
+  let destY = fx.returning ? owner.y : fx.originY + dy * scale * fraction;
+  const wall = !fx.returning && !hasSight(fx, { x: destX, y: destY });
+  if (wall) {
+    destX = fx.x;
+    destY = fx.y;
+  }
+  const vx = destX - fx.x,
+    vy = destY - fx.y,
+    length = Math.hypot(vx, vy);
+  const step = fx.returning
+    ? Math.min(length, (fx.reach * (now - fx.lastStep)) / fx.ms)
+    : length;
+  for (const target of game.entities) {
+    if (
+      target.isPlayer === owner.isPlayer ||
+      target.ally ||
+      !target.hp ||
+      fx.hit.has(target)
+    )
+      continue;
+    const along = length
+      ? Math.max(
+          0,
+          Math.min(
+            step,
+            ((target.x - fx.x) * vx + (target.y - fx.y) * vy) / length,
+          ),
+        )
+      : 0;
+    if (
+      Math.hypot(
+        target.x - fx.x - (vx * along) / (length || 1),
+        target.y - fx.y - (vy * along) / (length || 1),
+      ) >
+        bodyRadius(target) + 5 ||
+      !hasSight(fx, target)
+    )
+      continue;
+    fx.hit.add(target);
+    if (Math.random() < dodgeChance(target)) continue;
+    const crit = criticalHit(owner, target);
+    elementalHit(
+      owner,
+      target,
+      damageFor(owner, target, crit) *
+        (1 + actorRule(owner, 'projectileBonus')),
+      'ground',
+      false,
+      crit,
+      true,
+    );
+    projectileImpact(fx, target.x, target.y);
+  }
+  fx.x += (vx * step) / (length || 1);
+  fx.y += (vy * step) / (length || 1);
+  fx.lastStep = now;
+  if (fx.returning && step >= length) {
+    owner.boneInFlight = null;
+    return false;
+  }
+  if (!fx.returning && (fraction >= 1 || wall)) {
+    fx.returning = true;
+    fx.hit.clear();
+    fx.start = now;
+  }
   return true;
 }
 
 // Impacto terminal de un proyectil. La bomba reserva los fotogramas 10–12 para la explosión.
-function projectileImpact(projectile,x,y){
-  if(projectile.kind==='bone_throw')effect('bone_impact',x,y,130,0,projectile.owner);
-  if(projectile.kind==='iron_bomb'){
-    const blast=effect('iron_bomb',x,y,140,0,projectile.owner);
-    blast.firstFrame=9;blast.frameCount=3;
+function projectileImpact(projectile, x, y) {
+  if (projectile.kind === 'bone_throw')
+    effect('bone_impact', x, y, 130, 0, projectile.owner);
+  if (projectile.kind === 'iron_bomb') {
+    const blast = effect('iron_bomb', x, y, 140, 0, projectile.owner);
+    blast.firstFrame = 9;
+    blast.frameCount = 3;
   }
 }
 
 // Emplumado interrumpe los efectos ofensivos del adversario y reinicia su tiempo de reacción.
-export function featherStun(owner){
-  effect('featherfall',owner.x,owner.y,450).follow=owner;
-  const now=gameTime();
-  for(const target of game.entities){
-    if(!target.hp||target.ally||target.isPlayer===owner.isPlayer||Math.hypot(target.x-owner.x,target.y-owner.y)>attackReach(owner.stats))continue;
-    target.interruptedAt=now;target.rockUntil=0;target.paralyzedUntil=Math.max(target.paralyzedUntil??0,now+300);
-    target.impactPending=false;target.abilityCast=null;target.aimSince=null;
-    target.nextAttackAt=Math.max(target.nextAttackAt??0,now+300);
-    if(target.isPlayer)game.cast=null;
-    for(const fx of game.effects)if(fx.owner===target||fx.follow===target)fx.cancelled=true;
-    setState(target,'Idle');
+export function featherStun(owner) {
+  effect('featherfall', owner.x, owner.y, 450).follow = owner;
+  const now = gameTime();
+  for (const target of game.entities) {
+    if (
+      !target.hp ||
+      target.ally ||
+      target.isPlayer === owner.isPlayer ||
+      Math.hypot(target.x - owner.x, target.y - owner.y) >
+        attackReach(owner.stats)
+    )
+      continue;
+    target.interruptedAt = now;
+    target.rockUntil = 0;
+    target.paralyzedUntil = Math.max(target.paralyzedUntil ?? 0, now + 500);
+    target.impactPending = false;
+    target.abilityCast = null;
+    target.aimSince = null;
+    target.nextAttackAt = Math.max(target.nextAttackAt ?? 0, now + 300);
+    if (target.isPlayer) game.cast = null;
+    for (const fx of game.effects)
+      if (fx.owner === target || fx.follow === target) fx.cancelled = true;
+    setState(target, 'Idle');
   }
 }
 
 // Los costes se validan completos antes de descontar una sola unidad.
-function payEssences(owner,id){
-  const balances=owner.isPlayer?game.essences:(owner.essences??={bug:20});
-  const rules=game.benefits.get(id)?.rules;
-  const cost=rules?.essenceCost??rules?.lootCost;
-  if(cost){
-    if(Object.values(balances).reduce((sum,n)=>sum+n,0)<cost)return false;
-    for(let i=0;i<cost;i++){
-      const types=Object.keys(balances).filter(type=>balances[type]>0);
-      balances[types[Math.floor(Math.random()*types.length)]]--;
+function payEssences(owner, id) {
+  const balances = owner.isPlayer
+    ? game.essences
+    : (owner.essences ??= { bug: 20 });
+  const rules = game.benefits.get(id)?.rules;
+  const cost = rules?.essenceCost ?? rules?.lootCost;
+  if (cost) {
+    if (Object.values(balances).reduce((sum, n) => sum + n, 0) < cost)
+      return false;
+    for (let i = 0; i < cost; i++) {
+      const types = Object.keys(balances).filter((type) => balances[type] > 0);
+      balances[types[Math.floor(Math.random() * types.length)]]--;
     }
-  }else if(id==='silken'){
-    if((balances.bug??0)<10)return false;
-    balances.bug-=10;
-  }else if(id==='regenerative'){
-    if(owner.hp>=owner.stats.hpMax||Object.values(balances).reduce((a,b)=>a+b,0)<20)return false;
-    for(let i=0;i<20;i++){
-      const types=Object.keys(balances).filter(key=>balances[key]>0);
-      balances[types[Math.floor(Math.random()*types.length)]]--;
+  } else if (id === 'silken') {
+    if ((balances.bug ?? 0) < 10) return false;
+    balances.bug -= 10;
+  } else if (id === 'regenerative') {
+    if (
+      owner.hp >= owner.stats.hpMax ||
+      Object.values(balances).reduce((a, b) => a + b, 0) < 20
+    )
+      return false;
+    for (let i = 0; i < 20; i++) {
+      const types = Object.keys(balances).filter((key) => balances[key] > 0);
+      balances[types[Math.floor(Math.random() * types.length)]]--;
     }
   }
   if (owner.isPlayer) refreshEssenceAttack();
@@ -447,235 +984,507 @@ function payEssences(owner,id){
 }
 
 // Aplica el beneficio al concluir la carga. El área de roca alcanza una vez a cada rival.
-function releaseSpecial(owner,id){
-  const config=game.benefits.get(id)?.rules??{};
-  if(config.shellMs){
-    owner.shellUntil=gameTime()+config.shellMs;
+function releaseSpecial(owner, id) {
+  const config = game.benefits.get(id)?.rules ?? {};
+  if (config.shellMs) {
+    owner.shellUntil = gameTime() + config.shellMs;
     playSound('shell');
-  }else if(config.shuffleMs){
-    const balances=owner.isPlayer?game.essences:owner.essences;
-    const total=Object.values(balances).reduce((sum,n)=>sum+n,0);
-    for(const type of Object.keys(balances))balances[type]=0;
-    for(let i=0;i<total;i++){
-      const type=essenceNames[Math.floor(Math.random()*essenceNames.length)];
-      balances[type]=(balances[type]??0)+1;
+  } else if (config.shuffleMs) {
+    const balances = owner.isPlayer ? game.essences : owner.essences;
+    const total = Object.values(balances).reduce((sum, n) => sum + n, 0);
+    for (const type of Object.keys(balances)) balances[type] = 0;
+    for (let i = 0; i < total; i++) {
+      const type =
+        essenceNames[Math.floor(Math.random() * essenceNames.length)];
+      balances[type] = (balances[type] ?? 0) + 1;
     }
     if (owner.isPlayer) refreshEssenceAttack();
     playSound('dealer');
-  }else if(config.lootCost){
-    const [dx,dy]=DIR_VEC[owner.dir],step=TILE/Math.hypot(dx,dy);
-    const fx=effect('cover',owner.x+dx*step,owner.y+dy*step,350,owner.dir);
-    fx.reverse=true;fx.dropOnFinish=true;
-  }
-  else if(config.burstRange){
-    const radius=config.burstRange*attackReach(owner.stats);
-    Object.assign(effect('water_burst',owner.x,owner.y,350),{visualOwner:owner,diameter:radius*2});
-    for(const target of game.entities){
-      if(!target.hp || target.ally || target.isPlayer===owner.isPlayer || Math.hypot(target.x-owner.x,target.y-owner.y)>radius+bodyRadius(target))continue;
-      if(elementalHit(owner,target,owner.stats.attack,'water'))knockback(owner,target,config.push);
+  } else if (config.lootCost) {
+    const [dx, dy] = DIR_VEC[owner.dir],
+      step = TILE / Math.hypot(dx, dy);
+    const fx = effect(
+      'cover',
+      owner.x + dx * step,
+      owner.y + dy * step,
+      350,
+      owner.dir,
+    );
+    fx.reverse = true;
+    fx.dropOnFinish = true;
+  } else if (config.burstRange) {
+    const radius = config.burstRange * attackReach(owner.stats);
+    Object.assign(effect('water_burst', owner.x, owner.y, 350), {
+      visualOwner: owner,
+      diameter: radius * 2,
+    });
+    for (const target of game.entities) {
+      if (
+        !target.hp ||
+        target.ally ||
+        target.isPlayer === owner.isPlayer ||
+        Math.hypot(target.x - owner.x, target.y - owner.y) >
+          radius + bodyRadius(target)
+      )
+        continue;
+      if (elementalHit(owner, target, owner.stats.attack, 'water'))
+        knockback(owner, target, config.push);
     }
-  }else if(config.eruptionStep){
-    const chain={owner,dir:owner.dir,step:config.eruptionStep,damage:config.power*owner.stats.attack,hit:new Set()};
-    erupt(owner.x,owner.y,chain);
-  }else if(id==='rock_core'){
-    const radius=3*attackReach(owner.stats);
-    const aura=effect('rock_aura',owner.x,owner.y,1000);
-    Object.assign(aura,{owner,follow:owner,diameter:2*radius,radius,hit:new Set()});
-    owner.rockUntil=gameTime()+1000;setState(owner,'Charge');
-  }else if(id==='silken'){
-    if(owner.isPlayer){owner.bonuses.defense+=3;owner.stats=settleStats(game.pokemon.get(owner.dex),game.progress,owner.bonuses,owner.stats);}
-    else owner.stats.defense+=3;
-    effect('webshield',owner.x,owner.y,400).follow=owner;
-  }else if(id==='regenerative'){
-    owner.hp=Math.min(owner.stats.hpMax,owner.hp+Math.ceil(owner.stats.hpMax*.3));
-    effect('heal',owner.x,owner.y,400).follow=owner;playSound('regenerative');
+  } else if (config.eruptionStep) {
+    const chain = {
+      owner,
+      dir: owner.dir,
+      step: config.eruptionStep,
+      damage: config.power * owner.stats.attack,
+      hit: new Set(),
+    };
+    erupt(owner.x, owner.y, chain);
+  } else if (id === 'rock_core') {
+    const radius = 3 * attackReach(owner.stats);
+    const aura = effect('rock_aura', owner.x, owner.y, 1000);
+    Object.assign(aura, {
+      owner,
+      follow: owner,
+      diameter: 2 * radius,
+      radius,
+      hit: new Set(),
+    });
+    owner.rockUntil = gameTime() + 1000;
+    setState(owner, 'Charge');
+  } else if (id === 'silken') {
+    if (owner.isPlayer) {
+      owner.bonuses.defense += 3;
+      owner.stats = settleStats(
+        game.pokemon.get(owner.dex),
+        game.progress,
+        owner.bonuses,
+        owner.stats,
+      );
+    } else owner.stats.defense += 3;
+    effect('webshield', owner.x, owner.y, 400).follow = owner;
+  } else if (id === 'regenerative') {
+    owner.hp = Math.min(
+      owner.stats.hpMax,
+      owner.hp + Math.ceil(owner.stats.hpMax * 0.3),
+    );
+    effect('heal', owner.x, owner.y, 400).follow = owner;
+    playSound('regenerative');
   }
 }
 // Cada segmento atraviesa cuerpos. El segundo cuadro inicia el siguiente segmento.
-function erupt(x,y,chain){
-  const fx=effect('erupt',x,y,180,chain.dir);
-  fx.chain=chain;
-  for(const target of game.entities){
-    if(!target.hp || target.ally || target.isPlayer===chain.owner.isPlayer || chain.hit.has(target))continue;
-    if(Math.hypot(target.x-x,target.y-y)>chain.step/2+bodyRadius(target) || !hasSight({x,y},target))continue;
-    chain.hit.add(target);elementalHit(chain.owner,target,chain.damage,'fire');
+function erupt(x, y, chain) {
+  const fx = effect('erupt', x, y, 180, chain.dir);
+  fx.chain = chain;
+  for (const target of game.entities) {
+    if (
+      !target.hp ||
+      target.ally ||
+      target.isPlayer === chain.owner.isPlayer ||
+      chain.hit.has(target)
+    )
+      continue;
+    if (
+      Math.hypot(target.x - x, target.y - y) >
+        chain.step / 2 + bodyRadius(target) ||
+      !hasSight({ x, y }, target)
+    )
+      continue;
+    chain.hit.add(target);
+    elementalHit(chain.owner, target, chain.damage, 'fire');
   }
 }
-const specials=new Set(['rock_core','regenerative','silken','shelders_shell','dealer','linoone_loot','groudons_scale','kingdra_scale']);
+const specials = new Set([
+  'rock_core',
+  'regenerative',
+  'silken',
+  'shelders_shell',
+  'dealer',
+  'linoone_loot',
+  'groudons_scale',
+  'kingdra_scale',
+]);
 
 // El efecto se resuelve a su hora; la pose especial puede necesitar más fotogramas.
 function finishCastAnimation(owner) {
-  if (owner.animationCompleted) setState(owner,'Idle');
+  if (owner.animationCompleted) setState(owner, 'Idle');
   else owner.finishingSpecial = true;
 }
 
 // Cada salvaje anuncia su activa durante 500 ms y comprueba la presa,
 // la distancia y la visibilidad antes de empezar. La recarga es la mitad de la del jugador.
 export function updateWildAbility(wild) {
-  const benefitId = wild.activeBenefit, player = game.player, simulationTime = gameTime();
-  if (wild.frozenUntil>simulationTime || !benefitId || !wild.hp || !player.hp) return false;
-  const distance = Math.hypot(player.x-wild.x, player.y-wild.y);
-  const range = (benefitId==='gunpowder_core'?72:attackReach(wild.stats)*(benefitId==='hooh_brooch'?4:benefitId==='rock_core'?3:1)) + bodyRadius(player);
+  const benefitId = wild.activeBenefit,
+    player = game.player,
+    simulationTime = gameTime();
+  if (wild.frozenUntil > simulationTime || !benefitId || !wild.hp || !player.hp)
+    return false;
+  const distance = Math.hypot(player.x - wild.x, player.y - wild.y);
+  const range =
+    (benefitId === 'gunpowder_core'
+      ? 72
+      : attackReach(wild.stats) *
+        (benefitId === 'hooh_brooch' ? 4 : benefitId === 'rock_core' ? 3 : 1)) +
+    bodyRadius(player);
   let activeCast = wild.abilityCast;
   if (!activeCast) {
-    if ((benefitId==='seer' && wild.hp<=1) || wild.bossResponse || wild.sidestep || simulationTime < (wild.abilityReadyAt ?? 0) || (distance > range || !hasSight(wild,player))) return false;
+    if (
+      (benefitId === 'seer' && wild.hp <= 1) ||
+      wild.bossResponse ||
+      wild.sidestep ||
+      simulationTime < (wild.abilityReadyAt ?? 0) ||
+      distance > range ||
+      !hasSight(wild, player)
+    )
+      return false;
 
-    wild.dir = (Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
-    const destination=benefitId==='machinery'?machinerySite(wild):null;
-    if(benefitId==='machinery' && !destination)return false;
-    if(!payEssences(wild,benefitId))return false;
+    wild.dir =
+      (Math.round(
+        Math.atan2(player.x - wild.x, player.y - wild.y) / (Math.PI / 4),
+      ) +
+        8) %
+      8;
+    const destination = benefitId === 'machinery' ? machinerySite(wild) : null;
+    if (benefitId === 'machinery' && !destination) return false;
+    if (!payEssences(wild, benefitId)) return false;
     playSound('charge');
-    console.debug('[IA] Preparar habilidad',{dex:wild.dex,benefitId,x:wild.x,y:wild.y,distance,range});
-    wild.abilityCast = {destination,start:simulationTime,dir:wild.dir,hit:new Set()};
+    console.debug('[IA] Preparar habilidad', {
+      dex: wild.dex,
+      benefitId,
+      x: wild.x,
+      y: wild.y,
+      distance,
+      range,
+    });
+    wild.abilityCast = {
+      destination,
+      start: simulationTime,
+      dir: wild.dir,
+      hit: new Set(),
+    };
     wild.path = [];
-    setState(wild,'Charge');
+    setState(wild, 'Charge');
     return true;
   }
   // La onda de roca concede un segundo de reacción; el resto mantiene su aviso habitual.
-  if(benefitId==='dealer')wild.dir=(activeCast.dir+Math.floor((simulationTime-activeCast.start)/100))%8;
-  const chargeDuration = game.benefits.get(benefitId)?.rules?.shuffleMs ?? (benefitId === 'rock_core' ? 1000 : 500);
-  if (simulationTime-activeCast.start < chargeDuration) return true;
+  if (benefitId === 'dealer')
+    wild.dir =
+      (activeCast.dir + Math.floor((simulationTime - activeCast.start) / 100)) %
+      8;
+  const chargeDuration =
+    game.benefits.get(benefitId)?.rules?.shuffleMs ??
+    (benefitId === 'rock_core' ? 1000 : 500);
+  if (simulationTime - activeCast.start < chargeDuration) return true;
   if (!activeCast.released) {
-    activeCast.released=true;
-    if (benefitId==='mamoswine_fang') {
-      setState(wild,'Spin');
-      activeCast.spinStart=simulationTime;
-      effect('fangaround',wild.x,wild.y,560).follow=wild;
-    } else if (benefitId==='hooh_brooch') {
-      const direction=(Math.round(Math.atan2(player.x-wild.x,player.y-wild.y)/(Math.PI/4))+8)%8;
-      launchFlare(wild,direction);
-    } else if (benefitId==='gunpowder_core') {
+    activeCast.released = true;
+    if (benefitId === 'mamoswine_fang') {
+      setState(wild, 'Spin');
+      activeCast.spinStart = simulationTime;
+      effect('fangaround', wild.x, wild.y, 560).follow = wild;
+    } else if (benefitId === 'hooh_brooch') {
+      const direction =
+        (Math.round(
+          Math.atan2(player.x - wild.x, player.y - wild.y) / (Math.PI / 4),
+        ) +
+          8) %
+        8;
+      launchFlare(wild, direction);
+    } else if (benefitId === 'gunpowder_core') {
       blast(wild);
-    } else if (benefitId==='seer') {
-      wild.hp=Math.max(1,wild.hp-1);
-      wild.unbuffedStats={...wild.stats};
-      for (const key of ['attack','speed','attackSpeed']) wild.stats[key]+=50;
-      wild.buffUntil=simulationTime+10000;
-    } else if(specials.has(benefitId))releaseSpecial(wild,benefitId);
-    else if (utilities.has(benefitId)) utilityCast(benefitId,wild,activeCast.destination);
+    } else if (benefitId === 'seer') {
+      wild.hp = Math.max(1, wild.hp - 1);
+      wild.unbuffedStats = { ...wild.stats };
+      for (const key of ['attack', 'speed', 'attackSpeed'])
+        wild.stats[key] += 50;
+      wild.buffUntil = simulationTime + 10000;
+    } else if (specials.has(benefitId)) releaseSpecial(wild, benefitId);
+    else if (utilities.has(benefitId))
+      utilityCast(benefitId, wild, activeCast.destination);
   }
-  if (wild.state==='Spin') {
-    spin(wild,activeCast,simulationTime-activeCast.spinStart);
-    if (simulationTime-activeCast.spinStart<560) return true;
+  if (wild.state === 'Spin') {
+    spin(wild, activeCast, simulationTime - activeCast.spinStart);
+    if (simulationTime - activeCast.spinStart < 560) return true;
   }
-  if (!(wild.abilityReadyAt > simulationTime)) wild.abilityReadyAt=simulationTime+game.benefits.get(benefitId).amount*500*(1-actorRule(wild,'cooldownReduction'));
-  wild.abilityCast=null;
-  wild.dir=activeCast.dir;
-  if (wild.hp && !(wild.rockUntil>simulationTime) && wild.state!=='Hurt') finishCastAnimation(wild);
+  if (!(wild.abilityReadyAt > simulationTime))
+    wild.abilityReadyAt =
+      simulationTime +
+      game.benefits.get(benefitId).amount *
+        500 *
+        (1 - actorRule(wild, 'cooldownReduction'));
+  wild.abilityCast = null;
+  wild.dir = activeCast.dir;
+  if (wild.hp && !(wild.rockUntil > simulationTime) && wild.state !== 'Hurt')
+    finishCastAnimation(wild);
   return true;
 }
 
 // Actualiza lanzamientos, bonificaciones temporales y colisiones continuas de proyectiles.
 export function tickAbilities() {
-  const simulationTime=gameTime(), player=game.player, activeCast=game.cast;
+  const simulationTime = gameTime(),
+    player = game.player,
+    activeCast = game.cast;
   // El reloj de simulación pausa también la duración de los atributos temporales.
-  if (game.amuletUntil && simulationTime>=game.amuletUntil) {
-    game.amuletUntil=0;
-    player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
+  if (game.amuletUntil && simulationTime >= game.amuletUntil) {
+    game.amuletUntil = 0;
+    player.stats = playerStats(
+      game.pokemon.get(player.dex),
+      game.progress,
+      player.bonuses,
+    );
   }
-  for (const enemy of game.entities) if (enemy.buffUntil && simulationTime>=enemy.buffUntil) {
-    enemy.stats=enemy.unbuffedStats;
-    enemy.buffUntil=0;
-  }
-  if (activeCast && (!player.hp || player.state==='Hurt')) game.cast=null;
-  else if (activeCast && !(player.frozenUntil>simulationTime)) {
-    const castElapsedMs=simulationTime-activeCast.start;
-    if (activeCast.id==='mamoswine_fang') spin(player,activeCast,castElapsedMs);
-    if(activeCast.id==='dealer')player.dir=(activeCast.dir+Math.floor(castElapsedMs/100))%8;
-    if (castElapsedMs >= (relics[activeCast.id]?.charge ?? game.benefits.get(activeCast.id)?.rules?.shuffleMs ?? (activeCast.id==='mamoswine_fang'?560:['rock_core','seer'].includes(activeCast.id)?500:activeCast.id==='gunpowder_core'?350:200))) {
-      if(activeCast.id==='death_flute'){
-        effect('death_chant',player.x,player.y,600).follow=player;
-        for(const enemy of wildEnemies())inflictDamage(player,enemy,enemy.hp,false,false,true);
-      }else if(specials.has(activeCast.id))releaseSpecial(player,activeCast.id);
-      else if (utilities.has(activeCast.id)) utilityCast(activeCast.id,player,activeCast.destination);
-      else if (activeCast.id==='seer') {
-        game.amuletUntil=simulationTime+10000;
-        player.stats=playerStats(game.pokemon.get(player.dex),game.progress,player.bonuses);
-      } else if (activeCast.id==='gunpowder_core') blast(player);
-      else if (activeCast.id==='hooh_brooch') launchFlare(player,activeCast.dir);
-      player.dir=activeCast.dir;
-      game.cast=null;
-      if (player.hp && !(player.rockUntil>simulationTime) && player.state!=='Hurt') finishCastAnimation(player);
+  for (const enemy of game.entities)
+    if (enemy.buffUntil && simulationTime >= enemy.buffUntil) {
+      enemy.stats = enemy.unbuffedStats;
+      enemy.buffUntil = 0;
+    }
+  if (activeCast && (!player.hp || player.state === 'Hurt')) game.cast = null;
+  else if (activeCast && !(player.frozenUntil > simulationTime)) {
+    const castElapsedMs = simulationTime - activeCast.start;
+    if (activeCast.id === 'mamoswine_fang')
+      spin(player, activeCast, castElapsedMs);
+    if (activeCast.id === 'dealer')
+      player.dir = (activeCast.dir + Math.floor(castElapsedMs / 100)) % 8;
+    if (
+      castElapsedMs >=
+      (relics[activeCast.id]?.charge ??
+        game.benefits.get(activeCast.id)?.rules?.shuffleMs ??
+        (activeCast.id === 'mamoswine_fang'
+          ? 560
+          : ['rock_core', 'seer'].includes(activeCast.id)
+            ? 500
+            : activeCast.id === 'gunpowder_core'
+              ? 350
+              : 200))
+    ) {
+      if (activeCast.id === 'death_flute') {
+        effect('death_chant', player.x, player.y, 600).follow = player;
+        for (const enemy of wildEnemies())
+          inflictDamage(player, enemy, enemy.hp, false, false, true);
+      } else if (specials.has(activeCast.id))
+        releaseSpecial(player, activeCast.id);
+      else if (utilities.has(activeCast.id))
+        utilityCast(activeCast.id, player, activeCast.destination);
+      else if (activeCast.id === 'seer') {
+        game.amuletUntil = simulationTime + 10000;
+        player.stats = playerStats(
+          game.pokemon.get(player.dex),
+          game.progress,
+          player.bonuses,
+        );
+      } else if (activeCast.id === 'gunpowder_core') blast(player);
+      else if (activeCast.id === 'hooh_brooch')
+        launchFlare(player, activeCast.dir);
+      player.dir = activeCast.dir;
+      game.cast = null;
+      if (
+        player.hp &&
+        !(player.rockUntil > simulationTime) &&
+        player.state !== 'Hurt'
+      )
+        finishCastAnimation(player);
     }
   }
   // Una colisión puede crear espinas. Se acumulan aparte hasta el paso siguiente.
   const previousEffects = game.effects;
   game.effects = [];
-  const survivingEffects = previousEffects.filter(visualEffect=>{
-    const lifetimeFraction=Math.max(0,Math.min(1,(simulationTime-visualEffect.start)/visualEffect.ms));
+  const survivingEffects = previousEffects.filter((visualEffect) => {
+    const lifetimeFraction = Math.max(
+      0,
+      Math.min(1, (simulationTime - visualEffect.start) / visualEffect.ms),
+    );
     // Tras un impacto o interrupción, termina la secuencia visual sin volver a aplicar daño.
-    if (visualEffect.finishedImpact || visualEffect.cancelled ||
-        (visualEffect.owner??visualEffect.follow)?.interruptedAt>=visualEffect.start) {
-      if(visualEffect.kind==='bone_throw' && visualEffect.owner.boneInFlight===visualEffect)visualEffect.owner.boneInFlight=null;
-      return lifetimeFraction<1;
+    if (
+      visualEffect.finishedImpact ||
+      visualEffect.cancelled ||
+      (visualEffect.owner ?? visualEffect.follow)?.interruptedAt >=
+        visualEffect.start
+    ) {
+      if (
+        visualEffect.kind === 'bone_throw' &&
+        visualEffect.owner.boneInFlight === visualEffect
+      )
+        visualEffect.owner.boneInFlight = null;
+      return lifetimeFraction < 1;
     }
-    if(visualEffect.dropOnFinish && lifetimeFraction>=1){dropNewItem(visualEffect);return false;}
-    if(visualEffect.kind==='bone_throw')return advanceBone(visualEffect,lifetimeFraction,simulationTime);
-    if(visualEffect.chain && !visualEffect.chained && lifetimeFraction>=1/effectSheets.erupt.columns){
-      visualEffect.chained=true;
-      const chain=visualEffect.chain,[dx,dy]=DIR_VEC[chain.dir],length=Math.hypot(dx,dy);
-      const dest={x:visualEffect.x+chain.step*dx/length,y:visualEffect.y+chain.step*dy/length};
-      if(hasSight(visualEffect,dest))erupt(dest.x,dest.y,chain);
+    if (visualEffect.dropOnFinish && lifetimeFraction >= 1) {
+      dropNewItem(visualEffect);
+      return false;
     }
-    if(visualEffect.kind==='void_zone' && visualEffect.hit){
-      const radius=visualEffect.radius*lifetimeFraction;
-      visualEffect.diameter=Math.max(1,2*radius);
-      for(const target of wildEnemies()){
-        if(visualEffect.hit.has(target) || Math.hypot(target.x-visualEffect.x,target.y-visualEffect.y)>radius+bodyRadius(target))continue;
+    if (visualEffect.kind === 'bone_throw')
+      return advanceBone(visualEffect, lifetimeFraction, simulationTime);
+    if (
+      visualEffect.chain &&
+      !visualEffect.chained &&
+      lifetimeFraction >= 1 / effectSheets.erupt.columns
+    ) {
+      visualEffect.chained = true;
+      const chain = visualEffect.chain,
+        [dx, dy] = DIR_VEC[chain.dir],
+        length = Math.hypot(dx, dy);
+      const dest = {
+        x: visualEffect.x + (chain.step * dx) / length,
+        y: visualEffect.y + (chain.step * dy) / length,
+      };
+      if (hasSight(visualEffect, dest)) erupt(dest.x, dest.y, chain);
+    }
+    if (visualEffect.kind === 'void_zone' && visualEffect.hit) {
+      const radius = visualEffect.radius * lifetimeFraction;
+      visualEffect.diameter = Math.max(1, 2 * radius);
+      for (const target of wildEnemies()) {
+        if (
+          visualEffect.hit.has(target) ||
+          Math.hypot(target.x - visualEffect.x, target.y - visualEffect.y) >
+            radius + bodyRadius(target)
+        )
+          continue;
         visualEffect.hit.add(target);
-        if(elementalHit(visualEffect.owner,target,visualEffect.owner.stats.attack,'dark'))knockback(visualEffect,target,visualEffect.radius);
+        if (
+          elementalHit(
+            visualEffect.owner,
+            target,
+            visualEffect.owner.stats.attack,
+            'dark',
+          )
+        )
+          knockback(visualEffect, target, visualEffect.radius);
       }
     }
-    if(visualEffect.kind==='rock_aura'){
-      for(const target of game.entities){
-        if(!target.hp||target.ally||target.isPlayer===visualEffect.owner.isPlayer||visualEffect.hit.has(target))continue;
-        if(Math.hypot(target.x-visualEffect.owner.x,target.y-visualEffect.owner.y)>visualEffect.radius+bodyRadius(target))continue;
+    if (visualEffect.kind === 'rock_aura') {
+      for (const target of game.entities) {
+        if (
+          !target.hp ||
+          target.ally ||
+          target.isPlayer === visualEffect.owner.isPlayer ||
+          visualEffect.hit.has(target)
+        )
+          continue;
+        if (
+          Math.hypot(
+            target.x - visualEffect.owner.x,
+            target.y - visualEffect.owner.y,
+          ) >
+          visualEffect.radius + bodyRadius(target)
+        )
+          continue;
         visualEffect.hit.add(target);
-        if(elementalHit(visualEffect.owner,target,3*visualEffect.owner.stats.attack,'rock'))knockback(visualEffect.owner,target,16);
+        if (
+          elementalHit(
+            visualEffect.owner,
+            target,
+            3 * visualEffect.owner.stats.attack,
+            'rock',
+          )
+        )
+          knockback(visualEffect.owner, target, 16);
       }
     }
-    if (visualEffect.weapon || visualEffect.kind==='flare' || visualEffect.kind==='spine') {
-      const [deltaX,deltaY]=DIR_VEC[visualEffect.dir], directionLength=Math.hypot(deltaX,deltaY);
-      const travel=visualEffect.reach*lifetimeFraction, previousDistance=visualEffect.travel??0;
-      visualEffect.x=visualEffect.originX+deltaX/directionLength*travel;visualEffect.y=visualEffect.originY+deltaY/directionLength*travel;
+    if (
+      visualEffect.weapon ||
+      visualEffect.kind === 'flare' ||
+      visualEffect.kind === 'spine'
+    ) {
+      const [deltaX, deltaY] = DIR_VEC[visualEffect.dir],
+        directionLength = Math.hypot(deltaX, deltaY);
+      const travel = visualEffect.reach * lifetimeFraction,
+        previousDistance = visualEffect.travel ?? 0;
+      visualEffect.x =
+        visualEffect.originX + (deltaX / directionLength) * travel;
+      visualEffect.y =
+        visualEffect.originY + (deltaY / directionLength) * travel;
       // Colisión continua del proyectil aunque un fotograma tarde en llegar.
-      let closestTarget, nearestDistance=Infinity;
+      let closestTarget,
+        nearestDistance = Infinity;
       for (const enemy of game.entities) {
-        if (visualEffect.hit?.has(enemy) || enemy.ally || enemy.isPlayer === visualEffect.owner.isPlayer || !enemy.hp) continue;
-        const x=enemy.x-visualEffect.originX,y=enemy.y-visualEffect.originY,along=(x*deltaX+y*deltaY)/directionLength;
-        if(along<0 || along>visualEffect.reach+bodyRadius(enemy))continue;
-        const closestDistance=Math.max(previousDistance,Math.min(travel,along));
-        if (Math.hypot(x-closestDistance*deltaX/directionLength,y-closestDistance*deltaY/directionLength)<=10+bodyRadius(enemy) && along<nearestDistance) {
-          closestTarget=enemy;nearestDistance=along;
+        if (
+          visualEffect.hit?.has(enemy) ||
+          enemy.ally ||
+          enemy.isPlayer === visualEffect.owner.isPlayer ||
+          !enemy.hp
+        )
+          continue;
+        const x = enemy.x - visualEffect.originX,
+          y = enemy.y - visualEffect.originY,
+          along = (x * deltaX + y * deltaY) / directionLength;
+        if (along < 0 || along > visualEffect.reach + bodyRadius(enemy))
+          continue;
+        const closestDistance = Math.max(
+          previousDistance,
+          Math.min(travel, along),
+        );
+        if (
+          Math.hypot(
+            x - (closestDistance * deltaX) / directionLength,
+            y - (closestDistance * deltaY) / directionLength,
+          ) <=
+            10 + bodyRadius(enemy) &&
+          along < nearestDistance
+        ) {
+          closestTarget = enemy;
+          nearestDistance = along;
         }
       }
-      if(!hasSight({x:visualEffect.originX,y:visualEffect.originY},closestTarget??visualEffect)){
-        if(visualEffect.relicShot){
-          projectileImpact(visualEffect,visualEffect.originX+previousDistance*deltaX/directionLength,
-            visualEffect.originY+previousDistance*deltaY/directionLength);
+      if (
+        !hasSight(
+          { x: visualEffect.originX, y: visualEffect.originY },
+          closestTarget ?? visualEffect,
+        )
+      ) {
+        if (visualEffect.relicShot) {
+          projectileImpact(
+            visualEffect,
+            visualEffect.originX +
+              (previousDistance * deltaX) / directionLength,
+            visualEffect.originY +
+              (previousDistance * deltaY) / directionLength,
+          );
           return false;
         }
-        visualEffect.finishedImpact=true;
-        return lifetimeFraction<1;
+        visualEffect.finishedImpact = true;
+        return lifetimeFraction < 1;
       }
       if (closestTarget) {
-        visualEffect.hit?.add(closestTarget);visualEffect.travel=travel;
-        if(visualEffect.relicShot)projectileImpact(visualEffect,closestTarget.x,closestTarget.y);
-        if(visualEffect.weapon && Math.random()<dodgeChance(closestTarget)){
-          closestTarget.missUntil=simulationTime+750;playSound('miss');if(visualEffect.kind==='fire_spike')return lifetimeFraction<1;visualEffect.finishedImpact=true;return !visualEffect.relicShot && lifetimeFraction<1;
+        visualEffect.hit?.add(closestTarget);
+        visualEffect.travel = travel;
+        if (visualEffect.relicShot)
+          projectileImpact(visualEffect, closestTarget.x, closestTarget.y);
+        if (visualEffect.weapon && Math.random() < dodgeChance(closestTarget)) {
+          closestTarget.missUntil = simulationTime + 750;
+          playSound('miss');
+          if (visualEffect.kind === 'fire_spike') return lifetimeFraction < 1;
+          visualEffect.finishedImpact = true;
+          return !visualEffect.relicShot && lifetimeFraction < 1;
         }
-        const critical=visualEffect.weapon && criticalHit(visualEffect.owner,closestTarget);
-        const power=(visualEffect.weapon?damageFor(visualEffect.owner,closestTarget,critical):visualEffect.damage)*(1+actorRule(visualEffect.owner,'projectileBonus'));
-        if(elementalHit(visualEffect.owner,closestTarget,power,visualEffect.element,!visualEffect.weapon,critical,visualEffect.kind==='fire_spike') && visualEffect.weapon){
-          knockback(visualEffect.owner,closestTarget,visualEffect.kind==='rock_throw'?20:10);
+        const critical =
+          visualEffect.weapon && criticalHit(visualEffect.owner, closestTarget);
+        const power =
+          (visualEffect.weapon
+            ? damageFor(visualEffect.owner, closestTarget, critical)
+            : visualEffect.damage) *
+          (1 + actorRule(visualEffect.owner, 'projectileBonus'));
+        if (
+          elementalHit(
+            visualEffect.owner,
+            closestTarget,
+            power,
+            visualEffect.element,
+            !visualEffect.weapon,
+            critical,
+            visualEffect.kind === 'fire_spike',
+          ) &&
+          visualEffect.weapon
+        ) {
+          knockback(
+            visualEffect.owner,
+            closestTarget,
+            visualEffect.kind === 'rock_throw' ? 20 : 10,
+          );
         }
-        if(visualEffect.kind==='fire_spike')return lifetimeFraction<1;
-        visualEffect.finishedImpact=true;
-        return !visualEffect.relicShot && lifetimeFraction<1;
+        if (visualEffect.kind === 'fire_spike') return lifetimeFraction < 1;
+        visualEffect.finishedImpact = true;
+        return !visualEffect.relicShot && lifetimeFraction < 1;
       }
-      visualEffect.travel=travel;
+      visualEffect.travel = travel;
     }
-    return lifetimeFraction<1;
+    return lifetimeFraction < 1;
   });
   game.effects = survivingEffects.concat(game.effects);
 }

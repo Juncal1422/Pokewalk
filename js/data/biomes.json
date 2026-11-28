@@ -13,9 +13,31 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Weedle", "Wurmple", "Seedot", "Spinarak", "Pidgey", "Venipede", "Nincada"],
-      "9-16": ["Cascoon", "Shedinja", "Venonat", "Sewaddle", "Bulbasaur", "Turtwig"],
-      "17-25": ["Swadloon", "Dustox", "Beautifly", "Grotle", "Grovyle", "Ivysaur"],
+      "1-8": [
+        "Weedle",
+        "Wurmple",
+        "Seedot",
+        "Spinarak",
+        "Pidgey",
+        "Venipede",
+        "Nincada"
+      ],
+      "9-16": [
+        "Cascoon",
+        "Shedinja",
+        "Venonat",
+        "Sewaddle",
+        "Bulbasaur",
+        "Turtwig"
+      ],
+      "17-25": [
+        "Swadloon",
+        "Dustox",
+        "Beautifly",
+        "Grotle",
+        "Grovyle",
+        "Ivysaur"
+      ],
       "26-36": ["Pidgeot", "Shiftry", "Ambipom", "Raichu", "Scolipede"],
       "37-50": ["Roserade", "Leafeon", "Torterra", "Venusaur", "Serperior"]
     },
@@ -51,9 +73,31 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Sunkern", "Kricketot", "Starly", "Patrat", "Shinx", "Ledyba", "Lillipup"],
-      "9-16": ["Jigglypuff", "Minccino", "Snubbull", "Doduo", "Eevee", "Staravia"],
-      "17-25": ["Kricketune", "Ledian", "Munchlax", "Ponyta", "Furret", "Watchog"],
+      "1-8": [
+        "Sunkern",
+        "Kricketot",
+        "Starly",
+        "Patrat",
+        "Shinx",
+        "Ledyba",
+        "Lillipup"
+      ],
+      "9-16": [
+        "Jigglypuff",
+        "Minccino",
+        "Snubbull",
+        "Doduo",
+        "Eevee",
+        "Staravia"
+      ],
+      "17-25": [
+        "Kricketune",
+        "Ledian",
+        "Munchlax",
+        "Ponyta",
+        "Furret",
+        "Watchog"
+      ],
       "26-36": ["Kangaskhan", "Miltank", "Tauros", "Rapidash", "Stoutland"],
       "37-50": ["Luxray", "Jolteon", "Blaziken", "Blissey", "Snorlax"]
     },
@@ -87,9 +131,31 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Sunkern", "Sentret", "Zigzagoon", "Combee", "Togepi", "Hoppip", "Cherubi"],
-      "9-16": ["Cascoon", "Snubbull", "Snivy", "Doduo", "Bulbasaur", "Chikorita"],
-      "17-25": ["Gloom", "Roselia", "Bayleef", "Ivysaur", "Sunflora", "Illumise"],
+      "1-8": [
+        "Sunkern",
+        "Sentret",
+        "Zigzagoon",
+        "Combee",
+        "Togepi",
+        "Hoppip",
+        "Cherubi"
+      ],
+      "9-16": [
+        "Cascoon",
+        "Snubbull",
+        "Snivy",
+        "Doduo",
+        "Bulbasaur",
+        "Chikorita"
+      ],
+      "17-25": [
+        "Gloom",
+        "Roselia",
+        "Bayleef",
+        "Ivysaur",
+        "Sunflora",
+        "Illumise"
+      ],
       "26-36": ["Lilligant", "Lopunny", "Whimsicott", "Bellossom", "Vileplume"],
       "37-50": ["Roserade", "Meganium", "Venusaur", "Snorlax", "Togekiss"]
     },
@@ -123,8 +189,23 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Caterpie", "Wurmple", "Pichu", "Seedot", "Burmy", "Spinarak", "Hoothoot"],
-      "9-16": ["Metapod", "Shedinja", "Treecko", "Karrablast", "Chikorita", "Oddish"],
+      "1-8": [
+        "Caterpie",
+        "Wurmple",
+        "Pichu",
+        "Seedot",
+        "Burmy",
+        "Spinarak",
+        "Hoothoot"
+      ],
+      "9-16": [
+        "Metapod",
+        "Shedinja",
+        "Treecko",
+        "Karrablast",
+        "Chikorita",
+        "Oddish"
+      ],
       "17-25": ["Dustox", "Gloom", "Mothim", "Wormadam", "Ninjask", "Breloom"],
       "26-36": ["Pidgeot", "Shiftry", "Raichu", "Escavalier", "Pinsir"],
       "37-50": ["Roserade", "Leafeon", "Meganium", "Venusaur", "Serperior"]
@@ -159,9 +240,24 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Magikarp", "Wooper", "Lotad", "Bidoof", "Surskit", "Wingull"],
+      "1-8": [
+        "Feebas",
+        "Magikarp",
+        "Wooper",
+        "Lotad",
+        "Bidoof",
+        "Surskit",
+        "Wingull"
+      ],
       "9-16": ["Marill", "Dratini", "Ducklett", "Shellder", "Krabby", "Seel"],
-      "17-25": ["Palpitoad", "Sealeo", "Azumarill", "Pelipper", "Seadra", "Swanna"],
+      "17-25": [
+        "Palpitoad",
+        "Sealeo",
+        "Azumarill",
+        "Pelipper",
+        "Seadra",
+        "Swanna"
+      ],
       "26-36": ["Huntail", "Mantine", "Relicanth", "Floatzel", "Golduck"],
       "37-50": ["Cloyster", "Vaporeon", "Empoleon", "Walrein", "Gyarados"]
     },
@@ -195,9 +291,31 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Sunkern", "Kricketot", "Igglybuff", "Sentret", "Zigzagoon", "Starly", "Rattata"],
-      "9-16": ["Jigglypuff", "Minccino", "Snubbull", "Torchic", "Eevee", "Skiploom"],
-      "17-25": ["Herdier", "Lickitung", "Delcatty", "Combusken", "Ponyta", "Linoone"],
+      "1-8": [
+        "Sunkern",
+        "Kricketot",
+        "Igglybuff",
+        "Sentret",
+        "Zigzagoon",
+        "Starly",
+        "Rattata"
+      ],
+      "9-16": [
+        "Jigglypuff",
+        "Minccino",
+        "Snubbull",
+        "Torchic",
+        "Eevee",
+        "Skiploom"
+      ],
+      "17-25": [
+        "Herdier",
+        "Lickitung",
+        "Delcatty",
+        "Combusken",
+        "Ponyta",
+        "Linoone"
+      ],
       "26-36": ["Lopunny", "Staraptor", "Kangaskhan", "Miltank", "Tauros"],
       "37-50": ["Lickilicky", "Luxray", "Jolteon", "Blaziken", "Snorlax"]
     },
@@ -231,9 +349,24 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Weedle", "Wurmple", "Seedot", "Burmy", "Spinarak", "Pidgey", "Hoothoot"],
+      "1-8": [
+        "Weedle",
+        "Wurmple",
+        "Seedot",
+        "Burmy",
+        "Spinarak",
+        "Pidgey",
+        "Hoothoot"
+      ],
       "9-16": ["Kakuna", "Silcoon", "Venonat", "Snivy", "Turtwig", "Oddish"],
-      "17-25": ["Ariados", "Parasect", "Misdreavus", "Venomoth", "Noctowl", "Ninjask"],
+      "17-25": [
+        "Ariados",
+        "Parasect",
+        "Misdreavus",
+        "Venomoth",
+        "Noctowl",
+        "Ninjask"
+      ],
       "26-36": ["Lopunny", "Scolipede", "Vileplume", "Escavalier", "Mismagius"],
       "37-50": ["Leafeon", "Meganium", "Torterra", "Umbreon", "Sceptile"]
     },
@@ -267,9 +400,31 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Caterpie", "Weedle", "Pichu", "Seedot", "Spinarak", "Venipede", "Cherubi"],
-      "9-16": ["Kakuna", "Metapod", "Silcoon", "Shedinja", "Sewaddle", "Treecko"],
-      "17-25": ["Swadloon", "Beedrill", "Butterfree", "Ariados", "Grovyle", "Servine"],
+      "1-8": [
+        "Caterpie",
+        "Weedle",
+        "Pichu",
+        "Seedot",
+        "Spinarak",
+        "Venipede",
+        "Cherubi"
+      ],
+      "9-16": [
+        "Kakuna",
+        "Metapod",
+        "Silcoon",
+        "Shedinja",
+        "Sewaddle",
+        "Treecko"
+      ],
+      "17-25": [
+        "Swadloon",
+        "Beedrill",
+        "Butterfree",
+        "Ariados",
+        "Grovyle",
+        "Servine"
+      ],
       "26-36": ["Lopunny", "Shiftry", "Ambipom", "Bellossom", "Vileplume"],
       "37-50": ["Leafeon", "Torterra", "Serperior", "Sceptile", "Slaking"]
     },
@@ -303,9 +458,31 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Igglybuff", "Cleffa", "Happiny", "Togepi", "Smeargle", "Skitty"],
-      "9-16": ["Jigglypuff", "Klink", "Yamask", "Timburr", "Glameow", "Mime_Jr_"],
-      "17-25": ["Delcatty", "Gurdurr", "Wigglytuff", "Rotom", "Audino", "Chansey"],
+      "1-8": [
+        "Ralts",
+        "Igglybuff",
+        "Cleffa",
+        "Happiny",
+        "Togepi",
+        "Smeargle",
+        "Skitty"
+      ],
+      "9-16": [
+        "Jigglypuff",
+        "Klink",
+        "Yamask",
+        "Timburr",
+        "Glameow",
+        "Mime_Jr_"
+      ],
+      "17-25": [
+        "Delcatty",
+        "Gurdurr",
+        "Wigglytuff",
+        "Rotom",
+        "Audino",
+        "Chansey"
+      ],
       "26-36": ["Clefable", "Electrode", "Tauros", "Alakazam", "Muk"],
       "37-50": ["Gardevoir", "Klinklang", "Espeon", "Lucario", "Porygon_Z"]
     },
@@ -341,9 +518,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Lotad", "Bidoof", "Surskit"],
-      "9-16": ["Marill", "Poliwag", "Corphish", "Oshawott", "Mudkip", "Squirtle"],
-      "17-25": ["Farfetch_d", "Yanma", "Wartortle", "Bibarel", "Dewott", "Quagsire"],
+      "1-8": [
+        "Azurill",
+        "Feebas",
+        "Magikarp",
+        "Wooper",
+        "Lotad",
+        "Bidoof",
+        "Surskit"
+      ],
+      "9-16": [
+        "Marill",
+        "Poliwag",
+        "Corphish",
+        "Oshawott",
+        "Mudkip",
+        "Squirtle"
+      ],
+      "17-25": [
+        "Farfetch_d",
+        "Yanma",
+        "Wartortle",
+        "Bibarel",
+        "Dewott",
+        "Quagsire"
+      ],
       "26-36": ["Ludicolo", "Slowbro", "Slowking", "Toxicroak", "Golduck"],
       "37-50": ["Yanmega", "Samurott", "Blastoise", "Feraligatr", "Gyarados"]
     },
@@ -377,9 +576,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Kricketot", "Pichu", "Sentret", "Combee", "Hoppip", "Skitty", "Shinx"],
+      "1-8": [
+        "Kricketot",
+        "Pichu",
+        "Sentret",
+        "Combee",
+        "Hoppip",
+        "Skitty",
+        "Shinx"
+      ],
       "9-16": ["Doduo", "Joltik", "Pikachu", "Eevee", "Magnemite", "Voltorb"],
-      "17-25": ["Minun", "Pachirisu", "Plusle", "Emolga", "Granbull", "Swellow"],
+      "17-25": [
+        "Minun",
+        "Pachirisu",
+        "Plusle",
+        "Emolga",
+        "Granbull",
+        "Swellow"
+      ],
       "26-36": ["Raichu", "Electabuzz", "Electrode", "Kangaskhan", "Miltank"],
       "37-50": ["Luxray", "Jolteon", "Magnezone", "Electivire", "Snorlax"]
     },
@@ -415,9 +629,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Bidoof", "Surskit", "Wingull"],
-      "9-16": ["Remoraid", "Ducklett", "Shellder", "Corphish", "Piplup", "Krabby"],
-      "17-25": ["Prinplup", "Sealeo", "Pelipper", "Seadra", "Masquerain", "Swanna"],
+      "1-8": [
+        "Azurill",
+        "Feebas",
+        "Magikarp",
+        "Wooper",
+        "Bidoof",
+        "Surskit",
+        "Wingull"
+      ],
+      "9-16": [
+        "Remoraid",
+        "Ducklett",
+        "Shellder",
+        "Corphish",
+        "Piplup",
+        "Krabby"
+      ],
+      "17-25": [
+        "Prinplup",
+        "Sealeo",
+        "Pelipper",
+        "Seadra",
+        "Masquerain",
+        "Swanna"
+      ],
       "26-36": ["Octillery", "Gorebyss", "Mantine", "Floatzel", "Kabutops"],
       "37-50": ["Cloyster", "Vaporeon", "Empoleon", "Walrein", "Gyarados"]
     },
@@ -451,9 +687,24 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Zigzagoon", "Combee", "Starly", "Togepi", "Hoppip", "Pidgey", "Hoothoot"],
+      "1-8": [
+        "Zigzagoon",
+        "Combee",
+        "Starly",
+        "Togepi",
+        "Hoppip",
+        "Pidgey",
+        "Hoothoot"
+      ],
       "9-16": ["Bagon", "Dratini", "Minccino", "Swablu", "Natu", "Skiploom"],
-      "17-25": ["Ledian", "Chatot", "Castform", "Dragonair", "Emolga", "Swellow"],
+      "17-25": [
+        "Ledian",
+        "Chatot",
+        "Castform",
+        "Dragonair",
+        "Emolga",
+        "Swellow"
+      ],
       "26-36": ["Pidgeot", "Whimsicott", "Staraptor", "Altaria", "Miltank"],
       "37-50": ["Aerodactyl", "Yanmega", "Togekiss", "Dragonite", "Salamence"]
     },
@@ -487,9 +738,31 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Caterpie", "Wurmple", "Poochyena", "Burmy", "Pidgey", "Venipede", "Hoothoot"],
-      "9-16": ["Silcoon", "Venonat", "Snivy", "Karrablast", "Chikorita", "Turtwig"],
-      "17-25": ["Beautifly", "Butterfree", "Bayleef", "Murkrow", "Pachirisu", "Servine"],
+      "1-8": [
+        "Caterpie",
+        "Wurmple",
+        "Poochyena",
+        "Burmy",
+        "Pidgey",
+        "Venipede",
+        "Hoothoot"
+      ],
+      "9-16": [
+        "Silcoon",
+        "Venonat",
+        "Snivy",
+        "Karrablast",
+        "Chikorita",
+        "Turtwig"
+      ],
+      "17-25": [
+        "Beautifly",
+        "Butterfree",
+        "Bayleef",
+        "Murkrow",
+        "Pachirisu",
+        "Servine"
+      ],
       "26-36": ["Skuntank", "Scolipede", "Bellossom", "Vileplume", "Heracross"],
       "37-50": ["Meganium", "Torterra", "Umbreon", "Venusaur", "Serperior"]
     },
@@ -523,9 +796,31 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Slugma", "Spearow", "Diglett", "Litwick", "Meditite", "Roggenrola"],
-      "9-16": ["Numel", "Tepig", "Charmander", "Cyndaquil", "Darumaka", "Houndour"],
-      "17-25": ["Lampent", "Quilava", "Pignite", "Dugtrio", "Magcargo", "Hitmonchan"],
+      "1-8": [
+        "Tyrogue",
+        "Slugma",
+        "Spearow",
+        "Diglett",
+        "Litwick",
+        "Meditite",
+        "Roggenrola"
+      ],
+      "9-16": [
+        "Numel",
+        "Tepig",
+        "Charmander",
+        "Cyndaquil",
+        "Darumaka",
+        "Houndour"
+      ],
+      "17-25": [
+        "Lampent",
+        "Quilava",
+        "Pignite",
+        "Dugtrio",
+        "Magcargo",
+        "Hitmonchan"
+      ],
       "26-36": ["Darmanitan", "Heatmor", "Weezing", "Golem", "Magmar"],
       "37-50": ["Flareon", "Emboar", "Charizard", "Typhlosion", "Magmortar"]
     },
@@ -559,7 +854,15 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Tyrogue", "Makuhita", "Whismur", "Zubat", "Rattata", "Diglett", "Meditite"],
+      "1-8": [
+        "Tyrogue",
+        "Makuhita",
+        "Whismur",
+        "Zubat",
+        "Rattata",
+        "Diglett",
+        "Meditite"
+      ],
       "9-16": ["Deino", "Geodude", "Gible", "Larvitar", "Ferroseed", "Cubone"],
       "17-25": ["Nosepass", "Onix", "Fraxure", "Gabite", "Pupitar", "Zweilous"],
       "26-36": ["Durant", "Ferrothorn", "Exploud", "Bastiodon", "Golem"],
@@ -595,7 +898,15 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Cleffa", "Makuhita", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo"],
+      "1-8": [
+        "Cleffa",
+        "Makuhita",
+        "Whismur",
+        "Zubat",
+        "Spearow",
+        "Diglett",
+        "Tynamo"
+      ],
       "9-16": ["Beldum", "Bronzor", "Klink", "Ferroseed", "Axew", "Magnemite"],
       "17-25": ["Mawile", "Fraxure", "Gabite", "Dunsparce", "Metang", "Lairon"],
       "26-36": ["Durant", "Ferrothorn", "Bisharp", "Electrode", "Bastiodon"],
@@ -631,9 +942,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Makuhita", "Whismur", "Zubat", "Rattata", "Diglett", "Meditite"],
+      "1-8": [
+        "Tyrogue",
+        "Makuhita",
+        "Whismur",
+        "Zubat",
+        "Rattata",
+        "Diglett",
+        "Meditite"
+      ],
       "9-16": ["Beldum", "Deino", "Larvitar", "Axew", "Cubone", "Woobat"],
-      "17-25": ["Sableye", "Gabite", "Metang", "Zweilous", "Marowak", "Swoobat"],
+      "17-25": [
+        "Sableye",
+        "Gabite",
+        "Metang",
+        "Zweilous",
+        "Marowak",
+        "Swoobat"
+      ],
       "26-36": ["Durant", "Druddigon", "Ferrothorn", "Bastiodon", "Rampardos"],
       "37-50": ["Gigalith", "Probopass", "Aggron", "Rhyperior", "Haxorus"]
     },
@@ -667,9 +993,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Makuhita", "Slugma", "Diglett", "Litwick", "Meditite", "Roggenrola", "Chingling"],
-      "9-16": ["Bagon", "Numel", "Tepig", "Charmander", "Cyndaquil", "Darumaka"],
-      "17-25": ["Lampent", "Boldore", "Graveler", "Charmeleon", "Quilava", "Pignite"],
+      "1-8": [
+        "Makuhita",
+        "Slugma",
+        "Diglett",
+        "Litwick",
+        "Meditite",
+        "Roggenrola",
+        "Chingling"
+      ],
+      "9-16": [
+        "Bagon",
+        "Numel",
+        "Tepig",
+        "Charmander",
+        "Cyndaquil",
+        "Darumaka"
+      ],
+      "17-25": [
+        "Lampent",
+        "Boldore",
+        "Graveler",
+        "Charmeleon",
+        "Quilava",
+        "Pignite"
+      ],
       "26-36": ["Darmanitan", "Heatmor", "Weezing", "Magmar", "Houndoom"],
       "37-50": ["Chandelure", "Flareon", "Emboar", "Charizard", "Volcarona"]
     },
@@ -703,9 +1051,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Poochyena", "Rattata", "Wynaut", "Litwick", "Purrloin", "Chingling"],
+      "1-8": [
+        "Ralts",
+        "Poochyena",
+        "Rattata",
+        "Wynaut",
+        "Litwick",
+        "Purrloin",
+        "Chingling"
+      ],
       "9-16": ["Kirlia", "Deino", "Abra", "Gastly", "Drilbur", "Drowzee"],
-      "17-25": ["Gothorita", "Kadabra", "Haunter", "Murkrow", "Swoobat", "Sneasel"],
+      "17-25": [
+        "Gothorita",
+        "Kadabra",
+        "Haunter",
+        "Murkrow",
+        "Swoobat",
+        "Sneasel"
+      ],
       "26-36": ["Skuntank", "Spiritomb", "Gothitelle", "Mismagius", "Drifblim"],
       "37-50": ["Gallade", "Gardevoir", "Dusknoir", "Espeon", "Umbreon"]
     },
@@ -740,9 +1103,31 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Caterpie", "Weedle", "Pichu", "Venipede", "Nincada", "Cherubi", "Budew"],
-      "9-16": ["Cascoon", "Metapod", "Bellsprout", "Gulpin", "Mankey", "Sewaddle"],
-      "17-25": ["Weepinbell", "Chatot", "Tangela", "Kecleon", "Vigoroth", "Carnivine"],
+      "1-8": [
+        "Caterpie",
+        "Weedle",
+        "Pichu",
+        "Venipede",
+        "Nincada",
+        "Cherubi",
+        "Budew"
+      ],
+      "9-16": [
+        "Cascoon",
+        "Metapod",
+        "Bellsprout",
+        "Gulpin",
+        "Mankey",
+        "Sewaddle"
+      ],
+      "17-25": [
+        "Weepinbell",
+        "Chatot",
+        "Tangela",
+        "Kecleon",
+        "Vigoroth",
+        "Carnivine"
+      ],
       "26-36": ["Lilligant", "Lopunny", "Ambipom", "Raichu", "Victreebel"],
       "37-50": ["Lickilicky", "Exeggutor", "Sceptile", "Tangrowth", "Slaking"]
     },
@@ -776,9 +1161,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Lotad", "Bidoof", "Surskit"],
-      "9-16": ["Marill", "Croagunk", "Dratini", "Poliwag", "Oshawott", "Squirtle"],
-      "17-25": ["Poliwhirl", "Yanma", "Croconaw", "Marshtomp", "Bibarel", "Dewott"],
+      "1-8": [
+        "Azurill",
+        "Feebas",
+        "Magikarp",
+        "Wooper",
+        "Lotad",
+        "Bidoof",
+        "Surskit"
+      ],
+      "9-16": [
+        "Marill",
+        "Croagunk",
+        "Dratini",
+        "Poliwag",
+        "Oshawott",
+        "Squirtle"
+      ],
+      "17-25": [
+        "Poliwhirl",
+        "Yanma",
+        "Croconaw",
+        "Marshtomp",
+        "Bibarel",
+        "Dewott"
+      ],
       "26-36": ["Ludicolo", "Slowbro", "Slowking", "Toxicroak", "Floatzel"],
       "37-50": ["Samurott", "Blastoise", "Feraligatr", "Swampert", "Milotic"]
     },
@@ -812,9 +1219,31 @@
       "cruces": -1
     },
     "wild": {
-      "1-8": ["Azurill", "Feebas", "Magikarp", "Wooper", "Lotad", "Venipede", "Surskit"],
-      "9-16": ["Croagunk", "Carvanha", "Corphish", "Mudkip", "Totodile", "Krabby"],
-      "17-25": ["Palpitoad", "Yanma", "Croconaw", "Marshtomp", "Quagsire", "Carnivine"],
+      "1-8": [
+        "Azurill",
+        "Feebas",
+        "Magikarp",
+        "Wooper",
+        "Lotad",
+        "Venipede",
+        "Surskit"
+      ],
+      "9-16": [
+        "Croagunk",
+        "Carvanha",
+        "Corphish",
+        "Mudkip",
+        "Totodile",
+        "Krabby"
+      ],
+      "17-25": [
+        "Palpitoad",
+        "Yanma",
+        "Croconaw",
+        "Marshtomp",
+        "Quagsire",
+        "Carnivine"
+      ],
       "26-36": ["Ludicolo", "Slowbro", "Slowking", "Toxicroak", "Cradily"],
       "37-50": ["Lickilicky", "Tentacruel", "Yanmega", "Vaporeon", "Feraligatr"]
     },
@@ -848,9 +1277,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Feebas", "Tynamo", "Spheal", "Horsea", "Remoraid", "Shellder", "Piplup"],
-      "9-16": ["Remoraid", "Chinchou", "Finneon", "Luvdisc", "Staryu", "Clamperl"],
-      "17-25": ["Wailmer", "Corsola", "Sealeo", "Qwilfish", "Seadra", "Lanturn"],
+      "1-8": [
+        "Feebas",
+        "Tynamo",
+        "Spheal",
+        "Horsea",
+        "Remoraid",
+        "Shellder",
+        "Piplup"
+      ],
+      "9-16": [
+        "Remoraid",
+        "Chinchou",
+        "Finneon",
+        "Luvdisc",
+        "Staryu",
+        "Clamperl"
+      ],
+      "17-25": [
+        "Wailmer",
+        "Corsola",
+        "Sealeo",
+        "Qwilfish",
+        "Seadra",
+        "Lanturn"
+      ],
       "26-36": ["Octillery", "Gorebyss", "Mantine", "Relicanth", "Armaldo"],
       "37-50": ["Tentacruel", "Starmie", "Cloyster", "Lapras", "Kingdra"]
     },
@@ -884,9 +1335,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Starly", "Togepi", "Hoppip", "Spearow", "Ledyba", "Taillow"],
+      "1-8": [
+        "Tyrogue",
+        "Starly",
+        "Togepi",
+        "Hoppip",
+        "Spearow",
+        "Ledyba",
+        "Taillow"
+      ],
       "9-16": ["Bagon", "Machop", "Chimchar", "Swablu", "Phanpy", "Spoink"],
-      "17-25": ["Monferno", "Medicham", "Sudowoodo", "Shelgon", "Fearow", "Hitmonchan"],
+      "17-25": [
+        "Monferno",
+        "Medicham",
+        "Sudowoodo",
+        "Shelgon",
+        "Fearow",
+        "Hitmonchan"
+      ],
       "26-36": ["Whimsicott", "Altaria", "Donphan", "Machamp", "Braviary"],
       "37-50": ["Lucario", "Infernape", "Arcanine", "Archeops", "Salamence"]
     },
@@ -920,9 +1386,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Swinub", "Meditite", "Riolu", "Spheal", "Snorunt", "Cubchoo", "Smoochum"],
-      "9-16": ["Snorunt", "Cubchoo", "Smoochum", "Vanillite", "Piplup", "Clefairy"],
-      "17-25": ["Vanillish", "Prinplup", "Sealeo", "Sneasel", "Piloswine", "Jynx"],
+      "1-8": [
+        "Swinub",
+        "Meditite",
+        "Riolu",
+        "Spheal",
+        "Snorunt",
+        "Cubchoo",
+        "Smoochum"
+      ],
+      "9-16": [
+        "Snorunt",
+        "Cubchoo",
+        "Smoochum",
+        "Vanillite",
+        "Piplup",
+        "Clefairy"
+      ],
+      "17-25": [
+        "Vanillish",
+        "Prinplup",
+        "Sealeo",
+        "Sneasel",
+        "Piloswine",
+        "Jynx"
+      ],
       "26-36": ["Froslass", "Glalie", "Altaria", "Abomasnow", "Golem"],
       "37-50": ["Cryogonal", "Glaceon", "Empoleon", "Mamoswine", "Walrein"]
     },
@@ -956,9 +1444,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Togepi", "Wynaut", "Litwick", "Chingling", "Ditto", "Gothita"],
+      "1-8": [
+        "Ralts",
+        "Togepi",
+        "Wynaut",
+        "Litwick",
+        "Chingling",
+        "Ditto",
+        "Gothita"
+      ],
       "9-16": ["Kirlia", "Baltoy", "Bronzor", "Golett", "Yamask", "Abra"],
-      "17-25": ["Duosion", "Porygon", "Kadabra", "Togetic", "Wobbuffet", "Rotom"],
+      "17-25": [
+        "Duosion",
+        "Porygon",
+        "Kadabra",
+        "Togetic",
+        "Wobbuffet",
+        "Rotom"
+      ],
       "26-36": ["Cofagrigus", "Golurk", "Beheeyem", "Gothitelle", "Sigilyph"],
       "37-50": ["Porygon2", "Gallade", "Gardevoir", "Espeon", "Lucario"]
     },
@@ -992,8 +1495,23 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Tyrogue", "Poochyena", "Patrat", "Nidoran_M", "Nidoran_F", "Meditite", "Riolu"],
-      "9-16": ["Baltoy", "Sandshrew", "Cubone", "Hippopotas", "Skorupi", "Cacnea"],
+      "1-8": [
+        "Tyrogue",
+        "Poochyena",
+        "Patrat",
+        "Nidoran_M",
+        "Nidoran_F",
+        "Meditite",
+        "Riolu"
+      ],
+      "9-16": [
+        "Baltoy",
+        "Sandshrew",
+        "Cubone",
+        "Hippopotas",
+        "Skorupi",
+        "Cacnea"
+      ],
       "17-25": ["Vullaby", "Machoke", "Watchog", "Marowak", "Gligar", "Arbok"],
       "26-36": ["Scrafty", "Kangaskhan", "Sigilyph", "Claydol", "Donphan"],
       "37-50": ["Krookodile", "Flygon", "Hippowdon", "Probopass", "Aggron"]
@@ -1028,9 +1546,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Ralts", "Igglybuff", "Happiny", "Smeargle", "Skitty", "Wynaut", "Lillipup"],
-      "9-16": ["Gulpin", "Golett", "Timburr", "Glameow", "Mime_Jr_", "Clefairy"],
-      "17-25": ["Porygon", "Gurdurr", "Togetic", "Wobbuffet", "Persian", "Audino"],
+      "1-8": [
+        "Ralts",
+        "Igglybuff",
+        "Happiny",
+        "Smeargle",
+        "Skitty",
+        "Wynaut",
+        "Lillipup"
+      ],
+      "9-16": [
+        "Gulpin",
+        "Golett",
+        "Timburr",
+        "Glameow",
+        "Mime_Jr_",
+        "Clefairy"
+      ],
+      "17-25": [
+        "Porygon",
+        "Gurdurr",
+        "Togetic",
+        "Wobbuffet",
+        "Persian",
+        "Audino"
+      ],
       "26-36": ["Clefable", "Electrode", "Kangaskhan", "Miltank", "Alakazam"],
       "37-50": ["Gardevoir", "Klinklang", "Porygon_Z", "Blissey", "Togekiss"]
     },
@@ -1064,8 +1604,23 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Poochyena", "Makuhita", "Whismur", "Patrat", "Nidoran_M", "Nidoran_F"],
-      "9-16": ["Baltoy", "Sandshrew", "Cubone", "Hippopotas", "Phanpy", "Skorupi"],
+      "1-8": [
+        "Tyrogue",
+        "Poochyena",
+        "Makuhita",
+        "Whismur",
+        "Patrat",
+        "Nidoran_M",
+        "Nidoran_F"
+      ],
+      "9-16": [
+        "Baltoy",
+        "Sandshrew",
+        "Cubone",
+        "Hippopotas",
+        "Phanpy",
+        "Skorupi"
+      ],
       "17-25": ["Vullaby", "Machoke", "Watchog", "Marowak", "Gligar", "Arbok"],
       "26-36": ["Rhydon", "Scrafty", "Sigilyph", "Claydol", "Donphan"],
       "37-50": ["Krookodile", "Flygon", "Hippowdon", "Probopass", "Rhyperior"]
@@ -1100,9 +1655,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Cleffa", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo"],
+      "1-8": [
+        "Tyrogue",
+        "Cleffa",
+        "Whismur",
+        "Zubat",
+        "Spearow",
+        "Diglett",
+        "Tynamo"
+      ],
       "9-16": ["Beldum", "Bronzor", "Geodude", "Klink", "Ferroseed", "Cubone"],
-      "17-25": ["Nosepass", "Pupitar", "Dunsparce", "Metang", "Dugtrio", "Lairon"],
+      "17-25": [
+        "Nosepass",
+        "Pupitar",
+        "Dunsparce",
+        "Metang",
+        "Dugtrio",
+        "Lairon"
+      ],
       "26-36": ["Durant", "Ferrothorn", "Bisharp", "Exploud", "Bastiodon"],
       "37-50": ["Aerodactyl", "Eelektross", "Klinklang", "Aggron", "Magnezone"]
     },
@@ -1136,9 +1706,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Makuhita", "Whismur", "Zubat", "Rattata", "Spearow", "Diglett", "Roggenrola"],
+      "1-8": [
+        "Makuhita",
+        "Whismur",
+        "Zubat",
+        "Rattata",
+        "Spearow",
+        "Diglett",
+        "Roggenrola"
+      ],
       "9-16": ["Deino", "Gible", "Larvitar", "Ferroseed", "Cubone", "Woobat"],
-      "17-25": ["Nosepass", "Mawile", "Onix", "Pupitar", "Raticate", "Dunsparce"],
+      "17-25": [
+        "Nosepass",
+        "Mawile",
+        "Onix",
+        "Pupitar",
+        "Raticate",
+        "Dunsparce"
+      ],
       "26-36": ["Durant", "Rhydon", "Ferrothorn", "Bastiodon", "Rampardos"],
       "37-50": ["Aerodactyl", "Probopass", "Aggron", "Crobat", "Haxorus"]
     },
@@ -1172,9 +1757,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Zubat", "Slugma", "Litwick", "Roggenrola", "Vulpix", "Geodude", "Numel"],
-      "9-16": ["Numel", "Tepig", "Charmander", "Cyndaquil", "Torchic", "Darumaka"],
-      "17-25": ["Lampent", "Charmeleon", "Combusken", "Quilava", "Pignite", "Magcargo"],
+      "1-8": [
+        "Zubat",
+        "Slugma",
+        "Litwick",
+        "Roggenrola",
+        "Vulpix",
+        "Geodude",
+        "Numel"
+      ],
+      "9-16": [
+        "Numel",
+        "Tepig",
+        "Charmander",
+        "Cyndaquil",
+        "Torchic",
+        "Darumaka"
+      ],
+      "17-25": [
+        "Lampent",
+        "Charmeleon",
+        "Combusken",
+        "Quilava",
+        "Pignite",
+        "Magcargo"
+      ],
       "26-36": ["Darmanitan", "Durant", "Heatmor", "Weezing", "Magmar"],
       "37-50": ["Flareon", "Blaziken", "Typhlosion", "Magmortar", "Volcarona"]
     },
@@ -1208,11 +1815,25 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Cleffa", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo", "Roggenrola"],
+      "1-8": [
+        "Cleffa",
+        "Whismur",
+        "Zubat",
+        "Spearow",
+        "Diglett",
+        "Tynamo",
+        "Roggenrola"
+      ],
       "9-16": ["Beldum", "Geodude", "Gible", "Klink", "Larvitar", "Joltik"],
       "17-25": ["Nosepass", "Mawile", "Sableye", "Onix", "Boldore", "Graveler"],
       "26-36": ["Durant", "Bisharp", "Electrode", "Exploud", "Bastiodon"],
-      "37-50": ["Aerodactyl", "Eelektross", "Gigalith", "Klinklang", "Probopass"]
+      "37-50": [
+        "Aerodactyl",
+        "Eelektross",
+        "Gigalith",
+        "Klinklang",
+        "Probopass"
+      ]
     },
     "leaders": {
       "1-8": ["Chingling", "Riolu", "Bonsly", "Trapinch"],
@@ -1244,9 +1865,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Poochyena", "Zubat", "Rattata", "Wynaut", "Litwick", "Purrloin"],
+      "1-8": [
+        "Ralts",
+        "Poochyena",
+        "Zubat",
+        "Rattata",
+        "Wynaut",
+        "Litwick",
+        "Purrloin"
+      ],
       "9-16": ["Kirlia", "Deino", "Abra", "Gastly", "Woobat", "Drowzee"],
-      "17-25": ["Lampent", "Gothorita", "Haunter", "Murkrow", "Mightyena", "Misdreavus"],
+      "17-25": [
+        "Lampent",
+        "Gothorita",
+        "Haunter",
+        "Murkrow",
+        "Mightyena",
+        "Misdreavus"
+      ],
       "26-36": ["Skuntank", "Hypno", "Gothitelle", "Mismagius", "Gengar"],
       "37-50": ["Gallade", "Gardevoir", "Chandelure", "Dusknoir", "Umbreon"]
     },
@@ -1280,7 +1916,15 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Cleffa", "Whismur", "Zubat", "Spearow", "Diglett", "Tynamo"],
+      "1-8": [
+        "Tyrogue",
+        "Cleffa",
+        "Whismur",
+        "Zubat",
+        "Spearow",
+        "Diglett",
+        "Tynamo"
+      ],
       "9-16": ["Geodude", "Gible", "Klink", "Joltik", "Axew", "Cubone"],
       "17-25": ["Nosepass", "Mawile", "Sableye", "Onix", "Boldore", "Graveler"],
       "26-36": ["Rhydon", "Bisharp", "Bastiodon", "Golem", "Rampardos"],
@@ -1316,9 +1960,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Whismur", "Zubat", "Rattata", "Spearow", "Diglett", "Meditite"],
+      "1-8": [
+        "Tyrogue",
+        "Whismur",
+        "Zubat",
+        "Rattata",
+        "Spearow",
+        "Diglett",
+        "Meditite"
+      ],
       "9-16": ["Beldum", "Gible", "Larvitar", "Machop", "Axew", "Cubone"],
-      "17-25": ["Sableye", "Boldore", "Graveler", "Fraxure", "Gabite", "Raticate"],
+      "17-25": [
+        "Sableye",
+        "Boldore",
+        "Graveler",
+        "Fraxure",
+        "Gabite",
+        "Raticate"
+      ],
       "26-36": ["Durant", "Rhydon", "Ferrothorn", "Exploud", "Bastiodon"],
       "37-50": ["Gigalith", "Probopass", "Crobat", "Haxorus", "Garchomp"]
     },
@@ -1352,9 +2011,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Ralts", "Poochyena", "Zubat", "Rattata", "Wynaut", "Litwick", "Purrloin"],
+      "1-8": [
+        "Ralts",
+        "Poochyena",
+        "Zubat",
+        "Rattata",
+        "Wynaut",
+        "Litwick",
+        "Purrloin"
+      ],
       "9-16": ["Kirlia", "Gible", "Abra", "Gastly", "Woobat", "Drowzee"],
-      "17-25": ["Gothorita", "Kadabra", "Haunter", "Mightyena", "Sneasel", "Misdreavus"],
+      "17-25": [
+        "Gothorita",
+        "Kadabra",
+        "Haunter",
+        "Mightyena",
+        "Sneasel",
+        "Misdreavus"
+      ],
       "26-36": ["Skuntank", "Spiritomb", "Musharna", "Gothitelle", "Mismagius"],
       "37-50": ["Gallade", "Gardevoir", "Dusknoir", "Umbreon", "Crobat"]
     },
@@ -1388,9 +2062,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Tyrogue", "Makuhita", "Whismur", "Zubat", "Rattata", "Diglett", "Meditite"],
+      "1-8": [
+        "Tyrogue",
+        "Makuhita",
+        "Whismur",
+        "Zubat",
+        "Rattata",
+        "Diglett",
+        "Meditite"
+      ],
       "9-16": ["Beldum", "Deino", "Geodude", "Larvitar", "Ferroseed", "Axew"],
-      "17-25": ["Mawile", "Sableye", "Fraxure", "Pupitar", "Dunsparce", "Metang"],
+      "17-25": [
+        "Mawile",
+        "Sableye",
+        "Fraxure",
+        "Pupitar",
+        "Dunsparce",
+        "Metang"
+      ],
       "26-36": ["Durant", "Ferrothorn", "Exploud", "Bastiodon", "Golem"],
       "37-50": ["Gigalith", "Aggron", "Crobat", "Haxorus", "Hydreigon"]
     },
@@ -1424,9 +2113,31 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Zubat", "Slugma", "Diglett", "Litwick", "Vulpix", "Geodude", "Numel"],
-      "9-16": ["Numel", "Tepig", "Charmander", "Chimchar", "Cyndaquil", "Darumaka"],
-      "17-25": ["Lampent", "Charmeleon", "Quilava", "Sudowoodo", "Pignite", "Magcargo"],
+      "1-8": [
+        "Zubat",
+        "Slugma",
+        "Diglett",
+        "Litwick",
+        "Vulpix",
+        "Geodude",
+        "Numel"
+      ],
+      "9-16": [
+        "Numel",
+        "Tepig",
+        "Charmander",
+        "Chimchar",
+        "Cyndaquil",
+        "Darumaka"
+      ],
+      "17-25": [
+        "Lampent",
+        "Charmeleon",
+        "Quilava",
+        "Sudowoodo",
+        "Pignite",
+        "Magcargo"
+      ],
       "26-36": ["Darmanitan", "Heatmor", "Weezing", "Magmar", "Houndoom"],
       "37-50": ["Flareon", "Charizard", "Typhlosion", "Magmortar", "Volcarona"]
     },
@@ -1460,8 +2171,23 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Poochyena", "Makuhita", "Whismur", "Patrat", "Spearow", "Nidoran_M", "Nidoran_F"],
-      "9-16": ["Baltoy", "Sandshrew", "Hippopotas", "Phanpy", "Skorupi", "Cacnea"],
+      "1-8": [
+        "Poochyena",
+        "Makuhita",
+        "Whismur",
+        "Patrat",
+        "Spearow",
+        "Nidoran_M",
+        "Nidoran_F"
+      ],
+      "9-16": [
+        "Baltoy",
+        "Sandshrew",
+        "Hippopotas",
+        "Phanpy",
+        "Skorupi",
+        "Cacnea"
+      ],
       "17-25": ["Vullaby", "Archen", "Medicham", "Marowak", "Gligar", "Arbok"],
       "26-36": ["Scrafty", "Sigilyph", "Claydol", "Donphan", "Drapion"],
       "37-50": ["Krookodile", "Flygon", "Hippowdon", "Lucario", "Crobat"]
@@ -1496,8 +2222,23 @@
       "cruces": 1
     },
     "wild": {
-      "1-8": ["Poochyena", "Makuhita", "Patrat", "Spearow", "Nidoran_M", "Nidoran_F", "Riolu"],
-      "9-16": ["Baltoy", "Sandshrew", "Cubone", "Hippopotas", "Skorupi", "Cacnea"],
+      "1-8": [
+        "Poochyena",
+        "Makuhita",
+        "Patrat",
+        "Spearow",
+        "Nidoran_M",
+        "Nidoran_F",
+        "Riolu"
+      ],
+      "9-16": [
+        "Baltoy",
+        "Sandshrew",
+        "Cubone",
+        "Hippopotas",
+        "Skorupi",
+        "Cacnea"
+      ],
       "17-25": ["Vullaby", "Archen", "Sudowoodo", "Marowak", "Gligar", "Arbok"],
       "26-36": ["Scrafty", "Claydol", "Drapion", "Machamp", "Nidoking"],
       "37-50": ["Aerodactyl", "Krookodile", "Flygon", "Hippowdon", "Rhyperior"]
@@ -1532,9 +2273,24 @@
       "cruces": 0
     },
     "wild": {
-      "1-8": ["Makuhita", "Combee", "Togepi", "Hoppip", "Pidgey", "Hoothoot", "Ledyba"],
+      "1-8": [
+        "Makuhita",
+        "Combee",
+        "Togepi",
+        "Hoppip",
+        "Pidgey",
+        "Hoothoot",
+        "Ledyba"
+      ],
       "9-16": ["Bagon", "Sandshrew", "Machop", "Chimchar", "Natu", "Phanpy"],
-      "17-25": ["Archen", "Machoke", "Medicham", "Sudowoodo", "Chimecho", "Hitmonlee"],
+      "17-25": [
+        "Archen",
+        "Machoke",
+        "Medicham",
+        "Sudowoodo",
+        "Chimecho",
+        "Hitmonlee"
+      ],
       "26-36": ["Staraptor", "Drifblim", "Donphan", "Machamp", "Braviary"],
       "37-50": ["Lucario", "Emboar", "Infernape", "Arcanine", "Archeops"]
     },
