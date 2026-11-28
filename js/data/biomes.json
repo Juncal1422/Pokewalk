@@ -6,72 +6,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Magnemite",
-        "Joltik",
-        "Pichu",
-        "Pachirisu"
-      ],
-      "9-16": [
-        "Pichu",
-        "Pachirisu",
-        "Pikachu",
-        "Jolteon"
-      ],
-      "17-25": [
-        "Pikachu",
-        "Jolteon"
-      ],
-      "26-36": [
-        "Luxray",
-        "Raichu"
-      ],
-      "37-50": [
-        "Luxio",
-        "Ampharos"
-      ]
+      "1-8": ["Pichu", "Shinx", "Mareep", "Electrike", "Minun", "Plusle"],
+      "9-16": ["Pikachu", "Elekid", "Luxio", "Flaaffy", "Manectric"],
+      "17-25": ["Pikachu", "Pachirisu", "Emolga", "Dunsparce", "Skarmory"],
+      "26-36": ["Raichu", "Electabuzz", "Ampharos", "Klang", "Skarmory"],
+      "37-50": ["Klinklang", "Luxray", "Jolteon", "Ampharos", "Electivire"]
     },
     "leaders": {
-      "1-8": [
-        "Pikachu",
-        "Ampharos",
-        "Magneton",
-        "Manectric"
-      ],
-      "9-16": [
-        "Magneton",
-        "Manectric",
-        "Eelektrik",
-        "Magnezone"
-      ],
-      "17-25": [
-        "Eelektrik",
-        "Magnezone",
-        "Galvantula",
-        "Manectric"
-      ],
-      "26-36": [
-        "Galvantula",
-        "Luxio",
-        "Eelektrik",
-        "Electabuzz"
-      ],
-      "37-50": [
-        "Ampharos",
-        "Eelektross",
-        "Galvantula",
-        "Luxray"
-      ]
+      "1-8": ["Skarmory", "Manectric"],
+      "9-16": ["Electabuzz", "Ampharos"],
+      "17-25": ["Rotom", "Klinklang", "Jolteon"],
+      "26-36": ["Raikou", "Cobalion", "Thundurus"],
+      "37-50": ["Raikou", "Cobalion", "Zekrom"]
     },
     "paletteStepMs": 200,
     "sparkleStepMs": 100
@@ -83,72 +36,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 2,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Shroomish",
-        "Lileep",
-        "Seedot",
-        "Weedle"
-      ],
-      "9-16": [
-        "Seedot",
-        "Weedle",
-        "Whirlipede",
-        "Volcarona"
-      ],
-      "17-25": [
-        "Whirlipede",
-        "Volcarona"
-      ],
-      "26-36": [
-        "Beautifly",
-        "Venusaur"
-      ],
-      "37-50": [
-        "Sceptile",
-        "Victreebel"
-      ]
+      "1-8": ["Paras", "Oddish", "Hoothoot", "Seedot", "Pineco", "Bidoof"],
+      "9-16": ["Teddiursa", "Parasect", "Noctowl", "Nuzleaf", "Forretress"],
+      "17-25": ["Gloom", "Parasect", "Noctowl", "Shiftry", "Bibarel"],
+      "26-36": ["Ursaring", "Shiftry", "Vileplume", "Heracross", "Pinsir"],
+      "37-50": ["Sceptile", "Victreebel"]
     },
     "leaders": {
-      "1-8": [
-        "Yanma",
-        "Swadloon",
-        "Ivysaur",
-        "Grovyle"
-      ],
-      "9-16": [
-        "Ivysaur",
-        "Grovyle",
-        "Bellossom",
-        "Meganium"
-      ],
-      "17-25": [
-        "Bellossom",
-        "Meganium",
-        "Cradily",
-        "Sceptile"
-      ],
-      "26-36": [
-        "Carnivine",
-        "Victreebel",
-        "Parasect",
-        "Shiftry"
-      ],
-      "37-50": [
-        "Scizor",
-        "Torterra",
-        "Durant",
-        "Breloom"
-      ]
+      "1-8": ["Yanma", "Swadloon", "Ivysaur", "Grovyle"],
+      "9-16": ["Ivysaur", "Grovyle", "Bellossom", "Meganium"],
+      "17-25": ["Bellossom", "Meganium", "Cradily", "Sceptile"],
+      "26-36": ["Carnivine", "Victreebel", "Parasect", "Shiftry"],
+      "37-50": ["Scizor", "Torterra", "Durant", "Breloom"]
     }
   },
   {
@@ -158,72 +64,25 @@
     "terrain": "water",
     "mediumFrequency": 0.1,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Wooper",
-        "Baltoy",
-        "Nincada",
-        "Nosepass"
-      ],
-      "9-16": [
-        "Nincada",
-        "Nosepass",
-        "Whiscash",
-        "Claydol"
-      ],
-      "17-25": [
-        "Whiscash",
-        "Claydol"
-      ],
-      "26-36": [
-        "Swampert",
-        "Krookodile"
-      ],
-      "37-50": [
-        "Torterra",
-        "Flygon"
-      ]
+      "1-8": ["Wooper", "Baltoy", "Nincada", "Nosepass"],
+      "9-16": ["Nincada", "Nosepass", "Whiscash", "Claydol"],
+      "17-25": ["Whiscash", "Claydol"],
+      "26-36": ["Swampert", "Krookodile"],
+      "37-50": ["Torterra", "Flygon"]
     },
     "leaders": {
-      "1-8": [
-        "Vibrava",
-        "Larvitar",
-        "Hippopotas",
-        "Golett"
-      ],
-      "9-16": [
-        "Hippopotas",
-        "Golett",
-        "Steelix",
-        "Rhyhorn"
-      ],
-      "17-25": [
-        "Steelix",
-        "Rhyhorn",
-        "Drilbur",
-        "Gastrodon"
-      ],
-      "26-36": [
-        "Flygon",
-        "Boldore",
-        "Camerupt",
-        "Aerodactyl"
-      ],
-      "37-50": [
-        "Golem",
-        "Mamoswine",
-        "Golurk",
-        "Krookodile"
-      ]
+      "1-8": ["Vibrava", "Larvitar", "Hippopotas", "Golett"],
+      "9-16": ["Hippopotas", "Golett", "Steelix", "Rhyhorn"],
+      "17-25": ["Steelix", "Rhyhorn", "Drilbur", "Gastrodon"],
+      "26-36": ["Flygon", "Boldore", "Camerupt", "Aerodactyl"],
+      "37-50": ["Golem", "Mamoswine", "Golurk", "Krookodile"]
     }
   },
   {
@@ -233,72 +92,25 @@
     "terrain": "water",
     "mediumFrequency": 0.1,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Omanyte",
-        "Shieldon",
-        "Lileep",
-        "Onix"
-      ],
-      "9-16": [
-        "Lileep",
-        "Onix",
-        "Vibrava",
-        "Omastar"
-      ],
-      "17-25": [
-        "Vibrava",
-        "Omastar"
-      ],
-      "26-36": [
-        "Nidoking",
-        "Swampert"
-      ],
-      "37-50": [
-        "Seismitoad",
-        "Krookodile"
-      ]
+      "1-8": ["Omanyte", "Shieldon", "Lileep", "Onix"],
+      "9-16": ["Lileep", "Onix", "Vibrava", "Omastar"],
+      "17-25": ["Vibrava", "Omastar"],
+      "26-36": ["Nidoking", "Swampert"],
+      "37-50": ["Seismitoad", "Krookodile"]
     },
     "leaders": {
-      "1-8": [
-        "Golett",
-        "Larvitar",
-        "Gible",
-        "Sandshrew"
-      ],
-      "9-16": [
-        "Gible",
-        "Sandshrew",
-        "Lairon",
-        "Steelix"
-      ],
-      "17-25": [
-        "Lairon",
-        "Steelix",
-        "Pupitar",
-        "Gabite"
-      ],
-      "26-36": [
-        "Aerodactyl",
-        "Nidoking",
-        "Camerupt",
-        "Boldore"
-      ],
-      "37-50": [
-        "Donphan",
-        "Golurk",
-        "Kabutops",
-        "Cranidos"
-      ]
+      "1-8": ["Golett", "Larvitar", "Gible", "Sandshrew"],
+      "9-16": ["Gible", "Sandshrew", "Lairon", "Steelix"],
+      "17-25": ["Lairon", "Steelix", "Pupitar", "Gabite"],
+      "26-36": ["Aerodactyl", "Nidoking", "Camerupt", "Boldore"],
+      "37-50": ["Donphan", "Golurk", "Kabutops", "Cranidos"]
     }
   },
   {
@@ -308,72 +120,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Omanyte",
-        "Nosepass",
-        "Wooper",
-        "Nincada"
-      ],
-      "9-16": [
-        "Wooper",
-        "Nincada",
-        "Whiscash",
-        "Palpitoad"
-      ],
-      "17-25": [
-        "Whiscash",
-        "Palpitoad"
-      ],
-      "26-36": [
-        "Seismitoad",
-        "Krookodile"
-      ],
-      "37-50": [
-        "Swampert",
-        "Aggron"
-      ]
+      "1-8": ["Omanyte", "Nosepass", "Wooper", "Nincada"],
+      "9-16": ["Wooper", "Nincada", "Whiscash", "Palpitoad"],
+      "17-25": ["Whiscash", "Palpitoad"],
+      "26-36": ["Seismitoad", "Krookodile"],
+      "37-50": ["Swampert", "Aggron"]
     },
     "leaders": {
-      "1-8": [
-        "Palpitoad",
-        "Sandshrew",
-        "Hippopotas",
-        "Sandile"
-      ],
-      "9-16": [
-        "Hippopotas",
-        "Sandile",
-        "Relicanth",
-        "Quagsire"
-      ],
-      "17-25": [
-        "Relicanth",
-        "Quagsire",
-        "Gabite",
-        "Marshtomp"
-      ],
-      "26-36": [
-        "Nidoking",
-        "Boldore",
-        "Camerupt",
-        "Sudowoodo"
-      ],
-      "37-50": [
-        "Golurk",
-        "Rhydon",
-        "Kabutops",
-        "Mamoswine"
-      ]
+      "1-8": ["Palpitoad", "Sandshrew", "Hippopotas", "Sandile"],
+      "9-16": ["Hippopotas", "Sandile", "Relicanth", "Quagsire"],
+      "17-25": ["Relicanth", "Quagsire", "Gabite", "Marshtomp"],
+      "26-36": ["Nidoking", "Boldore", "Camerupt", "Sudowoodo"],
+      "37-50": ["Golurk", "Rhydon", "Kabutops", "Mamoswine"]
     }
   },
   {
@@ -383,73 +148,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Solosis",
-        "Abra",
-        "Litwick",
-        "Chingling",
-        "Munna"
-      ],
-      "9-16": [
-        "Chingling",
-        "Munna",
-        "Duosion"
-      ],
-      "17-25": [
-        "Duosion",
-        "Munna",
-        "Cubone"
-      ],
-      "26-36": [
-        "Beheeyem",
-        "Sigilyph"
-      ],
-      "37-50": [
-        "Golurk",
-        "Beheeyem",
-        "Sigilyph"
-      ]
+      "1-8": ["Solosis", "Abra", "Litwick", "Chingling", "Munna"],
+      "9-16": ["Chingling", "Munna", "Duosion"],
+      "17-25": ["Duosion", "Munna", "Cubone"],
+      "26-36": ["Beheeyem", "Sigilyph"],
+      "37-50": ["Golurk", "Beheeyem", "Sigilyph"]
     },
     "leaders": {
-      "1-8": [
-        "Unown",
-        "Claydol",
-        "Beheeyem",
-        "Chimecho"
-      ],
-      "9-16": [
-        "Beheeyem",
-        "Chimecho",
-        "Espeon",
-        "Metagross"
-      ],
-      "17-25": [
-        "Espeon",
-        "Metagross",
-        "Alakazam",
-        "Rotom"
-      ],
-      "26-36": [
-        "Azelf",
-        "Claydol",
-        "Metagross"
-      ],
-      "37-50": [
-        "Regigigas",
-        "Arceus",
-        "Golurk",
-        "Beheeyem"
-      ]
+      "1-8": ["Unown", "Claydol", "Beheeyem", "Chimecho"],
+      "9-16": ["Beheeyem", "Chimecho", "Espeon", "Metagross"],
+      "17-25": ["Espeon", "Metagross", "Alakazam", "Rotom"],
+      "26-36": ["Azelf", "Claydol", "Metagross"],
+      "37-50": ["Regigigas", "Arceus", "Golurk", "Beheeyem"]
     }
   },
   {
@@ -459,71 +176,25 @@
     "terrain": "void",
     "mediumFrequency": 0,
     "level": 6,
-    "canCross": [
-      "fly"
-    ],
+    "canCross": ["fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Misdreavus",
-        "Drifloon",
-        "Purrloin",
-        "Vullaby"
-      ],
-      "9-16": [
-        "Purrloin",
-        "Vullaby",
-        "Nuzleaf",
-        "Dusclops"
-      ],
-      "17-25": [
-        "Nuzleaf",
-        "Dusclops"
-      ],
-      "26-36": [
-        "Dusknoir",
-        "Hydreigon"
-      ],
-      "37-50": [
-        "Tyranitar",
-        "Skuntank"
-      ]
+      "1-8": ["Misdreavus", "Drifloon", "Purrloin", "Vullaby"],
+      "9-16": ["Purrloin", "Vullaby", "Nuzleaf", "Dusclops"],
+      "17-25": ["Nuzleaf", "Dusclops"],
+      "26-36": ["Dusknoir", "Hydreigon"],
+      "37-50": ["Tyranitar", "Skuntank"]
     },
     "leaders": {
-      "1-8": [
-        "Sandile",
-        "Gengar",
-        "Dusclops",
-        "Scraggy"
-      ],
-      "9-16": [
-        "Dusclops",
-        "Scraggy",
-        "Liepard",
-        "Skuntank"
-      ],
-      "17-25": [
-        "Liepard",
-        "Skuntank",
-        "Houndoom",
-        "Scrafty"
-      ],
-      "26-36": [
-        "Shiftry",
-        "Banette",
-        "Crawdaunt",
-        "Sharpedo"
-      ],
-      "37-50": [
-        "Bisharp",
-        "Cacturne",
-        "Weavile",
-        "Krookodile"
-      ]
+      "1-8": ["Sandile", "Gengar", "Dusclops", "Scraggy"],
+      "9-16": ["Dusclops", "Scraggy", "Liepard", "Skuntank"],
+      "17-25": ["Liepard", "Skuntank", "Houndoom", "Scrafty"],
+      "26-36": ["Shiftry", "Banette", "Crawdaunt", "Sharpedo"],
+      "37-50": ["Bisharp", "Cacturne", "Weavile", "Krookodile"]
     },
     "wallMaterial": "void"
   },
@@ -534,71 +205,25 @@
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 3,
-    "canCross": [
-      "fly"
-    ],
+    "canCross": ["fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Lileep",
-        "Snivy",
-        "Seedot",
-        "Venipede"
-      ],
-      "9-16": [
-        "Seedot",
-        "Venipede",
-        "Lilligant",
-        "Masquerain"
-      ],
-      "17-25": [
-        "Lilligant",
-        "Masquerain"
-      ],
-      "26-36": [
-        "Venusaur",
-        "Serperior"
-      ],
-      "37-50": [
-        "Beedrill",
-        "Scolipede"
-      ]
+      "1-8": ["Lileep", "Snivy", "Seedot", "Venipede"],
+      "9-16": ["Seedot", "Venipede", "Lilligant", "Masquerain"],
+      "17-25": ["Lilligant", "Masquerain"],
+      "26-36": ["Venusaur", "Serperior"],
+      "37-50": ["Beedrill", "Scolipede"]
     },
     "leaders": {
-      "1-8": [
-        "Whimsicott",
-        "Ivysaur",
-        "Yanma",
-        "Grovyle"
-      ],
-      "9-16": [
-        "Yanma",
-        "Grovyle",
-        "Maractus",
-        "Bellossom"
-      ],
-      "17-25": [
-        "Maractus",
-        "Bellossom",
-        "Sceptile",
-        "Venusaur"
-      ],
-      "26-36": [
-        "Shiftry",
-        "Scolipede",
-        "Carnivine",
-        "Parasect"
-      ],
-      "37-50": [
-        "Cacturne",
-        "Pinsir",
-        "Torterra",
-        "Durant"
-      ]
+      "1-8": ["Whimsicott", "Ivysaur", "Yanma", "Grovyle"],
+      "9-16": ["Yanma", "Grovyle", "Maractus", "Bellossom"],
+      "17-25": ["Maractus", "Bellossom", "Sceptile", "Venusaur"],
+      "26-36": ["Shiftry", "Scolipede", "Carnivine", "Parasect"],
+      "37-50": ["Cacturne", "Pinsir", "Torterra", "Durant"]
     }
   },
   {
@@ -608,72 +233,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Onix",
-        "Omanyte",
-        "Nincada",
-        "Baltoy"
-      ],
-      "9-16": [
-        "Nincada",
-        "Baltoy",
-        "Bastiodon",
-        "Probopass"
-      ],
-      "17-25": [
-        "Bastiodon",
-        "Probopass"
-      ],
-      "26-36": [
-        "Aggron",
-        "Krookodile"
-      ],
-      "37-50": [
-        "Nidoqueen",
-        "Seismitoad"
-      ]
+      "1-8": ["Onix", "Omanyte", "Nincada", "Baltoy"],
+      "9-16": ["Nincada", "Baltoy", "Bastiodon", "Probopass"],
+      "17-25": ["Bastiodon", "Probopass"],
+      "26-36": ["Aggron", "Krookodile"],
+      "37-50": ["Nidoqueen", "Seismitoad"]
     },
     "leaders": {
-      "1-8": [
-        "Vibrava",
-        "Claydol",
-        "Sandile",
-        "Aron"
-      ],
-      "9-16": [
-        "Sandile",
-        "Aron",
-        "Marshtomp",
-        "Rhyhorn"
-      ],
-      "17-25": [
-        "Marshtomp",
-        "Rhyhorn",
-        "Gabite",
-        "Drilbur"
-      ],
-      "26-36": [
-        "Flygon",
-        "Nidoking",
-        "Aerodactyl",
-        "Sandslash"
-      ],
-      "37-50": [
-        "Armaldo",
-        "Donphan",
-        "Mamoswine",
-        "Kabutops"
-      ]
+      "1-8": ["Vibrava", "Claydol", "Sandile", "Aron"],
+      "9-16": ["Sandile", "Aron", "Marshtomp", "Rhyhorn"],
+      "17-25": ["Marshtomp", "Rhyhorn", "Gabite", "Drilbur"],
+      "26-36": ["Flygon", "Nidoking", "Aerodactyl", "Sandslash"],
+      "37-50": ["Armaldo", "Donphan", "Mamoswine", "Kabutops"]
     }
   },
   {
@@ -683,72 +261,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Baltoy",
-        "Exeggcute",
-        "Natu",
-        "Meditite"
-      ],
-      "9-16": [
-        "Natu",
-        "Meditite",
-        "Espeon",
-        "Claydol"
-      ],
-      "17-25": [
-        "Espeon",
-        "Claydol"
-      ],
-      "26-36": [
-        "Klinklang",
-        "Gothitelle"
-      ],
-      "37-50": [
-        "Gallade",
-        "Magnezone"
-      ]
+      "1-8": ["Baltoy", "Exeggcute", "Natu", "Meditite"],
+      "9-16": ["Natu", "Meditite", "Espeon", "Claydol"],
+      "17-25": ["Espeon", "Claydol"],
+      "26-36": ["Klinklang", "Gothitelle"],
+      "37-50": ["Gallade", "Magnezone"]
     },
     "leaders": {
-      "1-8": [
-        "Starmie",
-        "Hypno",
-        "Magnezone",
-        "Claydol"
-      ],
-      "9-16": [
-        "Magnezone",
-        "Claydol",
-        "Ferrothorn",
-        "Lairon"
-      ],
-      "17-25": [
-        "Ferrothorn",
-        "Lairon",
-        "Forretress",
-        "Bronzong"
-      ],
-      "26-36": [
-        "Bisharp",
-        "Forretress",
-        "Exeggutor",
-        "Durant"
-      ],
-      "37-50": [
-        "Aggron",
-        "Excadrill",
-        "Durant",
-        "Gallade"
-      ]
+      "1-8": ["Starmie", "Hypno", "Magnezone", "Claydol"],
+      "9-16": ["Magnezone", "Claydol", "Ferrothorn", "Lairon"],
+      "17-25": ["Ferrothorn", "Lairon", "Forretress", "Bronzong"],
+      "26-36": ["Bisharp", "Forretress", "Exeggutor", "Durant"],
+      "37-50": ["Aggron", "Excadrill", "Durant", "Gallade"]
     }
   },
   {
@@ -758,72 +289,25 @@
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 9,
-    "canCross": [
-      "lavawalk",
-      "fly"
-    ],
+    "canCross": ["lavawalk", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Corsola",
-        "Chimchar",
-        "Torchic",
-        "Houndour"
-      ],
-      "9-16": [
-        "Torchic",
-        "Houndour",
-        "Volcarona",
-        "Ninetales"
-      ],
-      "17-25": [
-        "Volcarona",
-        "Ninetales"
-      ],
-      "26-36": [
-        "Golem",
-        "Aggron"
-      ],
-      "37-50": [
-        "Infernape",
-        "Tyranitar"
-      ]
+      "1-8": ["Corsola", "Chimchar", "Torchic", "Houndour"],
+      "9-16": ["Torchic", "Houndour", "Volcarona", "Ninetales"],
+      "17-25": ["Volcarona", "Ninetales"],
+      "26-36": ["Golem", "Aggron"],
+      "37-50": ["Infernape", "Tyranitar"]
     },
     "leaders": {
-      "1-8": [
-        "Typhlosion",
-        "Charizard",
-        "Bonsly",
-        "Monferno"
-      ],
-      "9-16": [
-        "Bonsly",
-        "Monferno",
-        "Solrock",
-        "Magmar"
-      ],
-      "17-25": [
-        "Solrock",
-        "Magmar",
-        "Magmortar",
-        "Camerupt"
-      ],
-      "26-36": [
-        "Arcanine",
-        "Infernape",
-        "Golem",
-        "Kabutops"
-      ],
-      "37-50": [
-        "Gigalith",
-        "Darmanitan",
-        "Archeops",
-        "Armaldo"
-      ]
+      "1-8": ["Typhlosion", "Charizard", "Bonsly", "Monferno"],
+      "9-16": ["Bonsly", "Monferno", "Solrock", "Magmar"],
+      "17-25": ["Solrock", "Magmar", "Magmortar", "Camerupt"],
+      "26-36": ["Arcanine", "Infernape", "Golem", "Kabutops"],
+      "37-50": ["Gigalith", "Darmanitan", "Archeops", "Armaldo"]
     }
   },
   {
@@ -833,72 +317,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Duskull",
-        "Poochyena",
-        "Rotom",
-        "Gastly"
-      ],
-      "9-16": [
-        "Rotom",
-        "Gastly",
-        "Mismagius",
-        "Haunter"
-      ],
-      "17-25": [
-        "Mismagius",
-        "Haunter"
-      ],
-      "26-36": [
-        "Krookodile",
-        "Hydreigon"
-      ],
-      "37-50": [
-        "Gengar",
-        "Chandelure"
-      ]
+      "1-8": ["Duskull", "Poochyena", "Rotom", "Gastly"],
+      "9-16": ["Rotom", "Gastly", "Mismagius", "Haunter"],
+      "17-25": ["Mismagius", "Haunter"],
+      "26-36": ["Krookodile", "Hydreigon"],
+      "37-50": ["Gengar", "Chandelure"]
     },
     "leaders": {
-      "1-8": [
-        "Dusclops",
-        "Gengar",
-        "Sandile",
-        "Golett"
-      ],
-      "9-16": [
-        "Sandile",
-        "Golett",
-        "Houndoom",
-        "Drapion"
-      ],
-      "17-25": [
-        "Houndoom",
-        "Drapion",
-        "Pawniard",
-        "Mightyena"
-      ],
-      "26-36": [
-        "Shiftry",
-        "Krookodile",
-        "Dusknoir",
-        "Cacturne"
-      ],
-      "37-50": [
-        "Honchkrow",
-        "Krookodile",
-        "Banette",
-        "Crawdaunt"
-      ]
+      "1-8": ["Dusclops", "Gengar", "Sandile", "Golett"],
+      "9-16": ["Sandile", "Golett", "Houndoom", "Drapion"],
+      "17-25": ["Houndoom", "Drapion", "Pawniard", "Mightyena"],
+      "26-36": ["Shiftry", "Krookodile", "Dusknoir", "Cacturne"],
+      "37-50": ["Honchkrow", "Krookodile", "Banette", "Crawdaunt"]
     }
   },
   {
@@ -908,71 +345,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Spheal",
-        "Delibird",
-        "Cryogonal",
-        "Swinub"
-      ],
-      "9-16": [
-        "Cryogonal",
-        "Swinub",
-        "Glaceon",
-        "Abomasnow"
-      ],
-      "17-25": [
-        "Glaceon",
-        "Abomasnow"
-      ],
-      "26-36": [
-        "Piloswine",
-        "Glalie"
-      ],
-      "37-50": [
-        "Walrein",
-        "Cloyster"
-      ]
+      "1-8": ["Spheal", "Delibird", "Cryogonal", "Swinub"],
+      "9-16": ["Cryogonal", "Swinub", "Glaceon", "Abomasnow"],
+      "17-25": ["Glaceon", "Abomasnow"],
+      "26-36": ["Piloswine", "Glalie"],
+      "37-50": ["Walrein", "Cloyster"]
     },
     "leaders": {
-      "1-8": [
-        "Vanillish",
-        "Cubchoo",
-        "Glalie",
-        "Lapras"
-      ],
-      "9-16": [
-        "Glalie",
-        "Lapras",
-        "Cloyster"
-      ],
-      "17-25": [
-        "Lapras",
-        "Cloyster",
-        "Froslass",
-        "Walrein"
-      ],
-      "26-36": [
-        "Cloyster",
-        "Beartic",
-        "Weavile",
-        "Mamoswine"
-      ],
-      "37-50": [
-        "Vanilluxe",
-        "Weavile",
-        "Abomasnow",
-        "Lapras"
-      ]
+      "1-8": ["Vanillish", "Cubchoo", "Glalie", "Lapras"],
+      "9-16": ["Glalie", "Lapras", "Cloyster"],
+      "17-25": ["Lapras", "Cloyster", "Froslass", "Walrein"],
+      "26-36": ["Cloyster", "Beartic", "Weavile", "Mamoswine"],
+      "37-50": ["Vanilluxe", "Weavile", "Abomasnow", "Lapras"]
     }
   },
   {
@@ -982,72 +373,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Nosepass",
-        "Swinub",
-        "Cubone",
-        "Nincada"
-      ],
-      "9-16": [
-        "Cubone",
-        "Nincada",
-        "Palpitoad",
-        "Vibrava"
-      ],
-      "17-25": [
-        "Palpitoad",
-        "Vibrava"
-      ],
-      "26-36": [
-        "Aggron",
-        "Seismitoad"
-      ],
-      "37-50": [
-        "Flygon",
-        "Torterra"
-      ]
+      "1-8": ["Nosepass", "Swinub", "Cubone", "Nincada"],
+      "9-16": ["Cubone", "Nincada", "Palpitoad", "Vibrava"],
+      "17-25": ["Palpitoad", "Vibrava"],
+      "26-36": ["Aggron", "Seismitoad"],
+      "37-50": ["Flygon", "Torterra"]
     },
     "leaders": {
-      "1-8": [
-        "Hippopotas",
-        "Aron",
-        "Vibrava",
-        "Roggenrola"
-      ],
-      "9-16": [
-        "Vibrava",
-        "Roggenrola",
-        "Graveler",
-        "Gabite"
-      ],
-      "17-25": [
-        "Graveler",
-        "Gabite",
-        "Rhyhorn",
-        "Steelix"
-      ],
-      "26-36": [
-        "Hippowdon",
-        "Nidoking",
-        "Kabutops",
-        "Swampert"
-      ],
-      "37-50": [
-        "Tyranitar",
-        "Mamoswine",
-        "Armaldo",
-        "Cranidos"
-      ]
+      "1-8": ["Hippopotas", "Aron", "Vibrava", "Roggenrola"],
+      "9-16": ["Vibrava", "Roggenrola", "Graveler", "Gabite"],
+      "17-25": ["Graveler", "Gabite", "Rhyhorn", "Steelix"],
+      "26-36": ["Hippowdon", "Nidoking", "Kabutops", "Swampert"],
+      "37-50": ["Tyranitar", "Mamoswine", "Armaldo", "Cranidos"]
     }
   },
   {
@@ -1057,72 +401,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Onix",
-        "Diglett",
-        "Cubone",
-        "Wooper"
-      ],
-      "9-16": [
-        "Cubone",
-        "Wooper",
-        "Probopass",
-        "Claydol"
-      ],
-      "17-25": [
-        "Probopass",
-        "Claydol"
-      ],
-      "26-36": [
-        "Seismitoad",
-        "Aggron"
-      ],
-      "37-50": [
-        "Golem",
-        "Swampert"
-      ]
+      "1-8": ["Onix", "Diglett", "Cubone", "Wooper"],
+      "9-16": ["Cubone", "Wooper", "Probopass", "Claydol"],
+      "17-25": ["Probopass", "Claydol"],
+      "26-36": ["Seismitoad", "Aggron"],
+      "37-50": ["Golem", "Swampert"]
     },
     "leaders": {
-      "1-8": [
-        "Hippopotas",
-        "Golett",
-        "Gligar",
-        "Roggenrola"
-      ],
-      "9-16": [
-        "Gligar",
-        "Roggenrola",
-        "Gabite",
-        "Solrock"
-      ],
-      "17-25": [
-        "Gabite",
-        "Solrock",
-        "Rhyhorn",
-        "Gliscor"
-      ],
-      "26-36": [
-        "Nidoking",
-        "Hippowdon",
-        "Archen",
-        "Aggron"
-      ],
-      "37-50": [
-        "Armaldo",
-        "Tyranitar",
-        "Cranidos",
-        "Mamoswine"
-      ]
+      "1-8": ["Hippopotas", "Golett", "Gligar", "Roggenrola"],
+      "9-16": ["Gligar", "Roggenrola", "Gabite", "Solrock"],
+      "17-25": ["Gabite", "Solrock", "Rhyhorn", "Gliscor"],
+      "26-36": ["Nidoking", "Hippowdon", "Archen", "Aggron"],
+      "37-50": ["Armaldo", "Tyranitar", "Cranidos", "Mamoswine"]
     }
   },
   {
@@ -1132,71 +429,25 @@
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 4,
-    "canCross": [
-      "fly"
-    ],
+    "canCross": ["fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Horsea",
-        "Staryu",
-        "Wooper",
-        "Tentacool"
-      ],
-      "9-16": [
-        "Wooper",
-        "Tentacool",
-        "Sealeo",
-        "Omastar"
-      ],
-      "17-25": [
-        "Sealeo",
-        "Omastar"
-      ],
-      "26-36": [
-        "Ludicolo",
-        "Seismitoad"
-      ],
-      "37-50": [
-        "Blastoise",
-        "Samurott"
-      ]
+      "1-8": ["Horsea", "Staryu", "Wooper", "Tentacool"],
+      "9-16": ["Wooper", "Tentacool", "Sealeo", "Omastar"],
+      "17-25": ["Sealeo", "Omastar"],
+      "26-36": ["Ludicolo", "Seismitoad"],
+      "37-50": ["Blastoise", "Samurott"]
     },
     "leaders": {
-      "1-8": [
-        "Ludicolo",
-        "Tentacruel",
-        "Poliwhirl",
-        "Slowpoke"
-      ],
-      "9-16": [
-        "Poliwhirl",
-        "Slowpoke",
-        "Bibarel",
-        "Lapras"
-      ],
-      "17-25": [
-        "Bibarel",
-        "Lapras",
-        "Marshtomp",
-        "Golduck"
-      ],
-      "26-36": [
-        "Floatzel",
-        "Octillery",
-        "Swampert",
-        "Cloyster"
-      ],
-      "37-50": [
-        "Gyarados",
-        "Swampert",
-        "Floatzel",
-        "Sharpedo"
-      ]
+      "1-8": ["Ludicolo", "Tentacruel", "Poliwhirl", "Slowpoke"],
+      "9-16": ["Poliwhirl", "Slowpoke", "Bibarel", "Lapras"],
+      "17-25": ["Bibarel", "Lapras", "Marshtomp", "Golduck"],
+      "26-36": ["Floatzel", "Octillery", "Swampert", "Cloyster"],
+      "37-50": ["Gyarados", "Swampert", "Floatzel", "Sharpedo"]
     }
   },
   {
@@ -1206,72 +457,25 @@
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 7,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Psyduck",
-        "Tympole",
-        "Piplup",
-        "Shellos"
-      ],
-      "9-16": [
-        "Piplup",
-        "Shellos",
-        "Vaporeon",
-        "Tentacruel"
-      ],
-      "17-25": [
-        "Vaporeon",
-        "Tentacruel"
-      ],
-      "26-36": [
-        "Politoed",
-        "Seismitoad"
-      ],
-      "37-50": [
-        "Samurott",
-        "Poliwrath"
-      ]
+      "1-8": ["Psyduck", "Tympole", "Piplup", "Shellos"],
+      "9-16": ["Piplup", "Shellos", "Vaporeon", "Tentacruel"],
+      "17-25": ["Vaporeon", "Tentacruel"],
+      "26-36": ["Politoed", "Seismitoad"],
+      "37-50": ["Samurott", "Poliwrath"]
     },
     "leaders": {
-      "1-8": [
-        "Dewgong",
-        "Tentacruel",
-        "Ludicolo",
-        "Starmie"
-      ],
-      "9-16": [
-        "Ludicolo",
-        "Starmie",
-        "Kingdra",
-        "Poliwrath"
-      ],
-      "17-25": [
-        "Kingdra",
-        "Poliwrath",
-        "Cloyster",
-        "Wailord"
-      ],
-      "26-36": [
-        "Floatzel",
-        "Crawdaunt",
-        "Swampert",
-        "Samurott"
-      ],
-      "37-50": [
-        "Krabby",
-        "Gyarados",
-        "Kingler",
-        "Crawdaunt"
-      ]
+      "1-8": ["Dewgong", "Tentacruel", "Ludicolo", "Starmie"],
+      "9-16": ["Ludicolo", "Starmie", "Kingdra", "Poliwrath"],
+      "17-25": ["Kingdra", "Poliwrath", "Cloyster", "Wailord"],
+      "26-36": ["Floatzel", "Crawdaunt", "Swampert", "Samurott"],
+      "37-50": ["Krabby", "Gyarados", "Kingler", "Crawdaunt"]
     }
   },
   {
@@ -1281,72 +485,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Onix",
-        "Wooper",
-        "Shieldon",
-        "Nincada"
-      ],
-      "9-16": [
-        "Shieldon",
-        "Nincada",
-        "Whiscash",
-        "Palpitoad"
-      ],
-      "17-25": [
-        "Whiscash",
-        "Palpitoad"
-      ],
-      "26-36": [
-        "Aggron",
-        "Swampert"
-      ],
-      "37-50": [
-        "Nidoking",
-        "Krookodile"
-      ]
+      "1-8": ["Onix", "Wooper", "Shieldon", "Nincada"],
+      "9-16": ["Shieldon", "Nincada", "Whiscash", "Palpitoad"],
+      "17-25": ["Whiscash", "Palpitoad"],
+      "26-36": ["Aggron", "Swampert"],
+      "37-50": ["Nidoking", "Krookodile"]
     },
     "leaders": {
-      "1-8": [
-        "Golett",
-        "Roggenrola",
-        "Hippopotas",
-        "Vibrava"
-      ],
-      "9-16": [
-        "Hippopotas",
-        "Vibrava",
-        "Rhyhorn",
-        "Steelix"
-      ],
-      "17-25": [
-        "Rhyhorn",
-        "Steelix",
-        "Pupitar",
-        "Drilbur"
-      ],
-      "26-36": [
-        "Boldore",
-        "Aggron",
-        "Torterra",
-        "Aerodactyl"
-      ],
-      "37-50": [
-        "Mamoswine",
-        "Rhydon",
-        "Armaldo",
-        "Golem"
-      ]
+      "1-8": ["Golett", "Roggenrola", "Hippopotas", "Vibrava"],
+      "9-16": ["Hippopotas", "Vibrava", "Rhyhorn", "Steelix"],
+      "17-25": ["Rhyhorn", "Steelix", "Pupitar", "Drilbur"],
+      "26-36": ["Boldore", "Aggron", "Torterra", "Aerodactyl"],
+      "37-50": ["Mamoswine", "Rhydon", "Armaldo", "Golem"]
     }
   },
   {
@@ -1356,72 +513,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 9,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Klink",
-        "Lunatone",
-        "Elgyem",
-        "Beldum"
-      ],
-      "9-16": [
-        "Elgyem",
-        "Beldum",
-        "Slowking",
-        "Claydol"
-      ],
-      "17-25": [
-        "Slowking",
-        "Claydol"
-      ],
-      "26-36": [
-        "Aggron",
-        "Gardevoir"
-      ],
-      "37-50": [
-        "Magnezone",
-        "Gothitelle"
-      ]
+      "1-8": ["Klink", "Lunatone", "Elgyem", "Beldum"],
+      "9-16": ["Elgyem", "Beldum", "Slowking", "Claydol"],
+      "17-25": ["Slowking", "Claydol"],
+      "26-36": ["Aggron", "Gardevoir"],
+      "37-50": ["Magnezone", "Gothitelle"]
     },
     "leaders": {
-      "1-8": [
-        "Starmie",
-        "Slowbro",
-        "Beheeyem",
-        "Klang"
-      ],
-      "9-16": [
-        "Beheeyem",
-        "Klang",
-        "Empoleon",
-        "Steelix"
-      ],
-      "17-25": [
-        "Empoleon",
-        "Steelix",
-        "Bronzong",
-        "Solrock"
-      ],
-      "26-36": [
-        "Durant",
-        "Gallade",
-        "Bisharp",
-        "Ferrothorn"
-      ],
-      "37-50": [
-        "Lucario",
-        "Durant",
-        "Escavalier",
-        "Bisharp"
-      ]
+      "1-8": ["Starmie", "Slowbro", "Beheeyem", "Klang"],
+      "9-16": ["Beheeyem", "Klang", "Empoleon", "Steelix"],
+      "17-25": ["Empoleon", "Steelix", "Bronzong", "Solrock"],
+      "26-36": ["Durant", "Gallade", "Bisharp", "Ferrothorn"],
+      "37-50": ["Lucario", "Durant", "Escavalier", "Bisharp"]
     }
   },
   {
@@ -1431,72 +541,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Nincada",
-        "Venipede",
-        "Shroomish",
-        "Exeggcute"
-      ],
-      "9-16": [
-        "Shroomish",
-        "Exeggcute",
-        "Ivysaur",
-        "Volcarona"
-      ],
-      "17-25": [
-        "Ivysaur",
-        "Volcarona"
-      ],
-      "26-36": [
-        "Ludicolo",
-        "Roserade"
-      ],
-      "37-50": [
-        "Scolipede",
-        "Meganium"
-      ]
+      "1-8": ["Nincada", "Venipede", "Shroomish", "Exeggcute"],
+      "9-16": ["Shroomish", "Exeggcute", "Ivysaur", "Volcarona"],
+      "17-25": ["Ivysaur", "Volcarona"],
+      "26-36": ["Ludicolo", "Roserade"],
+      "37-50": ["Scolipede", "Meganium"]
     },
     "leaders": {
-      "1-8": [
-        "Tropius",
-        "Venomoth",
-        "Roserade",
-        "Turtwig"
-      ],
-      "9-16": [
-        "Roserade",
-        "Turtwig",
-        "Kricketune",
-        "Larvesta"
-      ],
-      "17-25": [
-        "Kricketune",
-        "Larvesta",
-        "Sceptile",
-        "Maractus"
-      ],
-      "26-36": [
-        "Sawsbuck",
-        "Leavanny",
-        "Tangrowth",
-        "Shiftry"
-      ],
-      "37-50": [
-        "Pinsir",
-        "Armaldo",
-        "Scyther",
-        "Escavalier"
-      ]
+      "1-8": ["Tropius", "Venomoth", "Roserade", "Turtwig"],
+      "9-16": ["Roserade", "Turtwig", "Kricketune", "Larvesta"],
+      "17-25": ["Kricketune", "Larvesta", "Sceptile", "Maractus"],
+      "26-36": ["Sawsbuck", "Leavanny", "Tangrowth", "Shiftry"],
+      "37-50": ["Pinsir", "Armaldo", "Scyther", "Escavalier"]
     }
   },
   {
@@ -1506,71 +569,25 @@
     "terrain": "void",
     "mediumFrequency": 0,
     "level": 7,
-    "canCross": [
-      "fly"
-    ],
+    "canCross": ["fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Houndour",
-        "Vullaby",
-        "Misdreavus",
-        "Duskull"
-      ],
-      "9-16": [
-        "Misdreavus",
-        "Duskull",
-        "Krokorok",
-        "Froslass"
-      ],
-      "17-25": [
-        "Krokorok",
-        "Froslass"
-      ],
-      "26-36": [
-        "Chandelure",
-        "Zweilous"
-      ],
-      "37-50": [
-        "Tyranitar",
-        "Krookodile"
-      ]
+      "1-8": ["Houndour", "Vullaby", "Misdreavus", "Duskull"],
+      "9-16": ["Misdreavus", "Duskull", "Krokorok", "Froslass"],
+      "17-25": ["Krokorok", "Froslass"],
+      "26-36": ["Chandelure", "Zweilous"],
+      "37-50": ["Tyranitar", "Krookodile"]
     },
     "leaders": {
-      "1-8": [
-        "Sandile",
-        "Golett",
-        "Shuppet",
-        "Sableye"
-      ],
-      "9-16": [
-        "Shuppet",
-        "Sableye",
-        "Liepard",
-        "Sneasel"
-      ],
-      "17-25": [
-        "Liepard",
-        "Sneasel",
-        "Drapion",
-        "Scrafty"
-      ],
-      "26-36": [
-        "Cacturne",
-        "Zoroark",
-        "Sharpedo",
-        "Hydreigon"
-      ],
-      "37-50": [
-        "Golurk",
-        "Krookodile",
-        "Bisharp",
-        "Absol"
-      ]
+      "1-8": ["Sandile", "Golett", "Shuppet", "Sableye"],
+      "9-16": ["Shuppet", "Sableye", "Liepard", "Sneasel"],
+      "17-25": ["Liepard", "Sneasel", "Drapion", "Scrafty"],
+      "26-36": ["Cacturne", "Zoroark", "Sharpedo", "Hydreigon"],
+      "37-50": ["Golurk", "Krookodile", "Bisharp", "Absol"]
     },
     "wallMaterial": "void"
   },
@@ -1581,72 +598,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Torchic",
-        "Corsola",
-        "Nosepass",
-        "Onix"
-      ],
-      "9-16": [
-        "Nosepass",
-        "Onix",
-        "Charmeleon",
-        "Quilava"
-      ],
-      "17-25": [
-        "Charmeleon",
-        "Quilava"
-      ],
-      "26-36": [
-        "Golem",
-        "Magmortar"
-      ],
-      "37-50": [
-        "Infernape",
-        "Gigalith"
-      ]
+      "1-8": ["Torchic", "Corsola", "Nosepass", "Onix"],
+      "9-16": ["Nosepass", "Onix", "Charmeleon", "Quilava"],
+      "17-25": ["Charmeleon", "Quilava"],
+      "26-36": ["Golem", "Magmortar"],
+      "37-50": ["Infernape", "Gigalith"]
     },
     "leaders": {
-      "1-8": [
-        "Monferno",
-        "Cradily",
-        "Geodude",
-        "Ninetales"
-      ],
-      "9-16": [
-        "Geodude",
-        "Ninetales",
-        "Pignite",
-        "Houndoom"
-      ],
-      "17-25": [
-        "Pignite",
-        "Houndoom",
-        "Lairon",
-        "Relicanth"
-      ],
-      "26-36": [
-        "Arcanine",
-        "Aerodactyl",
-        "Infernape",
-        "Emboar"
-      ],
-      "37-50": [
-        "Emboar",
-        "Flareon",
-        "Rhyperior",
-        "Blaziken"
-      ]
+      "1-8": ["Monferno", "Cradily", "Geodude", "Ninetales"],
+      "9-16": ["Geodude", "Ninetales", "Pignite", "Houndoom"],
+      "17-25": ["Pignite", "Houndoom", "Lairon", "Relicanth"],
+      "26-36": ["Arcanine", "Aerodactyl", "Infernape", "Emboar"],
+      "37-50": ["Emboar", "Flareon", "Rhyperior", "Blaziken"]
     }
   },
   {
@@ -1656,71 +626,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Venipede",
-        "Nincada",
-        "Seedot",
-        "Wurmple"
-      ],
-      "9-16": [
-        "Seedot",
-        "Wurmple",
-        "Wormadam",
-        "Cherrim"
-      ],
-      "17-25": [
-        "Wormadam",
-        "Cherrim"
-      ],
-      "26-36": [
-        "Venusaur",
-        "Meganium"
-      ],
-      "37-50": [
-        "Victreebel",
-        "Beedrill"
-      ]
+      "1-8": ["Venipede", "Nincada", "Seedot", "Wurmple"],
+      "9-16": ["Seedot", "Wurmple", "Wormadam", "Cherrim"],
+      "17-25": ["Wormadam", "Cherrim"],
+      "26-36": ["Venusaur", "Meganium"],
+      "37-50": ["Victreebel", "Beedrill"]
     },
     "leaders": {
-      "1-8": [
-        "Ivysaur",
-        "Grovyle",
-        "Tropius",
-        "Pineco"
-      ],
-      "9-16": [
-        "Tropius",
-        "Pineco",
-        "Sceptile",
-        "Cacnea"
-      ],
-      "17-25": [
-        "Sceptile",
-        "Cacnea",
-        "Larvesta",
-        "Venusaur"
-      ],
-      "26-36": [
-        "Carnivine",
-        "Scolipede",
-        "Exeggutor"
-      ],
-      "37-50": [
-        "Heracross",
-        "Scyther",
-        "Cacturne",
-        "Scizor"
-      ]
+      "1-8": ["Ivysaur", "Grovyle", "Tropius", "Pineco"],
+      "9-16": ["Tropius", "Pineco", "Sceptile", "Cacnea"],
+      "17-25": ["Sceptile", "Cacnea", "Larvesta", "Venusaur"],
+      "26-36": ["Carnivine", "Scolipede", "Exeggutor"],
+      "37-50": ["Heracross", "Scyther", "Cacturne", "Scizor"]
     }
   },
   {
@@ -1730,72 +654,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Barboach",
-        "Onix",
-        "Nincada",
-        "Shieldon"
-      ],
-      "9-16": [
-        "Nincada",
-        "Shieldon",
-        "Claydol",
-        "Bastiodon"
-      ],
-      "17-25": [
-        "Claydol",
-        "Bastiodon"
-      ],
-      "26-36": [
-        "Torterra",
-        "Aggron"
-      ],
-      "37-50": [
-        "Golem",
-        "Swampert"
-      ]
+      "1-8": ["Barboach", "Onix", "Nincada", "Shieldon"],
+      "9-16": ["Nincada", "Shieldon", "Claydol", "Bastiodon"],
+      "17-25": ["Claydol", "Bastiodon"],
+      "26-36": ["Torterra", "Aggron"],
+      "37-50": ["Golem", "Swampert"]
     },
     "leaders": {
-      "1-8": [
-        "Hippopotas",
-        "Claydol",
-        "Roggenrola",
-        "Sandile"
-      ],
-      "9-16": [
-        "Roggenrola",
-        "Sandile",
-        "Marshtomp",
-        "Nidoqueen"
-      ],
-      "17-25": [
-        "Marshtomp",
-        "Nidoqueen",
-        "Pupitar",
-        "Drilbur"
-      ],
-      "26-36": [
-        "Piloswine",
-        "Swampert",
-        "Torterra",
-        "Aggron"
-      ],
-      "37-50": [
-        "Golurk",
-        "Garchomp",
-        "Golem",
-        "Krookodile"
-      ]
+      "1-8": ["Hippopotas", "Claydol", "Roggenrola", "Sandile"],
+      "9-16": ["Roggenrola", "Sandile", "Marshtomp", "Nidoqueen"],
+      "17-25": ["Marshtomp", "Nidoqueen", "Pupitar", "Drilbur"],
+      "26-36": ["Piloswine", "Swampert", "Torterra", "Aggron"],
+      "37-50": ["Golurk", "Garchomp", "Golem", "Krookodile"]
     }
   },
   {
@@ -1805,72 +682,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Baltoy",
-        "Onix",
-        "Shieldon",
-        "Nosepass"
-      ],
-      "9-16": [
-        "Shieldon",
-        "Nosepass",
-        "Omastar",
-        "Whiscash"
-      ],
-      "17-25": [
-        "Omastar",
-        "Whiscash"
-      ],
-      "26-36": [
-        "Flygon",
-        "Krookodile"
-      ],
-      "37-50": [
-        "Nidoking",
-        "Nidoqueen"
-      ]
+      "1-8": ["Baltoy", "Onix", "Shieldon", "Nosepass"],
+      "9-16": ["Shieldon", "Nosepass", "Omastar", "Whiscash"],
+      "17-25": ["Omastar", "Whiscash"],
+      "26-36": ["Flygon", "Krookodile"],
+      "37-50": ["Nidoking", "Nidoqueen"]
     },
     "leaders": {
-      "1-8": [
-        "Palpitoad",
-        "Larvitar",
-        "Omastar",
-        "Claydol"
-      ],
-      "9-16": [
-        "Omastar",
-        "Claydol",
-        "Steelix",
-        "Rhyhorn"
-      ],
-      "17-25": [
-        "Steelix",
-        "Rhyhorn",
-        "Krokorok",
-        "Geodude"
-      ],
-      "26-36": [
-        "Flygon",
-        "Sandslash",
-        "Piloswine",
-        "Trapinch"
-      ],
-      "37-50": [
-        "Krookodile",
-        "Armaldo",
-        "Golem",
-        "Rhydon"
-      ]
+      "1-8": ["Palpitoad", "Larvitar", "Omastar", "Claydol"],
+      "9-16": ["Omastar", "Claydol", "Steelix", "Rhyhorn"],
+      "17-25": ["Steelix", "Rhyhorn", "Krokorok", "Geodude"],
+      "26-36": ["Flygon", "Sandslash", "Piloswine", "Trapinch"],
+      "37-50": ["Krookodile", "Armaldo", "Golem", "Rhydon"]
     },
     "paletteStepMs": 200,
     "sparkleStepMs": 100
@@ -1882,71 +712,25 @@
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 8,
-    "canCross": [
-      "fly"
-    ],
+    "canCross": ["fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Cubone",
-        "Wooper",
-        "Lunatone",
-        "Swinub"
-      ],
-      "9-16": [
-        "Lunatone",
-        "Swinub",
-        "Palpitoad",
-        "Claydol"
-      ],
-      "17-25": [
-        "Palpitoad",
-        "Claydol"
-      ],
-      "26-36": [
-        "Aggron",
-        "Swampert"
-      ],
-      "37-50": [
-        "Nidoking",
-        "Torterra"
-      ]
+      "1-8": ["Cubone", "Wooper", "Lunatone", "Swinub"],
+      "9-16": ["Lunatone", "Swinub", "Palpitoad", "Claydol"],
+      "17-25": ["Palpitoad", "Claydol"],
+      "26-36": ["Aggron", "Swampert"],
+      "37-50": ["Nidoking", "Torterra"]
     },
     "leaders": {
-      "1-8": [
-        "Gligar",
-        "Golett",
-        "Sandshrew",
-        "Geodude"
-      ],
-      "9-16": [
-        "Sandshrew",
-        "Geodude",
-        "Solrock",
-        "Sandslash"
-      ],
-      "17-25": [
-        "Solrock",
-        "Sandslash",
-        "Lairon",
-        "Gliscor"
-      ],
-      "26-36": [
-        "Aerodactyl",
-        "Torterra",
-        "Boldore",
-        "Aggron"
-      ],
-      "37-50": [
-        "Tyranitar",
-        "Armaldo",
-        "Gigalith",
-        "Cranidos"
-      ]
+      "1-8": ["Gligar", "Golett", "Sandshrew", "Geodude"],
+      "9-16": ["Sandshrew", "Geodude", "Solrock", "Sandslash"],
+      "17-25": ["Solrock", "Sandslash", "Lairon", "Gliscor"],
+      "26-36": ["Aerodactyl", "Torterra", "Boldore", "Aggron"],
+      "37-50": ["Tyranitar", "Armaldo", "Gigalith", "Cranidos"]
     }
   },
   {
@@ -1956,72 +740,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Swinub",
-        "Smoochum",
-        "Snover",
-        "Cryogonal"
-      ],
-      "9-16": [
-        "Snover",
-        "Cryogonal",
-        "Abomasnow",
-        "Glalie"
-      ],
-      "17-25": [
-        "Abomasnow",
-        "Glalie"
-      ],
-      "26-36": [
-        "Vanilluxe",
-        "Piloswine"
-      ],
-      "37-50": [
-        "Cloyster",
-        "Beartic"
-      ]
+      "1-8": ["Swinub", "Smoochum", "Snover", "Cryogonal"],
+      "9-16": ["Snover", "Cryogonal", "Abomasnow", "Glalie"],
+      "17-25": ["Abomasnow", "Glalie"],
+      "26-36": ["Vanilluxe", "Piloswine"],
+      "37-50": ["Cloyster", "Beartic"]
     },
     "leaders": {
-      "1-8": [
-        "Snover",
-        "Glaceon",
-        "Lapras",
-        "Glalie"
-      ],
-      "9-16": [
-        "Lapras",
-        "Glalie",
-        "Piloswine",
-        "Walrein"
-      ],
-      "17-25": [
-        "Piloswine",
-        "Walrein",
-        "Abomasnow",
-        "Vanilluxe"
-      ],
-      "26-36": [
-        "Abomasnow",
-        "Sneasel",
-        "Cloyster",
-        "Piloswine"
-      ],
-      "37-50": [
-        "Mamoswine",
-        "Beartic",
-        "Abomasnow",
-        "Lapras"
-      ]
+      "1-8": ["Snover", "Glaceon", "Lapras", "Glalie"],
+      "9-16": ["Lapras", "Glalie", "Piloswine", "Walrein"],
+      "17-25": ["Piloswine", "Walrein", "Abomasnow", "Vanilluxe"],
+      "26-36": ["Abomasnow", "Sneasel", "Cloyster", "Piloswine"],
+      "37-50": ["Mamoswine", "Beartic", "Abomasnow", "Lapras"]
     }
   },
   {
@@ -2031,72 +768,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Shieldon",
-        "Barboach",
-        "Onix",
-        "Wooper"
-      ],
-      "9-16": [
-        "Onix",
-        "Wooper",
-        "Bastiodon",
-        "Palpitoad"
-      ],
-      "17-25": [
-        "Bastiodon",
-        "Palpitoad"
-      ],
-      "26-36": [
-        "Krookodile",
-        "Nidoking"
-      ],
-      "37-50": [
-        "Aggron",
-        "Nidoqueen"
-      ]
+      "1-8": ["Shieldon", "Barboach", "Onix", "Wooper"],
+      "9-16": ["Onix", "Wooper", "Bastiodon", "Palpitoad"],
+      "17-25": ["Bastiodon", "Palpitoad"],
+      "26-36": ["Krookodile", "Nidoking"],
+      "37-50": ["Aggron", "Nidoqueen"]
     },
     "leaders": {
-      "1-8": [
-        "Sandshrew",
-        "Golett",
-        "Gligar",
-        "Claydol"
-      ],
-      "9-16": [
-        "Gligar",
-        "Claydol",
-        "Drilbur",
-        "Quagsire"
-      ],
-      "17-25": [
-        "Drilbur",
-        "Quagsire",
-        "Gabite",
-        "Pupitar"
-      ],
-      "26-36": [
-        "Aggron",
-        "Piloswine",
-        "Nidoking",
-        "Swampert"
-      ],
-      "37-50": [
-        "Golurk",
-        "Donphan",
-        "Armaldo",
-        "Kabutops"
-      ]
+      "1-8": ["Sandshrew", "Golett", "Gligar", "Claydol"],
+      "9-16": ["Gligar", "Claydol", "Drilbur", "Quagsire"],
+      "17-25": ["Drilbur", "Quagsire", "Gabite", "Pupitar"],
+      "26-36": ["Aggron", "Piloswine", "Nidoking", "Swampert"],
+      "37-50": ["Golurk", "Donphan", "Armaldo", "Kabutops"]
     }
   },
   {
@@ -2106,72 +796,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Baltoy",
-        "Natu",
-        "Meditite",
-        "Woobat"
-      ],
-      "9-16": [
-        "Meditite",
-        "Woobat",
-        "Espeon",
-        "Claydol"
-      ],
-      "17-25": [
-        "Espeon",
-        "Claydol"
-      ],
-      "26-36": [
-        "Reuniclus",
-        "Magnezone"
-      ],
-      "37-50": [
-        "Metagross",
-        "Aggron"
-      ]
+      "1-8": ["Baltoy", "Natu", "Meditite", "Woobat"],
+      "9-16": ["Meditite", "Woobat", "Espeon", "Claydol"],
+      "17-25": ["Espeon", "Claydol"],
+      "26-36": ["Reuniclus", "Magnezone"],
+      "37-50": ["Metagross", "Aggron"]
     },
     "leaders": {
-      "1-8": [
-        "Starmie",
-        "Hypno",
-        "Aron",
-        "Magnezone"
-      ],
-      "9-16": [
-        "Aron",
-        "Magnezone",
-        "Lairon",
-        "Ferrothorn"
-      ],
-      "17-25": [
-        "Lairon",
-        "Ferrothorn",
-        "Pawniard",
-        "Steelix"
-      ],
-      "26-36": [
-        "Solrock",
-        "Exeggutor",
-        "Aggron",
-        "Lucario"
-      ],
-      "37-50": [
-        "Escavalier",
-        "Lucario",
-        "Gallade",
-        "Durant"
-      ]
+      "1-8": ["Starmie", "Hypno", "Aron", "Magnezone"],
+      "9-16": ["Aron", "Magnezone", "Lairon", "Ferrothorn"],
+      "17-25": ["Lairon", "Ferrothorn", "Pawniard", "Steelix"],
+      "26-36": ["Solrock", "Exeggutor", "Aggron", "Lucario"],
+      "37-50": ["Escavalier", "Lucario", "Gallade", "Durant"]
     }
   },
   {
@@ -2181,72 +824,25 @@
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 3,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Omanyte",
-        "Ducklett",
-        "Spheal",
-        "Wooper"
-      ],
-      "9-16": [
-        "Spheal",
-        "Wooper",
-        "Sealeo",
-        "Vaporeon"
-      ],
-      "17-25": [
-        "Sealeo",
-        "Vaporeon"
-      ],
-      "26-36": [
-        "Seismitoad",
-        "Walrein"
-      ],
-      "37-50": [
-        "Empoleon",
-        "Feraligatr"
-      ]
+      "1-8": ["Omanyte", "Ducklett", "Spheal", "Wooper"],
+      "9-16": ["Spheal", "Wooper", "Sealeo", "Vaporeon"],
+      "17-25": ["Sealeo", "Vaporeon"],
+      "26-36": ["Seismitoad", "Walrein"],
+      "37-50": ["Empoleon", "Feraligatr"]
     },
     "leaders": {
-      "1-8": [
-        "Vaporeon",
-        "Goldeen",
-        "Slowpoke",
-        "Prinplup"
-      ],
-      "9-16": [
-        "Slowpoke",
-        "Prinplup",
-        "Blastoise",
-        "Empoleon"
-      ],
-      "17-25": [
-        "Blastoise",
-        "Empoleon",
-        "Lapras",
-        "Golduck"
-      ],
-      "26-36": [
-        "Floatzel",
-        "Cloyster",
-        "Poliwrath",
-        "Krabby"
-      ],
-      "37-50": [
-        "Feraligatr",
-        "Swampert",
-        "Octillery",
-        "Gyarados"
-      ]
+      "1-8": ["Vaporeon", "Goldeen", "Slowpoke", "Prinplup"],
+      "9-16": ["Slowpoke", "Prinplup", "Blastoise", "Empoleon"],
+      "17-25": ["Blastoise", "Empoleon", "Lapras", "Golduck"],
+      "26-36": ["Floatzel", "Cloyster", "Poliwrath", "Krabby"],
+      "37-50": ["Feraligatr", "Swampert", "Octillery", "Gyarados"]
     }
   },
   {
@@ -2256,72 +852,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 2,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Hoppip",
-        "Weedle",
-        "Petilil",
-        "Seedot"
-      ],
-      "9-16": [
-        "Petilil",
-        "Seedot",
-        "Volcarona",
-        "Masquerain"
-      ],
-      "17-25": [
-        "Volcarona",
-        "Masquerain"
-      ],
-      "26-36": [
-        "Beautifly",
-        "Ludicolo"
-      ],
-      "37-50": [
-        "Beedrill",
-        "Scolipede"
-      ]
+      "1-8": ["Hoppip", "Weedle", "Petilil", "Seedot"],
+      "9-16": ["Petilil", "Seedot", "Volcarona", "Masquerain"],
+      "17-25": ["Volcarona", "Masquerain"],
+      "26-36": ["Beautifly", "Ludicolo"],
+      "37-50": ["Beedrill", "Scolipede"]
     },
     "leaders": {
-      "1-8": [
-        "Gloom",
-        "Whimsicott",
-        "Venomoth",
-        "Yanma"
-      ],
-      "9-16": [
-        "Venomoth",
-        "Yanma",
-        "Cacnea",
-        "Larvesta"
-      ],
-      "17-25": [
-        "Cacnea",
-        "Larvesta",
-        "Sceptile",
-        "Venusaur"
-      ],
-      "26-36": [
-        "Leavanny",
-        "Shiftry",
-        "Scolipede",
-        "Sawsbuck"
-      ],
-      "37-50": [
-        "Scizor",
-        "Pinsir",
-        "Durant",
-        "Cacturne"
-      ]
+      "1-8": ["Gloom", "Whimsicott", "Venomoth", "Yanma"],
+      "9-16": ["Venomoth", "Yanma", "Cacnea", "Larvesta"],
+      "17-25": ["Cacnea", "Larvesta", "Sceptile", "Venusaur"],
+      "26-36": ["Leavanny", "Shiftry", "Scolipede", "Sawsbuck"],
+      "37-50": ["Scizor", "Pinsir", "Durant", "Cacturne"]
     }
   },
   {
@@ -2331,72 +880,25 @@
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "lavawalk",
-      "fly"
-    ],
+    "canCross": ["lavawalk", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Litwick",
-        "Wooper",
-        "Diglett",
-        "Swinub",
-        "Baltoy"
-      ],
-      "9-16": [
-        "Swinub",
-        "Baltoy",
-        "Aron",
-        "Hippopotas"
-      ],
-      "17-25": [
-        "Aron",
-        "Hippopotas"
-      ],
-      "26-36": [
-        "Dugtrio"
-      ],
-      "37-50": [
-        "Torterra",
-        "Relicanth"
-      ]
+      "1-8": ["Litwick", "Wooper", "Diglett", "Swinub", "Baltoy"],
+      "9-16": ["Swinub", "Baltoy", "Aron", "Hippopotas"],
+      "17-25": ["Aron", "Hippopotas"],
+      "26-36": ["Dugtrio"],
+      "37-50": ["Torterra", "Relicanth"]
     },
     "leaders": {
-      "1-8": [
-        "Corsola",
-        "Magcargo",
-        "Shuckle",
-        "Camerupt"
-      ],
-      "9-16": [
-        "Shuckle",
-        "Camerupt",
-        "Omastar",
-        "Claydol"
-      ],
-      "17-25": [
-        "Omastar",
-        "Claydol",
-        "Bastiodon",
-        "Volcarona"
-      ],
-      "26-36": [
-        "Seismitoad",
-        "Kabutops",
-        "Swampert",
-        "Flygon"
-      ],
-      "37-50": [
-        "Excadrill",
-        "Mamoswine",
-        "Aggron",
-        "Garchomp"
-      ]
+      "1-8": ["Corsola", "Magcargo", "Shuckle", "Camerupt"],
+      "9-16": ["Shuckle", "Camerupt", "Omastar", "Claydol"],
+      "17-25": ["Omastar", "Claydol", "Bastiodon", "Volcarona"],
+      "26-36": ["Seismitoad", "Kabutops", "Swampert", "Flygon"],
+      "37-50": ["Excadrill", "Mamoswine", "Aggron", "Garchomp"]
     }
   },
   {
@@ -2406,72 +908,25 @@
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "lavawalk",
-      "fly"
-    ],
+    "canCross": ["lavawalk", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Shieldon",
-        "Lunatone",
-        "Corsola",
-        "Nosepass"
-      ],
-      "9-16": [
-        "Corsola",
-        "Nosepass",
-        "Ninetales",
-        "Quilava"
-      ],
-      "17-25": [
-        "Ninetales",
-        "Quilava"
-      ],
-      "26-36": [
-        "Typhlosion",
-        "Charizard"
-      ],
-      "37-50": [
-        "Blaziken",
-        "Aggron"
-      ]
+      "1-8": ["Shieldon", "Lunatone", "Corsola", "Nosepass"],
+      "9-16": ["Corsola", "Nosepass", "Ninetales", "Quilava"],
+      "17-25": ["Ninetales", "Quilava"],
+      "26-36": ["Typhlosion", "Charizard"],
+      "37-50": ["Blaziken", "Aggron"]
     },
     "leaders": {
-      "1-8": [
-        "Growlithe",
-        "Geodude",
-        "Ninetales",
-        "Kabuto"
-      ],
-      "9-16": [
-        "Ninetales",
-        "Kabuto",
-        "Magmortar",
-        "Darumaka"
-      ],
-      "17-25": [
-        "Magmortar",
-        "Darumaka",
-        "Lairon",
-        "Houndoom"
-      ],
-      "26-36": [
-        "Golem",
-        "Kabutops",
-        "Arcanine",
-        "Boldore"
-      ],
-      "37-50": [
-        "Cranidos",
-        "Golem",
-        "Flareon",
-        "Armaldo"
-      ]
+      "1-8": ["Growlithe", "Geodude", "Ninetales", "Kabuto"],
+      "9-16": ["Ninetales", "Kabuto", "Magmortar", "Darumaka"],
+      "17-25": ["Magmortar", "Darumaka", "Lairon", "Houndoom"],
+      "26-36": ["Golem", "Kabutops", "Arcanine", "Boldore"],
+      "37-50": ["Cranidos", "Golem", "Flareon", "Armaldo"]
     }
   },
   {
@@ -2481,71 +936,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 9,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Elgyem",
-        "Natu",
-        "Drowzee",
-        "Beldum"
-      ],
-      "9-16": [
-        "Drowzee",
-        "Beldum",
-        "Starmie",
-        "Slowbro"
-      ],
-      "17-25": [
-        "Starmie",
-        "Slowbro"
-      ],
-      "26-36": [
-        "Bronzong",
-        "Alakazam"
-      ],
-      "37-50": [
-        "Metagross",
-        "Beheeyem"
-      ]
+      "1-8": ["Elgyem", "Natu", "Drowzee", "Beldum"],
+      "9-16": ["Drowzee", "Beldum", "Starmie", "Slowbro"],
+      "17-25": ["Starmie", "Slowbro"],
+      "26-36": ["Bronzong", "Alakazam"],
+      "37-50": ["Metagross", "Beheeyem"]
     },
     "leaders": {
-      "1-8": [
-        "Starmie",
-        "Hypno",
-        "Claydol",
-        "Slowking"
-      ],
-      "9-16": [
-        "Claydol",
-        "Slowking",
-        "Starmie"
-      ],
-      "17-25": [
-        "Slowking",
-        "Starmie",
-        "Exeggutor",
-        "Bronzong"
-      ],
-      "26-36": [
-        "Metagross",
-        "Gallade",
-        "Slowking",
-        "Slowbro"
-      ],
-      "37-50": [
-        "Metagross",
-        "Slowking",
-        "Gallade",
-        "Exeggutor"
-      ]
+      "1-8": ["Starmie", "Hypno", "Claydol", "Slowking"],
+      "9-16": ["Claydol", "Slowking", "Starmie"],
+      "17-25": ["Slowking", "Starmie", "Exeggutor", "Bronzong"],
+      "26-36": ["Metagross", "Gallade", "Slowking", "Slowbro"],
+      "37-50": ["Metagross", "Slowking", "Gallade", "Exeggutor"]
     }
   },
   {
@@ -2555,72 +964,25 @@
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Staryu",
-        "Barboach",
-        "Finneon",
-        "Shellos"
-      ],
-      "9-16": [
-        "Finneon",
-        "Shellos",
-        "Palpitoad",
-        "Prinplup"
-      ],
-      "17-25": [
-        "Palpitoad",
-        "Prinplup"
-      ],
-      "26-36": [
-        "Walrein",
-        "Blastoise"
-      ],
-      "37-50": [
-        "Samurott",
-        "Politoed"
-      ]
+      "1-8": ["Staryu", "Barboach", "Finneon", "Shellos"],
+      "9-16": ["Finneon", "Shellos", "Palpitoad", "Prinplup"],
+      "17-25": ["Palpitoad", "Prinplup"],
+      "26-36": ["Walrein", "Blastoise"],
+      "37-50": ["Samurott", "Politoed"]
     },
     "leaders": {
-      "1-8": [
-        "Lumineon",
-        "Slowking",
-        "Mudkip",
-        "Dewgong"
-      ],
-      "9-16": [
-        "Mudkip",
-        "Dewgong",
-        "Wailord",
-        "Swanna"
-      ],
-      "17-25": [
-        "Wailord",
-        "Swanna",
-        "Seaking",
-        "Cloyster"
-      ],
-      "26-36": [
-        "Feraligatr",
-        "Crawdaunt",
-        "Sharpedo",
-        "Kabutops"
-      ],
-      "37-50": [
-        "Floatzel",
-        "Gyarados",
-        "Kingler",
-        "Swampert"
-      ]
+      "1-8": ["Lumineon", "Slowking", "Mudkip", "Dewgong"],
+      "9-16": ["Mudkip", "Dewgong", "Wailord", "Swanna"],
+      "17-25": ["Wailord", "Swanna", "Seaking", "Cloyster"],
+      "26-36": ["Feraligatr", "Crawdaunt", "Sharpedo", "Kabutops"],
+      "37-50": ["Floatzel", "Gyarados", "Kingler", "Swampert"]
     }
   },
   {
@@ -2630,72 +992,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Drifloon",
-        "Delibird",
-        "Vullaby",
-        "Taillow"
-      ],
-      "9-16": [
-        "Vullaby",
-        "Taillow",
-        "Omastar",
-        "Yanmega"
-      ],
-      "17-25": [
-        "Omastar",
-        "Yanmega"
-      ],
-      "26-36": [
-        "Golem",
-        "Beautifly"
-      ],
-      "37-50": [
-        "Crobat",
-        "Aggron"
-      ]
+      "1-8": ["Drifloon", "Delibird", "Vullaby", "Taillow"],
+      "9-16": ["Vullaby", "Taillow", "Omastar", "Yanmega"],
+      "17-25": ["Omastar", "Yanmega"],
+      "26-36": ["Golem", "Beautifly"],
+      "37-50": ["Crobat", "Aggron"]
     },
     "leaders": {
-      "1-8": [
-        "Golbat",
-        "Yanmega",
-        "Emolga",
-        "Gligar"
-      ],
-      "9-16": [
-        "Emolga",
-        "Gligar",
-        "Ninjask",
-        "Mothim"
-      ],
-      "17-25": [
-        "Ninjask",
-        "Mothim",
-        "Crobat",
-        "Anorith"
-      ],
-      "26-36": [
-        "Braviary",
-        "Boldore",
-        "Golem",
-        "Aggron"
-      ],
-      "37-50": [
-        "Gyarados",
-        "Braviary",
-        "Rhydon",
-        "Honchkrow"
-      ]
+      "1-8": ["Golbat", "Yanmega", "Emolga", "Gligar"],
+      "9-16": ["Emolga", "Gligar", "Ninjask", "Mothim"],
+      "17-25": ["Ninjask", "Mothim", "Crobat", "Anorith"],
+      "26-36": ["Braviary", "Boldore", "Golem", "Aggron"],
+      "37-50": ["Gyarados", "Braviary", "Rhydon", "Honchkrow"]
     }
   },
   {
@@ -2705,72 +1020,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Snorunt",
-        "Swinub",
-        "Smoochum",
-        "Vanillite"
-      ],
-      "9-16": [
-        "Smoochum",
-        "Vanillite",
-        "Dewgong",
-        "Sealeo"
-      ],
-      "17-25": [
-        "Dewgong",
-        "Sealeo"
-      ],
-      "26-36": [
-        "Glalie",
-        "Vanilluxe"
-      ],
-      "37-50": [
-        "Cloyster",
-        "Abomasnow"
-      ]
+      "1-8": ["Snorunt", "Swinub", "Smoochum", "Vanillite"],
+      "9-16": ["Smoochum", "Vanillite", "Dewgong", "Sealeo"],
+      "17-25": ["Dewgong", "Sealeo"],
+      "26-36": ["Glalie", "Vanilluxe"],
+      "37-50": ["Cloyster", "Abomasnow"]
     },
     "leaders": {
-      "1-8": [
-        "Cubchoo",
-        "Lapras",
-        "Froslass",
-        "Sealeo"
-      ],
-      "9-16": [
-        "Froslass",
-        "Sealeo",
-        "Piloswine",
-        "Cloyster"
-      ],
-      "17-25": [
-        "Piloswine",
-        "Cloyster",
-        "Sneasel",
-        "Glalie"
-      ],
-      "26-36": [
-        "Weavile",
-        "Sneasel",
-        "Lapras",
-        "Beartic"
-      ],
-      "37-50": [
-        "Beartic",
-        "Piloswine",
-        "Weavile",
-        "Lapras"
-      ]
+      "1-8": ["Cubchoo", "Lapras", "Froslass", "Sealeo"],
+      "9-16": ["Froslass", "Sealeo", "Piloswine", "Cloyster"],
+      "17-25": ["Piloswine", "Cloyster", "Sneasel", "Glalie"],
+      "26-36": ["Weavile", "Sneasel", "Lapras", "Beartic"],
+      "37-50": ["Beartic", "Piloswine", "Weavile", "Lapras"]
     }
   },
   {
@@ -2780,72 +1048,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Pidgey",
-        "Natu",
-        "Woobat",
-        "Drifloon"
-      ],
-      "9-16": [
-        "Woobat",
-        "Drifloon",
-        "Pidgeotto",
-        "Altaria"
-      ],
-      "17-25": [
-        "Pidgeotto",
-        "Altaria"
-      ],
-      "26-36": [
-        "Charizard",
-        "Aggron"
-      ],
-      "37-50": [
-        "Pidgeot",
-        "Tyranitar"
-      ]
+      "1-8": ["Pidgey", "Natu", "Woobat", "Drifloon"],
+      "9-16": ["Woobat", "Drifloon", "Pidgeotto", "Altaria"],
+      "17-25": ["Pidgeotto", "Altaria"],
+      "26-36": ["Charizard", "Aggron"],
+      "37-50": ["Pidgeot", "Tyranitar"]
     },
     "leaders": {
-      "1-8": [
-        "Xatu",
-        "Emolga",
-        "Tropius",
-        "Beautifly"
-      ],
-      "9-16": [
-        "Tropius",
-        "Beautifly",
-        "Swanna",
-        "Crobat"
-      ],
-      "17-25": [
-        "Swanna",
-        "Crobat",
-        "Fearow",
-        "Farfetch_d"
-      ],
-      "26-36": [
-        "Boldore",
-        "Kabutops",
-        "Scyther",
-        "Golem"
-      ],
-      "37-50": [
-        "Braviary",
-        "Dragonite",
-        "Cranidos",
-        "Staraptor"
-      ]
+      "1-8": ["Xatu", "Emolga", "Tropius", "Beautifly"],
+      "9-16": ["Tropius", "Beautifly", "Swanna", "Crobat"],
+      "17-25": ["Swanna", "Crobat", "Fearow", "Farfetch_d"],
+      "26-36": ["Boldore", "Kabutops", "Scyther", "Golem"],
+      "37-50": ["Braviary", "Dragonite", "Cranidos", "Staraptor"]
     }
   },
   {
@@ -2855,72 +1076,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Poochyena",
-        "Purrloin",
-        "Houndour",
-        "Duskull"
-      ],
-      "9-16": [
-        "Houndour",
-        "Duskull",
-        "Umbreon",
-        "Dusclops"
-      ],
-      "17-25": [
-        "Umbreon",
-        "Dusclops"
-      ],
-      "26-36": [
-        "Chandelure",
-        "Dusknoir"
-      ],
-      "37-50": [
-        "Mightyena",
-        "Tyranitar"
-      ]
+      "1-8": ["Poochyena", "Purrloin", "Houndour", "Duskull"],
+      "9-16": ["Houndour", "Duskull", "Umbreon", "Dusclops"],
+      "17-25": ["Umbreon", "Dusclops"],
+      "26-36": ["Chandelure", "Dusknoir"],
+      "37-50": ["Mightyena", "Tyranitar"]
     },
     "leaders": {
-      "1-8": [
-        "Zorua",
-        "Nuzleaf",
-        "Gengar",
-        "Umbreon"
-      ],
-      "9-16": [
-        "Gengar",
-        "Umbreon",
-        "Zweilous",
-        "Scrafty"
-      ],
-      "17-25": [
-        "Zweilous",
-        "Scrafty",
-        "Murkrow",
-        "Houndoom"
-      ],
-      "26-36": [
-        "Krookodile",
-        "Shiftry",
-        "Sharpedo",
-        "Banette"
-      ],
-      "37-50": [
-        "Golurk",
-        "Honchkrow",
-        "Cacturne",
-        "Banette"
-      ]
+      "1-8": ["Zorua", "Nuzleaf", "Gengar", "Umbreon"],
+      "9-16": ["Gengar", "Umbreon", "Zweilous", "Scrafty"],
+      "17-25": ["Zweilous", "Scrafty", "Murkrow", "Houndoom"],
+      "26-36": ["Krookodile", "Shiftry", "Sharpedo", "Banette"],
+      "37-50": ["Golurk", "Honchkrow", "Cacturne", "Banette"]
     }
   },
   {
@@ -2930,72 +1104,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Nincada",
-        "Joltik",
-        "Snivy",
-        "Wurmple"
-      ],
-      "9-16": [
-        "Snivy",
-        "Wurmple",
-        "Bayleef",
-        "Volcarona"
-      ],
-      "17-25": [
-        "Bayleef",
-        "Volcarona"
-      ],
-      "26-36": [
-        "Venusaur",
-        "Meganium"
-      ],
-      "37-50": [
-        "Torterra",
-        "Leavanny"
-      ]
+      "1-8": ["Nincada", "Joltik", "Snivy", "Wurmple"],
+      "9-16": ["Snivy", "Wurmple", "Bayleef", "Volcarona"],
+      "17-25": ["Bayleef", "Volcarona"],
+      "26-36": ["Venusaur", "Meganium"],
+      "37-50": ["Torterra", "Leavanny"]
     },
     "leaders": {
-      "1-8": [
-        "Ludicolo",
-        "Bellsprout",
-        "Roserade",
-        "Sunflora"
-      ],
-      "9-16": [
-        "Roserade",
-        "Sunflora",
-        "Grotle",
-        "Maractus"
-      ],
-      "17-25": [
-        "Grotle",
-        "Maractus",
-        "Mothim",
-        "Weepinbell"
-      ],
-      "26-36": [
-        "Scyther",
-        "Durant",
-        "Leafeon",
-        "Leavanny"
-      ],
-      "37-50": [
-        "Armaldo",
-        "Pinsir",
-        "Scizor",
-        "Heracross"
-      ]
+      "1-8": ["Ludicolo", "Bellsprout", "Roserade", "Sunflora"],
+      "9-16": ["Roserade", "Sunflora", "Grotle", "Maractus"],
+      "17-25": ["Grotle", "Maractus", "Mothim", "Weepinbell"],
+      "26-36": ["Scyther", "Durant", "Leafeon", "Leavanny"],
+      "37-50": ["Armaldo", "Pinsir", "Scizor", "Heracross"]
     }
   },
   {
@@ -3005,72 +1132,25 @@
     "terrain": "water",
     "mediumFrequency": 0.1,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Omanyte",
-        "Wooper",
-        "Nosepass",
-        "Shieldon"
-      ],
-      "9-16": [
-        "Nosepass",
-        "Shieldon",
-        "Palpitoad",
-        "Bastiodon"
-      ],
-      "17-25": [
-        "Palpitoad",
-        "Bastiodon"
-      ],
-      "26-36": [
-        "Swampert",
-        "Krookodile"
-      ],
-      "37-50": [
-        "Torterra",
-        "Golem"
-      ]
+      "1-8": ["Omanyte", "Wooper", "Nosepass", "Shieldon"],
+      "9-16": ["Nosepass", "Shieldon", "Palpitoad", "Bastiodon"],
+      "17-25": ["Palpitoad", "Bastiodon"],
+      "26-36": ["Swampert", "Krookodile"],
+      "37-50": ["Torterra", "Golem"]
     },
     "leaders": {
-      "1-8": [
-        "Claydol",
-        "Gligar",
-        "Gible",
-        "Sandile"
-      ],
-      "9-16": [
-        "Gible",
-        "Sandile",
-        "Lairon",
-        "Pupitar"
-      ],
-      "17-25": [
-        "Lairon",
-        "Pupitar",
-        "Marshtomp",
-        "Gabite"
-      ],
-      "26-36": [
-        "Swampert",
-        "Torterra",
-        "Aerodactyl",
-        "Piloswine"
-      ],
-      "37-50": [
-        "Armaldo",
-        "Rhydon",
-        "Garchomp",
-        "Kabutops"
-      ]
+      "1-8": ["Claydol", "Gligar", "Gible", "Sandile"],
+      "9-16": ["Gible", "Sandile", "Lairon", "Pupitar"],
+      "17-25": ["Lairon", "Pupitar", "Marshtomp", "Gabite"],
+      "26-36": ["Swampert", "Torterra", "Aerodactyl", "Piloswine"],
+      "37-50": ["Armaldo", "Rhydon", "Garchomp", "Kabutops"]
     }
   },
   {
@@ -3080,72 +1160,25 @@
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 2,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Chinchou",
-        "Tentacool",
-        "Seel",
-        "Spheal"
-      ],
-      "9-16": [
-        "Seel",
-        "Spheal",
-        "Lombre",
-        "Omastar"
-      ],
-      "17-25": [
-        "Lombre",
-        "Omastar"
-      ],
-      "26-36": [
-        "Politoed",
-        "Ludicolo"
-      ],
-      "37-50": [
-        "Samurott",
-        "Poliwrath"
-      ]
+      "1-8": ["Chinchou", "Tentacool", "Seel", "Spheal"],
+      "9-16": ["Seel", "Spheal", "Lombre", "Omastar"],
+      "17-25": ["Lombre", "Omastar"],
+      "26-36": ["Politoed", "Ludicolo"],
+      "37-50": ["Samurott", "Poliwrath"]
     },
     "leaders": {
-      "1-8": [
-        "Slowpoke",
-        "Poliwhirl",
-        "Shellder",
-        "Clamperl"
-      ],
-      "9-16": [
-        "Shellder",
-        "Clamperl",
-        "Gorebyss",
-        "Kabuto"
-      ],
-      "17-25": [
-        "Gorebyss",
-        "Kabuto",
-        "Blastoise",
-        "Gastrodon"
-      ],
-      "26-36": [
-        "Feraligatr",
-        "Krabby",
-        "Kingdra",
-        "Cloyster"
-      ],
-      "37-50": [
-        "Octillery",
-        "Sharpedo",
-        "Floatzel",
-        "Kabutops"
-      ]
+      "1-8": ["Slowpoke", "Poliwhirl", "Shellder", "Clamperl"],
+      "9-16": ["Shellder", "Clamperl", "Gorebyss", "Kabuto"],
+      "17-25": ["Gorebyss", "Kabuto", "Blastoise", "Gastrodon"],
+      "26-36": ["Feraligatr", "Krabby", "Kingdra", "Cloyster"],
+      "37-50": ["Octillery", "Sharpedo", "Floatzel", "Kabutops"]
     }
   },
   {
@@ -3155,74 +1188,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 2,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Sunkern",
-        "Burmy",
-        "Hoppip",
-        "Budew",
-        "Cherubi"
-      ],
-      "9-16": [
-        "Budew",
-        "Cherubi",
-        "Deerling",
-        "Roselia"
-      ],
-      "17-25": [
-        "Deerling",
-        "Roselia"
-      ],
-      "26-36": [
-        "Bellossom",
-        "Roserade"
-      ],
-      "37-50": [
-        "Bellossom",
-        "Breloom",
-        "Roserade"
-      ]
+      "1-8": ["Sunkern", "Burmy", "Hoppip", "Budew", "Cherubi"],
+      "9-16": ["Budew", "Cherubi", "Deerling", "Roselia"],
+      "17-25": ["Deerling", "Roselia"],
+      "26-36": ["Bellossom", "Roserade"],
+      "37-50": ["Bellossom", "Breloom", "Roserade"]
     },
     "leaders": {
-      "1-8": [
-        "Butterfree",
-        "Beautifly",
-        "Beedrill",
-        "Mothim"
-      ],
-      "9-16": [
-        "Beedrill",
-        "Mothim",
-        "Sceptile",
-        "Sawsbuck"
-      ],
-      "17-25": [
-        "Sceptile",
-        "Sawsbuck",
-        "Torterra",
-        "Serperior"
-      ],
-      "26-36": [
-        "Shaymin",
-        "Celebi",
-        "Bellossom",
-        "Butterfree"
-      ],
-      "37-50": [
-        "Virizion",
-        "Genesect",
-        "Celebi",
-        "Shaymin"
-      ]
+      "1-8": ["Butterfree", "Beautifly", "Beedrill", "Mothim"],
+      "9-16": ["Beedrill", "Mothim", "Sceptile", "Sawsbuck"],
+      "17-25": ["Sceptile", "Sawsbuck", "Torterra", "Serperior"],
+      "26-36": ["Shaymin", "Celebi", "Bellossom", "Butterfree"],
+      "37-50": ["Virizion", "Genesect", "Celebi", "Shaymin"]
     }
   },
   {
@@ -3232,70 +1216,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 1,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Sunkern",
-        "Kricketot",
-        "Wurmple",
-        "Burmy",
-        "Caterpie"
-      ],
-      "9-16": [
-        "Burmy",
-        "Caterpie",
-        "Sunflora",
-        "Kricketune"
-      ],
-      "17-25": [
-        "Sunflora",
-        "Kricketune"
-      ],
-      "26-36": [
-        "Tropius"
-      ],
-      "37-50": [
-        "Vileplume",
-        "Whimsicott"
-      ]
+      "1-8": ["Sunkern", "Kricketot", "Wurmple", "Burmy", "Caterpie"],
+      "9-16": ["Burmy", "Caterpie", "Sunflora", "Kricketune"],
+      "17-25": ["Sunflora", "Kricketune"],
+      "26-36": ["Tropius"],
+      "37-50": ["Vileplume", "Whimsicott"]
     },
     "leaders": {
-      "1-8": [
-        "Victreebel",
-        "Leavanny",
-        "Roserade",
-        "Lilligant"
-      ],
-      "9-16": [
-        "Roserade",
-        "Lilligant",
-        "Galvantula"
-      ],
-      "17-25": [
-        "Galvantula",
-        "Escavalier",
-        "Sunflora"
-      ],
-      "26-36": [
-        "Venusaur",
-        "Sceptile",
-        "Meganium",
-        "Serperior"
-      ],
-      "37-50": [
-        "Scizor",
-        "Heracross",
-        "Pinsir",
-        "Genesect"
-      ]
+      "1-8": ["Victreebel", "Leavanny", "Roserade", "Lilligant"],
+      "9-16": ["Roserade", "Lilligant", "Galvantula"],
+      "17-25": ["Galvantula", "Escavalier", "Sunflora"],
+      "26-36": ["Venusaur", "Sceptile", "Meganium", "Serperior"],
+      "37-50": ["Scizor", "Heracross", "Pinsir", "Genesect"]
     },
     "paletteStepMs": 200,
     "sparkleStepMs": 100
@@ -3307,77 +1246,25 @@
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 3,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Feebas",
-        "Quagsire",
-        "Magikarp",
-        "Surskit",
-        "Carvanha",
-        "Paras"
-      ],
-      "9-16": [
-        "Carvanha",
-        "Paras",
-        "Feebas",
-        "Quagsire"
-      ],
-      "17-25": [
-        "Feebas",
-        "Quagsire",
-        "Masquerain",
-        "Paras",
-        "Carvanha"
-      ],
-      "26-36": [
-        "Volbeat",
-        "Carvanha",
-        "Masquerain"
-      ],
-      "37-50": [
-        "Toxicroak",
-        "Pinsir"
-      ]
+      "1-8": ["Feebas", "Quagsire", "Magikarp", "Surskit", "Carvanha", "Paras"],
+      "9-16": ["Carvanha", "Paras", "Feebas", "Quagsire"],
+      "17-25": ["Feebas", "Quagsire", "Masquerain", "Paras", "Carvanha"],
+      "26-36": ["Volbeat", "Carvanha", "Masquerain"],
+      "37-50": ["Toxicroak", "Pinsir"]
     },
     "leaders": {
-      "1-8": [
-        "Poliwrath",
-        "Bibarel",
-        "Floatzel",
-        "Whiscash"
-      ],
-      "9-16": [
-        "Floatzel",
-        "Whiscash",
-        "Politoed",
-        "Armaldo"
-      ],
-      "17-25": [
-        "Politoed",
-        "Armaldo",
-        "Yanmega",
-        "Leafeon"
-      ],
-      "26-36": [
-        "Celebi",
-        "Seismitoad",
-        "Blastoise",
-        "Swampert"
-      ],
-      "37-50": [
-        "Virizion",
-        "Suicune",
-        "Celebi"
-      ]
+      "1-8": ["Poliwrath", "Bibarel", "Floatzel", "Whiscash"],
+      "9-16": ["Floatzel", "Whiscash", "Politoed", "Armaldo"],
+      "17-25": ["Politoed", "Armaldo", "Yanmega", "Leafeon"],
+      "26-36": ["Celebi", "Seismitoad", "Blastoise", "Swampert"],
+      "37-50": ["Virizion", "Suicune", "Celebi"]
     }
   },
   {
@@ -3387,72 +1274,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 5,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 1,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Nosepass",
-        "Shieldon",
-        "Wooper",
-        "Onix"
-      ],
-      "9-16": [
-        "Wooper",
-        "Onix",
-        "Claydol",
-        "Magcargo"
-      ],
-      "17-25": [
-        "Claydol",
-        "Magcargo"
-      ],
-      "26-36": [
-        "Torterra",
-        "Flygon"
-      ],
-      "37-50": [
-        "Golem",
-        "Seismitoad"
-      ]
+      "1-8": ["Nosepass", "Shieldon", "Wooper", "Onix"],
+      "9-16": ["Wooper", "Onix", "Claydol", "Magcargo"],
+      "17-25": ["Claydol", "Magcargo"],
+      "26-36": ["Torterra", "Flygon"],
+      "37-50": ["Golem", "Seismitoad"]
     },
     "leaders": {
-      "1-8": [
-        "Vibrava",
-        "Sandile",
-        "Hippopotas",
-        "Sandshrew"
-      ],
-      "9-16": [
-        "Hippopotas",
-        "Sandshrew",
-        "Steelix",
-        "Quagsire"
-      ],
-      "17-25": [
-        "Steelix",
-        "Quagsire",
-        "Marshtomp",
-        "Lairon"
-      ],
-      "26-36": [
-        "Nidoking",
-        "Swampert",
-        "Dugtrio",
-        "Torterra"
-      ],
-      "37-50": [
-        "Armaldo",
-        "Krookodile",
-        "Cranidos",
-        "Rhydon"
-      ]
+      "1-8": ["Vibrava", "Sandile", "Hippopotas", "Sandshrew"],
+      "9-16": ["Hippopotas", "Sandshrew", "Steelix", "Quagsire"],
+      "17-25": ["Steelix", "Quagsire", "Marshtomp", "Lairon"],
+      "26-36": ["Nidoking", "Swampert", "Dugtrio", "Torterra"],
+      "37-50": ["Armaldo", "Krookodile", "Cranidos", "Rhydon"]
     }
   },
   {
@@ -3462,72 +1302,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Nosepass",
-        "Vulpix",
-        "Cyndaquil",
-        "Lileep"
-      ],
-      "9-16": [
-        "Cyndaquil",
-        "Lileep",
-        "Probopass",
-        "Bastiodon"
-      ],
-      "17-25": [
-        "Probopass",
-        "Bastiodon"
-      ],
-      "26-36": [
-        "Aggron",
-        "Infernape"
-      ],
-      "37-50": [
-        "Magmortar",
-        "Charizard"
-      ]
+      "1-8": ["Nosepass", "Vulpix", "Cyndaquil", "Lileep"],
+      "9-16": ["Cyndaquil", "Lileep", "Probopass", "Bastiodon"],
+      "17-25": ["Probopass", "Bastiodon"],
+      "26-36": ["Aggron", "Infernape"],
+      "37-50": ["Magmortar", "Charizard"]
     },
     "leaders": {
-      "1-8": [
-        "Charmeleon",
-        "Quilava",
-        "Roggenrola",
-        "Kabuto"
-      ],
-      "9-16": [
-        "Roggenrola",
-        "Kabuto",
-        "Graveler",
-        "Magmar"
-      ],
-      "17-25": [
-        "Graveler",
-        "Magmar",
-        "Lairon",
-        "Darumaka"
-      ],
-      "26-36": [
-        "Infernape",
-        "Boldore",
-        "Aggron",
-        "Camerupt"
-      ],
-      "37-50": [
-        "Gigalith",
-        "Kabutops",
-        "Tyranitar",
-        "Flareon"
-      ]
+      "1-8": ["Charmeleon", "Quilava", "Roggenrola", "Kabuto"],
+      "9-16": ["Roggenrola", "Kabuto", "Graveler", "Magmar"],
+      "17-25": ["Graveler", "Magmar", "Lairon", "Darumaka"],
+      "26-36": ["Infernape", "Boldore", "Aggron", "Camerupt"],
+      "37-50": ["Gigalith", "Kabutops", "Tyranitar", "Flareon"]
     }
   },
   {
@@ -3537,71 +1330,25 @@
     "terrain": "void",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "fly"
-    ],
+    "canCross": ["fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Drifloon",
-        "Woobat",
-        "Natu",
-        "Pidgey"
-      ],
-      "9-16": [
-        "Natu",
-        "Pidgey",
-        "Yanmega",
-        "Masquerain"
-      ],
-      "17-25": [
-        "Yanmega",
-        "Masquerain"
-      ],
-      "26-36": [
-        "Pidgeot",
-        "Charizard"
-      ],
-      "37-50": [
-        "Staraptor",
-        "Gigalith"
-      ]
+      "1-8": ["Drifloon", "Woobat", "Natu", "Pidgey"],
+      "9-16": ["Natu", "Pidgey", "Yanmega", "Masquerain"],
+      "17-25": ["Yanmega", "Masquerain"],
+      "26-36": ["Pidgeot", "Charizard"],
+      "37-50": ["Staraptor", "Gigalith"]
     },
     "leaders": {
-      "1-8": [
-        "Aron",
-        "Roggenrola",
-        "Pidgeot",
-        "Staravia"
-      ],
-      "9-16": [
-        "Pidgeot",
-        "Staravia",
-        "Graveler",
-        "Solrock"
-      ],
-      "17-25": [
-        "Graveler",
-        "Solrock",
-        "Fearow",
-        "Farfetch_d"
-      ],
-      "26-36": [
-        "Dodrio",
-        "Aggron",
-        "Archen",
-        "Staraptor"
-      ],
-      "37-50": [
-        "Rhydon",
-        "Braviary",
-        "Dragonite",
-        "Gigalith"
-      ]
+      "1-8": ["Aron", "Roggenrola", "Pidgeot", "Staravia"],
+      "9-16": ["Pidgeot", "Staravia", "Graveler", "Solrock"],
+      "17-25": ["Graveler", "Solrock", "Fearow", "Farfetch_d"],
+      "26-36": ["Dodrio", "Aggron", "Archen", "Staraptor"],
+      "37-50": ["Rhydon", "Braviary", "Dragonite", "Gigalith"]
     }
   },
   {
@@ -3611,72 +1358,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Woobat",
-        "Elgyem",
-        "Baltoy",
-        "Sigilyph"
-      ],
-      "9-16": [
-        "Baltoy",
-        "Sigilyph",
-        "Hypno",
-        "Slowking"
-      ],
-      "17-25": [
-        "Hypno",
-        "Slowking"
-      ],
-      "26-36": [
-        "Gardevoir",
-        "Gallade"
-      ],
-      "37-50": [
-        "Bronzong",
-        "Metagross"
-      ]
+      "1-8": ["Woobat", "Elgyem", "Baltoy", "Sigilyph"],
+      "9-16": ["Baltoy", "Sigilyph", "Hypno", "Slowking"],
+      "17-25": ["Hypno", "Slowking"],
+      "26-36": ["Gardevoir", "Gallade"],
+      "37-50": ["Bronzong", "Metagross"]
     },
     "leaders": {
-      "1-8": [
-        "Slowbro",
-        "Unown",
-        "Hypno",
-        "Claydol"
-      ],
-      "9-16": [
-        "Hypno",
-        "Claydol",
-        "Beheeyem",
-        "Bronzong"
-      ],
-      "17-25": [
-        "Beheeyem",
-        "Bronzong",
-        "Starmie",
-        "Slowbro"
-      ],
-      "26-36": [
-        "Bronzong",
-        "Xatu",
-        "Gallade",
-        "Metagross"
-      ],
-      "37-50": [
-        "Gallade",
-        "Metagross",
-        "Exeggutor",
-        "Xatu"
-      ]
+      "1-8": ["Slowbro", "Unown", "Hypno", "Claydol"],
+      "9-16": ["Hypno", "Claydol", "Beheeyem", "Bronzong"],
+      "17-25": ["Beheeyem", "Bronzong", "Starmie", "Slowbro"],
+      "26-36": ["Bronzong", "Xatu", "Gallade", "Metagross"],
+      "37-50": ["Gallade", "Metagross", "Exeggutor", "Xatu"]
     }
   },
   {
@@ -3686,72 +1386,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Onix",
-        "Vulpix",
-        "Charmander",
-        "Cyndaquil"
-      ],
-      "9-16": [
-        "Charmander",
-        "Cyndaquil",
-        "Omastar",
-        "Charmeleon"
-      ],
-      "17-25": [
-        "Omastar",
-        "Charmeleon"
-      ],
-      "26-36": [
-        "Golem",
-        "Magmortar"
-      ],
-      "37-50": [
-        "Aggron",
-        "Charizard"
-      ]
+      "1-8": ["Onix", "Vulpix", "Charmander", "Cyndaquil"],
+      "9-16": ["Charmander", "Cyndaquil", "Omastar", "Charmeleon"],
+      "17-25": ["Omastar", "Charmeleon"],
+      "26-36": ["Golem", "Magmortar"],
+      "37-50": ["Aggron", "Charizard"]
     },
     "leaders": {
-      "1-8": [
-        "Ninetales",
-        "Roggenrola",
-        "Quilava",
-        "Growlithe"
-      ],
-      "9-16": [
-        "Quilava",
-        "Growlithe",
-        "Combusken",
-        "Relicanth"
-      ],
-      "17-25": [
-        "Combusken",
-        "Relicanth",
-        "Pignite",
-        "Graveler"
-      ],
-      "26-36": [
-        "Aggron",
-        "Infernape",
-        "Sudowoodo",
-        "Archen"
-      ],
-      "37-50": [
-        "Gigalith",
-        "Golem",
-        "Rhydon",
-        "Cranidos"
-      ]
+      "1-8": ["Ninetales", "Roggenrola", "Quilava", "Growlithe"],
+      "9-16": ["Quilava", "Growlithe", "Combusken", "Relicanth"],
+      "17-25": ["Combusken", "Relicanth", "Pignite", "Graveler"],
+      "26-36": ["Aggron", "Infernape", "Sudowoodo", "Archen"],
+      "37-50": ["Gigalith", "Golem", "Rhydon", "Cranidos"]
     }
   },
   {
@@ -3761,72 +1414,25 @@
     "terrain": "water",
     "mediumFrequency": 0.1,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 1,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Tyrogue",
-        "Wooper",
-        "Magnemite",
-        "Diglett",
-        "Meditite"
-      ],
-      "9-16": [
-        "Diglett",
-        "Meditite",
-        "Corsola",
-        "Phanpy"
-      ],
-      "17-25": [
-        "Corsola",
-        "Phanpy"
-      ],
-      "26-36": [
-        "Boldore"
-      ],
-      "37-50": [
-        "Durant",
-        "Mienshao"
-      ]
+      "1-8": ["Tyrogue", "Wooper", "Magnemite", "Diglett", "Meditite"],
+      "9-16": ["Diglett", "Meditite", "Corsola", "Phanpy"],
+      "17-25": ["Corsola", "Phanpy"],
+      "26-36": ["Boldore"],
+      "37-50": ["Durant", "Mienshao"]
     },
     "leaders": {
-      "1-8": [
-        "Corsola",
-        "Magcargo",
-        "Shuckle",
-        "Mawile"
-      ],
-      "9-16": [
-        "Shuckle",
-        "Mawile",
-        "Empoleon",
-        "Ferrothorn"
-      ],
-      "17-25": [
-        "Empoleon",
-        "Ferrothorn",
-        "Whiscash",
-        "Primeape"
-      ],
-      "26-36": [
-        "Mienshao",
-        "Infernape",
-        "Kabutops",
-        "Swampert"
-      ],
-      "37-50": [
-        "Durant",
-        "Steelix",
-        "Gliscor",
-        "Archeops"
-      ]
+      "1-8": ["Corsola", "Magcargo", "Shuckle", "Mawile"],
+      "9-16": ["Shuckle", "Mawile", "Empoleon", "Ferrothorn"],
+      "17-25": ["Empoleon", "Ferrothorn", "Whiscash", "Primeape"],
+      "26-36": ["Mienshao", "Infernape", "Kabutops", "Swampert"],
+      "37-50": ["Durant", "Steelix", "Gliscor", "Archeops"]
     }
   },
   {
@@ -3836,72 +1442,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 9,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Ralts",
-        "Abra",
-        "Smoochum",
-        "Gothita",
-        "Spoink"
-      ],
-      "9-16": [
-        "Gothita",
-        "Spoink",
-        "Exeggcute",
-        "Duosion"
-      ],
-      "17-25": [
-        "Exeggcute",
-        "Duosion"
-      ],
-      "26-36": [
-        "Metang"
-      ],
-      "37-50": [
-        "Fraxure",
-        "Lairon"
-      ]
+      "1-8": ["Ralts", "Abra", "Smoochum", "Gothita", "Spoink"],
+      "9-16": ["Gothita", "Spoink", "Exeggcute", "Duosion"],
+      "17-25": ["Exeggcute", "Duosion"],
+      "26-36": ["Metang"],
+      "37-50": ["Fraxure", "Lairon"]
     },
     "leaders": {
-      "1-8": [
-        "Unown",
-        "Girafarig",
-        "Medicham",
-        "Hypno"
-      ],
-      "9-16": [
-        "Medicham",
-        "Hypno",
-        "Solrock",
-        "Gardevoir"
-      ],
-      "17-25": [
-        "Solrock",
-        "Gardevoir",
-        "Skarmory",
-        "Starmie"
-      ],
-      "26-36": [
-        "Bisharp",
-        "Excadrill",
-        "Aggron",
-        "Garchomp"
-      ],
-      "37-50": [
-        "Mesprit",
-        "Mew",
-        "Palkia",
-        "Mewtwo"
-      ]
+      "1-8": ["Unown", "Girafarig", "Medicham", "Hypno"],
+      "9-16": ["Medicham", "Hypno", "Solrock", "Gardevoir"],
+      "17-25": ["Solrock", "Gardevoir", "Skarmory", "Starmie"],
+      "26-36": ["Bisharp", "Excadrill", "Aggron", "Garchomp"],
+      "37-50": ["Mesprit", "Mew", "Palkia", "Mewtwo"]
     }
   },
   {
@@ -3911,71 +1470,25 @@
     "terrain": "water",
     "mediumFrequency": 0.1,
     "level": 1,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": -1,
       "habitaciones": -1,
       "cruces": -1
     },
     "wild": {
-      "1-8": [
-        "Cherubi",
-        "Exeggcute",
-        "Lileep",
-        "Shroomish"
-      ],
-      "9-16": [
-        "Lileep",
-        "Shroomish",
-        "Masquerain",
-        "Volcarona"
-      ],
-      "17-25": [
-        "Masquerain",
-        "Volcarona"
-      ],
-      "26-36": [
-        "Ludicolo",
-        "Beautifly"
-      ],
-      "37-50": [
-        "Meganium",
-        "Scolipede"
-      ]
+      "1-8": ["Cherubi", "Exeggcute", "Lileep", "Shroomish"],
+      "9-16": ["Lileep", "Shroomish", "Masquerain", "Volcarona"],
+      "17-25": ["Masquerain", "Volcarona"],
+      "26-36": ["Ludicolo", "Beautifly"],
+      "37-50": ["Meganium", "Scolipede"]
     },
     "leaders": {
-      "1-8": [
-        "Servine",
-        "Spinarak",
-        "Lilligant",
-        "Bayleef"
-      ],
-      "9-16": [
-        "Lilligant",
-        "Bayleef",
-        "Vileplume",
-        "Meganium"
-      ],
-      "17-25": [
-        "Vileplume",
-        "Meganium",
-        "Bellsprout",
-        "Venusaur"
-      ],
-      "26-36": [
-        "Exeggutor",
-        "Scolipede",
-        "Shiftry"
-      ],
-      "37-50": [
-        "Cacturne",
-        "Torterra",
-        "Scyther",
-        "Pinsir"
-      ]
+      "1-8": ["Servine", "Spinarak", "Lilligant", "Bayleef"],
+      "9-16": ["Lilligant", "Bayleef", "Vileplume", "Meganium"],
+      "17-25": ["Vileplume", "Meganium", "Bellsprout", "Venusaur"],
+      "26-36": ["Exeggutor", "Scolipede", "Shiftry"],
+      "37-50": ["Cacturne", "Torterra", "Scyther", "Pinsir"]
     }
   },
   {
@@ -3985,72 +1498,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 3,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Sunkern",
-        "Wurmple",
-        "Hoppip",
-        "Petilil",
-        "Spinarak"
-      ],
-      "9-16": [
-        "Petilil",
-        "Spinarak",
-        "Cacnea",
-        "Snover"
-      ],
-      "17-25": [
-        "Cacnea",
-        "Snover"
-      ],
-      "26-36": [
-        "Emolga"
-      ],
-      "37-50": [
-        "Exeggutor",
-        "Escavalier"
-      ]
+      "1-8": ["Sunkern", "Wurmple", "Hoppip", "Petilil", "Spinarak"],
+      "9-16": ["Petilil", "Spinarak", "Cacnea", "Snover"],
+      "17-25": ["Cacnea", "Snover"],
+      "26-36": ["Emolga"],
+      "37-50": ["Exeggutor", "Escavalier"]
     },
     "leaders": {
-      "1-8": [
-        "Shedinja",
-        "Illumise",
-        "Butterfree",
-        "Ariados"
-      ],
-      "9-16": [
-        "Butterfree",
-        "Ariados",
-        "Mothim",
-        "Cacturne"
-      ],
-      "17-25": [
-        "Mothim",
-        "Cacturne",
-        "Galvantula",
-        "Vileplume"
-      ],
-      "26-36": [
-        "Bellossom",
-        "Jumpluff",
-        "Dodrio",
-        "Scizor"
-      ],
-      "37-50": [
-        "Braviary",
-        "Scolipede",
-        "Salamence",
-        "Genesect"
-      ]
+      "1-8": ["Shedinja", "Illumise", "Butterfree", "Ariados"],
+      "9-16": ["Butterfree", "Ariados", "Mothim", "Cacturne"],
+      "17-25": ["Mothim", "Cacturne", "Galvantula", "Vileplume"],
+      "26-36": ["Bellossom", "Jumpluff", "Dodrio", "Scizor"],
+      "37-50": ["Braviary", "Scolipede", "Salamence", "Genesect"]
     }
   },
   {
@@ -4060,72 +1526,25 @@
     "terrain": "water",
     "mediumFrequency": 0.55,
     "level": 4,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": -1,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Seel",
-        "Omanyte",
-        "Ducklett",
-        "Wooper"
-      ],
-      "9-16": [
-        "Ducklett",
-        "Wooper",
-        "Sealeo",
-        "Seadra"
-      ],
-      "17-25": [
-        "Sealeo",
-        "Seadra"
-      ],
-      "26-36": [
-        "Ludicolo",
-        "Blastoise"
-      ],
-      "37-50": [
-        "Kingdra",
-        "Swampert"
-      ]
+      "1-8": ["Seel", "Omanyte", "Ducklett", "Wooper"],
+      "9-16": ["Ducklett", "Wooper", "Sealeo", "Seadra"],
+      "17-25": ["Sealeo", "Seadra"],
+      "26-36": ["Ludicolo", "Blastoise"],
+      "37-50": ["Kingdra", "Swampert"]
     },
     "leaders": {
-      "1-8": [
-        "Poliwhirl",
-        "Wailmer",
-        "Slowpoke",
-        "Lumineon"
-      ],
-      "9-16": [
-        "Slowpoke",
-        "Lumineon",
-        "Quagsire",
-        "Swanna"
-      ],
-      "17-25": [
-        "Quagsire",
-        "Swanna",
-        "Golduck",
-        "Empoleon"
-      ],
-      "26-36": [
-        "Floatzel",
-        "Octillery",
-        "Poliwrath",
-        "Huntail"
-      ],
-      "37-50": [
-        "Swampert",
-        "Octillery",
-        "Kingler",
-        "Sharpedo"
-      ]
+      "1-8": ["Poliwhirl", "Wailmer", "Slowpoke", "Lumineon"],
+      "9-16": ["Slowpoke", "Lumineon", "Quagsire", "Swanna"],
+      "17-25": ["Quagsire", "Swanna", "Golduck", "Empoleon"],
+      "26-36": ["Floatzel", "Octillery", "Poliwrath", "Huntail"],
+      "37-50": ["Swampert", "Octillery", "Kingler", "Sharpedo"]
     }
   },
   {
@@ -4135,72 +1554,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 7,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Onix",
-        "Nincada",
-        "Corsola",
-        "Swinub"
-      ],
-      "9-16": [
-        "Corsola",
-        "Swinub",
-        "Probopass",
-        "Marowak"
-      ],
-      "17-25": [
-        "Probopass",
-        "Marowak"
-      ],
-      "26-36": [
-        "Seismitoad",
-        "Krookodile"
-      ],
-      "37-50": [
-        "Golem",
-        "Torterra"
-      ]
+      "1-8": ["Onix", "Nincada", "Corsola", "Swinub"],
+      "9-16": ["Corsola", "Swinub", "Probopass", "Marowak"],
+      "17-25": ["Probopass", "Marowak"],
+      "26-36": ["Seismitoad", "Krookodile"],
+      "37-50": ["Golem", "Torterra"]
     },
     "leaders": {
-      "1-8": [
-        "Hippopotas",
-        "Aron",
-        "Whiscash",
-        "Sandile"
-      ],
-      "9-16": [
-        "Whiscash",
-        "Sandile",
-        "Rhyhorn",
-        "Nidoqueen"
-      ],
-      "17-25": [
-        "Rhyhorn",
-        "Nidoqueen",
-        "Gabite",
-        "Graveler"
-      ],
-      "26-36": [
-        "Boldore",
-        "Torterra",
-        "Aerodactyl",
-        "Hippowdon"
-      ],
-      "37-50": [
-        "Gigalith",
-        "Garchomp",
-        "Excadrill",
-        "Cranidos"
-      ]
+      "1-8": ["Hippopotas", "Aron", "Whiscash", "Sandile"],
+      "9-16": ["Whiscash", "Sandile", "Rhyhorn", "Nidoqueen"],
+      "17-25": ["Rhyhorn", "Nidoqueen", "Gabite", "Graveler"],
+      "26-36": ["Boldore", "Torterra", "Aerodactyl", "Hippowdon"],
+      "37-50": ["Gigalith", "Garchomp", "Excadrill", "Cranidos"]
     }
   },
   {
@@ -4210,72 +1582,25 @@
     "terrain": "water",
     "mediumFrequency": 0.23,
     "level": 8,
-    "canCross": [
-      "swim",
-      "fly"
-    ],
+    "canCross": ["swim", "fly"],
     "layoutModifier": {
       "pasillos": 0,
       "habitaciones": 0,
       "cruces": 0
     },
     "wild": {
-      "1-8": [
-        "Lunatone",
-        "Woobat",
-        "Sigilyph",
-        "Drowzee"
-      ],
-      "9-16": [
-        "Sigilyph",
-        "Drowzee",
-        "Starmie",
-        "Slowking"
-      ],
-      "17-25": [
-        "Starmie",
-        "Slowking"
-      ],
-      "26-36": [
-        "Reuniclus",
-        "Gardevoir"
-      ],
-      "37-50": [
-        "Exeggutor",
-        "Gothitelle"
-      ]
+      "1-8": ["Lunatone", "Woobat", "Sigilyph", "Drowzee"],
+      "9-16": ["Sigilyph", "Drowzee", "Starmie", "Slowking"],
+      "17-25": ["Starmie", "Slowking"],
+      "26-36": ["Reuniclus", "Gardevoir"],
+      "37-50": ["Exeggutor", "Gothitelle"]
     },
     "leaders": {
-      "1-8": [
-        "Xatu",
-        "Slowking",
-        "Claydol",
-        "Girafarig"
-      ],
-      "9-16": [
-        "Claydol",
-        "Girafarig",
-        "Metang",
-        "Starmie"
-      ],
-      "17-25": [
-        "Metang",
-        "Starmie",
-        "Girafarig",
-        "Beheeyem"
-      ],
-      "26-36": [
-        "Slowking",
-        "Girafarig",
-        "Xatu",
-        "Starmie"
-      ],
-      "37-50": [
-        "Exeggutor",
-        "Starmie",
-        "Bronzong",
-        "Metagross"
-      ]
+      "1-8": ["Xatu", "Slowking", "Claydol", "Girafarig"],
+      "9-16": ["Claydol", "Girafarig", "Metang", "Starmie"],
+      "17-25": ["Metang", "Starmie", "Girafarig", "Beheeyem"],
+      "26-36": ["Slowking", "Girafarig", "Xatu", "Starmie"],
+      "37-50": ["Exeggutor", "Starmie", "Bronzong", "Metagross"]
     }
   },
   {
@@ -4285,72 +1610,25 @@
     "terrain": "lava",
     "mediumFrequency": 0.23,
     "level": 6,
-    "canCross": [
-      "lavawalk",
-      "fly"
-    ],
+    "canCross": ["lavawalk", "fly"],
     "layoutModifier": {
       "pasillos": 1,
       "habitaciones": 0,
       "cruces": 1
     },
     "wild": {
-      "1-8": [
-        "Litwick",
-        "Wooper",
-        "Diglett",
-        "Swinub",
-        "Baltoy"
-      ],
-      "9-16": [
-        "Swinub",
-        "Baltoy",
-        "Aron",
-        "Hippopotas"
-      ],
-      "17-25": [
-        "Aron",
-        "Hippopotas"
-      ],
-      "26-36": [
-        "Dugtrio"
-      ],
-      "37-50": [
-        "Torterra",
-        "Relicanth"
-      ]
+      "1-8": ["Litwick", "Wooper", "Diglett", "Swinub", "Baltoy"],
+      "9-16": ["Swinub", "Baltoy", "Aron", "Hippopotas"],
+      "17-25": ["Aron", "Hippopotas"],
+      "26-36": ["Dugtrio"],
+      "37-50": ["Torterra", "Relicanth"]
     },
     "leaders": {
-      "1-8": [
-        "Corsola",
-        "Magcargo",
-        "Shuckle",
-        "Camerupt"
-      ],
-      "9-16": [
-        "Shuckle",
-        "Camerupt",
-        "Omastar",
-        "Claydol"
-      ],
-      "17-25": [
-        "Omastar",
-        "Claydol",
-        "Bastiodon",
-        "Volcarona"
-      ],
-      "26-36": [
-        "Seismitoad",
-        "Kabutops",
-        "Swampert",
-        "Flygon"
-      ],
-      "37-50": [
-        "Excadrill",
-        "Mamoswine",
-        "Aggron",
-        "Garchomp"
-      ]
+      "1-8": ["Corsola", "Magcargo", "Shuckle", "Camerupt"],
+      "9-16": ["Shuckle", "Camerupt", "Omastar", "Claydol"],
+      "17-25": ["Omastar", "Claydol", "Bastiodon", "Volcarona"],
+      "26-36": ["Seismitoad", "Kabutops", "Swampert", "Flygon"],
+      "37-50": ["Excadrill", "Mamoswine", "Aggron", "Garchomp"]
     }
   }
 ]

@@ -6036,7 +6036,7 @@
     "heightDm": 9,
     "stats": {
       "hpMax": 20,
-      "attack": 10,
+      "attack": 20,
       "defense": 55,
       "speed": 80,
       "size": 114,
@@ -10324,7 +10324,7 @@
     "heightDm": 6,
     "stats": {
       "hpMax": 20,
-      "attack": 10,
+      "attack": 20,
       "defense": 230,
       "speed": 5,
       "size": 107,
@@ -18032,7 +18032,7 @@
     "heightDm": 6,
     "stats": {
       "hpMax": 43,
-      "attack": 30,
+      "attack": 35,
       "defense": 55,
       "speed": 97,
       "size": 107,

@@ -46,13 +46,7 @@
     "image": "assets/benefits/heritage_fire.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Litwick",
-      "Magby",
-      "Ponyta",
-      "Darumaka",
-      "Larvesta"
-    ],
+    "pokemon": ["Litwick", "Magby", "Ponyta", "Darumaka", "Larvesta"],
     "stats": {
       "attack": 10
     }
@@ -101,9 +95,7 @@
     "stats": {
       "attack": 10
     },
-    "spriteanimations": [
-      "Charge"
-    ]
+    "spriteanimations": ["Charge"]
   },
   {
     "id": "machinery",
@@ -112,13 +104,7 @@
     "image": "assets/benefits/machinery.png",
     "active": true,
     "amount": 20,
-    "pokemon": [
-      "Baltoy",
-      "Claydol",
-      "Klink",
-      "Klang",
-      "Klinklang"
-    ],
+    "pokemon": ["Baltoy", "Claydol", "Klink", "Klang", "Klinklang"],
     "slot": "q",
     "stats": {}
   },
@@ -129,13 +115,7 @@
     "image": "assets/benefits/reinforced.png",
     "active": false,
     "amount": 0.1,
-    "pokemon": [
-      "Sudowoodo",
-      "Pineco",
-      "Forretress",
-      "Relicanth",
-      "Durant"
-    ],
+    "pokemon": ["Sudowoodo", "Pineco", "Forretress", "Relicanth", "Durant"],
     "stats": {
       "defense": 25,
       "block": 25
@@ -154,9 +134,7 @@
       "speed": 10,
       "attackSpeed": 10
     },
-    "excludes": [
-      "feathered"
-    ]
+    "excludes": ["feathered"]
   },
   {
     "id": "facechanger",
@@ -326,13 +304,7 @@
     "image": "assets/benefits/hooh_brooch.png",
     "active": true,
     "amount": 30,
-    "pokemon": [
-      "Lampent",
-      "Chandelure",
-      "Magmar",
-      "Magmortar",
-      "Ho_Oh"
-    ],
+    "pokemon": ["Lampent", "Chandelure", "Magmar", "Magmortar", "Ho_Oh"],
     "slot": "e",
     "stats": {}
   },
@@ -360,9 +332,7 @@
     "stats": {
       "range": 10
     },
-    "spriteanimations": [
-      "Charge"
-    ]
+    "spriteanimations": ["Charge"]
   },
   {
     "id": "seer",
@@ -371,13 +341,7 @@
     "amount": 90,
     "active": true,
     "slot": "q",
-    "pokemon": [
-      "Abra",
-      "Kadabra",
-      "Alakazam",
-      "Natu",
-      "Xatu"
-    ],
+    "pokemon": ["Abra", "Kadabra", "Alakazam", "Natu", "Xatu"],
     "image": "assets/benefits/seer.png",
     "stats": {}
   },
@@ -502,13 +466,7 @@
     "image": "assets/benefits/transparent.png",
     "active": true,
     "amount": 120,
-    "pokemon": [
-      "Porygon",
-      "Porygon2",
-      "Sableye",
-      "Drifloon",
-      "Drifblim"
-    ],
+    "pokemon": ["Porygon", "Porygon2", "Sableye", "Drifloon", "Drifblim"],
     "stats": {},
     "slot": "q"
   },
@@ -590,11 +548,7 @@
     "stats": {
       "range": -10
     },
-    "spriteanimations": [
-      "Strike",
-      "Swing",
-      "Charge"
-    ]
+    "spriteanimations": ["Strike", "Swing", "Charge"]
   },
   {
     "id": "rock_core",
@@ -655,10 +609,7 @@
       "attack": -10,
       "range": 20
     },
-    "spriteanimations": [
-      "Shoot",
-      "Charge"
-    ]
+    "spriteanimations": ["Shoot", "Charge"]
   },
   {
     "id": "rock_thrower",
@@ -684,10 +635,7 @@
       "speed": -60,
       "attackSpeed": -60
     },
-    "spriteanimations": [
-      "Shoot",
-      "Charge"
-    ]
+    "spriteanimations": ["Shoot", "Charge"]
   },
   {
     "id": "shelders_shell",
@@ -700,13 +648,7 @@
       "freezeMs": 1000
     },
     "active": true,
-    "pokemon": [
-      "Lapras",
-      "Glaceon",
-      "Vanillite",
-      "Vanillish",
-      "Vanilluxe"
-    ],
+    "pokemon": ["Lapras", "Glaceon", "Vanillite", "Vanillish", "Vanilluxe"],
     "slot": "q",
     "amount": 60
   },
@@ -721,12 +663,7 @@
       "essenceCost": 10
     },
     "active": true,
-    "pokemon": [
-      "Druddigon",
-      "Groudon",
-      "Heatmor",
-      "Torkoal"
-    ],
+    "pokemon": ["Druddigon", "Groudon", "Heatmor", "Torkoal"],
     "slot": "e",
     "amount": 120
   },
@@ -806,14 +743,7 @@
       "lootCost": 40
     },
     "active": true,
-    "pokemon": [
-      "Skitty",
-      "Delcatty",
-      "Buneary",
-      "Lopunny",
-      "Aipom",
-      "Ambipom"
-    ],
+    "pokemon": ["Skitty", "Delcatty", "Buneary", "Lopunny", "Aipom", "Ambipom"],
     "slot": "q",
     "amount": 0
   },
@@ -824,13 +754,7 @@
     "image": "assets/benefits/nobility.png",
     "rules": {},
     "active": false,
-    "pokemon": [
-      "Mantyke",
-      "Mantine",
-      "Tornadus",
-      "Thundurus",
-      "Landorus"
-    ],
+    "pokemon": ["Mantyke", "Mantine", "Tornadus", "Thundurus", "Landorus"],
     "stats": {
       "size": 20,
       "attack": 20,
@@ -875,12 +799,7 @@
       "redReward": 3
     },
     "active": false,
-    "pokemon": [
-      "Riolu",
-      "Lucario",
-      "Celebi",
-      "Rayquaza"
-    ],
+    "pokemon": ["Riolu", "Lucario", "Celebi", "Rayquaza"],
     "stats": {
       "attack": 30,
       "defense": 30,
@@ -930,9 +849,7 @@
       "evasion": 15,
       "defense": -5
     },
-    "excludes": [
-      "fighter"
-    ]
+    "excludes": ["fighter"]
   },
   {
     "id": "fighter",
@@ -959,9 +876,7 @@
       "critical": 15,
       "attack": 5
     },
-    "excludes": [
-      "aviodant"
-    ]
+    "excludes": ["aviodant"]
   },
   {
     "id": "wooden",
@@ -1091,11 +1006,7 @@
       "criticalBerry": 0.1
     },
     "active": false,
-    "pokemon": [
-      "Tropius",
-      "Cherubi",
-      "Cherrim"
-    ],
+    "pokemon": ["Tropius", "Cherubi", "Cherrim"],
     "stats": {}
   },
   {
@@ -1107,12 +1018,7 @@
       "bossLoot": 1
     },
     "active": false,
-    "pokemon": [
-      "Girafarig",
-      "Delibird",
-      "Wingull",
-      "Pelipper"
-    ],
+    "pokemon": ["Girafarig", "Delibird", "Wingull", "Pelipper"],
     "stats": {}
   },
   {
@@ -1124,13 +1030,7 @@
       "reflectCritical": 1
     },
     "active": false,
-    "pokemon": [
-      "Houndour",
-      "Houndoom",
-      "Gothita",
-      "Gothorita",
-      "Gothitelle"
-    ],
+    "pokemon": ["Houndour", "Houndoom", "Gothita", "Gothorita", "Gothitelle"],
     "stats": {}
   },
   {
@@ -1143,11 +1043,7 @@
       "push": 40
     },
     "active": true,
-    "pokemon": [
-      "Kingdra",
-      "Lugia",
-      "Kyogre"
-    ],
+    "pokemon": ["Kingdra", "Lugia", "Kyogre"],
     "slot": "e",
     "amount": 45
   },
@@ -1171,10 +1067,7 @@
       "Magcargo"
     ],
     "stats": {},
-    "excludes": [
-      "acuatic",
-      "wooden"
-    ],
+    "excludes": ["acuatic", "wooden"],
     "affinity": {
       "fire": 0.5
     }
@@ -1189,13 +1082,7 @@
       "cooldownReduction": 0.25
     },
     "active": false,
-    "pokemon": [
-      "Golduck",
-      "Smoochum",
-      "Jynx",
-      "Espeon",
-      "Sigilyph"
-    ],
+    "pokemon": ["Golduck", "Smoochum", "Jynx", "Espeon", "Sigilyph"],
     "stats": {}
   },
   {
@@ -1205,13 +1092,7 @@
     "image": "assets/benefits/skeptic.png",
     "rules": {},
     "active": false,
-    "pokemon": [
-      "Elgyem",
-      "Beheeyem",
-      "Darkrai",
-      "Umbreon",
-      "Mewtwo"
-    ],
+    "pokemon": ["Elgyem", "Beheeyem", "Darkrai", "Umbreon", "Mewtwo"],
     "stats": {},
     "affinity": {
       "psychic": 0.5,
@@ -1229,13 +1110,7 @@
       "reviveBerry": 0.15
     },
     "active": false,
-    "pokemon": [
-      "Murkrow",
-      "Honchkrow",
-      "Absol",
-      "Staryu",
-      "Starmie"
-    ],
+    "pokemon": ["Murkrow", "Honchkrow", "Absol", "Staryu", "Starmie"],
     "stats": {}
   },
   {
@@ -1638,12 +1513,7 @@
       "attackSpeed": -10
     },
     "weapon": "bite",
-    "pokemon": [
-      "Ekans",
-      "Arbok",
-      "Mawile",
-      "Seviper"
-    ]
+    "pokemon": ["Ekans", "Arbok", "Mawile", "Seviper"]
   },
   {
     "id": "static",
@@ -1672,12 +1542,7 @@
     "description": "Los aumentos de Crítico y Evasión también aumentan tu Bloqueo crítico. Los aumentos de Tamaño también aumentan tus HP máximos.",
     "active": false,
     "amount": 0,
-    "pokemon": [
-      "Bastiodon",
-      "Wynaut",
-      "Wobbuffet",
-      "Cryogonal"
-    ]
+    "pokemon": ["Bastiodon", "Wynaut", "Wobbuffet", "Cryogonal"]
   },
   {
     "id": "forgotten_bone",
@@ -1687,10 +1552,7 @@
     "active": false,
     "amount": 0,
     "weapon": "bone_throw",
-    "pokemon": [
-      "Cubone",
-      "Marowak"
-    ]
+    "pokemon": ["Cubone", "Marowak"]
   },
   {
     "id": "magnet",
@@ -1701,13 +1563,7 @@
     "amount": 0,
     "weapon": "iron_bomb",
     "halve": "attackSpeed",
-    "pokemon": [
-      "Magnemite",
-      "Magneton",
-      "Magnezone",
-      "Nosepass",
-      "Probopass"
-    ]
+    "pokemon": ["Magnemite", "Magneton", "Magnezone", "Nosepass", "Probopass"]
   },
   {
     "id": "occult_powder",
